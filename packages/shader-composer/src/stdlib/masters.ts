@@ -1,37 +1,18 @@
 import { Color } from "three"
 import { $ } from "../expressions"
-import { Snippet } from "../snippets"
-import { Master, Value, Vec3 } from "../units"
-
-export const VertexPosition = Vec3($`position`, {
-	name: "Vertex Position",
-	varying: true
-})
+import { Master, Value } from "../units"
+import { VertexNormal, VertexPosition } from "./geometry"
 
 export type CustomShaderMaterialMasterProps = {
 	position?: Value<"vec3">
+	normal?: Value<"vec3">
 	diffuseColor?: Value<"vec3">
 	alpha?: Value<"float">
 }
 
-const foo = Snippet(
-	(name) => $`
-	vec3 ${name}(in vec3 v) {
-		return v;
-	}
-`
-)
-
-const dummy = Snippet(
-	(name) => $`
-	vec3 ${name}(in vec3 v) {
-		return ${foo}(v);
-	}
-`
-)
-
 export const CustomShaderMaterialMaster = ({
 	position = VertexPosition,
+	normal = VertexNormal,
 	diffuseColor = new Color("white"),
 	alpha = 1
 }: CustomShaderMaterialMasterProps = {}) =>
@@ -40,7 +21,8 @@ export const CustomShaderMaterialMaster = ({
 
 		vertex: {
 			body: $`
-				csm_Position.xyz = ${dummy}(${position});
+				csm_Position.xyz = ${position};
+				csm_Normal = ${normal};
 			`
 		},
 
