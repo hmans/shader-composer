@@ -44,11 +44,11 @@ describe("compileShader", () => {
 		void main()
 		{
 		  /*** BEGIN: Anonymous ***/
-		  float Anonymous_2 = 123.0;
+		  float Anonymous_1 = 123.0;
 		  /*** END: Anonymous ***/
 		  
 		  /*** BEGIN: Anonymous ***/
-		  float Anonymous_1 = Anonymous_2;
+		  float Anonymous_2 = Anonymous_1;
 		  /*** END: Anonymous ***/
 		  
 		}"
@@ -60,11 +60,11 @@ describe("compileShader", () => {
 		void main()
 		{
 		  /*** BEGIN: Anonymous ***/
-		  float Anonymous_2 = 123.0;
+		  float Anonymous_1 = 123.0;
 		  /*** END: Anonymous ***/
 		  
 		  /*** BEGIN: Anonymous ***/
-		  float Anonymous_1 = Anonymous_2;
+		  float Anonymous_2 = Anonymous_1;
 		  /*** END: Anonymous ***/
 		  
 		}"
@@ -83,11 +83,11 @@ describe("compileShader", () => {
 		void main()
 		{
 		  /*** BEGIN: Anonymous ***/
-		  float Anonymous_2 = 123.0;
+		  float Anonymous_1 = 123.0;
 		  /*** END: Anonymous ***/
 		  
 		  /*** BEGIN: Anonymous ***/
-		  float Anonymous_1 = Anonymous_2 * 2.0;
+		  float Anonymous_2 = Anonymous_1 * 2.0;
 		  /*** END: Anonymous ***/
 		  
 		}"
@@ -99,11 +99,11 @@ describe("compileShader", () => {
 		void main()
 		{
 		  /*** BEGIN: Anonymous ***/
-		  float Anonymous_2 = 123.0;
+		  float Anonymous_1 = 123.0;
 		  /*** END: Anonymous ***/
 		  
 		  /*** BEGIN: Anonymous ***/
-		  float Anonymous_1 = Anonymous_2 * 2.0;
+		  float Anonymous_2 = Anonymous_1 * 2.0;
 		  /*** END: Anonymous ***/
 		  
 		}"
@@ -159,15 +159,15 @@ describe("compileShader", () => {
 		void main()
 		{
 		  /*** BEGIN: Position (Vertex Only) ***/
-		  float Position_Vertex_Only_2 = 1.0;
+		  float Position_Vertex_Only_1 = 1.0;
 		  /*** END: Position (Vertex Only) ***/
 		  
 		  /*** BEGIN: Anonymous ***/
-		  bool Anonymous_1;
+		  bool Anonymous_3;
 		  {
 		    bool value = true;
-		    gl_Position = Position_Vertex_Only_2;
-		    Anonymous_1 = value;
+		    gl_Position = Position_Vertex_Only_1;
+		    Anonymous_3 = value;
 		  }
 		  /*** END: Anonymous ***/
 		  
@@ -184,11 +184,11 @@ describe("compileShader", () => {
 		  /*** END: Color (Fragment Only) ***/
 		  
 		  /*** BEGIN: Anonymous ***/
-		  bool Anonymous_1;
+		  bool Anonymous_3;
 		  {
 		    bool value = true;
 		    gl_FragColor = Color_Fragment_Only_2;
-		    Anonymous_1 = value;
+		    Anonymous_3 = value;
 		  }
 		  /*** END: Anonymous ***/
 		  
