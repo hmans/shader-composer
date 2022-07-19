@@ -13,16 +13,11 @@ export type CustomShaderMaterialMasterProps = {
 	alpha?: Value<"float">
 }
 
-const DummyFunction = Master({
-	name: "Dummy Function",
-	vertex: {
-		header: $`
-			vec3 dummy(in vec3 v) {
-				return v;
-			}
-	`
+const dummy = $`
+	vec3 dummy(in vec3 v) {
+		return v;
 	}
-})
+`
 
 export const CustomShaderMaterialMaster = ({
 	position = VertexPosition,
@@ -33,8 +28,9 @@ export const CustomShaderMaterialMaster = ({
 		name: "CustomShaderMaterial Master",
 
 		vertex: {
+			header: $`${dummy}`,
 			body: $`
-				csm_Position.xyz = ${DummyFunction}(${position});
+				csm_Position.xyz = dummy(${position});
 			`
 		},
 
