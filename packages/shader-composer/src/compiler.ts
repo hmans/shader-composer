@@ -30,7 +30,7 @@ const collectDependencies = (
 ) => {
 	dependencies.forEach((dependency) => {
 		if (isUnit(dependency)) collectUnit(dependency, state)
-		if (isExpression(dependency)) collectExpression(dependency, state)
+		else if (isExpression(dependency)) collectExpression(dependency, state)
 	})
 }
 
