@@ -31,7 +31,12 @@ const compileItem = (
 }
 
 const compileExpression = (exp: Expression, program: Program, state: CompilerState) => {
-	/* Compile dependencies */
+	/*
+	Expressions automatically expand to their string representations, so we don't need to
+	add them to headers or bodies, but we _do_ need to resolve their dependencies (because
+	they may include other units.)
+	*/
+
 	exp.values.forEach((value) => {
 		compileItem(value, program, state)
 	})
@@ -48,7 +53,11 @@ const compileSnippet = (snippet: Snippet, program: Program, state: CompilerState
 }
 
 const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
-	/* Identify dependencies and add them */
+	/*
+	Before we add this unit, let's recurse into its dependencies. We're limiting
+	ourselves to direct dependencies (within the value), and dependencies of the
+	header and body of the program we're currenty compiling.
+	*/
 	const dependencies = [
 		unit.value,
 		unit._unitConfig[program]?.header?.values,
