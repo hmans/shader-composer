@@ -12,6 +12,9 @@ export default function Playground() {
 		return compileShader(root)
 	}, [])
 
+	console.log(shader.vertexShader)
+	console.log(shader.fragmentShader)
+
 	return (
 		<group position-y={13}>
 			<mesh>
