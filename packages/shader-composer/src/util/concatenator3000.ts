@@ -8,7 +8,11 @@ export const concatenate = (...parts: Part[]): string =>
 		.filter(isPresent)
 		.join("\n")
 
-export const identifier = (...parts: Part[]): string => parts.filter(isPresent).join("_")
+export const identifier = (...parts: Part[]): string =>
+	parts
+		.filter(isPresent)
+		.join("_")
+		.replace(/_{2,}/g, "_")
 
 export const statement = (...parts: Part[]): string =>
 	parts.filter(isPresent).join(" ") + ";"
@@ -24,5 +28,4 @@ export const block = (...parts: Part[]): Part[] => [
 	"}"
 ]
 
-export const sluggify = (s: string) =>
-	s.replace(/[^a-zA-Z0-9]/g, "_").replace(/_{2,}/g, "_")
+export const sluggify = (s: string) => s.replace(/[^a-zA-Z0-9]/g, "_")

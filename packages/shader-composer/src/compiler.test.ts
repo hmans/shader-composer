@@ -159,14 +159,14 @@ describe("compileShader", () => {
 		void main()
 		{
 		  /*** BEGIN: Position (Vertex Only) ***/
-		  float Position_Vertex_Only__2 = 1.0;
+		  float Position_Vertex_Only_2 = 1.0;
 		  /*** END: Position (Vertex Only) ***/
 		  
 		  /*** BEGIN: Anonymous ***/
 		  bool Anonymous_1;
 		  {
 		    bool value = true;
-		    gl_Position = Position_Vertex_Only__2;
+		    gl_Position = Position_Vertex_Only_2;
 		    Anonymous_1 = value;
 		  }
 		  /*** END: Anonymous ***/
@@ -180,14 +180,14 @@ describe("compileShader", () => {
 		void main()
 		{
 		  /*** BEGIN: Color (Fragment Only) ***/
-		  float Color_Fragment_Only__2 = 2.0;
+		  float Color_Fragment_Only_2 = 2.0;
 		  /*** END: Color (Fragment Only) ***/
 		  
 		  /*** BEGIN: Anonymous ***/
 		  bool Anonymous_1;
 		  {
 		    bool value = true;
-		    gl_FragColor = Color_Fragment_Only__2;
+		    gl_FragColor = Color_Fragment_Only_2;
 		    Anonymous_1 = value;
 		  }
 		  /*** END: Anonymous ***/
