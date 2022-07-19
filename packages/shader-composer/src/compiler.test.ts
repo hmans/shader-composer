@@ -1,5 +1,6 @@
 import { compileShader } from "./compiler"
-import { glsl } from "./expressions"
+import { $, glsl } from "./expressions"
+import { Snippet } from "./snippets"
 import { Bool, Float, Master, Unit, Vec3 } from "./units"
 
 describe("compileShader", () => {
@@ -190,6 +191,51 @@ describe("compileShader", () => {
 		    gl_FragColor = Color_Fragment_Only_2;
 		    Anonymous_3 = value;
 		  }
+		  /*** END: Anonymous ***/
+
+		}"
+	`)
+	})
+
+	it("supports snippets", () => {
+		const double = Snippet(
+			(name) => $`
+			float ${name}(in float a) {
+				return a * 2.0;
+			}`
+		)
+
+		const root = Float($`${double}(1.0)`)
+
+		const [shader] = compileShader(root)
+
+		expect(shader.vertexShader).toMatchInlineSnapshot(`
+		"/*** PROGRAM: VERTEX ***/
+
+
+					float snippet_c8b24f9130(in float a) {
+						return a * 2.0;
+					}
+		void main()
+		{
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_1 = snippet_c8b24f9130(1.0);
+		  /*** END: Anonymous ***/
+
+		}"
+	`)
+
+		expect(shader.fragmentShader).toMatchInlineSnapshot(`
+		"/*** PROGRAM: FRAGMENT ***/
+
+
+					float snippet_c8b24f9130(in float a) {
+						return a * 2.0;
+					}
+		void main()
+		{
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_1 = snippet_c8b24f9130(1.0);
 		  /*** END: Anonymous ***/
 
 		}"
