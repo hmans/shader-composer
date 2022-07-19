@@ -15,13 +15,6 @@ import { isUnit, isUnitInProgram, Program, Unit } from "./units"
 const beginUnit = (unit: Unit) => `/*** BEGIN: ${unit._unitConfig.name} ***/`
 const endUnit = (unit: Unit) => `/*** END: ${unit._unitConfig.name} ***/\n`
 
-const compileExpression = (exp: Expression, program: Program, state: CompilerState) => {
-	/* Compile dependencies */
-	exp.values.forEach((value) => {
-		compileItem(value, program, state)
-	})
-}
-
 const compileItem = (item: Unit | Expression, program: Program, state: CompilerState) => {
 	/* Check if we've already seen this unit */
 	if (state.seen.has(item)) return
@@ -29,6 +22,13 @@ const compileItem = (item: Unit | Expression, program: Program, state: CompilerS
 
 	if (isUnit(item)) compileUnit(item, program, state)
 	else if (isExpression(item)) compileExpression(item, program, state)
+}
+
+const compileExpression = (exp: Expression, program: Program, state: CompilerState) => {
+	/* Compile dependencies */
+	exp.values.forEach((value) => {
+		compileItem(value, program, state)
+	})
 }
 
 const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
