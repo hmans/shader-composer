@@ -6,18 +6,22 @@ export type Expression = {
 	_: "Expression"
 	values: any[]
 	render: () => string
+	toString: () => string
 }
 
-export const glsl = (strings: TemplateStringsArray, ...values: any[]): Expression => ({
-	_: "Expression",
-
-	values,
-
-	render: () =>
+export const glsl = (strings: TemplateStringsArray, ...values: any[]): Expression => {
+	const render = () =>
 		zip(strings, values.map(glslRepresentation))
 			.flat()
 			.join("")
-})
+
+	return {
+		_: "Expression",
+		values,
+		render,
+		toString: render
+	}
+}
 
 export const $ = glsl
 
