@@ -34,7 +34,7 @@ const collectUnitHeader = (unit: Unit, program: Program, state: CompilerState) =
 	if (unit._unitConfig[`${program}Header`])
 		state[program].headers.push(
 			beginUnit(unit),
-			unit._unitConfig[`${program}Header`]?.render(),
+			glslRepresentation(unit._unitConfig[`${program}Header`]),
 			endUnit(unit)
 		)
 }
@@ -51,7 +51,8 @@ const collectUnitBody = (unit: Unit, program: Program, state: CompilerState) => 
 			statement(unit.type, "value", "=", glslRepresentation(unit.value)),
 
 			/* Include body chunk, if given */
-			unit._unitConfig[`${program}Body`]?.render(),
+			unit._unitConfig[`${program}Body`] &&
+				glslRepresentation(unit._unitConfig[`${program}Body`]),
 
 			/* Assign value back to global variable */
 			assignment(unit._unitConfig.variableName, "value")

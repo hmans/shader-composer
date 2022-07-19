@@ -24,10 +24,10 @@ export type UnitConfig = {
 	only?: Program
 
 	/* Chunks */
-	vertexHeader?: Expression
-	vertexBody?: Expression
-	fragmentHeader?: Expression
-	fragmentBody?: Expression
+	vertexHeader?: Expression | string
+	vertexBody?: Expression | string
+	fragmentHeader?: Expression | string
+	fragmentBody?: Expression | string
 }
 
 export type Unit<T extends GLSLType = any> = {
