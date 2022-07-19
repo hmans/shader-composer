@@ -34,6 +34,7 @@ const compileProgram = (nodes: Node[], program: Program): string =>
 	)
 
 export const compileShader = (root: Node) => {
+	/* Prepare some state for our compilation process */
 	const nextId = idGenerator()
 
 	const gatherProgram = (node: Node, program: Program): Node[] => {
