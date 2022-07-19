@@ -3,8 +3,19 @@ import { $ } from "../expressions"
 import { Master, Value, Vec3 } from "../units"
 
 export const VertexPositionAttribute = Vec3($`position`, {
-	name: "Position",
+	name: "Position (Attribute)",
 	only: "vertex"
+})
+
+export const VertexPosition = Vec3($`v_position`, {
+	name: "Position (Varying)",
+	vertex: {
+		header: $`varying vec3 v_position;`,
+		body: $`value = v_position = ${VertexPositionAttribute};`
+	},
+	fragment: {
+		header: $`varying vec3 v_position;`
+	}
 })
 
 export type CustomShaderMaterialMasterProps = {
@@ -14,7 +25,7 @@ export type CustomShaderMaterialMasterProps = {
 }
 
 export const CustomShaderMaterialMaster = ({
-	position = VertexPositionAttribute,
+	position = VertexPosition,
 	diffuseColor = new Color("white"),
 	alpha = 1
 }: CustomShaderMaterialMasterProps = {}) =>
