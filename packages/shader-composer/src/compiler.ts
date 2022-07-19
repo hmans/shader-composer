@@ -10,9 +10,7 @@ import {
 	statement
 } from "./lib/concatenator3000"
 import idGenerator from "./lib/idGenerator"
-import { isUnit, Unit } from "./units"
-
-type Program = "vertex" | "fragment"
+import { isUnit, isUnitInProgram, Program, Unit } from "./units"
 
 const beginUnit = (unit: Unit) => `/*** BEGIN: ${unit._unitConfig.name} ***/`
 const endUnit = (unit: Unit) => `/*** END: ${unit._unitConfig.name} ***/\n`
@@ -36,7 +34,7 @@ const collectUnitHeader = (unit: Unit, program: Program, state: CompilerState) =
 	if (unit._unitConfig[`${program}Header`])
 		state[program].headers.push(
 			beginUnit(unit),
-			unit._unitConfig[`${program}Header`],
+			unit._unitConfig[`${program}Header`]?.render(),
 			endUnit(unit)
 		)
 }
@@ -53,7 +51,7 @@ const collectUnitBody = (unit: Unit, program: Program, state: CompilerState) => 
 			statement(unit.type, "value", "=", glslRepresentation(unit.value)),
 
 			/* Include body chunk, if given */
-			unit._unitConfig[`${program}Body`],
+			unit._unitConfig[`${program}Body`]?.render(),
 
 			/* Assign value back to global variable */
 			assignment(unit._unitConfig.variableName, "value")
@@ -73,15 +71,24 @@ const collectUnit = (unit: Unit, state = CompilerState()) => {
 		state.nextid()
 	)
 
-	/* Collect dependencies */
-	const dependencies: (Unit | Expression)[] = [unit.value]
-	collectDependencies(dependencies, state)
+	if (isUnitInProgram(unit, "vertex")) {
+		collectDependencies(
+			[unit.value, unit._unitConfig.vertexHeader, unit._unitConfig.vertexBody],
+			state
+		)
 
-	/* Collect this unit */
-	collectUnitHeader(unit, "vertex", state)
-	collectUnitHeader(unit, "fragment", state)
-	collectUnitBody(unit, "vertex", state)
-	collectUnitBody(unit, "fragment", state)
+		collectUnitHeader(unit, "vertex", state)
+		collectUnitBody(unit, "vertex", state)
+	}
+
+	if (isUnitInProgram(unit, "fragment")) {
+		collectDependencies(
+			[unit.value, unit._unitConfig.fragmentHeader, unit._unitConfig.fragmentBody],
+			state
+		)
+		collectUnitHeader(unit, "fragment", state)
+		collectUnitBody(unit, "fragment", state)
+	}
 }
 
 /**

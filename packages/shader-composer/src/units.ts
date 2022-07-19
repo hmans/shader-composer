@@ -1,6 +1,8 @@
 import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
 import { Expression } from "./expressions"
 
+export type Program = "vertex" | "fragment"
+
 export type GLSLType = "bool" | "float" | "vec2" | "vec3" | "vec4" | "mat3" | "mat4"
 
 export type JSTypes = {
@@ -18,6 +20,10 @@ export type Value<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
 export type UnitConfig = {
 	name: string
 	variableName?: string
+
+	only?: Program
+
+	/* Chunks */
 	vertexHeader?: Expression
 	vertexBody?: Expression
 	fragmentHeader?: Expression
@@ -53,6 +59,9 @@ export const Unit = <T extends GLSLType>(
 export function isUnit(value: any): value is Unit {
 	return value && value._ === "Unit"
 }
+
+export const isUnitInProgram = (unit: Unit, program: Program) =>
+	[undefined, program].includes(unit._unitConfig.only)
 
 const makeUnit = <T extends GLSLType>(type: T) => (
 	v: Value<T>,
