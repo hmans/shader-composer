@@ -6,7 +6,6 @@ import {
 	Add,
 	compileShader,
 	CustomShaderMaterialMaster,
-	Div,
 	Fresnel,
 	Sampler2D,
 	Texture2D,
