@@ -19,6 +19,8 @@ export const glsl = (strings: TemplateStringsArray, ...values: any[]): Expressio
 			.join("")
 })
 
+export const $ = glsl
+
 export function isExpression(v: any): v is Expression {
 	return v && v._ === "Expression"
 }
