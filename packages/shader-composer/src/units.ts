@@ -25,6 +25,7 @@ export type UnitConfig = {
 }
 
 export type Unit<T extends GLSLType = any> = {
+	_: "Unit"
 	_unitConfig: UnitConfig
 	type: T
 	value: Value<T>
@@ -35,18 +36,20 @@ export const Unit = <T extends GLSLType>(
 	value: Value<T>,
 	config?: Partial<UnitConfig>
 ): Unit<T> => {
-	const node = {
+	const unit: Unit<T> = {
+		_: "Unit",
+		type,
+		value,
+
 		_unitConfig: {
 			name: "Anonymous",
 			...config
-		},
-		type,
-		value
+		}
 	}
 
-	return node
+	return unit
 }
 
 export function isUnit(value: any): value is Unit {
-	return value && value._unitConfig
+	return value && value._ === "Unit"
 }
