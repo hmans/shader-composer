@@ -1,12 +1,15 @@
 import { $ } from "../expressions"
 import { GLSLType, Unit } from "../units"
 
-export const Uniform = <T extends GLSLType>(type: T, name: string) =>
-	Unit<T>(type, $`${name}`, {
+export const Uniform = <T extends GLSLType>(type: T, name: string) => {
+	const header = $`uniform ${type} ${name};`
+
+	return Unit<T>(type, $`${name}`, {
 		name: `Uniform: ${name}`,
-		vertexHeader: $`uniform ${type} ${name};`,
-		fragmentHeader: $`uniform ${type} ${name};`
+		vertex: { header },
+		fragment: { header }
 	})
+}
 
 export const Time = Uniform("float", "u_time")
 

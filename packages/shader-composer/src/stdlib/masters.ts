@@ -14,11 +14,10 @@ export const CustomShaderMaterialMaster = ({
 	Master({
 		name: "CustomShaderMaterial Master",
 
-		vertexBody: glsl`
-		`,
-
-		fragmentBody: glsl`
-			csm_DiffuseColor.rgb = ${Vec3(diffuseColor, { only: "fragment" })};
-			csm_DiffuseColor.a = ${Float(alpha, { only: "fragment" })};
-		`
+		fragment: {
+			body: glsl`
+				csm_DiffuseColor.rgb = ${Vec3(diffuseColor, { only: "fragment" })};
+				csm_DiffuseColor.a = ${Float(alpha, { only: "fragment" })};
+			`
+		}
 	})
