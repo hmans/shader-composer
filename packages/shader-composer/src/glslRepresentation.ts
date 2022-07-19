@@ -3,7 +3,8 @@ import { isExpression } from "./expressions"
 import { isSnippet } from "./snippets"
 import { isUnit, Value } from "./units"
 
-export const glslRepresentation = (value: Value): string => {
+export const glslRepresentation = (value: Value | undefined): string => {
+	if (value === undefined) return ""
 	if (isUnit(value)) return value.toString()
 	if (isExpression(value)) return value.render()
 	if (isSnippet(value)) return value.name

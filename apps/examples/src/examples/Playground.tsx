@@ -30,7 +30,7 @@ export default function Playground() {
 		const color = new Color("hotpink")
 
 		const root = CustomShaderMaterialMaster({
-			diffuseColor: $`${color} * ${tex2d.color}`,
+			fragColor: $`${color} * ${tex2d.color}`,
 			alpha: Add(Fresnel(), 0.1)
 		})
 
