@@ -1,19 +1,47 @@
+import { useTexture } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useMemo } from "react"
-import { $, compileShader, CustomShaderMaterialMaster, Fresnel } from "shader-composer"
-import { Color, MeshStandardMaterial } from "three"
+import {
+	$,
+	Add,
+	compileShader,
+	CustomShaderMaterialMaster,
+	Div,
+	Fresnel,
+	Sampler2D,
+	Texture2D,
+	TilingUV,
+	Time,
+	UV
+} from "shader-composer"
+import { Color, MeshStandardMaterial, RepeatWrapping, TextureDataType } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function Playground() {
-	const [shader, update] = useMemo(() => {
+	const texture = useTexture("/textures/hexgrid.jpg")
+	texture.wrapS = RepeatWrapping
+	texture.wrapT = RepeatWrapping
+
+	const [{ uniforms, ...shader }, update] = useMemo(() => {
+		const tex2d = Texture2D(Sampler2D("u_texture"), TilingUV(Add(UV, Div(Time, 10))))
+
 		const color = new Color("hotpink")
 
 		const root = CustomShaderMaterialMaster({
-			diffuseColor: $`${color} + ${new Color("white")} * ${Fresnel()}`
+			diffuseColor: $`${color} * ${tex2d.color}`,
+			alpha: Fresnel()
 		})
 
 		return compileShader(root)
 	}, [])
+
+	const myUniforms = useMemo(
+		() => ({
+			...uniforms,
+			u_texture: { value: texture }
+		}),
+		[uniforms]
+	)
 
 	useFrame((_, dt) => update(dt))
 
@@ -24,7 +52,12 @@ export default function Playground() {
 		<group position-y={13}>
 			<mesh>
 				<icosahedronGeometry args={[8, 3]} />
-				<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} />
+				<CustomShaderMaterial
+					baseMaterial={MeshStandardMaterial}
+					uniforms={myUniforms}
+					{...shader}
+					transparent
+				/>
 			</mesh>
 		</group>
 	)

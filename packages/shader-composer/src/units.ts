@@ -42,24 +42,27 @@ export type Unit<T extends GLSLType = any, A extends {} = {}> = {
 	_unitConfig: UnitConfig
 	type: T
 	value: Value<T>
+	toString: () => string
 } & A
 
 export const Unit = <T extends GLSLType>(
 	type: T,
 	value: Value<T>,
-	config?: Partial<UnitConfig>
+	_config?: Partial<UnitConfig>
 ): Unit<T> => {
+	const config: UnitConfig = {
+		name: "Anonymous",
+		varying: false,
+		variableName: identifier("var", Math.floor(Math.random() * 1000000)),
+		..._config
+	}
+
 	const unit: Unit<T> = {
 		_: "Unit",
 		type,
 		value,
-
-		_unitConfig: {
-			name: "Anonymous",
-			varying: false,
-			variableName: identifier("var", Math.floor(Math.random() * 1000000)),
-			...config
-		}
+		toString: () => config.variableName,
+		_unitConfig: config
 	}
 
 	return unit
@@ -78,7 +81,7 @@ export const withAPI = <T extends GLSLType, A extends {}>(unit: Unit<T>, api: A)
 const makeUnit = <T extends GLSLType>(type: T) => (
 	v: Value<T>,
 	extras?: Partial<UnitConfig>
-) => Unit(type, v, extras)
+) => Unit(type, v, extras) as Unit<T>
 
 export const Float = makeUnit("float")
 export const Bool = makeUnit("bool")

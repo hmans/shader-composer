@@ -18,7 +18,9 @@ export const Sampler2D = (name: string) =>
 export type Sampler2D = ReturnType<typeof Sampler2D>
 
 export const Texture2D = (sampler2D: Sampler2D, xy: Value<"vec2">) => {
-	const node = Vec4($`texture2D(${sampler2D}, ${xy})`)
+	const node = Vec4($`texture2D(${sampler2D}, ${xy})`, {
+		name: "Texture2D"
+	})
 
 	return withAPI(node, {
 		color: Vec3($`${node}.rgb`),
