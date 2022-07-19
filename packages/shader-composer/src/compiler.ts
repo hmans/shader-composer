@@ -1,8 +1,9 @@
-export const compileShader = () => {
-	const vertexShader = `void main() {
-	}`
+import { Expression } from "./expressions"
 
-	const fragmentShader = `void main() { csm_DiffuseColor = vec4(1.0, 0.4, 0.0, 1.0); }`
+export const compileShader = (root: Expression) => {
+	const vertexShader = ``
+
+	const fragmentShader = root.render()
 
 	return { vertexShader, fragmentShader }
 }
