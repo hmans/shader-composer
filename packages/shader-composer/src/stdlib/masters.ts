@@ -1,5 +1,6 @@
 import { Color } from "three"
 import { $ } from "../expressions"
+import { Snippet } from "../snippets"
 import { Master, Value, Vec3 } from "../units"
 
 export const VertexPosition = Vec3($`position`, {
@@ -13,11 +14,21 @@ export type CustomShaderMaterialMasterProps = {
 	alpha?: Value<"float">
 }
 
-const dummy = $`
-	vec3 dummy(in vec3 v) {
+const foo = Snippet(
+	(name) => $`
+	vec3 ${name}(in vec3 v) {
 		return v;
 	}
 `
+)
+
+const dummy = Snippet(
+	(name) => $`
+	vec3 ${name}(in vec3 v) {
+		return ${foo}(v);
+	}
+`
+)
 
 export const CustomShaderMaterialMaster = ({
 	position = VertexPosition,
@@ -28,9 +39,8 @@ export const CustomShaderMaterialMaster = ({
 		name: "CustomShaderMaterial Master",
 
 		vertex: {
-			header: $`${dummy}`,
 			body: $`
-				csm_Position.xyz = dummy(${position});
+				csm_Position.xyz = ${dummy}(${position});
 			`
 		},
 

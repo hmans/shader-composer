@@ -1,5 +1,6 @@
 import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
+import { isSnippet, Snippet } from "./snippets"
 import { isUnit, Program, Unit } from "./units"
 import {
 	assignment,
@@ -15,13 +16,18 @@ import idGenerator from "./util/idGenerator"
 const beginUnit = (unit: Unit) => `/*** BEGIN: ${unit._unitConfig.name} ***/`
 const endUnit = (unit: Unit) => `/*** END: ${unit._unitConfig.name} ***/\n`
 
-const compileItem = (item: Unit | Expression, program: Program, state: CompilerState) => {
+const compileItem = (
+	item: Unit | Expression | Snippet,
+	program: Program,
+	state: CompilerState
+) => {
 	/* Check if we've already seen this unit */
 	if (state.seen.has(item)) return
 	state.seen.add(item)
 
 	if (isUnit(item)) compileUnit(item, program, state)
 	else if (isExpression(item)) compileExpression(item, program, state)
+	else if (isSnippet(item)) compileSnippet(item, program, state)
 }
 
 const compileExpression = (exp: Expression, program: Program, state: CompilerState) => {
@@ -29,6 +35,16 @@ const compileExpression = (exp: Expression, program: Program, state: CompilerSta
 	exp.values.forEach((value) => {
 		compileItem(value, program, state)
 	})
+}
+
+const compileSnippet = (snippet: Snippet, program: Program, state: CompilerState) => {
+	/* Add dependencies */
+	snippet.expression.values.forEach((value) => {
+		compileItem(value, program, state)
+	})
+
+	/* Add snippet to header */
+	state.header.push(snippet.expression)
 }
 
 const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
@@ -164,5 +180,5 @@ const CompilerState = () => ({
 	header: new Array<Part>(),
 	body: new Array<Part>(),
 	nextid: idGenerator(),
-	seen: new Set<Unit | Expression>()
+	seen: new Set<Unit | Expression | Snippet>()
 })
