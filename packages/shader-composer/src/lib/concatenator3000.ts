@@ -10,4 +10,7 @@ export const concatenate = (...parts: Part[]): string =>
 
 export const identifier = (...parts: Part[]): string => parts.filter(isPresent).join("_")
 
+export const statement = (...parts: Part[]): string =>
+	parts.filter(isPresent).join(" ") + ";"
+
 export const block = (...parts: Part[]): Part[] => ["{", ...parts, "}"]

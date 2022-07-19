@@ -1,4 +1,5 @@
-import { block, concatenate, Part } from "./lib/concatenator3000"
+import { glslRepresentation } from "./glslRepresentation"
+import { block, concatenate, Part, statement } from "./lib/concatenator3000"
 import { Node } from "./tree"
 
 type Program = "vertex" | "fragment"
@@ -12,11 +13,16 @@ const compileHeader = (node: Node, program: Program): Part[] =>
 		: []
 
 const compileBody = (node: Node, program: Program): Part[] => [
-	node._node[`${program}Body`]?.render()
+	/* Create global variable for this node */
+	statement(node.type, node._node.variableName, "=", glslRepresentation(node.value)),
+
+	/* Include body block if one is given */
+	node._node[`${program}Body`] && block(node._node[`${program}Body`]?.render())
 ]
 
 const compileProgram = (nodes: Node[], program: Program): string =>
 	concatenate(
+		`/*** PROGRAM: ${program.toUpperCase()} ***/\n`,
 		nodes.map((n) => compileHeader(n, program)),
 		"void main()",
 		block(...nodes.map((n) => compileBody(n, program)))
