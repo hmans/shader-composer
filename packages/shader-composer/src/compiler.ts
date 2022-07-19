@@ -8,8 +8,8 @@ import {
 	Part,
 	sluggify,
 	statement
-} from "./lib/concatenator3000"
-import idGenerator from "./lib/idGenerator"
+} from "./util/concatenator3000"
+import idGenerator from "./util/idGenerator"
 import { isUnit, isUnitInProgram, Program, Unit } from "./units"
 
 const beginUnit = (unit: Unit) => `/*** BEGIN: ${unit._unitConfig.name} ***/`
