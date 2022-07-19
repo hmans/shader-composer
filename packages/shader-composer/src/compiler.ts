@@ -143,7 +143,6 @@ const compileProgram = (
 	program: Program,
 	state: CompilerState = CompilerState()
 ): string => {
-	prepareItem(unit)
 	compileItem(unit, program, state)
 
 	return concatenate(
@@ -156,6 +155,8 @@ const compileProgram = (
 }
 
 export const compileShader = (root: Unit) => {
+	prepareItem(root)
+
 	const uniforms = {
 		u_time: { value: 0 }
 	}
