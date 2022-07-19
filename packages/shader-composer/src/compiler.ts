@@ -1,5 +1,6 @@
 import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
+import { isUnit, Program, Unit } from "./units"
 import {
 	assignment,
 	block,
@@ -10,7 +11,6 @@ import {
 	statement
 } from "./util/concatenator3000"
 import idGenerator from "./util/idGenerator"
-import { isUnit, isUnitInProgram, Program, Unit } from "./units"
 
 const beginUnit = (unit: Unit) => `/*** BEGIN: ${unit._unitConfig.name} ***/`
 const endUnit = (unit: Unit) => `/*** END: ${unit._unitConfig.name} ***/\n`
