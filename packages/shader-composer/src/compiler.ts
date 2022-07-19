@@ -16,14 +16,6 @@ type Program = "vertex" | "fragment"
 const beginUnit = (unit: Unit) => `/*** BEGIN: ${unit._unitConfig.name} ***/`
 const endUnit = (unit: Unit) => `/*** END: ${unit._unitConfig.name} ***/\n`
 
-const compileProgram = (program: Program, state: CompilerState): string =>
-	concatenate(
-		`/*** PROGRAM: ${program.toUpperCase()} ***/\n`,
-		state[program].headers,
-		"void main()",
-		block(state[program].bodies)
-	)
-
 const collectDependencies = (
 	dependencies: (Expression | Unit)[],
 	state: CompilerState
@@ -51,13 +43,24 @@ const collectUnitHeader = (unit: Unit, program: Program, state: CompilerState) =
 const collectUnitBody = (unit: Unit, program: Program, state: CompilerState) => {
 	state[program].bodies.push(
 		beginUnit(unit),
+
+		/* Declare global variable */
 		statement(
 			unit.type,
 			unit._unitConfig.variableName,
 			"=",
 			glslRepresentation(unit.value)
 		),
-		unit._unitConfig[`${program}Body`] && block(unit._unitConfig[`${program}Body`]),
+
+		block(
+			/* TODO: Declare local value variable */
+
+			/* Include body chunk, if given */
+			block(unit._unitConfig[`${program}Body`])
+
+			/* TODO: Assign value back to global variable */
+		),
+
 		endUnit(unit)
 	)
 }
@@ -82,6 +85,17 @@ const collectUnit = (unit: Unit, state = CompilerState()) => {
 	collectUnitBody(unit, "vertex", state)
 	collectUnitBody(unit, "fragment", state)
 }
+
+/**
+ * Generates a full shader program from a compiler state object.
+ */
+const compileProgram = (program: Program, state: CompilerState): string =>
+	concatenate(
+		`/*** PROGRAM: ${program.toUpperCase()} ***/\n`,
+		state[program].headers,
+		"void main()",
+		block(state[program].bodies)
+	)
 
 export const compileShader = (root: Unit) => {
 	const state = CompilerState()
