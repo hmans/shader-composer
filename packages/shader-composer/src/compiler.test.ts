@@ -12,14 +12,14 @@ describe("compileShader", () => {
 
 		void main()
 		{
-		/*** BEGIN: Anonymous ***/
-		bool Anonymous_1;
-		{
-		bool value = true;
-		Anonymous_1 = value;
-		}
-		/*** END: Anonymous ***/
-
+		  /*** BEGIN: Anonymous ***/
+		  bool Anonymous_1;
+		  {
+		    bool value = true;
+		    Anonymous_1 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 
@@ -28,14 +28,14 @@ describe("compileShader", () => {
 
 		void main()
 		{
-		/*** BEGIN: Anonymous ***/
-		bool Anonymous_1;
-		{
-		bool value = true;
-		Anonymous_1 = value;
-		}
-		/*** END: Anonymous ***/
-
+		  /*** BEGIN: Anonymous ***/
+		  bool Anonymous_1;
+		  {
+		    bool value = true;
+		    Anonymous_1 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 	})
@@ -51,22 +51,22 @@ describe("compileShader", () => {
 
 		void main()
 		{
-		/*** BEGIN: Anonymous ***/
-		float Anonymous_2;
-		{
-		float value = 123.0;
-		Anonymous_2 = value;
-		}
-		/*** END: Anonymous ***/
-
-		/*** BEGIN: Anonymous ***/
-		float Anonymous_1;
-		{
-		float value = Anonymous_2;
-		Anonymous_1 = value;
-		}
-		/*** END: Anonymous ***/
-
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_2;
+		  {
+		    float value = 123.0;
+		    Anonymous_2 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_1;
+		  {
+		    float value = Anonymous_2;
+		    Anonymous_1 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 
@@ -75,22 +75,22 @@ describe("compileShader", () => {
 
 		void main()
 		{
-		/*** BEGIN: Anonymous ***/
-		float Anonymous_2;
-		{
-		float value = 123.0;
-		Anonymous_2 = value;
-		}
-		/*** END: Anonymous ***/
-
-		/*** BEGIN: Anonymous ***/
-		float Anonymous_1;
-		{
-		float value = Anonymous_2;
-		Anonymous_1 = value;
-		}
-		/*** END: Anonymous ***/
-
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_2;
+		  {
+		    float value = 123.0;
+		    Anonymous_2 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_1;
+		  {
+		    float value = Anonymous_2;
+		    Anonymous_1 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 	})
@@ -106,22 +106,22 @@ describe("compileShader", () => {
 
 		void main()
 		{
-		/*** BEGIN: Anonymous ***/
-		float Anonymous_2;
-		{
-		float value = 123.0;
-		Anonymous_2 = value;
-		}
-		/*** END: Anonymous ***/
-
-		/*** BEGIN: Anonymous ***/
-		float Anonymous_1;
-		{
-		float value = Anonymous_2 * 2.0;
-		Anonymous_1 = value;
-		}
-		/*** END: Anonymous ***/
-
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_2;
+		  {
+		    float value = 123.0;
+		    Anonymous_2 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_1;
+		  {
+		    float value = Anonymous_2 * 2.0;
+		    Anonymous_1 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 
@@ -130,22 +130,22 @@ describe("compileShader", () => {
 
 		void main()
 		{
-		/*** BEGIN: Anonymous ***/
-		float Anonymous_2;
-		{
-		float value = 123.0;
-		Anonymous_2 = value;
-		}
-		/*** END: Anonymous ***/
-
-		/*** BEGIN: Anonymous ***/
-		float Anonymous_1;
-		{
-		float value = Anonymous_2 * 2.0;
-		Anonymous_1 = value;
-		}
-		/*** END: Anonymous ***/
-
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_2;
+		  {
+		    float value = 123.0;
+		    Anonymous_2 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_1;
+		  {
+		    float value = Anonymous_2 * 2.0;
+		    Anonymous_1 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 	})
@@ -162,14 +162,14 @@ describe("compileShader", () => {
 
 		void main()
 		{
-		/*** BEGIN: Anonymous ***/
-		float Anonymous_1;
-		{
-		float value = 123.0 + 4.0;
-		Anonymous_1 = value;
-		}
-		/*** END: Anonymous ***/
-
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_1;
+		  {
+		    float value = 123.0 + 4.0;
+		    Anonymous_1 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 
@@ -178,14 +178,14 @@ describe("compileShader", () => {
 
 		void main()
 		{
-		/*** BEGIN: Anonymous ***/
-		float Anonymous_1;
-		{
-		float value = 123.0 + 4.0;
-		Anonymous_1 = value;
-		}
-		/*** END: Anonymous ***/
-
+		  /*** BEGIN: Anonymous ***/
+		  float Anonymous_1;
+		  {
+		    float value = 123.0 + 4.0;
+		    Anonymous_1 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 	})
@@ -206,23 +206,23 @@ describe("compileShader", () => {
 
 		void main()
 		{
-		/*** BEGIN: Position (Vertex Only) ***/
-		float Position_Vertex_Only__2;
-		{
-		float value = 1.0;
-		Position_Vertex_Only__2 = value;
-		}
-		/*** END: Position (Vertex Only) ***/
-
-		/*** BEGIN: Anonymous ***/
-		bool Anonymous_1;
-		{
-		bool value = true;
-		gl_Position = Position_Vertex_Only__2;
-		Anonymous_1 = value;
-		}
-		/*** END: Anonymous ***/
-
+		  /*** BEGIN: Position (Vertex Only) ***/
+		  float Position_Vertex_Only__2;
+		  {
+		    float value = 1.0;
+		    Position_Vertex_Only__2 = value;
+		  }
+		  /*** END: Position (Vertex Only) ***/
+		  
+		  /*** BEGIN: Anonymous ***/
+		  bool Anonymous_1;
+		  {
+		    bool value = true;
+		    gl_Position = Position_Vertex_Only__2;
+		    Anonymous_1 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 
@@ -231,23 +231,23 @@ describe("compileShader", () => {
 
 		void main()
 		{
-		/*** BEGIN: Color (Fragment Only) ***/
-		float Color_Fragment_Only__3;
-		{
-		float value = 2.0;
-		Color_Fragment_Only__3 = value;
-		}
-		/*** END: Color (Fragment Only) ***/
-
-		/*** BEGIN: Anonymous ***/
-		bool Anonymous_1;
-		{
-		bool value = true;
-		gl_FragColor = Color_Fragment_Only__3;
-		Anonymous_1 = value;
-		}
-		/*** END: Anonymous ***/
-
+		  /*** BEGIN: Color (Fragment Only) ***/
+		  float Color_Fragment_Only__3;
+		  {
+		    float value = 2.0;
+		    Color_Fragment_Only__3 = value;
+		  }
+		  /*** END: Color (Fragment Only) ***/
+		  
+		  /*** BEGIN: Anonymous ***/
+		  bool Anonymous_1;
+		  {
+		    bool value = true;
+		    gl_FragColor = Color_Fragment_Only__3;
+		    Anonymous_1 = value;
+		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 	})

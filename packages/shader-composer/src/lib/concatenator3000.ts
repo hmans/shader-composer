@@ -15,7 +15,14 @@ export const statement = (...parts: Part[]): string =>
 
 export const assignment = (...parts: Part[]): string => statement(parts.join(" = "))
 
-export const block = (...parts: Part[]): Part[] => ["{", ...parts, "}"]
+export const block = (...parts: Part[]): Part[] => [
+	"{",
+	concatenate(parts)
+		.split("\n")
+		.map((line) => "  " + line)
+		.join("\n"),
+	"}"
+]
 
 export const sluggify = (s: string) =>
 	s.replace(/[^a-zA-Z0-9]/g, "_").replace(/_{2,}/g, "_")
