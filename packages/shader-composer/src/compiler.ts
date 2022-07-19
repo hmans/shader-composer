@@ -24,13 +24,19 @@ const compileProgram = (program: Program, state: CompilerState): string =>
 		block(state[program].bodies)
 	)
 
-const collectExpression = (
-	expression: Expression,
-	program: Program,
+const collectDependencies = (
+	dependencies: (Expression | Unit)[],
 	state: CompilerState
 ) => {
+	dependencies.forEach((dependency) => {
+		if (isUnit(dependency)) collectUnit(dependency, state)
+		if (isExpression(dependency)) collectExpression(dependency, state)
+	})
+}
+
+const collectExpression = (expression: Expression, state: CompilerState) => {
 	/* Collect dependencies */
-	/* Collect this expression */
+	collectDependencies(expression.values, state)
 }
 
 const collectUnitHeader = (unit: Unit, program: Program, state: CompilerState) => {
@@ -68,10 +74,7 @@ const collectUnit = (unit: Unit, state = CompilerState()) => {
 
 	/* Collect dependencies */
 	const dependencies: (Unit | Expression)[] = [unit.value]
-
-	dependencies.forEach((dependency) => {
-		if (isUnit(dependency)) collectUnit(dependency, state)
-	})
+	collectDependencies(dependencies, state)
 
 	/* Collect this unit */
 	collectUnitHeader(unit, "vertex", state)

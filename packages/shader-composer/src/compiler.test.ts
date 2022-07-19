@@ -83,7 +83,11 @@ describe("compileShader", () => {
 		void main()
 		{
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_1 = E_UNRESOLVED_DEPENDENCY * 2.0;
+		float Anonymous_2 = 123.0;
+		/*** END: Anonymous ***/
+
+		/*** BEGIN: Anonymous ***/
+		float Anonymous_1 = Anonymous_2 * 2.0;
 		/*** END: Anonymous ***/
 
 		}"
@@ -95,7 +99,11 @@ describe("compileShader", () => {
 		void main()
 		{
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_1 = E_UNRESOLVED_DEPENDENCY * 2.0;
+		float Anonymous_2 = 123.0;
+		/*** END: Anonymous ***/
+
+		/*** BEGIN: Anonymous ***/
+		float Anonymous_1 = Anonymous_2 * 2.0;
 		/*** END: Anonymous ***/
 
 		}"
