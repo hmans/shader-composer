@@ -1,11 +1,15 @@
-import { concatenate, Part } from "./lib/concatenator3000"
+import { block, concatenate, Part } from "./lib/concatenator3000"
 import { Node } from "./tree"
 
 type Program = "vertex" | "fragment"
 
-const compileHeader = (node: Node, program: Program): Part[] => [
-	node._node[`${program}Header`]?.render()
-]
+const nodeHeader = (node: Node) => `/*** BEGIN: ${node._node.name} ***/`
+const nodeFooter = (node: Node) => `/*** END: ${node._node.name} ***/\n`
+
+const compileHeader = (node: Node, program: Program): Part[] =>
+	node._node[`${program}Header`]
+		? [nodeHeader(node), node._node[`${program}Header`]?.render(), nodeFooter(node)]
+		: []
 
 const compileBody = (node: Node, program: Program): Part[] => [
 	node._node[`${program}Body`]?.render()
@@ -14,9 +18,8 @@ const compileBody = (node: Node, program: Program): Part[] => [
 const compileProgram = (nodes: Node[], program: Program): string =>
 	concatenate(
 		nodes.map((n) => compileHeader(n, program)),
-		"void main() {",
-		nodes.map((n) => compileBody(n, program)),
-		"}"
+		"void main()",
+		block(...nodes.map((n) => compileBody(n, program)))
 	)
 
 export const compileShader = (root: Node) => {
