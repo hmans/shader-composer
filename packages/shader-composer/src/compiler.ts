@@ -43,7 +43,7 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 		unit.value,
 		unit._unitConfig[program]?.header?.values,
 		unit._unitConfig[program]?.body?.values
-	]
+	].flat()
 
 	dependencies.forEach((dep) => {
 		compileItem(dep, program, state)

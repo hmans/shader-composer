@@ -122,10 +122,11 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  float Position_Vertex_Only__2 = 1.0;
 		  bool Anonymous_1;
 		  {
 		    bool value = true;
-		    gl_Position = E_UNRESOLVED_DEPENDENCY;
+		    gl_Position = Position_Vertex_Only__2;
 		    Anonymous_1 = value;
 		  }
 		}"
@@ -136,10 +137,11 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  float Color_Fragment_Only__2 = 2.0;
 		  bool Anonymous_1;
 		  {
 		    bool value = true;
-		    gl_FragColor = E_UNRESOLVED_DEPENDENCY;
+		    gl_FragColor = Color_Fragment_Only__2;
 		    Anonymous_1 = value;
 		  }
 		}"
