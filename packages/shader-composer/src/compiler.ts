@@ -49,33 +49,50 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 		compileItem(dep, program, state)
 	})
 
-	/* Add header if present */
-	if (unit._unitConfig[program]?.header) {
-		state.header.push(beginUnit(unit), unit._unitConfig[program]?.header, endUnit(unit))
+	/* HEADER */
+	const header = new Array<Part>()
+
+	/* Declare varying if this unit has varying mode */
+	if (unit._unitConfig.varying) {
+		header.push(`varying ${unit.type} v_${unit._unitConfig.variableName};`)
 	}
 
-	/* Add body */
+	/* Add header if present */
+	if (unit._unitConfig[program]?.header) {
+		header.push(unit._unitConfig[program]?.header)
+	}
+
+	if (header.length) state.header.push(beginUnit(unit), ...header, endUnit(unit))
+
+	/* BODY */
+
+	const value =
+		unit._unitConfig.varying && program === "fragment"
+			? `v_${unit._unitConfig.variableName}`
+			: glslRepresentation(unit.value)
+
 	state.body.push(beginUnit(unit))
 	if (unit._unitConfig[program]?.body) {
 		state.body.push(
 			statement(unit.type, unit._unitConfig.variableName),
 			block(
-				statement(unit.type, "value", "=", glslRepresentation(unit.value)),
+				statement(unit.type, "value", "=", value),
 				unit._unitConfig[program]?.body,
 				assignment(unit._unitConfig.variableName, "value")
 			)
 		)
 	} else {
 		/* Since we don't have a body chunk, we can just use the simplified form here. */
+		state.body.push(statement(unit.type, unit._unitConfig.variableName, "=", value))
+	}
+
+	/* If we're in varying mode and vertex, write value to the varying, too */
+	if (unit._unitConfig.varying && program === "vertex") {
 		state.body.push(
-			statement(
-				unit.type,
-				unit._unitConfig.variableName,
-				"=",
-				glslRepresentation(unit.value)
-			)
+			assignment(`v_${unit._unitConfig.variableName}`, unit._unitConfig.variableName)
 		)
 	}
+
 	state.body.push(endUnit(unit))
 }
 

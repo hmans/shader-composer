@@ -22,6 +22,7 @@ export type UnitConfig = {
 	variableName?: string
 
 	only?: Program
+	varying: boolean
 
 	/* Chunks */
 	vertex?: {
@@ -54,6 +55,7 @@ export const Unit = <T extends GLSLType>(
 
 		_unitConfig: {
 			name: "Anonymous",
+			varying: false,
 			...config
 		}
 	}
