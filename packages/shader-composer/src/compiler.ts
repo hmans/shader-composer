@@ -138,11 +138,7 @@ const prepareItem = (item: Unit | Expression, state = CompilerState()) => {
 	}
 }
 
-const compileProgram = (
-	unit: Unit,
-	program: Program,
-	state: CompilerState = CompilerState()
-): string => {
+const compileProgram = (unit: Unit, program: Program, state: CompilerState): string => {
 	compileItem(unit, program, state)
 
 	return concatenate(
@@ -155,20 +151,50 @@ const compileProgram = (
 }
 
 export const compileShader = (root: Unit) => {
+	/* STEP 1: prepare all units and their dependencies! */
 	prepareItem(root)
 
+	/*
+	STEP 2: compile the fragment shader. We're going to compile it first because
+	we need to identify units with varyings, because we will _always_ want to
+	include them in the vertex shader.
+	*/
+	const fragmentState = CompilerState()
+	const fragmentShader = compileProgram(root, "fragment", fragmentState)
+
+	/*
+	STEP 3: compile the vertex shader. But first, we'll manually squeeze in all
+	units with varyings.
+	*/
+	const vertexState = CompilerState()
+	fragmentState.seen.forEach((item) => {
+		if (isUnit(item) && item._unitConfig.varying) {
+			compileItem(item, "vertex", vertexState)
+		}
+	})
+	const vertexShader = compileProgram(root, "vertex", vertexState)
+
+	/*
+	STEP 4: Collect uniforms.
+	*/
 	const uniforms = {
 		u_time: { value: 0 }
 	}
 
+	/*
+	STEP 4: Build per-frame update function.
+	*/
 	const update = (dt: number) => {
 		uniforms.u_time.value += dt
 	}
 
+	/*
+	DONE! Let's return everything and go on a lengthy vacation somewhere nice.
+	*/
 	return [
 		{
-			vertexShader: compileProgram(root, "vertex"),
-			fragmentShader: compileProgram(root, "fragment"),
+			vertexShader,
+			fragmentShader,
 			uniforms
 		},
 		update

@@ -1,6 +1,12 @@
 import { useFrame } from "@react-three/fiber"
 import { useMemo } from "react"
-import { compileShader, CustomShaderMaterialMaster, glsl, Time } from "shader-composer"
+import {
+	compileShader,
+	CustomShaderMaterialMaster,
+	Fresnel,
+	glsl,
+	Time
+} from "shader-composer"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
@@ -9,7 +15,7 @@ export default function Playground() {
 		const color = new Color("hotpink")
 
 		const root = CustomShaderMaterialMaster({
-			diffuseColor: glsl`${color} * ${Time}`
+			diffuseColor: glsl`${color} + ${new Color("white")} * ${Fresnel()}`
 		})
 
 		return compileShader(root)
