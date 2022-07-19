@@ -1,6 +1,7 @@
 import { Vector2, Vector3, Color, Vector4, Matrix3, Matrix4 } from "three"
 import { Expression } from "./expressions"
 import { identifier } from "./lib/concatenator3000"
+import idGenerator from "./lib/idGenerator"
 
 export type GLSLType = "bool" | "float" | "vec2" | "vec3" | "vec4" | "mat3" | "mat4"
 
@@ -18,7 +19,7 @@ export type Value<T extends GLSLType = any> = Expression | JSTypes[T] | Node<T>
 
 export type NodeConfig = {
 	name: string
-	variableName: string
+	variableName?: string
 	vertexHeader?: Expression
 	vertexBody?: Expression
 	fragmentHeader?: Expression
@@ -31,6 +32,8 @@ export type Node<T extends GLSLType = any> = {
 	value: Value<T>
 }
 
+const nextUnitId = idGenerator()
+
 export const Node = <T extends GLSLType>(
 	type: T,
 	value: Value<T>,
@@ -39,7 +42,6 @@ export const Node = <T extends GLSLType>(
 	const node = {
 		_node: {
 			name: "Anonymous",
-			variableName: identifier("anonymous", Math.floor(Math.random() * 100000)),
 			...config
 		},
 		type,
