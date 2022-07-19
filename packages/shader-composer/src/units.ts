@@ -1,5 +1,6 @@
 import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
 import { Expression } from "./expressions"
+import { identifier } from "./util/concatenator3000"
 
 export type Program = "vertex" | "fragment"
 
@@ -19,7 +20,7 @@ export type Value<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
 
 export type UnitConfig = {
 	name: string
-	variableName?: string
+	variableName: string
 
 	only?: Program
 	varying: boolean
@@ -56,6 +57,7 @@ export const Unit = <T extends GLSLType>(
 		_unitConfig: {
 			name: "Anonymous",
 			varying: false,
+			variableName: identifier("var", Math.floor(Math.random() * 1000000)),
 			...config
 		}
 	}
