@@ -24,9 +24,11 @@ export default function Playground() {
 	texture.wrapT = RepeatWrapping
 
 	const [{ uniforms, ...shader }, update] = useMemo(() => {
+		const offset = JoinVector2(Mul(Time, 0.05), 0)
+
 		const tex2d = Texture2D(
 			Sampler2D("u_texture"),
-			TilingUV(Add(UV, JoinVector2(Mul(Time, 0.05), 0)), new Vector2(2, 1))
+			TilingUV(UV, new Vector2(2, 1), offset)
 		)
 
 		const color = new Color("hotpink")
