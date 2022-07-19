@@ -90,6 +90,8 @@ const collectUnit = (unit: Unit, state = CompilerState()) => {
 		)
 		collectUnitHeader(unit, "fragment", state)
 		collectUnitBody(unit, "fragment", state)
+
+		/* TODO: if the unit is using a varying, add it to the vertex program either way */
 	}
 }
 
