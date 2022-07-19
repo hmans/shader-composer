@@ -14,6 +14,7 @@ import {
 import idGenerator from "./util/idGenerator"
 
 const beginUnit = (unit: Unit) => `/*** BEGIN: ${unit._unitConfig.name} ***/`
+
 const endUnit = (unit: Unit) => `/*** END: ${unit._unitConfig.name} ***/\n`
 
 const compileItem = (
@@ -25,6 +26,7 @@ const compileItem = (
 	if (state.seen.has(item)) return
 	state.seen.add(item)
 
+	/* If the item is something we know, delegate to the corresponding function */
 	if (isUnit(item)) compileUnit(item, program, state)
 	else if (isExpression(item)) compileExpression(item, program, state)
 	else if (isSnippet(item)) compileSnippet(item, program, state)
@@ -91,19 +93,19 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 			: glslRepresentation(unit.value)
 
 	state.body.push(beginUnit(unit))
-	if (unit._unitConfig[program]?.body) {
+
+	/* Declare global variable */
+	state.body.push(statement(unit.type, unit._unitConfig.variableName, "=", value))
+
+	/* Unit block */
+	if (unit._unitConfig[program]?.body)
 		state.body.push(
-			statement(unit.type, unit._unitConfig.variableName),
 			block(
-				statement(unit.type, "value", "=", value),
+				statement(unit.type, "value", "=", unit._unitConfig.variableName),
 				unit._unitConfig[program]?.body,
 				assignment(unit._unitConfig.variableName, "value")
 			)
 		)
-	} else {
-		/* Since we don't have a body chunk, we can just use the simplified form here. */
-		state.body.push(statement(unit.type, unit._unitConfig.variableName, "=", value))
-	}
 
 	/* If we're in varying mode and vertex, write value to the varying, too */
 	if (unit._unitConfig.varying && program === "vertex") {

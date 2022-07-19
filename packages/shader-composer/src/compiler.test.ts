@@ -164,9 +164,9 @@ describe("compileShader", () => {
 		  /*** END: Position (Vertex Only) ***/
 		  
 		  /*** BEGIN: Anonymous ***/
-		  bool Anonymous_3;
+		  bool Anonymous_3 = true;
 		  {
-		    bool value = true;
+		    bool value = Anonymous_3;
 		    gl_Position = Position_Vertex_Only_1;
 		    Anonymous_3 = value;
 		  }
@@ -185,9 +185,9 @@ describe("compileShader", () => {
 		  /*** END: Color (Fragment Only) ***/
 		  
 		  /*** BEGIN: Anonymous ***/
-		  bool Anonymous_3;
+		  bool Anonymous_3 = true;
 		  {
-		    bool value = true;
+		    bool value = Anonymous_3;
 		    gl_FragColor = Color_Fragment_Only_2;
 		    Anonymous_3 = value;
 		  }
