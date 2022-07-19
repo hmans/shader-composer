@@ -1,3 +1,4 @@
+import sha256 from "crypto-js/sha256"
 import { Expression } from "./expressions"
 
 export type Snippet = {
@@ -7,7 +8,13 @@ export type Snippet = {
 }
 
 export const Snippet = (fun: (name: string) => Expression): Snippet => {
-	const name = `snippet_${Math.floor(Math.random() * 100000)}`
+	/* Calculate a hash, based on the expression's contents */
+	const hash = sha256(fun("").render())
+		.toString()
+		.substring(0, 10)
+
+	/* Build a name using the hash */
+	const name = `snippet_${hash}`
 
 	return {
 		_: "Snippet",
