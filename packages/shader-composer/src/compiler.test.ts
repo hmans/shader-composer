@@ -12,7 +12,10 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		/*** BEGIN: Anonymous ***/
 		bool Anonymous_1 = true;
+		/*** END: Anonymous ***/
+
 		}"
 	`)
 
@@ -21,7 +24,10 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		/*** BEGIN: Anonymous ***/
 		bool Anonymous_1 = true;
+		/*** END: Anonymous ***/
+
 		}"
 	`)
 	})
@@ -37,8 +43,14 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		/*** BEGIN: Anonymous ***/
 		float Anonymous_2 = 123.0;
+		/*** END: Anonymous ***/
+
+		/*** BEGIN: Anonymous ***/
 		float Anonymous_1 = Anonymous_2;
+		/*** END: Anonymous ***/
+
 		}"
 	`)
 
@@ -47,8 +59,45 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		/*** BEGIN: Anonymous ***/
 		float Anonymous_2 = 123.0;
+		/*** END: Anonymous ***/
+
+		/*** BEGIN: Anonymous ***/
 		float Anonymous_1 = Anonymous_2;
+		/*** END: Anonymous ***/
+
+		}"
+	`)
+	})
+
+	it("resolves dependencies to other units from within expressions", () => {
+		const f = Unit("float", 123)
+		const root = Unit("float", glsl`${f} * 2.0`)
+
+		const shader = compileShader(root)
+
+		expect(shader.vertexShader).toMatchInlineSnapshot(`
+		"/*** PROGRAM: VERTEX ***/
+
+		void main()
+		{
+		/*** BEGIN: Anonymous ***/
+		float Anonymous_1 = E_UNRESOLVED_DEPENDENCY * 2.0;
+		/*** END: Anonymous ***/
+
+		}"
+	`)
+
+		expect(shader.fragmentShader).toMatchInlineSnapshot(`
+		"/*** PROGRAM: FRAGMENT ***/
+
+		void main()
+		{
+		/*** BEGIN: Anonymous ***/
+		float Anonymous_1 = E_UNRESOLVED_DEPENDENCY * 2.0;
+		/*** END: Anonymous ***/
+
 		}"
 	`)
 	})
@@ -65,7 +114,10 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		/*** BEGIN: Anonymous ***/
 		float Anonymous_1 = 123.0 + 4.0;
+		/*** END: Anonymous ***/
+
 		}"
 	`)
 
@@ -74,7 +126,10 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		/*** BEGIN: Anonymous ***/
 		float Anonymous_1 = 123.0 + 4.0;
+		/*** END: Anonymous ***/
+
 		}"
 	`)
 	})

@@ -3,7 +3,7 @@ import { isExpression } from "./expressions"
 import { isUnit, Value } from "./units"
 
 export const glslRepresentation = (value: Value): string => {
-	if (isUnit(value)) return value._unitConfig.variableName!
+	if (isUnit(value)) return value._unitConfig.variableName || "E_UNRESOLVED_DEPENDENCY"
 	if (isExpression(value)) return value.render()
 	// if (isSnippet(value)) return value.name
 

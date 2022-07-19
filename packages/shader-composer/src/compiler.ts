@@ -1,72 +1,106 @@
+import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
-import { block, concatenate, Part, sluggify, statement } from "./lib/concatenator3000"
+import {
+	block,
+	concatenate,
+	identifier,
+	Part,
+	sluggify,
+	statement
+} from "./lib/concatenator3000"
 import idGenerator from "./lib/idGenerator"
 import { isUnit, Unit } from "./units"
 
 type Program = "vertex" | "fragment"
 
-const nodeHeader = (node: Unit) => `/*** BEGIN: ${node._unitConfig.name} ***/`
-const nodeFooter = (node: Unit) => `/*** END: ${node._unitConfig.name} ***/\n`
+const beginUnit = (unit: Unit) => `/*** BEGIN: ${unit._unitConfig.name} ***/`
+const endUnit = (unit: Unit) => `/*** END: ${unit._unitConfig.name} ***/\n`
 
-const compileHeader = (node: Unit, program: Program) =>
-	node._unitConfig[`${program}Header`] &&
-	concatenate(
-		nodeHeader(node),
-		node._unitConfig[`${program}Header`]?.render(),
-		nodeFooter(node)
-	)
-
-const compileBody = (node: Unit, program: Program) =>
-	concatenate(
-		/* Create global variable for this node */
-		statement(
-			node.type,
-			node._unitConfig.variableName,
-			"=",
-			glslRepresentation(node.value)
-		),
-
-		/* Include body block if one is given */
-		node._unitConfig[`${program}Body`] &&
-			block(node._unitConfig[`${program}Body`]?.render())
-	)
-
-const compileProgram = (nodes: Unit[], program: Program): string =>
+const compileProgram = (program: Program, state: CompilerState): string =>
 	concatenate(
 		`/*** PROGRAM: ${program.toUpperCase()} ***/\n`,
-		nodes.map((n) => compileHeader(n, program)),
+		state[program].headers,
 		"void main()",
-		block(...nodes.map((n) => compileBody(n, program)))
+		block(state[program].bodies)
 	)
 
-export const compileShader = (root: Unit) => {
-	/* Prepare some state for our compilation process */
-	const nextId = idGenerator()
-
-	const gather = (node: Unit, program: Program): Unit[] => {
-		/* Initialize unit, if necessary */
-		if (node._unitConfig.variableName === undefined) {
-			node._unitConfig.variableName = `${sluggify(node._unitConfig.name)}_${nextId()}`
-		}
-
-		return [
-			/* If the node value is another node, include that node */
-			...(isUnit(node.value) ? gather(node.value, program) : []),
-			/* If the node value is an expression, include the expression's dependencies */
-			node
-		]
-	}
-
-	/* Step 1: compile a list of nodes to render, per program */
-	const nodes = {
-		vertex: gather(root, "vertex"),
-		fragment: gather(root, "fragment")
-	}
-
-	/* Step 2: compile nodes */
-	const vertexShader = compileProgram(nodes.vertex, "vertex")
-
-	const fragmentShader = compileProgram(nodes.fragment, "fragment")
-
-	return { vertexShader, fragmentShader }
+const collectExpression = (
+	expression: Expression,
+	program: Program,
+	state: CompilerState
+) => {
+	/* Collect dependencies */
+	/* Collect this expression */
 }
+
+const collectUnitHeader = (unit: Unit, program: Program, state: CompilerState) => {
+	if (unit._unitConfig[`${program}Header`])
+		state[program].headers.push(
+			beginUnit(unit),
+			unit._unitConfig[`${program}Header`],
+			endUnit(unit)
+		)
+}
+
+const collectUnitBody = (unit: Unit, program: Program, state: CompilerState) => {
+	state[program].bodies.push(
+		beginUnit(unit),
+		statement(
+			unit.type,
+			unit._unitConfig.variableName,
+			"=",
+			glslRepresentation(unit.value)
+		),
+		unit._unitConfig[`${program}Body`] && block(unit._unitConfig[`${program}Body`]),
+		endUnit(unit)
+	)
+}
+
+const collectUnit = (unit: Unit, state = CompilerState()) => {
+	if (state.seen.has(unit)) return
+	state.seen.add(unit)
+
+	/* Prepare unit */
+	unit._unitConfig.variableName = identifier(
+		sluggify(unit._unitConfig.name),
+		state.nextid()
+	)
+
+	/* Collect dependencies */
+	const dependencies: (Unit | Expression)[] = [unit.value]
+
+	dependencies.forEach((dependency) => {
+		if (isUnit(dependency)) collectUnit(dependency, state)
+	})
+
+	/* Collect this unit */
+	collectUnitHeader(unit, "vertex", state)
+	collectUnitHeader(unit, "fragment", state)
+	collectUnitBody(unit, "vertex", state)
+	collectUnitBody(unit, "fragment", state)
+}
+
+export const compileShader = (root: Unit) => {
+	const state = CompilerState()
+	collectUnit(root, state)
+
+	return {
+		vertexShader: compileProgram("vertex", state),
+		fragmentShader: compileProgram("fragment", state)
+	}
+}
+
+type CompilerState = ReturnType<typeof CompilerState>
+
+const CompilerState = () => ({
+	vertex: {
+		headers: new Array<Part>(),
+		bodies: new Array<Part>()
+	},
+	fragment: {
+		headers: new Array<Part>(),
+		bodies: new Array<Part>()
+	},
+	nextid: idGenerator(),
+	seen: new Set<Unit>()
+})
