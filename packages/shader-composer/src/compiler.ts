@@ -32,12 +32,6 @@ const compileExpression = (exp: Expression, program: Program, state: CompilerSta
 }
 
 const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
-	/* Prepare this unit */
-	unit._unitConfig.variableName = identifier(
-		sluggify(unit._unitConfig.name),
-		state.nextid()
-	)
-
 	/* Identify dependencies and add them */
 	const dependencies = [
 		unit.value,
@@ -96,11 +90,44 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	state.body.push(endUnit(unit))
 }
 
+const prepareItem = (item: Unit | Expression, state = CompilerState()) => {
+	if (state.seen.has(item)) return
+	state.seen.add(item)
+
+	const dependencies = new Array<any>()
+
+	/* Prepare dependencies */
+	if (isUnit(item)) {
+		dependencies.push(
+			item.value,
+			item._unitConfig.vertex?.header,
+			item._unitConfig.vertex?.body,
+			item._unitConfig.fragment?.header,
+			item._unitConfig.fragment?.body
+		)
+	}
+
+	if (isExpression(item)) {
+		dependencies.push(...item.values)
+	}
+
+	dependencies.flat().forEach((dep) => prepareItem(dep, state))
+
+	/* Prepare this unit */
+	if (isUnit(item)) {
+		item._unitConfig.variableName = identifier(
+			sluggify(item._unitConfig.name),
+			state.nextid()
+		)
+	}
+}
+
 const compileProgram = (
 	unit: Unit,
 	program: Program,
 	state: CompilerState = CompilerState()
 ): string => {
+	prepareItem(unit)
 	compileItem(unit, program, state)
 
 	return concatenate(
