@@ -1,10 +1,10 @@
 import { compileShader } from "./compiler"
 import { glsl } from "./expressions"
-import { Unit } from "./units"
+import { Bool, Float, Unit } from "./units"
 
 describe("compileShader", () => {
 	it("compiles shader programs from the given unit", () => {
-		const root = Unit("bool", true)
+		const root = Bool(true)
 		const shader = compileShader(root)
 
 		expect(shader.vertexShader).toMatchInlineSnapshot(`
@@ -41,8 +41,8 @@ describe("compileShader", () => {
 	})
 
 	it("resolves dependencies to other units", () => {
-		const f = Unit("float", 123)
-		const root = Unit("float", f)
+		const f = Float(123)
+		const root = Float(f)
 
 		const shader = compileShader(root)
 
@@ -96,8 +96,8 @@ describe("compileShader", () => {
 	})
 
 	it("resolves dependencies to other units from within expressions", () => {
-		const f = Unit("float", 123)
-		const root = Unit("float", glsl`${f} * 2.0`)
+		const f = Float(123)
+		const root = Float(glsl`${f} * 2.0`)
 
 		const shader = compileShader(root)
 
@@ -151,9 +151,9 @@ describe("compileShader", () => {
 	})
 
 	it("resolves dependencies to expressions", () => {
-		const f = glsl`123.0`
-		const g = glsl`${f} + 4.0`
-		const root = Unit("float", glsl`${g}`)
+		const a = glsl`123.0`
+		const b = glsl`${a} + 4.0`
+		const root = Float(glsl`${b}`)
 
 		const shader = compileShader(root)
 

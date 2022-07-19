@@ -53,3 +53,16 @@ export const Unit = <T extends GLSLType>(
 export function isUnit(value: any): value is Unit {
 	return value && value._ === "Unit"
 }
+
+const makeUnit = <T extends GLSLType>(type: T) => (
+	v: Value<T>,
+	extras?: Partial<UnitConfig>
+) => Unit(type, v, extras)
+
+export const Float = makeUnit("float")
+export const Bool = makeUnit("bool")
+export const Vec2 = makeUnit("vec2")
+export const Vec3 = makeUnit("vec3")
+export const Vec4 = makeUnit("vec4")
+export const Mat3 = makeUnit("mat3")
+export const Mat4 = makeUnit("mat4")
