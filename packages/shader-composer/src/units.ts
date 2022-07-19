@@ -66,3 +66,5 @@ export const Vec3 = makeUnit("vec3")
 export const Vec4 = makeUnit("vec4")
 export const Mat3 = makeUnit("mat3")
 export const Mat4 = makeUnit("mat4")
+
+export const Master = (extras?: Partial<UnitConfig>) => Bool(true, extras)
