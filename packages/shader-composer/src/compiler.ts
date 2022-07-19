@@ -71,6 +71,7 @@ const collectUnit = (unit: Unit, state = CompilerState()) => {
 		state.nextid()
 	)
 
+	/* Collect for vertex program */
 	if (isUnitInProgram(unit, "vertex")) {
 		collectDependencies(
 			[unit.value, unit._unitConfig.vertexHeader, unit._unitConfig.vertexBody],
@@ -81,6 +82,7 @@ const collectUnit = (unit: Unit, state = CompilerState()) => {
 		collectUnitBody(unit, "vertex", state)
 	}
 
+	/* Collect for fragment program */
 	if (isUnitInProgram(unit, "fragment")) {
 		collectDependencies(
 			[unit.value, unit._unitConfig.fragmentHeader, unit._unitConfig.fragmentBody],
