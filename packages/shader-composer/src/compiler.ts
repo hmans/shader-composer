@@ -1,28 +1,34 @@
 import { glslRepresentation } from "./glslRepresentation"
 import { block, concatenate, Part, sluggify, statement } from "./lib/concatenator3000"
 import idGenerator from "./lib/idGenerator"
-import { isUnit, Unit } from "./tree"
+import { isUnit, Unit } from "./units"
 
 type Program = "vertex" | "fragment"
 
-const nodeHeader = (node: Unit) => `/*** BEGIN: ${node._node.name} ***/`
-const nodeFooter = (node: Unit) => `/*** END: ${node._node.name} ***/\n`
+const nodeHeader = (node: Unit) => `/*** BEGIN: ${node._unitConfig.name} ***/`
+const nodeFooter = (node: Unit) => `/*** END: ${node._unitConfig.name} ***/\n`
 
 const compileHeader = (node: Unit, program: Program) =>
-	node._node[`${program}Header`] &&
+	node._unitConfig[`${program}Header`] &&
 	concatenate(
 		nodeHeader(node),
-		node._node[`${program}Header`]?.render(),
+		node._unitConfig[`${program}Header`]?.render(),
 		nodeFooter(node)
 	)
 
 const compileBody = (node: Unit, program: Program) =>
 	concatenate(
 		/* Create global variable for this node */
-		statement(node.type, node._node.variableName, "=", glslRepresentation(node.value)),
+		statement(
+			node.type,
+			node._unitConfig.variableName,
+			"=",
+			glslRepresentation(node.value)
+		),
 
 		/* Include body block if one is given */
-		node._node[`${program}Body`] && block(node._node[`${program}Body`]?.render())
+		node._unitConfig[`${program}Body`] &&
+			block(node._unitConfig[`${program}Body`]?.render())
 	)
 
 const compileProgram = (nodes: Unit[], program: Program): string =>
@@ -39,8 +45,8 @@ export const compileShader = (root: Unit) => {
 
 	const gatherProgram = (node: Unit, program: Program): Unit[] => {
 		/* Initialize unit, if necessary */
-		if (node._node.variableName === undefined) {
-			node._node.variableName = `${sluggify(node._node.name)}_${nextId()}`
+		if (node._unitConfig.variableName === undefined) {
+			node._unitConfig.variableName = `${sluggify(node._unitConfig.name)}_${nextId()}`
 		}
 
 		return [

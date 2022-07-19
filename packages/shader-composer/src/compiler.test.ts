@@ -1,5 +1,5 @@
 import { compileShader } from "./compiler"
-import { Unit } from "./tree"
+import { Unit } from "./units"
 
 describe("compileShader", () => {
 	it("compiles shader programs from the given unit", () => {
