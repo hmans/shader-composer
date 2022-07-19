@@ -1,10 +1,11 @@
+import { useFrame } from "@react-three/fiber"
 import { useMemo } from "react"
 import { compileShader, glsl, Unit } from "shader-composer"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function Playground() {
-	const shader = useMemo(() => {
+	const [shader, update] = useMemo(() => {
 		const color = new Color("hotpink")
 
 		const root = Unit("float", 0, {
@@ -15,6 +16,8 @@ export default function Playground() {
 
 		return compileShader(root)
 	}, [])
+
+	useFrame((_, dt) => update(dt))
 
 	console.log(shader.vertexShader)
 	console.log(shader.fragmentShader)

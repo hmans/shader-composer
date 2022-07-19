@@ -5,7 +5,7 @@ import { Bool, Float, Master, Unit, Vec3 } from "./units"
 describe("compileShader", () => {
 	it("compiles shader programs from the given unit", () => {
 		const root = Bool(true)
-		const shader = compileShader(root)
+		const [shader] = compileShader(root)
 
 		expect(shader.vertexShader).toMatchInlineSnapshot(`
 		"/*** PROGRAM: VERTEX ***/
@@ -44,7 +44,7 @@ describe("compileShader", () => {
 		const f = Float(123)
 		const root = Float(f)
 
-		const shader = compileShader(root)
+		const [shader] = compileShader(root)
 
 		expect(shader.vertexShader).toMatchInlineSnapshot(`
 		"/*** PROGRAM: VERTEX ***/
@@ -99,7 +99,7 @@ describe("compileShader", () => {
 		const f = Float(123)
 		const root = Float(glsl`${f} * 2.0`)
 
-		const shader = compileShader(root)
+		const [shader] = compileShader(root)
 
 		expect(shader.vertexShader).toMatchInlineSnapshot(`
 		"/*** PROGRAM: VERTEX ***/
@@ -155,7 +155,7 @@ describe("compileShader", () => {
 		const b = glsl`${a} + 4.0`
 		const root = Float(glsl`${b}`)
 
-		const shader = compileShader(root)
+		const [shader] = compileShader(root)
 
 		expect(shader.vertexShader).toMatchInlineSnapshot(`
 		"/*** PROGRAM: VERTEX ***/
@@ -199,7 +199,7 @@ describe("compileShader", () => {
 			fragmentBody: glsl`gl_FragColor = ${color};`
 		})
 
-		const shader = compileShader(root)
+		const [shader] = compileShader(root)
 
 		expect(shader.vertexShader).toMatchInlineSnapshot(`
 		"/*** PROGRAM: VERTEX ***/

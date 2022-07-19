@@ -110,10 +110,22 @@ export const compileShader = (root: Unit) => {
 	const state = CompilerState()
 	collectUnit(root, state)
 
-	return {
-		vertexShader: compileProgram("vertex", state),
-		fragmentShader: compileProgram("fragment", state)
+	const uniforms = {
+		u_time: { value: 0 }
 	}
+
+	const update = (dt: number) => {
+		uniforms.u_time.value += dt
+	}
+
+	return [
+		{
+			vertexShader: compileProgram("vertex", state),
+			fragmentShader: compileProgram("fragment", state),
+			uniforms
+		},
+		update
+	] as const
 }
 
 type CompilerState = ReturnType<typeof CompilerState>
