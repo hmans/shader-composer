@@ -94,10 +94,15 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 
 	state.body.push(beginUnit(unit))
 
-	/* Declare global variable */
+	/*
+	Declare the unit's global variable, and assign the specified value to it.
+	*/
 	state.body.push(statement(unit.type, unit._unitConfig.variableName, "=", value))
 
-	/* Unit block */
+	/*
+	If a body chunk is given, we'll create a scoped block with a local variable called
+	"value" that the chunk can modify before it is assigned back to the unit's global.
+	*/
 	if (unit._unitConfig[program]?.body)
 		state.body.push(
 			block(
@@ -107,7 +112,9 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 			)
 		)
 
-	/* If we're in varying mode and vertex, write value to the varying, too */
+	/*
+	If we're in varying mode and vertex, write value to the varying, too.
+	*/
 	if (unit._unitConfig.varying && program === "vertex") {
 		state.body.push(
 			assignment(`v_${unit._unitConfig.variableName}`, unit._unitConfig.variableName)
