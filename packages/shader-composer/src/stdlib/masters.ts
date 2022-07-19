@@ -29,6 +29,7 @@ export const CustomShaderMaterialMaster = ({
 		},
 
 		fragment: {
+			/* FIXME: meh */
 			body: $`
 				${diffuseColor && $`csm_DiffuseColor = vec4(${diffuseColor}, ${alpha});`}
 				${fragColor && $`csm_FragColor = vec4(${fragColor}, ${alpha});`}
