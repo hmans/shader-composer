@@ -7,6 +7,8 @@ import {
 	compileShader,
 	CustomShaderMaterialMaster,
 	Fresnel,
+	JoinVector2,
+	Mul,
 	Sampler2D,
 	Texture2D,
 	TilingUV,
@@ -24,7 +26,7 @@ export default function Playground() {
 	const [{ uniforms, ...shader }, update] = useMemo(() => {
 		const tex2d = Texture2D(
 			Sampler2D("u_texture"),
-			TilingUV($`vec2(${UV}.x + ${Time} * 0.05, ${UV}.y)`, new Vector2(2, 1))
+			TilingUV(Add(UV, JoinVector2(Mul(Time, 0.05), 0)), new Vector2(2, 1))
 		)
 
 		const color = new Color("hotpink")
