@@ -12,7 +12,10 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  /*** BEGIN: Anonymous ***/
 		  bool Anonymous_1 = true;
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 
@@ -21,7 +24,10 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  /*** BEGIN: Anonymous ***/
 		  bool Anonymous_1 = true;
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 	})
@@ -37,8 +43,14 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  /*** BEGIN: Anonymous ***/
 		  float Anonymous_2 = 123.0;
+		  /*** END: Anonymous ***/
+		  
+		  /*** BEGIN: Anonymous ***/
 		  float Anonymous_1 = Anonymous_2;
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 
@@ -47,8 +59,14 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  /*** BEGIN: Anonymous ***/
 		  float Anonymous_2 = 123.0;
+		  /*** END: Anonymous ***/
+		  
+		  /*** BEGIN: Anonymous ***/
 		  float Anonymous_1 = Anonymous_2;
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 	})
@@ -64,8 +82,14 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  /*** BEGIN: Anonymous ***/
 		  float Anonymous_2 = 123.0;
+		  /*** END: Anonymous ***/
+		  
+		  /*** BEGIN: Anonymous ***/
 		  float Anonymous_1 = Anonymous_2 * 2.0;
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 
@@ -74,8 +98,14 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  /*** BEGIN: Anonymous ***/
 		  float Anonymous_2 = 123.0;
+		  /*** END: Anonymous ***/
+		  
+		  /*** BEGIN: Anonymous ***/
 		  float Anonymous_1 = Anonymous_2 * 2.0;
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 	})
@@ -92,7 +122,10 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  /*** BEGIN: Anonymous ***/
 		  float Anonymous_1 = 123.0 + 4.0;
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 
@@ -101,7 +134,10 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  /*** BEGIN: Anonymous ***/
 		  float Anonymous_1 = 123.0 + 4.0;
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 	})
@@ -122,13 +158,19 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  /*** BEGIN: Position (Vertex Only) ***/
 		  float Position_Vertex_Only__2 = 1.0;
+		  /*** END: Position (Vertex Only) ***/
+		  
+		  /*** BEGIN: Anonymous ***/
 		  bool Anonymous_1;
 		  {
 		    bool value = true;
 		    gl_Position = Position_Vertex_Only__2;
 		    Anonymous_1 = value;
 		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 
@@ -137,13 +179,19 @@ describe("compileShader", () => {
 
 		void main()
 		{
+		  /*** BEGIN: Color (Fragment Only) ***/
 		  float Color_Fragment_Only__2 = 2.0;
+		  /*** END: Color (Fragment Only) ***/
+		  
+		  /*** BEGIN: Anonymous ***/
 		  bool Anonymous_1;
 		  {
 		    bool value = true;
 		    gl_FragColor = Color_Fragment_Only__2;
 		    Anonymous_1 = value;
 		  }
+		  /*** END: Anonymous ***/
+		  
 		}"
 	`)
 	})

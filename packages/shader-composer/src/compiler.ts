@@ -55,6 +55,7 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	}
 
 	/* Add body */
+	state.body.push(beginUnit(unit))
 	if (unit._unitConfig[program]?.body) {
 		state.body.push(
 			statement(unit.type, unit._unitConfig.variableName),
@@ -75,6 +76,7 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 			)
 		)
 	}
+	state.body.push(endUnit(unit))
 }
 
 const compileProgram = (
