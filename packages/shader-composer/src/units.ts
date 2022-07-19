@@ -36,12 +36,12 @@ export type UnitConfig = {
 	}
 }
 
-export type Unit<T extends GLSLType = any> = {
+export type Unit<T extends GLSLType = any, A extends {} = {}> = {
 	_: "Unit"
 	_unitConfig: UnitConfig
 	type: T
 	value: Value<T>
-}
+} & A
 
 export const Unit = <T extends GLSLType>(
 	type: T,
@@ -69,6 +69,9 @@ export function isUnit(value: any): value is Unit {
 
 export const isUnitInProgram = (unit: Unit, program: Program) =>
 	[undefined, program].includes(unit._unitConfig.only)
+
+export const withAPI = <T extends GLSLType, A extends {}>(unit: Unit<T>, api: A) =>
+	({ ...unit, ...api } as Unit<T, A>)
 
 const makeUnit = <T extends GLSLType>(type: T) => (
 	v: Value<T>,
