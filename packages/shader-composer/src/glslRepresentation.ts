@@ -1,9 +1,9 @@
 import { Color, Vector2, Vector3, Vector4 } from "three"
 import { isExpression } from "./expressions"
-import { Value } from "./tree"
+import { isNode, Value } from "./tree"
 
 export const glslRepresentation = (value: Value): string => {
-	// if (isNode(value)) return value.toString()
+	if (isNode(value)) return value._node.variableName
 	if (isExpression(value)) return value.render()
 	// if (isSnippet(value)) return value.name
 

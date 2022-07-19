@@ -48,3 +48,7 @@ export const Node = <T extends GLSLType>(
 
 	return node
 }
+
+export function isNode(value: any): value is Node {
+	return value && value._node
+}
