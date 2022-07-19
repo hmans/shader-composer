@@ -3,7 +3,7 @@ import { $ } from "../expressions"
 import { Master, Value, Vec3 } from "../units"
 
 export const VertexPosition = Vec3($`position`, {
-	name: "Position (Attribute)",
+	name: "Vertex Position",
 	varying: true
 })
 
@@ -29,7 +29,7 @@ export const CustomShaderMaterialMaster = ({
 
 		fragment: {
 			body: $`
-				csm_DiffuseColor.rgb = ${diffuseColor} * ${VertexPosition};
+				csm_DiffuseColor.rgb = ${diffuseColor};
 				csm_DiffuseColor.a = ${alpha};
 			`
 		}
