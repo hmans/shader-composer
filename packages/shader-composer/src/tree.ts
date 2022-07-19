@@ -1,7 +1,5 @@
-import { Vector2, Vector3, Color, Vector4, Matrix3, Matrix4 } from "three"
+import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
 import { Expression } from "./expressions"
-import { identifier } from "./lib/concatenator3000"
-import idGenerator from "./lib/idGenerator"
 
 export type GLSLType = "bool" | "float" | "vec2" | "vec3" | "vec4" | "mat3" | "mat4"
 
@@ -15,9 +13,9 @@ export type JSTypes = {
 	mat4: Matrix4
 }
 
-export type Value<T extends GLSLType = any> = Expression | JSTypes[T] | Node<T>
+export type Value<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
 
-export type NodeConfig = {
+export type UnitConfig = {
 	name: string
 	variableName?: string
 	vertexHeader?: Expression
@@ -26,19 +24,17 @@ export type NodeConfig = {
 	fragmentBody?: Expression
 }
 
-export type Node<T extends GLSLType = any> = {
-	_node: NodeConfig
+export type Unit<T extends GLSLType = any> = {
+	_node: UnitConfig
 	type: T
 	value: Value<T>
 }
 
-const nextUnitId = idGenerator()
-
-export const Node = <T extends GLSLType>(
+export const Unit = <T extends GLSLType>(
 	type: T,
 	value: Value<T>,
-	config?: Partial<NodeConfig>
-): Node<T> => {
+	config?: Partial<UnitConfig>
+): Unit<T> => {
 	const node = {
 		_node: {
 			name: "Anonymous",
@@ -51,6 +47,6 @@ export const Node = <T extends GLSLType>(
 	return node
 }
 
-export function isNode(value: any): value is Node {
+export function isUnit(value: any): value is Unit {
 	return value && value._node
 }

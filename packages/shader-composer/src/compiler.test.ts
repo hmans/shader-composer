@@ -1,9 +1,9 @@
 import { compileShader } from "./compiler"
-import { Node } from "./tree"
+import { Unit } from "./tree"
 
 describe("compileShader", () => {
 	it("compiles shader programs from the given unit", () => {
-		const root = Node("bool", true)
+		const root = Unit("bool", true)
 		const shader = compileShader(root)
 
 		expect(shader.vertexShader).toMatchInlineSnapshot(`
@@ -26,8 +26,8 @@ describe("compileShader", () => {
 	})
 
 	it("resolves dependencies to other units", () => {
-		const f = Node("float", 123)
-		const root = Node("float", f)
+		const f = Unit("float", 123)
+		const root = Unit("float", f)
 
 		const shader = compileShader(root)
 

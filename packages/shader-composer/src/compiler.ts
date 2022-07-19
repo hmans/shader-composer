@@ -1,14 +1,14 @@
 import { glslRepresentation } from "./glslRepresentation"
 import { block, concatenate, Part, sluggify, statement } from "./lib/concatenator3000"
 import idGenerator from "./lib/idGenerator"
-import { isNode, Node } from "./tree"
+import { isUnit, Unit } from "./tree"
 
 type Program = "vertex" | "fragment"
 
-const nodeHeader = (node: Node) => `/*** BEGIN: ${node._node.name} ***/`
-const nodeFooter = (node: Node) => `/*** END: ${node._node.name} ***/\n`
+const nodeHeader = (node: Unit) => `/*** BEGIN: ${node._node.name} ***/`
+const nodeFooter = (node: Unit) => `/*** END: ${node._node.name} ***/\n`
 
-const compileHeader = (node: Node, program: Program) =>
+const compileHeader = (node: Unit, program: Program) =>
 	node._node[`${program}Header`] &&
 	concatenate(
 		nodeHeader(node),
@@ -16,7 +16,7 @@ const compileHeader = (node: Node, program: Program) =>
 		nodeFooter(node)
 	)
 
-const compileBody = (node: Node, program: Program) =>
+const compileBody = (node: Unit, program: Program) =>
 	concatenate(
 		/* Create global variable for this node */
 		statement(node.type, node._node.variableName, "=", glslRepresentation(node.value)),
@@ -25,7 +25,7 @@ const compileBody = (node: Node, program: Program) =>
 		node._node[`${program}Body`] && block(node._node[`${program}Body`]?.render())
 	)
 
-const compileProgram = (nodes: Node[], program: Program): string =>
+const compileProgram = (nodes: Unit[], program: Program): string =>
 	concatenate(
 		`/*** PROGRAM: ${program.toUpperCase()} ***/\n`,
 		nodes.map((n) => compileHeader(n, program)),
@@ -33,11 +33,11 @@ const compileProgram = (nodes: Node[], program: Program): string =>
 		block(...nodes.map((n) => compileBody(n, program)))
 	)
 
-export const compileShader = (root: Node) => {
+export const compileShader = (root: Unit) => {
 	/* Prepare some state for our compilation process */
 	const nextId = idGenerator()
 
-	const gatherProgram = (node: Node, program: Program): Node[] => {
+	const gatherProgram = (node: Unit, program: Program): Unit[] => {
 		/* Initialize unit, if necessary */
 		if (node._node.variableName === undefined) {
 			node._node.variableName = `${sluggify(node._node.name)}_${nextId()}`
@@ -45,7 +45,7 @@ export const compileShader = (root: Node) => {
 
 		return [
 			/* If the node value is another node, include that node */
-			...(isNode(node.value) ? gatherProgram(node.value, program) : []),
+			...(isUnit(node.value) ? gatherProgram(node.value, program) : []),
 			/* If the node value is an expression, include the expression's dependencies */
 			node
 		]
