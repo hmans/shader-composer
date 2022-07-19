@@ -1,6 +1,7 @@
 import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import {
+	assignment,
 	block,
 	concatenate,
 	identifier,
@@ -45,20 +46,17 @@ const collectUnitBody = (unit: Unit, program: Program, state: CompilerState) => 
 		beginUnit(unit),
 
 		/* Declare global variable */
-		statement(
-			unit.type,
-			unit._unitConfig.variableName,
-			"=",
-			glslRepresentation(unit.value)
-		),
+		statement(unit.type, unit._unitConfig.variableName),
 
 		block(
-			/* TODO: Declare local value variable */
+			/* Declare local value variable */
+			statement(unit.type, "value", "=", glslRepresentation(unit.value)),
 
 			/* Include body chunk, if given */
-			block(unit._unitConfig[`${program}Body`])
+			unit._unitConfig[`${program}Body`],
 
-			/* TODO: Assign value back to global variable */
+			/* Assign value back to global variable */
+			assignment(unit._unitConfig.variableName, "value")
 		),
 
 		endUnit(unit)

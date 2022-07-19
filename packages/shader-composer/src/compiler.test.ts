@@ -13,7 +13,11 @@ describe("compileShader", () => {
 		void main()
 		{
 		/*** BEGIN: Anonymous ***/
-		bool Anonymous_1 = true;
+		bool Anonymous_1;
+		{
+		bool value = true;
+		Anonymous_1 = value;
+		}
 		/*** END: Anonymous ***/
 
 		}"
@@ -25,7 +29,11 @@ describe("compileShader", () => {
 		void main()
 		{
 		/*** BEGIN: Anonymous ***/
-		bool Anonymous_1 = true;
+		bool Anonymous_1;
+		{
+		bool value = true;
+		Anonymous_1 = value;
+		}
 		/*** END: Anonymous ***/
 
 		}"
@@ -44,11 +52,19 @@ describe("compileShader", () => {
 		void main()
 		{
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_2 = 123.0;
+		float Anonymous_2;
+		{
+		float value = 123.0;
+		Anonymous_2 = value;
+		}
 		/*** END: Anonymous ***/
 
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_1 = Anonymous_2;
+		float Anonymous_1;
+		{
+		float value = Anonymous_2;
+		Anonymous_1 = value;
+		}
 		/*** END: Anonymous ***/
 
 		}"
@@ -60,11 +76,19 @@ describe("compileShader", () => {
 		void main()
 		{
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_2 = 123.0;
+		float Anonymous_2;
+		{
+		float value = 123.0;
+		Anonymous_2 = value;
+		}
 		/*** END: Anonymous ***/
 
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_1 = Anonymous_2;
+		float Anonymous_1;
+		{
+		float value = Anonymous_2;
+		Anonymous_1 = value;
+		}
 		/*** END: Anonymous ***/
 
 		}"
@@ -83,11 +107,19 @@ describe("compileShader", () => {
 		void main()
 		{
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_2 = 123.0;
+		float Anonymous_2;
+		{
+		float value = 123.0;
+		Anonymous_2 = value;
+		}
 		/*** END: Anonymous ***/
 
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_1 = Anonymous_2 * 2.0;
+		float Anonymous_1;
+		{
+		float value = Anonymous_2 * 2.0;
+		Anonymous_1 = value;
+		}
 		/*** END: Anonymous ***/
 
 		}"
@@ -99,11 +131,19 @@ describe("compileShader", () => {
 		void main()
 		{
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_2 = 123.0;
+		float Anonymous_2;
+		{
+		float value = 123.0;
+		Anonymous_2 = value;
+		}
 		/*** END: Anonymous ***/
 
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_1 = Anonymous_2 * 2.0;
+		float Anonymous_1;
+		{
+		float value = Anonymous_2 * 2.0;
+		Anonymous_1 = value;
+		}
 		/*** END: Anonymous ***/
 
 		}"
@@ -123,7 +163,11 @@ describe("compileShader", () => {
 		void main()
 		{
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_1 = 123.0 + 4.0;
+		float Anonymous_1;
+		{
+		float value = 123.0 + 4.0;
+		Anonymous_1 = value;
+		}
 		/*** END: Anonymous ***/
 
 		}"
@@ -135,7 +179,11 @@ describe("compileShader", () => {
 		void main()
 		{
 		/*** BEGIN: Anonymous ***/
-		float Anonymous_1 = 123.0 + 4.0;
+		float Anonymous_1;
+		{
+		float value = 123.0 + 4.0;
+		Anonymous_1 = value;
+		}
 		/*** END: Anonymous ***/
 
 		}"

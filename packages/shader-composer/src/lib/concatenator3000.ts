@@ -13,6 +13,8 @@ export const identifier = (...parts: Part[]): string => parts.filter(isPresent).
 export const statement = (...parts: Part[]): string =>
 	parts.filter(isPresent).join(" ") + ";"
 
+export const assignment = (...parts: Part[]): string => statement(parts.join(" = "))
+
 export const block = (...parts: Part[]): Part[] => ["{", ...parts, "}"]
 
 export const sluggify = (s: string) =>
