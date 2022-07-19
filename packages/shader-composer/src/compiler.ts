@@ -43,7 +43,7 @@ export const compileShader = (root: Unit) => {
 	/* Prepare some state for our compilation process */
 	const nextId = idGenerator()
 
-	const gatherProgram = (node: Unit, program: Program): Unit[] => {
+	const gather = (node: Unit, program: Program): Unit[] => {
 		/* Initialize unit, if necessary */
 		if (node._unitConfig.variableName === undefined) {
 			node._unitConfig.variableName = `${sluggify(node._unitConfig.name)}_${nextId()}`
@@ -51,7 +51,7 @@ export const compileShader = (root: Unit) => {
 
 		return [
 			/* If the node value is another node, include that node */
-			...(isUnit(node.value) ? gatherProgram(node.value, program) : []),
+			...(isUnit(node.value) ? gather(node.value, program) : []),
 			/* If the node value is an expression, include the expression's dependencies */
 			node
 		]
@@ -59,8 +59,8 @@ export const compileShader = (root: Unit) => {
 
 	/* Step 1: compile a list of nodes to render, per program */
 	const nodes = {
-		vertex: gatherProgram(root, "vertex"),
-		fragment: gatherProgram(root, "fragment")
+		vertex: gather(root, "vertex"),
+		fragment: gather(root, "fragment")
 	}
 
 	/* Step 2: compile nodes */
