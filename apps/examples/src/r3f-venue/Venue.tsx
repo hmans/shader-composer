@@ -2,6 +2,7 @@ import { Environment, OrbitControls } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { FC, ReactNode } from "react"
 import { Link, useRoute } from "wouter"
+import Stage from "./Stage"
 
 function Navigation({ examples }: { examples: Examples }) {
 	return (
@@ -35,6 +36,8 @@ export const Venue: FC<{ children?: ReactNode; examples?: Examples }> = ({
 			<Canvas>
 				<Environment preset="studio" />
 				<OrbitControls makeDefault />
+
+				<Stage />
 
 				{examples && <Example examples={examples} />}
 				{children}
