@@ -1,4 +1,4 @@
-import { pipe } from "fp-ts/lib/function"
+import { flow, pipe } from "fp-ts/lib/function"
 import {
 	$,
 	Add,
@@ -22,28 +22,18 @@ import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function() {
 	const shader = useShader(() => {
-		const continents = pipe(
-			VertexPosition,
-			(v) => Add(v, Math.random() * 100),
-			(v) => Simplex3DNoise(v),
-			(v) => Mul(v, 0.1)
-		)
+		const getNoise = (scale: number, amplitude: number) =>
+			pipe(
+				VertexPosition,
+				(v) => Mul(v, scale),
+				(v) => Add(v, Math.random() * 100),
+				(v) => Simplex3DNoise(v),
+				(v) => Mul(v, amplitude)
+			)
 
-		const hills = pipe(
-			VertexPosition,
-			(v) => Mul(v, 0.8),
-			(v) => Add(v, Math.random() * 100),
-			(v) => Simplex3DNoise(v),
-			(v) => Mul(v, 0.2)
-		)
-
-		const mountains = pipe(
-			VertexPosition,
-			(v) => Mul(v, 1.2),
-			(v) => Add(v, Math.random() * 100),
-			(v) => Simplex3DNoise(v),
-			(v) => Mul(v, 0.2)
-		)
+		const continents = getNoise(1, 0.1)
+		const hills = getNoise(0.8, 0.2)
+		const mountains = getNoise(1.2, 0.2)
 
 		const totalHeight = pipe(
 			continents,
@@ -80,7 +70,7 @@ export default function() {
 				applyColor(new Color("#fff"), 0.3)
 			)
 		})
-	}, [Math.random()])
+	})
 
 	return (
 		<mesh>
