@@ -1,22 +1,17 @@
-import { flow, pipe } from "fp-ts/lib/function"
+import { pipe } from "fp-ts/lib/function"
 import {
 	Add,
 	CustomShaderMaterialMaster,
 	GLSLType,
-	With,
 	Mul,
 	Simplex3DNoise,
 	Smoothstep,
 	Value,
-	VertexPosition,
-	Pipe,
-	Float
+	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { AdditiveBlending, Color, MeshStandardMaterial, Vector3 } from "three"
+import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
-
-export const Take = <T extends any>(initial: T) => Promise.resolve().then(() => initial)
 
 export default function() {
 	const shader = useShader(() => {
