@@ -1,13 +1,10 @@
-import { identity, pipe } from "fp-ts/lib/function"
+import { pipe } from "fp-ts/lib/function"
 import {
 	Add,
 	CustomShaderMaterialMaster,
-	Float,
-	GLSLType,
 	Mul,
 	Simplex3DNoise,
 	Smoothstep,
-	Value,
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
@@ -16,20 +13,9 @@ import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function() {
 	const shader = useShader(() => {
-		const ScaleAndOffset = <T extends GLSLType>(
-			target: Value<T>,
-			scale?: Value<T | "float">,
-			offset?: Value<T | "float">
-		) =>
-			pipe(
-				target,
-				(v) => (scale !== undefined ? Mul(v, scale) : v),
-				(v) => (offset !== undefined ? Add(v, offset) : v)
-			)
-
 		const continents = pipe(
 			VertexPosition,
-			(v) => ScaleAndOffset(v, 1, 10),
+			(v) => Add(v, 10),
 			(v) => Simplex3DNoise(v),
 			(v) => Smoothstep(0, 1, v),
 			(v) => Mul(v, 0.1)
