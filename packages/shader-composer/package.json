@@ -35,7 +35,7 @@
 		"@testing-library/jest-dom": "^5.16.4",
 		"@types/crypto-js": "^4.1.1",
 		"@types/jest": "^28.1.1",
-		"@types/three": "^0.141.0",
+		"@types/three": "^0.142.0",
 		"jest": "^28.1.1",
 		"jest-environment-jsdom": "^28.1.1",
 		"rimraf": "^3.0.2",
