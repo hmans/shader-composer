@@ -27,8 +27,8 @@ export default function HelloWorld() {
 		ShaderMaterialMaster({
 			color: Pipe(
 				new Color("hotpink"),
-				$Mix(new Color("white"), Sin(Time)),
-				$Add(Fresnel())
+				[Mix, new Color("white"), Sin(Time)],
+				[Add, Fresnel()]
 			),
 
 			position: $`${VertexPosition} * (1.0 + sin(${Time} + ${VertexPosition}.y * 2.0) * 0.2)`
