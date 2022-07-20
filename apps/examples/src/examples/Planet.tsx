@@ -1,4 +1,4 @@
-import { flow, pipe } from "fp-ts/lib/function"
+import { pipe } from "fp-ts/lib/function"
 import {
 	$,
 	Add,
@@ -6,10 +6,8 @@ import {
 	CustomShaderMaterialMaster,
 	Mix,
 	Mul,
-	Pow,
 	Simplex3DNoise,
 	Sin,
-	Smoothstep,
 	Step,
 	Time,
 	Value,
