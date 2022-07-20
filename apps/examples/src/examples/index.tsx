@@ -1,4 +1,7 @@
 import { lazy } from "react"
 
-export const HelloWorld = lazy(() => import("./HelloWorld"))
-export const Textures = lazy(() => import("./Textures"))
+export default {
+	HelloWorld: lazy(() => import("./HelloWorld")),
+	Textures: lazy(() => import("./Textures")),
+	Planet: lazy(() => import("./Planet"))
+}
