@@ -55,16 +55,14 @@ export default function Playground() {
 	console.log(shader.fragmentShader)
 
 	return (
-		<group position-y={13}>
-			<mesh>
-				<icosahedronGeometry args={[8, 3]} />
-				<CustomShaderMaterial
-					baseMaterial={MeshStandardMaterial}
-					uniforms={myUniforms}
-					{...shader}
-					transparent
-				/>
-			</mesh>
-		</group>
+		<mesh>
+			<icosahedronGeometry args={[1, 3]} />
+			<CustomShaderMaterial
+				baseMaterial={MeshStandardMaterial}
+				uniforms={myUniforms}
+				{...shader}
+				transparent
+			/>
+		</mesh>
 	)
 }
