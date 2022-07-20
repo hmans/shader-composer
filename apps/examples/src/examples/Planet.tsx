@@ -1,7 +1,8 @@
-import { pipe } from "fp-ts/lib/function"
+import { identity, pipe } from "fp-ts/lib/function"
 import {
 	Add,
 	CustomShaderMaterialMaster,
+	Float,
 	GLSLType,
 	Mul,
 	Simplex3DNoise,
@@ -22,8 +23,8 @@ export default function() {
 		) =>
 			pipe(
 				target,
-				(v) => Mul(v, scale || 1),
-				(v) => Add(v, offset || 0)
+				(v) => (scale !== undefined ? Mul(v, scale) : v),
+				(v) => (offset !== undefined ? Add(v, offset) : v)
 			)
 
 		const continents = pipe(
