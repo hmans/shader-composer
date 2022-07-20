@@ -2,11 +2,13 @@ import {
 	Add,
 	CustomShaderMaterialMaster,
 	GLSLType,
+	With,
 	Mul,
 	Simplex3DNoise,
 	Smoothstep,
 	Value,
-	VertexPosition
+	VertexPosition,
+	Pipe
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial, Vector3 } from "three"
@@ -20,15 +22,18 @@ export default function() {
 			offset?: Value<T | "float">
 		) => Add(Mul(target, scale ?? 1), offset ?? 0)
 
-		const continents = Mul(
-			Smoothstep(0, 0.1, Simplex3DNoise(ScaleAndOffset(VertexPosition, 1, 10))),
-			0.1
+		const continents = Pipe(
+			VertexPosition,
+			(v) => ScaleAndOffset(v, 1, 10),
+			(v) => Simplex3DNoise(v),
+			(v) => Smoothstep(0, 1, v),
+			(v) => Mul(v, 0.1)
 		)
 
 		const totalHeight = continents
 
 		return CustomShaderMaterialMaster({
-			position: Mul(VertexPosition, Add(1.0, totalHeight)),
+			position: With(VertexPosition).Mul(With(totalHeight).Add(1.0)),
 			diffuseColor: new Color("#888")
 		})
 	}, [Math.random()])
