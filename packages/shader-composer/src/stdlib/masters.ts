@@ -3,6 +3,33 @@ import { $ } from "../expressions"
 import { Master, Value } from "../units"
 import { VertexNormal, VertexPosition } from "./geometry"
 
+export type ShaderMaterialMasterProps = {
+	color?: Value<"vec3">
+	alpha?: Value<"float">
+	position?: Value<"vec3">
+}
+
+export const ShaderMaterialMaster = ({
+	color = new Color("red"),
+	alpha = 1,
+	position = VertexPosition
+}: ShaderMaterialMasterProps = {}) =>
+	Master({
+		name: "ShaderMaterial Master",
+
+		vertex: {
+			body: $`
+				gl_Position = projectionMatrix * modelViewMatrix * vec4(${position}, 1.0);
+			`
+		},
+
+		fragment: {
+			body: $`
+				gl_FragColor = vec4(${color}, ${alpha});
+			`
+		}
+	})
+
 export type CustomShaderMaterialMasterProps = {
 	position?: Value<"vec3">
 	normal?: Value<"vec3">

@@ -1,4 +1,4 @@
-import { OrbitControls } from "@react-three/drei"
+import { Environment, OrbitControls } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { FC, ReactNode } from "react"
 import { Link, useRoute } from "wouter"
@@ -33,8 +33,10 @@ export const Venue: FC<{ children?: ReactNode; examples?: Examples }> = ({
 		<>
 			{examples && <Navigation examples={examples} />}
 			<Canvas>
-				{examples && <Example examples={examples} />}
+				<Environment preset="studio" />
 				<OrbitControls makeDefault />
+
+				{examples && <Example examples={examples} />}
 				{children}
 			</Canvas>
 		</>
