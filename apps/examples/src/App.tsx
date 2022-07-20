@@ -1,4 +1,4 @@
-import Playground from "./examples/Playground"
+import { Playground } from "./examples"
 import { Venue } from "./r3f-venue/Venue"
 import "./r3f-venue/styles.css"
 
