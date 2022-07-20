@@ -1,13 +1,12 @@
-import { R3FStage } from "r3f-stage"
-import "@react-three/fiber"
-import "r3f-stage/styles.css"
 import Playground from "./examples/Playground"
+import { Venue } from "./r3f-venue/Venue"
+import "./r3f-venue/styles.css"
 
 function App() {
 	return (
-		<R3FStage>
+		<Venue>
 			<Playground />
-		</R3FStage>
+		</Venue>
 	)
 }
 
