@@ -1,27 +1,16 @@
 import {
 	$,
-	Add,
+	$Add,
+	$Mix,
 	Fresnel,
-	GLSLType,
-	Mix,
-	Mul,
 	Pipe,
 	ShaderMaterialMaster,
 	Sin,
 	Time,
-	Unit,
-	Value,
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { Color } from "three"
-
-const $Op = <T extends GLSLType, A extends any[]>(
-	fun: (target: Value<T>, ...args: A) => Unit<T>
-) => (...args: A) => (target: Value<T>) => fun(target, ...args)
-
-const $Add = $Op(Add)
-const $Mix = $Op(Mix)
 
 export default function HelloWorld() {
 	const shader = useShader(() =>
