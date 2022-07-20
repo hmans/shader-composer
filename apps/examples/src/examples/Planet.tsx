@@ -12,6 +12,7 @@ import {
 	Smoothstep,
 	Step,
 	Time,
+	Value,
 	Vec3,
 	VertexPosition
 } from "shader-composer"
@@ -59,6 +60,9 @@ export default function() {
 			(v) => Add(v, 0.02)
 		)
 
+		const applyColor = (color: Color, height: Value<"float">) => (v: Value<"vec3">) =>
+			Mix(v, color, Step(height, totalHeight))
+
 		return CustomShaderMaterialMaster({
 			position: pipe(
 				totalHeight,
@@ -68,12 +72,12 @@ export default function() {
 
 			diffuseColor: pipe(
 				Vec3(new Color("#336")),
-				(v) => Mix(v, new Color("yellow"), Step(water, totalHeight)),
-				(v) => Mix(v, new Color("#484"), Step(0.04, totalHeight)),
-				(v) => Mix(v, new Color("#262"), Step(0.1, totalHeight)),
-				(v) => Mix(v, new Color("#444"), Step(0.2, totalHeight)),
-				(v) => Mix(v, new Color("#555"), Step(0.25, totalHeight)),
-				(v) => Mix(v, new Color("#fff"), Step(0.3, totalHeight))
+				applyColor(new Color("yellow"), water),
+				applyColor(new Color("#484"), 0.04),
+				applyColor(new Color("#262"), 0.1),
+				applyColor(new Color("#444"), 0.2),
+				applyColor(new Color("#555"), 0.25),
+				applyColor(new Color("#fff"), 0.3)
 			)
 		})
 	}, [Math.random()])
