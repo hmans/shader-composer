@@ -9,26 +9,25 @@ import {
 	ShaderMaterialMaster,
 	Sin,
 	Time,
+	Unit,
 	Value,
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { Color } from "three"
 
-const $Add = <T extends GLSLType>(operand: Value) => (target: Value<T>) =>
-	Add(target, operand)
-
-const $Mix = <T extends GLSLType>(operand: Value, factor: Value<"float">) => (
-	target: Value<T>
-) => Mix(target, operand, factor)
+const $Op = <T extends GLSLType, A extends any[]>(
+	fun: (target: Value<T>, ...args: A) => Unit<T>,
+	...args: A
+) => (target: Value<T>) => fun(target, ...args)
 
 export default function HelloWorld() {
 	const shader = useShader(() =>
 		ShaderMaterialMaster({
 			color: Pipe(
 				new Color("hotpink"),
-				[Mix, new Color("white"), Sin(Time)],
-				[Add, Fresnel()]
+				$Op(Mix, new Color("white"), Sin(Time)),
+				$Op(Add, Fresnel())
 			),
 
 			position: $`${VertexPosition} * (1.0 + sin(${Time} + ${VertexPosition}.y * 2.0) * 0.2)`
