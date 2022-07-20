@@ -36,6 +36,7 @@ export const Venue: FC<{ children?: ReactNode; examples?: Examples }> = ({
 			<Canvas>
 				<Environment preset="studio" />
 				<OrbitControls makeDefault />
+				<fogExp2 args={["#000", 0.03]} attach="fog" />
 
 				<Stage />
 
