@@ -51,7 +51,13 @@ export default function() {
 			(v) => Clamp(v, 0, 1)
 		)
 
-		const water = Add(Mul(Sin(Add(Time, $`${VertexPosition}.y`)), 0.008), 0.02)
+		const water = pipe(
+			Time,
+			(v) => Add(v, $`${VertexPosition}.y`),
+			(v) => Sin(v),
+			(v) => Mul(v, 0.008),
+			(v) => Add(v, 0.02)
+		)
 
 		return CustomShaderMaterialMaster({
 			position: pipe(
