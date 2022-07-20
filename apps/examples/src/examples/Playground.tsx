@@ -1,10 +1,8 @@
 import { useTexture } from "@react-three/drei"
-import { useFrame } from "@react-three/fiber"
 import { useMemo } from "react"
 import {
 	$,
 	Add,
-	compileShader,
 	CustomShaderMaterialMaster,
 	Fresnel,
 	JoinVector2,
@@ -15,6 +13,7 @@ import {
 	Time,
 	UV
 } from "shader-composer"
+import { useShader } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial, RepeatWrapping, Vector2 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
@@ -23,7 +22,7 @@ export default function Playground() {
 	texture.wrapS = RepeatWrapping
 	texture.wrapT = RepeatWrapping
 
-	const [{ uniforms, ...shader }, update] = useMemo(() => {
+	const { uniforms, ...shader } = useShader(() => {
 		const offset = JoinVector2(Mul(Time, 0.05), 0)
 
 		const tex2d = Texture2D(
@@ -33,13 +32,11 @@ export default function Playground() {
 
 		const color = new Color("hotpink")
 
-		const root = CustomShaderMaterialMaster({
+		return CustomShaderMaterialMaster({
 			fragColor: $`${color} * ${tex2d.color}`,
 			alpha: Add(Fresnel(), 0.1)
 		})
-
-		return compileShader(root)
-	}, [])
+	})
 
 	const myUniforms = useMemo(
 		() => ({
@@ -48,8 +45,6 @@ export default function Playground() {
 		}),
 		[uniforms]
 	)
-
-	useFrame((_, dt) => update(dt))
 
 	console.log(shader.vertexShader)
 	console.log(shader.fragmentShader)
