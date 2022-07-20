@@ -21,13 +21,14 @@ const $Op = <T extends GLSLType, A extends any[]>(
 ) => (...args: A) => (target: Value<T>) => fun(target, ...args)
 
 const $Add = $Op(Add)
+const $Mix = $Op(Mix)
 
 export default function HelloWorld() {
 	const shader = useShader(() =>
 		ShaderMaterialMaster({
 			color: Pipe(
 				new Color("hotpink"),
-				$Op(Mix)(new Color("white"), Sin(Time)),
+				$Mix(new Color("white"), Sin(Time)),
 				$Add(Fresnel())
 			),
 
