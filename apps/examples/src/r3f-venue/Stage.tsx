@@ -4,7 +4,7 @@ export default function() {
 	return (
 		<group>
 			<mesh>
-				<boxGeometry args={[50, 25, 50]} />
+				<boxGeometry args={[64, 32, 64]} />
 				<meshStandardMaterial color="#333" side={DoubleSide} />
 			</mesh>
 		</group>

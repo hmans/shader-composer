@@ -35,8 +35,15 @@ export const Venue: FC<{ children?: ReactNode; examples?: Examples }> = ({
 			{examples && <Navigation examples={examples} />}
 			<Canvas>
 				<Environment preset="studio" />
-				<OrbitControls makeDefault />
 				<fogExp2 args={["#000", 0.03]} attach="fog" />
+
+				<OrbitControls
+					makeDefault
+					maxDistance={10}
+					minDistance={3}
+					minPolarAngle={Math.PI * 0.25}
+					maxPolarAngle={Math.PI * 0.75}
+				/>
 
 				<Stage />
 
