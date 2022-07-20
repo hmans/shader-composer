@@ -1,3 +1,3 @@
 import { lazy } from "react"
 
-export const Playground = lazy(() => import("./Playground"))
+export const Textures = lazy(() => import("./Textures"))

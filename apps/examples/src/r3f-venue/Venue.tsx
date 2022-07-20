@@ -17,7 +17,7 @@ function Navigation({ examples }: { examples: Examples }) {
 
 function Example({ examples }: { examples: Examples }) {
 	const [match, params] = useRoute("/examples/:name")
-	const name = match ? params.name : "Playground"
+	const name = match ? params.name : "Textures"
 	const Component = examples[name as keyof typeof examples]
 
 	return <Component />
