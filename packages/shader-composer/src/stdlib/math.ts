@@ -16,13 +16,9 @@ export const Operator = (title: string, operator: "+" | "-" | "*" | "/") => <
 }
 
 export const Add = Operator("Add", "+")
-export const Subtract = Operator("Subtract", "-")
-export const Multiply = Operator("Multiply", "*")
-export const Divide = Operator("Divide", "/")
-
-export const Sub = Subtract
-export const Mul = Multiply
-export const Div = Divide
+export const Sub = Operator("Subtract", "-")
+export const Mul = Operator("Multiply", "*")
+export const Div = Operator("Divide", "/")
 
 export const Sin = (x: Value<"float">) => Float($`sin(${x})`)
 export const Cos = (x: Value<"float">) => Float($`cos(${x})`)
