@@ -1,3 +1,4 @@
+import { flow, pipe } from "fp-ts/lib/function"
 import {
 	Add,
 	CustomShaderMaterialMaster,
@@ -8,11 +9,14 @@ import {
 	Smoothstep,
 	Value,
 	VertexPosition,
-	Pipe
+	Pipe,
+	Float
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { Color, MeshStandardMaterial, Vector3 } from "three"
+import { AdditiveBlending, Color, MeshStandardMaterial, Vector3 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
+
+export const Take = <T extends any>(initial: T) => Promise.resolve().then(() => initial)
 
 export default function() {
 	const shader = useShader(() => {
@@ -22,7 +26,7 @@ export default function() {
 			offset?: Value<T | "float">
 		) => Add(Mul(target, scale ?? 1), offset ?? 0)
 
-		const continents = Pipe(
+		const continents = pipe(
 			VertexPosition,
 			(v) => ScaleAndOffset(v, 1, 10),
 			(v) => Simplex3DNoise(v),
@@ -33,7 +37,12 @@ export default function() {
 		const totalHeight = continents
 
 		return CustomShaderMaterialMaster({
-			position: With(VertexPosition).Mul(With(totalHeight).Add(1.0)),
+			position: pipe(
+				totalHeight,
+				(v) => Add(1.0, v),
+				(v) => Mul(VertexPosition, v)
+			),
+
 			diffuseColor: new Color("#888")
 		})
 	}, [Math.random()])
