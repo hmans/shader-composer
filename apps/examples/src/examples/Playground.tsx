@@ -1,4 +1,3 @@
-import { useTexture } from "@react-three/drei"
 import { useMemo } from "react"
 import {
 	$,
@@ -14,13 +13,12 @@ import {
 	UV
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { Color, MeshStandardMaterial, RepeatWrapping, Vector2 } from "three"
+import { Color, MeshStandardMaterial, Vector2 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
+import { useRepeatingTexture } from "./helpers"
 
 export default function Playground() {
-	const texture = useTexture("/textures/hexgrid.jpg")
-	texture.wrapS = RepeatWrapping
-	texture.wrapT = RepeatWrapping
+	const texture = useRepeatingTexture("/textures/hexgrid.jpg")
 
 	const { uniforms, ...shader } = useShader(() => {
 		const offset = JoinVector2(Mul(Time, 0.05), 0)
@@ -45,9 +43,6 @@ export default function Playground() {
 		}),
 		[uniforms]
 	)
-
-	console.log(shader.vertexShader)
-	console.log(shader.fragmentShader)
 
 	return (
 		<mesh>
