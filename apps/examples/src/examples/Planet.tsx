@@ -1,6 +1,5 @@
 import { pipe } from "fp-ts/lib/function"
 import {
-	$,
 	Add,
 	Clamp,
 	CustomShaderMaterialMaster,
@@ -8,6 +7,7 @@ import {
 	Mul,
 	Simplex3DNoise,
 	Sin,
+	SplitVector3,
 	Step,
 	Time,
 	Value,
@@ -42,7 +42,7 @@ export default function() {
 
 		const water = pipe(
 			Time,
-			(v) => Add(v, $`${VertexPosition}.y`),
+			(v) => Add(v, SplitVector3(VertexPosition)[1]),
 			(v) => Sin(v),
 			(v) => Mul(v, 0.008),
 			(v) => Add(v, 0.02)
