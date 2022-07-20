@@ -19,7 +19,12 @@ export default function() {
 			target: Value<T>,
 			scale?: Value<T | "float">,
 			offset?: Value<T | "float">
-		) => Add(Mul(target, scale ?? 1), offset ?? 0)
+		) =>
+			pipe(
+				target,
+				(v) => Mul(v, scale || 1),
+				(v) => Add(v, offset || 0)
+			)
 
 		const continents = pipe(
 			VertexPosition,
