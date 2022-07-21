@@ -72,7 +72,7 @@ export default function() {
 
 	return (
 		<mesh>
-			<icosahedronGeometry args={[1, 8]} />
+			<icosahedronGeometry args={[1.5, 12]} />
 			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} />
 		</mesh>
 	)
