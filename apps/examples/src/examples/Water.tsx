@@ -22,7 +22,7 @@ const NormalizeNoise = (v: Value<"float">) => Remap(v, -1, 1, 0, 1)
 
 function Water() {
 	const shader = useShader(() => {
-		const diffuseColor = new Color("#88c")
+		const diffuseColor = new Color("#acd")
 
 		const { position, normal } = ModifyVertex(VertexPosition, VertexNormal, (v) => {
 			const split = SplitVector3(v)
@@ -69,7 +69,7 @@ function Water() {
 				baseMaterial={MeshPhysicalMaterial}
 				{...shader}
 				roughness={0.1}
-				metalness={0.2}
+				metalness={0.5}
 			/>
 		</mesh>
 	)
