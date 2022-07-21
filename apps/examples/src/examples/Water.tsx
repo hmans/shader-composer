@@ -1,20 +1,17 @@
+import { pipe } from "fp-ts/lib/function"
 import {
 	Add,
 	CustomShaderMaterialMaster,
 	GerstnerWave,
 	JoinVector2,
-	JoinVector3,
-	Mul,
-	Simplex3DNoise,
 	Time,
 	VertexNormal,
 	VertexPosition
 } from "shader-composer"
-import { ModifyVertex } from "shader-composer-toybox"
 import { useShader } from "shader-composer-r3f"
+import { ModifyVertex } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
-import { pipe } from "fp-ts/lib/function"
 
 export default function() {
 	const shader = useShader(() => {
