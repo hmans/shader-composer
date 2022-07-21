@@ -1,6 +1,8 @@
+import { Vector2 } from "three"
 import { $ } from "../../expressions"
 import { Snippet } from "../../snippets"
 import { Value, Vec3 } from "../../units"
+import { Time } from "../input"
 
 /*
 With many thanks to glNoise:
@@ -23,11 +25,11 @@ const gerstnerWave = Snippet(
 
 export const GerstnerWave = (
 	p: Value<"vec3">,
-	direction: Value<"vec2">,
-	steepness: Value<"float">,
-	wavelength: Value<"float">,
-	dt: Value<"float">
+	direction: Value<"vec2"> = new Vector2(1, 0),
+	steepness: Value<"float"> = 1,
+	wavelength: Value<"float"> = 1,
+	offset: Value<"float"> = Time
 ) =>
-	Vec3($`${gerstnerWave}(${p}, ${direction}, ${steepness}, ${wavelength}, ${dt})`, {
+	Vec3($`${gerstnerWave}(${p}, ${direction}, ${steepness}, ${wavelength}, ${offset})`, {
 		name: "Gerstner Wave"
 	})
