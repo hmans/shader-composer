@@ -5,7 +5,6 @@ import {
 	Int,
 	JoinVector2,
 	JoinVector3,
-	Mix,
 	Mul,
 	Remap,
 	SplitVector3,
@@ -15,8 +14,8 @@ import {
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { FBMNoise, GerstnerWave, ModifyVertex, PerlinNoise } from "shader-composer-toybox"
-import { Color, MeshPhysicalMaterial, MeshStandardMaterial, Vector3 } from "three"
+import { FBMNoise, GerstnerWave, ModifyVertex } from "shader-composer-toybox"
+import { Color, DoubleSide, MeshPhysicalMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 const NormalizeNoise = (v: Value<"float">) => Remap(v, -1, 1, 0, 1)
@@ -71,6 +70,7 @@ function Water() {
 				{...shader}
 				roughness={0.1}
 				metalness={0.5}
+				side={DoubleSide}
 			/>
 		</mesh>
 	)
