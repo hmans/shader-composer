@@ -3,6 +3,8 @@
 exports[`compileShader allows units to declare themselves to exist in one program only 1`] = `
 "/*** PROGRAM: VERTEX ***/
 
+precision highp float;
+
 void main()
 {
   /*** UNIT: Position (Vertex Only) ***/
@@ -23,6 +25,8 @@ void main()
 
 exports[`compileShader allows units to declare themselves to exist in one program only 2`] = `
 "/*** PROGRAM: FRAGMENT ***/
+
+precision highp float;
 
 void main()
 {
@@ -45,6 +49,8 @@ void main()
 exports[`compileShader compiles shader programs from the given unit 1`] = `
 "/*** PROGRAM: VERTEX ***/
 
+precision highp float;
+
 void main()
 {
   /*** UNIT: Anonymous ***/
@@ -57,6 +63,8 @@ void main()
 exports[`compileShader compiles shader programs from the given unit 2`] = `
 "/*** PROGRAM: FRAGMENT ***/
 
+precision highp float;
+
 void main()
 {
   /*** UNIT: Anonymous ***/
@@ -68,6 +76,8 @@ void main()
 
 exports[`compileShader embeds body chunks in scoped blocks, with a local \`value\` variable 1`] = `
 "/*** PROGRAM: FRAGMENT ***/
+
+precision highp float;
 
 void main()
 {
@@ -86,6 +96,8 @@ void main()
 exports[`compileShader resolves dependencies to expressions 1`] = `
 "/*** PROGRAM: VERTEX ***/
 
+precision highp float;
+
 void main()
 {
   /*** UNIT: Anonymous ***/
@@ -98,6 +110,8 @@ void main()
 exports[`compileShader resolves dependencies to expressions 2`] = `
 "/*** PROGRAM: FRAGMENT ***/
 
+precision highp float;
+
 void main()
 {
   /*** UNIT: Anonymous ***/
@@ -109,6 +123,8 @@ void main()
 
 exports[`compileShader resolves dependencies to other units 1`] = `
 "/*** PROGRAM: VERTEX ***/
+
+precision highp float;
 
 void main()
 {
@@ -126,6 +142,8 @@ void main()
 exports[`compileShader resolves dependencies to other units 2`] = `
 "/*** PROGRAM: FRAGMENT ***/
 
+precision highp float;
+
 void main()
 {
   /*** UNIT: Anonymous ***/
@@ -141,6 +159,8 @@ void main()
 
 exports[`compileShader resolves dependencies to other units from within expressions 1`] = `
 "/*** PROGRAM: VERTEX ***/
+
+precision highp float;
 
 void main()
 {
@@ -158,6 +178,8 @@ void main()
 exports[`compileShader resolves dependencies to other units from within expressions 2`] = `
 "/*** PROGRAM: FRAGMENT ***/
 
+precision highp float;
+
 void main()
 {
   /*** UNIT: Anonymous ***/
@@ -174,6 +196,8 @@ void main()
 exports[`compileShader supports snippets 1`] = `
 "/*** PROGRAM: VERTEX ***/
 
+precision highp float;
+
 
 			float snippet_c8b24f9130(in float a) {
 				return a * 2.0;
@@ -189,6 +213,8 @@ void main()
 
 exports[`compileShader supports snippets 2`] = `
 "/*** PROGRAM: FRAGMENT ***/
+
+precision highp float;
 
 
 			float snippet_c8b24f9130(in float a) {
