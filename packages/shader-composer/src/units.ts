@@ -93,6 +93,7 @@ const makeUnit = <T extends GLSLType>(type: T) => (
 ) => Unit(type, v, extras) as Unit<T>
 
 export const Float = makeUnit("float")
+export const Int = makeUnit("int")
 export const Bool = makeUnit("bool")
 export const Vec2 = makeUnit("vec2")
 export const Vec3 = makeUnit("vec3")

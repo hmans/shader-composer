@@ -1,4 +1,4 @@
-import { $, Float, Snippet, Value } from "shader-composer"
+import { $, Float, Int, Snippet, Value } from "shader-composer"
 import { type } from "shader-composer/src/glslType"
 import { perlin } from "./PerlinNoise"
 
@@ -21,7 +21,7 @@ export const FBMNoise = (
 		lacunarity = 0,
 		scale = 1,
 		redistribution = 1,
-		octaves = "1",
+		octaves = "1", //Int(1),
 		terbulance = true,
 		ridge = true
 	}: FBMOptions = {}
