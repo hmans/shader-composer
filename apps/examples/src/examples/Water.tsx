@@ -25,11 +25,11 @@ function Water() {
 		const diffuseColor = new Color("#acd")
 
 		const { position, normal } = ModifyVertex(VertexPosition, VertexNormal, (v) => {
-			const split = SplitVector3(v)
-			const xy = vec2(split[0], split[2])
+			const [x, y, z] = SplitVector3(v)
+			const xy = vec2(x, z)
 
 			const fbm = NormalizeNoise(
-				FBMNoise(vec2(Add(split[0], Time), split[2]), {
+				FBMNoise(vec2(Add(x, Time), z), {
 					seed: Math.random(),
 					persistance: 2.2,
 					lacunarity: 1.3,
