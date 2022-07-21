@@ -6,5 +6,7 @@
     "shader-composer": "0.0.3",
     "shader-composer-r3f": "0.0.3"
   },
-  "changesets": []
+  "changesets": [
+    "rare-lions-develop"
+  ]
 }
