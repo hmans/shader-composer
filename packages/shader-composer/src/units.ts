@@ -1,5 +1,5 @@
 import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
-import { Expression } from "./expressions"
+import { $, Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
 export type Program = "vertex" | "fragment"
@@ -100,5 +100,26 @@ export const Vec3 = makeUnit("vec3")
 export const Vec4 = makeUnit("vec4")
 export const Mat3 = makeUnit("mat3")
 export const Mat4 = makeUnit("mat4")
+
+export const vec2 = (
+	x: Value<"float">,
+	y: Value<"float">,
+	extras?: Partial<UnitConfig>
+) => Vec2($`vec2(${x}, ${y})`, extras)
+
+export const vec3 = (
+	x: Value<"float">,
+	y: Value<"float">,
+	z: Value<"float">,
+	extras?: Partial<UnitConfig>
+) => Vec3($`vec3(${x}, ${y}, ${z})`, extras)
+
+export const vec4 = (
+	x: Value<"float">,
+	y: Value<"float">,
+	z: Value<"float">,
+	w: Value<"float">,
+	extras?: Partial<UnitConfig>
+) => Vec4($`vec4(${x}, ${y}, ${z}, ${w})`, extras)
 
 export const Master = (extras?: Partial<UnitConfig>) => Bool(true, extras)

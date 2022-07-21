@@ -3,13 +3,13 @@ import {
 	Add,
 	CustomShaderMaterialMaster,
 	Int,
-	JoinVector2,
-	JoinVector3,
 	Mul,
 	Remap,
 	SplitVector3,
 	Time,
 	Value,
+	vec2,
+	vec3,
 	VertexNormal,
 	VertexPosition
 } from "shader-composer"
@@ -26,32 +26,28 @@ function Water() {
 
 		const { position, normal } = ModifyVertex(VertexPosition, VertexNormal, (v) => {
 			const split = SplitVector3(v)
-			const xy = JoinVector2(split[0], split[2])
+			const xy = vec2(split[0], split[2])
+
+			const fbm = NormalizeNoise(
+				FBMNoise(vec2(Add(split[0], Time), split[2]), {
+					seed: Math.random(),
+					persistance: 2.2,
+					lacunarity: 1.3,
+					scale: 2.4,
+					redistribution: 1,
+					octaves: Int(2),
+					turbulence: false,
+					ridge: false
+				})
+			)
+
 			return pipe(
 				v,
-				(v) => Add(v, Mul(GerstnerWave(xy, JoinVector2(1, 1), 0.5, 20.0), 0.8)),
-				(v) => Add(v, Mul(GerstnerWave(xy, JoinVector2(0.2, 1), 0.2, 10), 0.8)),
-				(v) => Add(v, Mul(GerstnerWave(xy, JoinVector2(0, -1), 0.2, 5), 0.5)),
-				(v) => Add(v, Mul(GerstnerWave(xy, JoinVector2(1, 1), 0.2, 8), 0.3)),
-				(v) =>
-					Add(
-						v,
-						Mul(
-							JoinVector3(0, 0.005, 0),
-							NormalizeNoise(
-								FBMNoise(JoinVector2(Add(split[0], Time), split[2]), {
-									seed: Math.random(),
-									persistance: 2.2,
-									lacunarity: 1.3,
-									scale: 2.4,
-									redistribution: 1,
-									octaves: Int(2),
-									turbulence: false,
-									ridge: false
-								})
-							)
-						)
-					)
+				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.5, 20.0), 0.8)),
+				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0.2, 1), 0.2, 10), 0.8)),
+				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0, -1), 0.2, 5), 0.5)),
+				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.2, 8), 0.3)),
+				(v) => Add(v, Mul(vec3(0, 0.005, 0), fbm))
 			)
 		})
 
