@@ -4,7 +4,7 @@ import { permute } from "./permute"
 import { taylorInvSqrt } from "./taylorInvSqrt"
 
 export const PerlinNoise = (p: Value<"vec3">, rep: Value<"vec3">) =>
-	Float(glsl`${noise.name}(${p}, ${rep})`)
+	Float(glsl`${noise}(${p}, ${rep})`)
 
 // GLSL textureless classic 3D noise "cnoise",
 // with an RSL-style periodic variant "pnoise".

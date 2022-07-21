@@ -3,13 +3,14 @@ import {
 	Add,
 	CustomShaderMaterialMaster,
 	JoinVector2,
+	Mix,
 	Time,
 	VertexNormal,
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { GerstnerWave, ModifyVertex } from "shader-composer-toybox"
-import { Color, MeshStandardMaterial } from "three"
+import { GerstnerWave, ModifyVertex, PerlinNoise } from "shader-composer-toybox"
+import { Color, MeshStandardMaterial, Vector3 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 function Water() {
@@ -43,7 +44,11 @@ function Water() {
 
 function Thingy() {
 	const shader = useShader(() => {
-		const diffuseColor = new Color("#66d")
+		const diffuseColor = Mix<"vec3">(
+			new Color("black"),
+			new Color("white"),
+			PerlinNoise(VertexPosition, new Vector3(10, 10, 10))
+		)
 
 		return CustomShaderMaterialMaster({
 			diffuseColor
