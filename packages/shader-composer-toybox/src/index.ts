@@ -1,4 +1,3 @@
-import { Color } from "three"
 import {
 	Add,
 	Bitangent,
@@ -11,9 +10,10 @@ import {
 	Step,
 	Sub,
 	Tangent,
+	Value,
 	VertexPosition
-} from "../stdlib"
-import { Value } from "../units"
+} from "shader-composer"
+import { Color } from "three"
 
 export const Dissolve = (
 	visibility: Value<"float"> = 0.5,

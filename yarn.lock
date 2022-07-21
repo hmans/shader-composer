@@ -5952,6 +5952,11 @@ set-value@^2.0.0, set-value@^2.0.1:
     is-plain-object "^2.0.3"
     split-string "^3.0.1"
 
+shader-composer-toybox@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/shader-composer-toybox/-/shader-composer-toybox-0.0.1.tgz#bd3e928a465b64d28e7783d24c19977171994737"
+  integrity sha512-sQi/OgNQP/J5906XKnci26OPXw9n75lzeja2shRjEYBY274xW7DTCWeBdboW5ZS5DRdvltqBLc/5itZOAJfUXQ==
+
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"

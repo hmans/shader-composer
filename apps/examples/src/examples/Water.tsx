@@ -8,8 +8,7 @@ import {
 	VertexNormal,
 	VertexPosition
 } from "shader-composer"
-import { ModifyVertex } from "shader-composer/effects"
-
+import { ModifyVertex } from "shader-composer-toybox"
 import { useShader } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
