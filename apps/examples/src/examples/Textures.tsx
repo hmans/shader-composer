@@ -4,7 +4,6 @@ import {
 	Add,
 	CustomShaderMaterialMaster,
 	Fresnel,
-	tor2,
 	Mul,
 	Sampler2D,
 	Texture2D,
