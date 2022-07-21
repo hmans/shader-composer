@@ -3,10 +3,13 @@ import {
 	Add,
 	Clamp,
 	CustomShaderMaterialMaster,
+	Float,
+	Fresnel,
 	Mix,
 	Mul,
 	Simplex3DNoise,
 	Sin,
+	Smoothstep,
 	SplitVector3,
 	Step,
 	Time,
@@ -18,17 +21,21 @@ import { useShader } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
-export default function() {
-	const shader = useShader(() => {
-		const getNoise = (scale: number, amplitude: number) =>
-			pipe(
-				VertexPosition,
-				(v) => Mul(v, scale),
-				(v) => Add(v, Math.random() * 100),
-				(v) => Simplex3DNoise(v),
-				(v) => Mul(v, amplitude)
-			)
+const getNoise = (
+	scale: number,
+	amplitude: number,
+	offset: Value<"float" | "vec3"> = 0
+) =>
+	pipe(
+		VertexPosition,
+		(v) => Mul(v, scale),
+		(v) => Add(v, Add(offset, Math.random() * 100)),
+		(v) => Simplex3DNoise(v),
+		(v) => Mul(v, amplitude)
+	)
 
+function Planet() {
+	const shader = useShader(() => {
 		const continents = getNoise(1, 0.1)
 		const hills = getNoise(0.8, 0.2)
 		const mountains = getNoise(1.2, 0.2)
@@ -75,5 +82,51 @@ export default function() {
 			<icosahedronGeometry args={[1.5, 12]} />
 			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} />
 		</mesh>
+	)
+}
+
+function Atmosphere() {
+	const shader = useShader(() => {
+		const cloudSpeed = 0.02
+		const cloudThreshold = 0.5
+		const cloudDensity = 0.9
+		const atmosphereDensity = 0.05
+
+		const cloudNoise = Add(
+			getNoise(0.5, 1, Mul(Time, cloudSpeed)),
+			getNoise(0.2, 1, Mul(Time, cloudSpeed * -0.5))
+		)
+
+		const clouds = pipe(
+			cloudNoise,
+			(v) => Smoothstep(cloudThreshold, cloudThreshold + 0.08, v),
+			(v) => Mul(v, cloudDensity)
+		)
+
+		const fresnel = Mul(Fresnel(), 0.3)
+
+		return CustomShaderMaterialMaster({
+			alpha: pipe(
+				Float(atmosphereDensity),
+				(v) => Add(v, clouds),
+				(v) => Add(v, fresnel)
+			)
+		})
+	})
+
+	return (
+		<mesh>
+			<icosahedronGeometry args={[1.75, 12]} />
+			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} transparent />
+		</mesh>
+	)
+}
+
+export default function() {
+	return (
+		<>
+			<Planet />
+			<Atmosphere />
+		</>
 	)
 }
