@@ -1,7 +1,7 @@
 import { Float, glsl, Snippet, Value } from "shader-composer"
 import { type } from "shader-composer/src/glslType"
 import { permute } from "./permute"
-import { rand4 } from "./rand4"
+import { rand4 } from "./random"
 import { taylorInvSqrt } from "./taylorInvSqrt"
 
 export const PerlinNoise = (p: Value<"vec3" | "vec2">) =>
