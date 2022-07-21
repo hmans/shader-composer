@@ -1,4 +1,4 @@
-import { Environment, OrbitControls } from "@react-three/drei"
+import { OrbitControls } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { Perf } from "r3f-perf"
 import { FC, ReactNode } from "react"
@@ -36,7 +36,9 @@ export const Venue: FC<{
 		<>
 			{examples && <Navigation examples={examples} />}
 			<Canvas>
-				<Environment preset="studio" />
+				<ambientLight intensity={0.2} />
+				<directionalLight position={[10, 10, 20]} intensity={1.1} />
+				<directionalLight position={[-20, 0, 10]} intensity={0.8} />
 				<fogExp2 args={["#000", 0.03]} attach="fog" />
 
 				<OrbitControls
