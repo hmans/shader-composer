@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "examples": "0.0.0",
+    "shader-composer": "0.0.3",
+    "shader-composer-r3f": "0.0.3"
+  },
+  "changesets": []
+}
