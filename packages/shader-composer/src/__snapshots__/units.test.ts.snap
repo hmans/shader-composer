@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Node supports a 'varying' flag that will automatically make it pass its data as a varying 1`] = `
+exports[`Unit supports a 'varying' flag that will automatically make it pass its data as a varying 1`] = `
 "/*** PROGRAM: VERTEX ***/
 
 /*** BEGIN: A variable with a varying ***/
@@ -22,7 +22,7 @@ void main()
 }"
 `;
 
-exports[`Node supports a 'varying' flag that will automatically make it pass its data as a varying 2`] = `
+exports[`Unit supports a 'varying' flag that will automatically make it pass its data as a varying 2`] = `
 "/*** PROGRAM: FRAGMENT ***/
 
 /*** BEGIN: A variable with a varying ***/

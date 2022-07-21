@@ -7,7 +7,6 @@ import {
 	Fresnel,
 	Mix,
 	Mul,
-	Simplex3DNoise,
 	Sin,
 	Smoothstep,
 	SplitVector3,
@@ -18,6 +17,7 @@ import {
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
+import { Simplex3DNoise } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 

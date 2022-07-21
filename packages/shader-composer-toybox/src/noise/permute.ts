@@ -1,5 +1,4 @@
-import { glsl } from "../../expressions"
-import { Snippet } from "../../snippets"
+import { glsl, Snippet } from "shader-composer"
 import { mod289 } from "./mod289"
 
 export const permute = Snippet(

@@ -90,7 +90,7 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	const value =
 		unit._unitConfig.varying && program === "fragment"
 			? `v_${unit._unitConfig.variableName}`
-			: glslRepresentation(unit.value)
+			: glslRepresentation(unit.value, unit.type)
 
 	state.body.push(beginUnit(unit))
 

@@ -11,7 +11,10 @@ export type Expression = {
 
 export const glsl = (strings: TemplateStringsArray, ...values: any[]): Expression => {
 	const render = () =>
-		zip(strings, values.map(glslRepresentation))
+		zip(
+			strings,
+			values.map((v) => glslRepresentation(v))
+		)
 			.flat()
 			.join("")
 
