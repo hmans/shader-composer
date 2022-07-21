@@ -46,7 +46,7 @@ function Water() {
 									scale: 2.4,
 									redistribution: 1,
 									octaves: Int(2),
-									terbulance: false,
+									turbulence: false,
 									ridge: false
 								})
 							)

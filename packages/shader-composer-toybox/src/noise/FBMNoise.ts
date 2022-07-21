@@ -9,7 +9,7 @@ export type FBMOptions = {
 	scale?: Value<"float">
 	redistribution?: Value<"float">
 	octaves?: Value<"int">
-	terbulance?: Value<"bool">
+	turbulence?: Value<"bool">
 	ridge?: Value<"bool">
 }
 
@@ -22,7 +22,7 @@ export const FBMNoise = (
 		scale = 1,
 		redistribution = 1,
 		octaves = Int(1),
-		terbulance = true,
+		turbulence = true,
 		ridge = true
 	}: FBMOptions = {}
 ) =>
@@ -34,7 +34,7 @@ export const FBMNoise = (
 			${scale},
 			${redistribution},
 			${octaves},
-			${terbulance},
+			${turbulence},
 			${ridge}))`,
 		{
 			name: `FBMNoise ${type(p)}`
@@ -52,7 +52,7 @@ const fbmNoise = Snippet(
 			float scale;
 			float redistribution;
 			int octaves;
-			bool terbulance;
+			bool turbulence;
 			bool ridge;
 		};
 
@@ -62,8 +62,8 @@ const fbmNoise = Snippet(
 			float lacunarity = opts.lacunarity;
 			float redistribution = opts.redistribution;
 			int octaves = opts.octaves;
-			bool terbulance = opts.terbulance;
-			bool ridge = opts.terbulance && opts.ridge;
+			bool turbulence = opts.turbulence;
+			bool ridge = opts.turbulence && opts.ridge;
 
 			float result = 0.0;
 			float amplitude = 1.0;
@@ -78,7 +78,7 @@ const fbmNoise = Snippet(
 
 				float noiseVal = ${perlin}(p);
 
-				if (terbulance)
+				if (turbulence)
 					noiseVal = abs(noiseVal);
 
 				if (ridge)
@@ -101,8 +101,8 @@ const fbmNoise = Snippet(
 			float lacunarity = opts.lacunarity;
 			float redistribution = opts.redistribution;
 			int octaves = opts.octaves;
-			bool terbulance = opts.terbulance;
-			bool ridge = opts.terbulance && opts.ridge;
+			bool turbulence = opts.turbulence;
+			bool ridge = opts.turbulence && opts.ridge;
 
 			float result = 0.0;
 			float amplitude = 1.0;
@@ -117,7 +117,7 @@ const fbmNoise = Snippet(
 
 				float noiseVal = ${perlin}(p);
 
-				if (terbulance)
+				if (turbulence)
 					noiseVal = abs(noiseVal);
 
 				if (ridge)
