@@ -7,7 +7,7 @@
 		"url": "https://hmans.co"
 	},
 	"description": "react-three-fiber glue for shader-composer.",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"main": "dist/shader-composer-r3f.cjs.js",
 	"module": "dist/shader-composer-r3f.esm.js",
 	"types": "dist/shader-composer-r3f.cjs.d.ts",
@@ -43,7 +43,7 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"rimraf": "^3.0.2",
-		"shader-composer": "^0.0.2",
+		"shader-composer": "^0.0.3",
 		"three": "^0.142.0",
 		"ts-jest": "^28.0.4",
 		"tslib": "^2.4.0",
@@ -54,7 +54,7 @@
 		"@react-three/fiber": "^8.2.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"shader-composer": ">=0.0.2"
+		"shader-composer": ">=0.0.3"
 	},
 	"babel": {
 		"presets": [
