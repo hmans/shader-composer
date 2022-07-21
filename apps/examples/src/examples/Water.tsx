@@ -1,6 +1,8 @@
 import {
 	Add,
 	CustomShaderMaterialMaster,
+	GerstnerWave,
+	JoinVector2,
 	JoinVector3,
 	Mul,
 	Simplex3DNoise,
@@ -12,14 +14,20 @@ import { ModifyVertex } from "shader-composer-toybox"
 import { useShader } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
+import { pipe } from "fp-ts/lib/function"
 
 export default function() {
 	const shader = useShader(() => {
-		const waterHeight = Simplex3DNoise(Mul(Add(VertexPosition, Time), 0.1))
 		const diffuseColor = new Color("#66d")
 
 		const { position, normal } = ModifyVertex(VertexPosition, VertexNormal, (v) =>
-			Add(v, JoinVector3(0, Mul(waterHeight, 1.3), 0))
+			pipe(
+				v,
+				(v) => Add(v, GerstnerWave(VertexPosition, JoinVector2(0, -1), 0.5, 8.0, Time)),
+				(v) => Add(v, GerstnerWave(VertexPosition, JoinVector2(0, 1), 1.25, 3, Time)),
+				(v) => Add(v, GerstnerWave(VertexPosition, JoinVector2(1, 1), 0.2, 8.0, Time)),
+				(v) => Add(v, GerstnerWave(VertexPosition, JoinVector2(1, 1), 1, 20.0, Time))
+			)
 		)
 
 		return CustomShaderMaterialMaster({

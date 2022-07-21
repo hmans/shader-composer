@@ -10,11 +10,9 @@ https://github.com/FarazzShaikh/glNoise/blob/master/src/GerstnerWave.glsl
 const gerstnerWave = Snippet(
 	(gerstnerWave) => $`
 		vec3 ${gerstnerWave}(in vec3 p, in vec2 direction, in float steepness, in float wavelength, in float dt) {
-			float steepness = opts.steepness;
-			float wavelength = opts.wavelength;
-			float k = 2.0 * gln_PI / wavelength;
+			float k = 2.0 * PI / wavelength;
 			float c = sqrt(9.8 / k);
-			vec2 d = normalize(opts.direction);
+			vec2 d = normalize(direction);
 			float f = k * (dot(d, p.xy) - c * dt);
 			float a = steepness / k;
 
