@@ -1,5 +1,12 @@
 # shader-composer
 
+## 0.0.4-next.2
+
+### Patch Changes
+
+- ae36751: Remove `JoinVector2/3/4`. The new `vec2/3/4` helpers do the same thing (but better.)
+- c90ab60: Force high precision in all shaders. (This will be made configurable in a future update.)
+
 ## 0.0.4-next.1
 
 ### Patch Changes
