@@ -1,5 +1,4 @@
-import { glsl } from "../../expressions"
-import { Snippet } from "../../snippets"
+import { glsl, Snippet } from "shader-composer"
 
 export const mod289 = Snippet(
 	(name) => glsl`

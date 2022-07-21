@@ -2,14 +2,13 @@ import { pipe } from "fp-ts/lib/function"
 import {
 	Add,
 	CustomShaderMaterialMaster,
-	GerstnerWave,
 	JoinVector2,
 	Time,
 	VertexNormal,
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { ModifyVertex } from "shader-composer-toybox"
+import { GerstnerWave, ModifyVertex } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 

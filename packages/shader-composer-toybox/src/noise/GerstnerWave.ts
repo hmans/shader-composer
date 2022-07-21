@@ -1,8 +1,5 @@
+import { $, Snippet, Time, Value, Vec3 } from "shader-composer"
 import { Vector2 } from "three"
-import { $ } from "../../expressions"
-import { Snippet } from "../../snippets"
-import { Value, Vec3 } from "../../units"
-import { Time } from "../input"
 
 /*
 With many thanks to glNoise:

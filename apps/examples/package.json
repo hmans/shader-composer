@@ -17,7 +17,7 @@
 		"react-dom": "^18.2.0",
 		"shader-composer": "^0.0.4-next.0",
 		"shader-composer-r3f": "^0.0.4-next.0",
-		"shader-composer-toybox": "^0.0.1",
+		"shader-composer-toybox": "^0.0.4-next.0",
 		"three": "^0.142.0",
 		"three-custom-shader-material": "^3.4.4",
 		"wouter": "^2.8.0-alpha.2"

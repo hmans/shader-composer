@@ -1,6 +1,4 @@
-import { glsl } from "../../expressions"
-import { Snippet } from "../../snippets"
-import { Float, Value } from "../../units"
+import { Float, glsl, Snippet, Value } from "shader-composer"
 import { permute } from "./permute"
 import { taylorInvSqrt } from "./taylorInvSqrt"
 

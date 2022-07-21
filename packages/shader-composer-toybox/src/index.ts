@@ -5,7 +5,6 @@ import {
 	Mul,
 	Normalize,
 	Remap,
-	Simplex3DNoise,
 	Smoothstep,
 	Step,
 	Sub,
@@ -14,6 +13,9 @@ import {
 	VertexPosition
 } from "shader-composer"
 import { Color } from "three"
+import { Simplex3DNoise } from "./noise"
+
+export * from "./noise"
 
 export const Dissolve = (
 	visibility: Value<"float"> = 0.5,
