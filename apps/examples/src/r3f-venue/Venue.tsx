@@ -37,8 +37,8 @@ export const Venue: FC<{
 			{examples && <Navigation examples={examples} />}
 			<Canvas>
 				<ambientLight intensity={0.2} />
-				<directionalLight position={[10, 10, 20]} intensity={1.1} />
-				<directionalLight position={[-20, 0, 10]} intensity={0.8} />
+				<directionalLight position={[10, 10, 20]} intensity={0.6} />
+				<directionalLight position={[-20, 0, 10]} intensity={0.6} />
 				<fogExp2 args={["#000", 0.03]} attach="fog" />
 
 				<OrbitControls
