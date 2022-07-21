@@ -1,5 +1,6 @@
 import { Environment, OrbitControls } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
+import { Perf } from "r3f-perf"
 import { FC, ReactNode } from "react"
 import { Link, useRoute } from "wouter"
 import Stage from "./Stage"
@@ -26,10 +27,11 @@ function Example({ examples }: { examples: Examples }) {
 
 export type Examples = Record<string, any>
 
-export const Venue: FC<{ children?: ReactNode; examples?: Examples }> = ({
-	children,
-	examples
-}) => {
+export const Venue: FC<{
+	children?: ReactNode
+	examples?: Examples
+	performance?: boolean
+}> = ({ children, examples, performance = true }) => {
 	return (
 		<>
 			{examples && <Navigation examples={examples} />}
@@ -44,6 +46,8 @@ export const Venue: FC<{ children?: ReactNode; examples?: Examples }> = ({
 					minPolarAngle={Math.PI * 0.25}
 					maxPolarAngle={Math.PI * 0.75}
 				/>
+
+				{performance && <Perf position="bottom-right" />}
 
 				<Stage />
 
