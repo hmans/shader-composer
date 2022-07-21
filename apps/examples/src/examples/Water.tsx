@@ -33,9 +33,6 @@ function Water() {
 		})
 	})
 
-	console.log(shader.vertexShader)
-	console.log(shader.fragmentShader)
-
 	return (
 		<mesh position-y={-16}>
 			<boxGeometry args={[70, 16, 70, 70, 1, 70]} />
@@ -44,6 +41,28 @@ function Water() {
 	)
 }
 
-export default function() {
-	return <Water />
+function Thingy() {
+	const shader = useShader(() => {
+		const diffuseColor = new Color("#66d")
+
+		return CustomShaderMaterialMaster({
+			diffuseColor
+		})
+	})
+
+	return (
+		<mesh>
+			<icosahedronBufferGeometry args={[1.5, 8]} />
+			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} />
+		</mesh>
+	)
+}
+
+export default function WaterExample() {
+	return (
+		<>
+			<Thingy />
+			<Water />
+		</>
+	)
 }
