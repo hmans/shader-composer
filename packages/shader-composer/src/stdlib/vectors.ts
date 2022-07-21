@@ -1,19 +1,6 @@
 import { $ } from "../expressions"
 import { type } from "../glslType"
-import { Float, Value, Unit, Vec2, Vec3, Vec4 } from "../units"
-
-export const JoinVector2 = (x: Value<"float">, y: Value<"float">) =>
-	Vec2($`vec2(${x}, ${y})`, { name: "Join Vector2" })
-
-export const JoinVector3 = (x: Value<"float">, y: Value<"float">, z: Value<"float">) =>
-	Vec3($`vec3(${x}, ${y}, ${z})`, { name: "Join Vector3" })
-
-export const JoinVector4 = (
-	x: Value<"float">,
-	y: Value<"float">,
-	z: Value<"float">,
-	w: Value<"float">
-) => Vec4($`vec4(${x}, ${y}, ${z}, ${w})`, { name: "Join Vector4" })
+import { Float, Unit, Value, Vec3 } from "../units"
 
 export const SplitVector2 = (vector: Value<"vec2">) =>
 	[Float($`${vector}.x`), Float($`${vector}.y`)] as const

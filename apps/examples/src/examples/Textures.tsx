@@ -4,13 +4,14 @@ import {
 	Add,
 	CustomShaderMaterialMaster,
 	Fresnel,
-	JoinVector2,
+	tor2,
 	Mul,
 	Sampler2D,
 	Texture2D,
 	TilingUV,
 	Time,
-	UV
+	UV,
+	vec2
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial, Vector2 } from "three"
@@ -21,12 +22,9 @@ export default function Playground() {
 	const texture = useRepeatingTexture("/textures/hexgrid.jpg")
 
 	const { uniforms, ...shader } = useShader(() => {
-		const offset = JoinVector2(Mul(Time, 0.05), 0)
+		const offset = vec2(Mul(Time, 0.05), 0)
 
-		const tex2d = Texture2D(
-			Sampler2D("u_texture"),
-			TilingUV(UV, new Vector2(2, 1), offset)
-		)
+		const tex2d = Texture2D(Sampler2D("u_texture"), TilingUV(UV, vec2(2, 1), offset))
 
 		const color = new Color("hotpink")
 
