@@ -18,7 +18,7 @@ export type JSTypes = {
 	bool: boolean
 	float: number
 	int: number
-	vec2: Vector2
+	vec2: Vector2 | [number, number]
 	vec3: Vector3 | Color
 	vec4: Vector4
 	mat3: Matrix3

@@ -1,11 +1,12 @@
+import { Vector2 } from "three"
 import { compileShader } from "./compiler"
 import { $ } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
-import { Float, Value, Unit } from "./units"
+import { Float, Value, Unit, Vec2 } from "./units"
 
 const glsl = glslRepresentation
 
-describe("Node", () => {
+describe("Unit", () => {
 	it("creates a node of the specified type and value", () => {
 		const v = Unit("float", 1)
 		expect(v.type).toBe("float")
@@ -72,5 +73,12 @@ describe("Node", () => {
 		const a = Float(5)
 		const v = Double($`${a} + 5.0`)
 		expect(glsl(v.value)).toBe(`(${a._unitConfig.variableName} + 5.0) * 2.0`)
+	})
+})
+
+describe("Vec2", () => {
+	it("accepts a THREE.Vector2 as value", () => {
+		const vec2 = Vec2(new Vector2(1, 2))
+		expect(glsl(vec2.value)).toBe("vec2(1.0, 2.0)")
 	})
 })
