@@ -26,13 +26,13 @@ function Water() {
 
 		const { position, normal } = ModifyVertex(VertexPosition, VertexNormal, (v) => {
 			const split = SplitVector3(v)
-
+			const xy = JoinVector2(split[0], split[2])
 			return pipe(
 				v,
-				(v) => Add(v, Mul(GerstnerWave(v, JoinVector2(0.5, 0.5), 0.1, 10), 0.8)),
-				(v) => Add(v, Mul(GerstnerWave(v, JoinVector2(0, -0.5), 0.5, 5), 0.5)),
-				(v) => Add(v, Mul(GerstnerWave(v, JoinVector2(0.5, -0.5), 0.2, 8), 0.2)),
-				(v) => Add(v, Mul(GerstnerWave(v, JoinVector2(1, 1), 1, 20.0), 0.9)),
+				(v) => Add(v, Mul(GerstnerWave(xy, JoinVector2(1, 1), 0.5, 20.0), 0.8)),
+				(v) => Add(v, Mul(GerstnerWave(xy, JoinVector2(0.2, 1), 0.2, 10), 0.8)),
+				(v) => Add(v, Mul(GerstnerWave(xy, JoinVector2(0, -1), 0.2, 5), 0.5)),
+				(v) => Add(v, Mul(GerstnerWave(xy, JoinVector2(1, 1), 0.2, 8), 0.3)),
 				(v) =>
 					Add(
 						v,
