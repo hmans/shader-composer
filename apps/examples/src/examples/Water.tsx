@@ -41,9 +41,9 @@ function Water() {
 							NormalizeNoise(
 								FBMNoise(JoinVector2(Add(split[0], Time), split[2]), {
 									seed: Math.random(),
-									persistance: 10.2,
+									persistance: 2.2,
 									lacunarity: 1.3,
-									scale: 1.8,
+									scale: 2.4,
 									redistribution: 1,
 									octaves: "2",
 									terbulance: false,
@@ -68,8 +68,8 @@ function Water() {
 			<CustomShaderMaterial
 				baseMaterial={MeshPhysicalMaterial}
 				{...shader}
-				roughness={0.5}
-				metalness={0.5}
+				roughness={0.1}
+				metalness={0.2}
 			/>
 		</mesh>
 	)
