@@ -32,7 +32,7 @@ function Water() {
 				(v) => Add(v, Mul(GerstnerWave(v, JoinVector2(0.5, 0.5), 0.1, 10), 0.8)),
 				(v) => Add(v, Mul(GerstnerWave(v, JoinVector2(0, -0.5), 0.5, 5), 0.5)),
 				(v) => Add(v, Mul(GerstnerWave(v, JoinVector2(0.5, -0.5), 0.2, 8), 0.2)),
-				(v) => Add(v, Mul(GerstnerWave(v, JoinVector2(0.5, 1), 1, 20.0), 0.9)),
+				(v) => Add(v, Mul(GerstnerWave(v, JoinVector2(1, 1), 1, 20.0), 0.9)),
 				(v) =>
 					Add(
 						v,
