@@ -12,7 +12,7 @@ import { GerstnerWave, ModifyVertex } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
-export default function() {
+function Water() {
 	const shader = useShader(() => {
 		const diffuseColor = new Color("#66d")
 
@@ -42,4 +42,8 @@ export default function() {
 			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} />
 		</mesh>
 	)
+}
+
+export default function() {
+	return <Water />
 }
