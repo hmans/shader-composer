@@ -5,18 +5,18 @@ exports[`compileShader allows units to declare themselves to exist in one progra
 
 void main()
 {
-  /*** BEGIN: Position (Vertex Only) ***/
+  /*** UNIT: Position (Vertex Only) ***/
   float Position_Vertex_Only_1 = 1.0;
-  /*** END: Position (Vertex Only) ***/
   
-  /*** BEGIN: Anonymous ***/
+  
+  /*** UNIT: Anonymous ***/
   bool Anonymous_3 = true;
   {
     bool value = Anonymous_3;
     gl_Position = Position_Vertex_Only_1;
     Anonymous_3 = value;
   }
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -26,18 +26,18 @@ exports[`compileShader allows units to declare themselves to exist in one progra
 
 void main()
 {
-  /*** BEGIN: Color (Fragment Only) ***/
+  /*** UNIT: Color (Fragment Only) ***/
   float Color_Fragment_Only_2 = 2.0;
-  /*** END: Color (Fragment Only) ***/
   
-  /*** BEGIN: Anonymous ***/
+  
+  /*** UNIT: Anonymous ***/
   bool Anonymous_3 = true;
   {
     bool value = Anonymous_3;
     gl_FragColor = Color_Fragment_Only_2;
     Anonymous_3 = value;
   }
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -47,9 +47,9 @@ exports[`compileShader compiles shader programs from the given unit 1`] = `
 
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   bool Anonymous_1 = true;
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -59,9 +59,9 @@ exports[`compileShader compiles shader programs from the given unit 2`] = `
 
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   bool Anonymous_1 = true;
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -71,14 +71,14 @@ exports[`compileShader embeds body chunks in scoped blocks, with a local \`value
 
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   bool Anonymous_1 = true;
   {
     bool value = Anonymous_1;
     gl_FragColor.rgb = vec3(1.0, 0.0, 0.0);
     Anonymous_1 = value;
   }
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -88,9 +88,9 @@ exports[`compileShader resolves dependencies to expressions 1`] = `
 
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   float Anonymous_1 = 123.0 + 4.0;
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -100,9 +100,9 @@ exports[`compileShader resolves dependencies to expressions 2`] = `
 
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   float Anonymous_1 = 123.0 + 4.0;
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -112,13 +112,13 @@ exports[`compileShader resolves dependencies to other units 1`] = `
 
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   float Anonymous_1 = 123.0;
-  /*** END: Anonymous ***/
   
-  /*** BEGIN: Anonymous ***/
+  
+  /*** UNIT: Anonymous ***/
   float Anonymous_2 = Anonymous_1;
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -128,13 +128,13 @@ exports[`compileShader resolves dependencies to other units 2`] = `
 
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   float Anonymous_1 = 123.0;
-  /*** END: Anonymous ***/
   
-  /*** BEGIN: Anonymous ***/
+  
+  /*** UNIT: Anonymous ***/
   float Anonymous_2 = Anonymous_1;
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -144,13 +144,13 @@ exports[`compileShader resolves dependencies to other units from within expressi
 
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   float Anonymous_1 = 123.0;
-  /*** END: Anonymous ***/
   
-  /*** BEGIN: Anonymous ***/
+  
+  /*** UNIT: Anonymous ***/
   float Anonymous_2 = Anonymous_1 * 2.0;
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -160,13 +160,13 @@ exports[`compileShader resolves dependencies to other units from within expressi
 
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   float Anonymous_1 = 123.0;
-  /*** END: Anonymous ***/
   
-  /*** BEGIN: Anonymous ***/
+  
+  /*** UNIT: Anonymous ***/
   float Anonymous_2 = Anonymous_1 * 2.0;
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -180,9 +180,9 @@ exports[`compileShader supports snippets 1`] = `
 			}
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   float Anonymous_1 = snippet_c8b24f9130(1.0);
-  /*** END: Anonymous ***/
+  
   
 }"
 `;
@@ -196,9 +196,9 @@ exports[`compileShader supports snippets 2`] = `
 			}
 void main()
 {
-  /*** BEGIN: Anonymous ***/
+  /*** UNIT: Anonymous ***/
   float Anonymous_1 = snippet_c8b24f9130(1.0);
-  /*** END: Anonymous ***/
+  
   
 }"
 `;

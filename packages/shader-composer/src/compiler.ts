@@ -13,9 +13,9 @@ import {
 } from "./util/concatenator3000"
 import idGenerator from "./util/idGenerator"
 
-const beginUnit = (unit: Unit) => `/*** BEGIN: ${unit._unitConfig.name} ***/`
+const beginUnit = (unit: Unit) => `/*** UNIT: ${unit._unitConfig.name} ***/`
 
-const endUnit = (unit: Unit) => `/*** END: ${unit._unitConfig.name} ***/\n`
+const endUnit = (unit: Unit) => `\n`
 
 const compileItem = (
 	item: Unit | Expression | Snippet,
