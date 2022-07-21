@@ -1,5 +1,11 @@
 # shader-composer
 
+## 0.0.4-next.0
+
+### Patch Changes
+
+- c2157ff: We're trying prereleases! Let's go!
+
 ## 0.0.3
 
 ### Patch Changes
