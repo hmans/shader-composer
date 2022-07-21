@@ -1,9 +1,12 @@
 import { Color, Vector2, Vector3, Vector4 } from "three"
 import { isExpression } from "./expressions"
 import { isSnippet } from "./snippets"
-import { isUnit, Value } from "./units"
+import { GLSLType, isUnit, Value } from "./units"
 
-export const glslRepresentation = (value: Value | undefined): string => {
+export const glslRepresentation = (
+	value: Value | undefined,
+	typeHint?: GLSLType
+): string => {
 	if (value === undefined) return ""
 	if (isUnit(value)) return value.toString()
 	if (isExpression(value)) return value.render()
@@ -15,7 +18,7 @@ export const glslRepresentation = (value: Value | undefined): string => {
 
 	if (typeof value === "number") {
 		const s = value.toString()
-		return s.match(/[.e]/) ? s : `${s}.0`
+		return typeHint === "int" ? s : s.match(/[.e]/) ? s : `${s}.0`
 	}
 
 	if (value instanceof Color)

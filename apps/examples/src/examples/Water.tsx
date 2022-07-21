@@ -2,6 +2,7 @@ import { pipe } from "fp-ts/lib/function"
 import {
 	Add,
 	CustomShaderMaterialMaster,
+	Int,
 	JoinVector2,
 	JoinVector3,
 	Mix,
@@ -45,7 +46,7 @@ function Water() {
 									lacunarity: 1.3,
 									scale: 2.4,
 									redistribution: 1,
-									octaves: "2",
+									octaves: Int(2),
 									terbulance: false,
 									ridge: false
 								})
