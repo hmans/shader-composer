@@ -1,4 +1,4 @@
-# Shader Composer
+# shader-composer
 
 > **Warning**
 >
