@@ -4,9 +4,13 @@
   "initialVersions": {
     "examples": "0.0.0",
     "shader-composer": "0.0.3",
-    "shader-composer-r3f": "0.0.3"
+    "shader-composer-r3f": "0.0.3",
+    "shader-composer-toybox": "0.0.4-next.0"
   },
   "changesets": [
-    "rare-lions-develop"
+    "grumpy-dogs-push",
+    "rare-lions-develop",
+    "spotty-rice-grow",
+    "two-eagles-clap"
   ]
 }
