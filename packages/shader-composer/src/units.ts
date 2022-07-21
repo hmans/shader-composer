@@ -4,11 +4,20 @@ import { identifier } from "./util/concatenator3000"
 
 export type Program = "vertex" | "fragment"
 
-export type GLSLType = "bool" | "float" | "vec2" | "vec3" | "vec4" | "mat3" | "mat4"
+export type GLSLType =
+	| "bool"
+	| "int"
+	| "float"
+	| "vec2"
+	| "vec3"
+	| "vec4"
+	| "mat3"
+	| "mat4"
 
 export type JSTypes = {
 	bool: boolean
 	float: number
+	int: number
 	vec2: Vector2
 	vec3: Vector3 | Color
 	vec4: Vector4

@@ -2,10 +2,44 @@ import { $, Float, Snippet, Value } from "shader-composer"
 import { type } from "shader-composer/src/glslType"
 import { perlin } from "./PerlinNoise"
 
-export const FBMNoise = (p: Value<"vec2" | "vec3">) =>
-	Float($`${fbmNoise}(${p}, ${fbmNoise}Opts(0.0, 0.3, 2.0, 0.5, 1.0, 5, false, false))`, {
-		name: `FBMNoise ${type(p)}`
-	})
+export type FBMOptions = {
+	seed?: Value<"float">
+	persistance?: Value<"float">
+	lacunarity?: Value<"float">
+	scale?: Value<"float">
+	redistribution?: Value<"float">
+	octaves?: Value<"int">
+	terbulance?: Value<"bool">
+	ridge?: Value<"bool">
+}
+
+export const FBMNoise = (
+	p: Value<"vec2" | "vec3">,
+	{
+		seed = 0,
+		persistance = 0,
+		lacunarity = 0,
+		scale = 1,
+		redistribution = 1,
+		octaves = "1",
+		terbulance = true,
+		ridge = true
+	}: FBMOptions = {}
+) =>
+	Float(
+		$`${fbmNoise}(${p}, ${fbmNoise}Opts(
+			${seed},
+			${persistance},
+			${lacunarity},
+			${scale},
+			${redistribution},
+			${octaves},
+			${terbulance},
+			${ridge}))`,
+		{
+			name: `FBMNoise ${type(p)}`
+		}
+	)
 
 const fbmNoise = Snippet(
 	(fbmNoise) => $`
