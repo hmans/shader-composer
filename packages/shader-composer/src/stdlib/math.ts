@@ -2,7 +2,7 @@ import { $ } from "../expressions"
 import { type } from "../glslType"
 import { Snippet } from "../snippets"
 import { Float, GLSLType, Unit, Value, withAPI } from "../units"
-import { VertexNormalWorld, ViewDirection } from "./geometry"
+import { VertexNormal, ViewDirection } from "./geometry"
 
 export const Operator = (title: string, operator: "+" | "-" | "*" | "/") => <
 	T extends GLSLType
@@ -41,6 +41,7 @@ export const With = <T extends GLSLType>(unit: Unit<T>) =>
 	})
 
 export type FresnelProps = {
+	normal?: Value<"vec3">
 	alpha?: Value<"float">
 	bias?: Value<"float">
 	intensity?: Value<"float">
@@ -49,6 +50,7 @@ export type FresnelProps = {
 }
 
 export const Fresnel = ({
+	normal = VertexNormal,
 	bias = 0,
 	intensity = 1,
 	power = 2,
@@ -57,7 +59,7 @@ export const Fresnel = ({
 	Float(0, {
 		fragment: {
 			body: $`
-				float f_a = (${factor} + dot(${ViewDirection}, ${VertexNormalWorld}));
+				float f_a = (${factor} + dot(${ViewDirection}, ${normal}));
 				float f_fresnel = ${bias} + ${intensity} * pow(abs(f_a), ${power});
 				f_fresnel = clamp(f_fresnel, 0.0, 1.0);
 				value = f_fresnel;
