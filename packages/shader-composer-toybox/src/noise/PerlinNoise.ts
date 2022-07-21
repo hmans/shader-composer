@@ -14,7 +14,7 @@ const fade = Snippet(
   `
 )
 
-const perlin = Snippet(
+export const perlin = Snippet(
 	(perlin) => glsl`
 		float ${perlin}(vec2 P) {
 			vec4 Pi = floor(P.xyxy) + vec4(0.0, 0.0, 1.0, 1.0);

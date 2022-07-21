@@ -9,7 +9,7 @@ import {
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { GerstnerWave, ModifyVertex, PerlinNoise } from "shader-composer-toybox"
+import { FBMNoise, GerstnerWave, ModifyVertex, PerlinNoise } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial, Vector3 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
@@ -47,7 +47,7 @@ function Thingy() {
 		const diffuseColor = Mix<"vec3">(
 			new Color("black"),
 			new Color("white"),
-			PerlinNoise(VertexPosition)
+			FBMNoise(VertexPosition)
 		)
 
 		return CustomShaderMaterialMaster({
