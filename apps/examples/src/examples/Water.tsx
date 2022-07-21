@@ -47,7 +47,7 @@ function Thingy() {
 		const diffuseColor = Mix<"vec3">(
 			new Color("black"),
 			new Color("white"),
-			PerlinNoise(VertexPosition, new Vector3(10, 10, 10))
+			PerlinNoise(VertexPosition)
 		)
 
 		return CustomShaderMaterialMaster({
