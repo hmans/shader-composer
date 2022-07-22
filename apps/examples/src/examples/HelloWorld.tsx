@@ -20,11 +20,11 @@ export default function HelloWorld() {
 	const leva = useControls({ color1: "hotpink", color2: "white" })
 
 	const blackboard = {
-		color1: Uniform("vec3", "u_color1", leva.color1),
-		color2: Uniform("vec3", "u_color2", leva.color2)
+		color1: Uniform("vec3", "u_color1", new Color(leva.color1)),
+		color2: Uniform("vec3", "u_color2", new Color(leva.color2))
 	}
 
-	const { uniforms, ...shader } = useShader(() => {
+	const shader = useShader(() => {
 		console.log("Recompiling shader. You should not see this when changing the color.")
 
 		return ShaderMaterialMaster({
@@ -38,27 +38,18 @@ export default function HelloWorld() {
 		})
 	}, [])
 
-	const myUniforms = useMemo(
-		() => ({
-			...uniforms,
-			u_color1: { value: new Color(leva.color1) },
-			u_color2: { value: new Color(leva.color2) }
-		}),
-		[uniforms]
-	)
-
 	useEffect(() => {
-		myUniforms.u_color1.value.set(leva.color1)
+		shader.uniforms.u_color1.value.set(leva.color1)
 	}, [leva.color1])
 
 	useEffect(() => {
-		myUniforms.u_color2.value.set(leva.color2)
+		shader.uniforms.u_color2.value.set(leva.color2)
 	}, [leva.color2])
 
 	return (
 		<mesh>
 			<sphereGeometry />
-			<shaderMaterial uniforms={myUniforms} {...shader} key={Math.random()} />
+			<shaderMaterial {...shader} key={Math.random()} />
 		</mesh>
 	)
 }

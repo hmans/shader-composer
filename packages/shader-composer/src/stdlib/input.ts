@@ -7,6 +7,6 @@ export const Uniform = <T extends GLSLType>(type: T, name: string, value?: any) 
 		uniforms: { [name]: { type, value } }
 	})
 
-export const Time = Uniform("float", "u_time")
+export const Time = Uniform("float", "u_time", 0)
 
 export const Resolution = Uniform("vec2", "u_resolution")
