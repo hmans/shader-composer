@@ -10,6 +10,7 @@ export default function DissolveExample() {
 	const sphereOpts = useControls("Sphere", { color: "#666" })
 	const dissolveOpts = useControls("Dissolve", {
 		edgeColor: "#0ef",
+		edgeColorIntensity: { value: 2, min: 0, max: 5 },
 		edgeThickness: { value: 0.2, min: 0, max: 1 },
 		scale: { value: 2.5, min: 0, max: 5 },
 		visibility: { value: 0.5, min: 0, max: 1 }
@@ -21,7 +22,7 @@ export default function DissolveExample() {
 	const dissolveScale = useUniform("float", dissolveOpts.scale)
 	const dissolveEdgeColor = useUniform(
 		"vec3",
-		new Color(dissolveOpts.edgeColor).multiplyScalar(10)
+		new Color(dissolveOpts.edgeColor).multiplyScalar(dissolveOpts.edgeColorIntensity)
 	)
 	const dissolveEdgeThickness = useUniform("float", dissolveOpts.edgeThickness)
 
