@@ -5,7 +5,8 @@ import {
 	EffectPass,
 	Pass,
 	RenderPass,
-	SelectiveBloomEffect
+	SelectiveBloomEffect,
+	VignetteEffect
 } from "postprocessing"
 import { useLayoutEffect, useMemo } from "react"
 import { HalfFloatType } from "three"
@@ -41,6 +42,8 @@ export const PostProcessing = () => {
 	}, [scene, camera])
 
 	usePass(composer, () => new EffectPass(camera, bloomEffect), [bloomEffect, camera])
+
+	usePass(composer, () => new EffectPass(camera, new VignetteEffect()), [camera])
 
 	useFrame(() => {
 		composer.render()
