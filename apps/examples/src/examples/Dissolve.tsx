@@ -1,7 +1,5 @@
-import { useFrame } from "@react-three/fiber"
 import { useControls } from "leva"
-import { useMemo } from "react"
-import { CustomShaderMaterialMaster, Mix, pipe, Uniform } from "shader-composer"
+import { CustomShaderMaterialMaster, Mix, pipe } from "shader-composer"
 import { useShader, useUniform } from "shader-composer-r3f"
 import { Dissolve } from "shader-composer-toybox"
 import { Color, DoubleSide, MeshPhysicalMaterial } from "three"
