@@ -99,3 +99,5 @@ export const Remap = <T extends "float" | "vec2" | "vec3" | "vec4">(
 	outMin: Value<T>,
 	outMax: Value<T>
 ) => Unit(type(v), $`${remap}(${v}, ${inMin}, ${inMax}, ${outMin}, ${outMax})`)
+
+export const NormalizePlusMinusOne = (f: Value<"float">) => Remap(f, -1, 1, 0, 1)
