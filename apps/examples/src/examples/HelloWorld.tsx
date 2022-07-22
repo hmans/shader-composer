@@ -5,14 +5,12 @@ import {
 	Add,
 	Fresnel,
 	Mix,
-	Mul,
 	pipe,
 	Remap,
 	ShaderMaterialMaster,
 	Sin,
 	Time,
-	UniformConfiguration,
-	Vec3,
+	Uniform,
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
