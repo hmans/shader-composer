@@ -19,7 +19,10 @@ export default function DissolveExample() {
 	const sphereColor = useUniform("vec3", new Color(sphereOpts.color))
 	const dissolveVisibility = useUniform("float", dissolveOpts.visibility)
 	const dissolveScale = useUniform("float", dissolveOpts.scale)
-	const dissolveEdgeColor = useUniform("vec3", new Color(dissolveOpts.edgeColor))
+	const dissolveEdgeColor = useUniform(
+		"vec3",
+		new Color(dissolveOpts.edgeColor).multiplyScalar(10)
+	)
 	const dissolveEdgeThickness = useUniform("float", dissolveOpts.edgeThickness)
 
 	/* Shader */

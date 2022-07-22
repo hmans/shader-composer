@@ -2,7 +2,7 @@ import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Perf } from "r3f-perf"
 import { FC, ReactNode, Suspense, useRef } from "react"
-import { Mesh } from "three"
+import { LinearEncoding, Mesh, sRGBEncoding } from "three"
 import { Link, useRoute } from "wouter"
 import { PostProcessing } from "./PostProcessing"
 import Stage from "./Stage"
@@ -53,7 +53,16 @@ export const Venue: FC<{
 	return (
 		<>
 			{examples && <Navigation examples={examples} />}
-			<Canvas>
+			<Canvas
+				flat
+				gl={{
+					powerPreference: "high-performance",
+					alpha: false,
+					depth: true,
+					stencil: false,
+					antialias: false
+				}}
+			>
 				<Environment preset="sunset" />
 				<fogExp2 args={["#000", 0.03]} attach="fog" />
 				<PerspectiveCamera position={[0, 0, 5]} makeDefault />
