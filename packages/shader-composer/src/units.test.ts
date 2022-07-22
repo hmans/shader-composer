@@ -9,27 +9,29 @@ const glsl = glslRepresentation
 describe("Unit", () => {
 	it("creates a node of the specified type and value", () => {
 		const v = Unit("float", 1)
-		expect(v.type).toBe("float")
-		expect(v.value).toBe(1)
-		expect(glsl(v.value)).toBe("1.0")
+		expect(v._unitConfig.type).toBe("float")
+		expect(v._unitConfig.value).toBe(1)
+		expect(glsl(v._unitConfig.value)).toBe("1.0")
 	})
 
 	it("supports string values (which will be used as verbatim expressions)", () => {
 		const v = Unit("vec3", $`vec3(1.0, 1.0, 1.0)`)
-		expect(glsl(v.value)).toBe("vec3(1.0, 1.0, 1.0)")
+		expect(glsl(v._unitConfig.value)).toBe("vec3(1.0, 1.0, 1.0)")
 	})
 
 	it("supports expression values", () => {
 		const a = Float(1)
 		const v = Unit("vec3", $`vec3(${a}, 1.0, 1.0)`)
-		expect(glsl(v.value)).toBe(`vec3(${a._unitConfig.variableName}, 1.0, 1.0)`)
+		expect(glsl(v._unitConfig.value)).toBe(
+			`vec3(${a._unitConfig.variableName}, 1.0, 1.0)`
+		)
 	})
 
 	it("allows nodes to directly reference other nodes", () => {
 		const source = Float(1)
 		const v = Float(source)
-		expect(v.value).toBe(source)
-		expect(glsl(v.value)).toBe(source._unitConfig.variableName)
+		expect(v._unitConfig.value).toBe(source)
+		expect(glsl(v._unitConfig.value)).toBe(source._unitConfig.variableName)
 	})
 
 	it("supports a 'varying' flag that will automatically make it pass its data as a varying", () => {
@@ -52,33 +54,33 @@ describe("Unit", () => {
 	it("supports constructing nodes through constructor functions", () => {
 		const Double = (f: Value<"float">) => Float($`(${f}) * 2.0`)
 		const v = Double(1)
-		expect(glsl(v.value)).toBe("(1.0) * 2.0")
+		expect(glsl(v._unitConfig.value)).toBe("(1.0) * 2.0")
 	})
 
 	it("constructor functions can pass string values as expressions", () => {
 		const Double = (f: Value<"float">) => Float($`(${f}) * 2.0`)
 		const v = Double($`5.0`)
-		expect(glsl(v.value)).toBe(`(5.0) * 2.0`)
+		expect(glsl(v._unitConfig.value)).toBe(`(5.0) * 2.0`)
 	})
 
 	it("constructor functions can pass references to other nodes", () => {
 		const Double = (f: Value<"float">) => Float($`(${f}) * 2.0`)
 		const a = Float(1)
 		const v = Double(a)
-		expect(glsl(v.value)).toBe(`(${a._unitConfig.variableName}) * 2.0`)
+		expect(glsl(v._unitConfig.value)).toBe(`(${a._unitConfig.variableName}) * 2.0`)
 	})
 
 	it("constructor functions can pass expression values to other nodes", () => {
 		const Double = (f: Value<"float">) => Float($`(${f}) * 2.0`)
 		const a = Float(5)
 		const v = Double($`${a} + 5.0`)
-		expect(glsl(v.value)).toBe(`(${a._unitConfig.variableName} + 5.0) * 2.0`)
+		expect(glsl(v._unitConfig.value)).toBe(`(${a._unitConfig.variableName} + 5.0) * 2.0`)
 	})
 })
 
 describe("Vec2", () => {
 	it("accepts a THREE.Vector2 as value", () => {
 		const vec2 = Vec2(new Vector2(1, 2))
-		expect(glsl(vec2.value)).toBe("vec2(1.0, 2.0)")
+		expect(glsl(vec2._unitConfig.value)).toBe("vec2(1.0, 2.0)")
 	})
 })

@@ -1,7 +1,8 @@
+import { stringifyJSON } from "fp-ts/es6/Either"
 import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
-import { isUnit, Program, Unit } from "./units"
+import { isUnit, Program, UniformConfiguration, Unit } from "./units"
 import {
 	assignment,
 	block,
@@ -61,7 +62,7 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	header and body of the program we're currenty compiling.
 	*/
 	const dependencies = [
-		unit.value,
+		unit._unitConfig.value,
 		unit._unitConfig[program]?.header?.values,
 		unit._unitConfig[program]?.body?.values
 	].flat()
@@ -75,7 +76,18 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 
 	/* Declare varying if this unit has varying mode */
 	if (unit._unitConfig.varying) {
-		header.push(`varying ${unit.type} v_${unit._unitConfig.variableName};`)
+		header.push(`varying ${unit._unitConfig.type} v_${unit._unitConfig.variableName};`)
+	}
+
+	/* Declare uniforms, if any are configured. */
+	if (unit._unitConfig.uniforms) {
+		/* Register uniforms with compiler state */
+		state.uniforms = { ...state.uniforms, ...unit._unitConfig.uniforms }
+
+		/* Declare uniforms in header */
+		Object.entries(unit._unitConfig.uniforms).forEach(([name, { type }]) => {
+			header.push(statement("uniform", type, name))
+		})
 	}
 
 	/* Add header if present */
@@ -90,14 +102,16 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	const value =
 		unit._unitConfig.varying && program === "fragment"
 			? `v_${unit._unitConfig.variableName}`
-			: glslRepresentation(unit.value, unit.type)
+			: glslRepresentation(unit._unitConfig.value, unit._unitConfig.type)
 
 	state.body.push(beginUnit(unit))
 
 	/*
 	Declare the unit's global variable, and assign the specified value to it.
 	*/
-	state.body.push(statement(unit.type, unit._unitConfig.variableName, "=", value))
+	state.body.push(
+		statement(unit._unitConfig.type, unit._unitConfig.variableName, "=", value)
+	)
 
 	/*
 	If a body chunk is given, we'll create a scoped block with a local variable called
@@ -106,7 +120,7 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	if (unit._unitConfig[program]?.body)
 		state.body.push(
 			block(
-				statement(unit.type, "value", "=", unit._unitConfig.variableName),
+				statement(unit._unitConfig.type, "value", "=", unit._unitConfig.variableName),
 				unit._unitConfig[program]?.body,
 				assignment(unit._unitConfig.variableName, "value")
 			)
@@ -133,7 +147,7 @@ const prepareItem = (item: Unit | Expression, state = CompilerState()) => {
 	/* Prepare dependencies */
 	if (isUnit(item)) {
 		dependencies.push(
-			item.value,
+			item._unitConfig.value,
 			item._unitConfig.vertex?.header,
 			item._unitConfig.vertex?.body,
 			item._unitConfig.fragment?.header,
@@ -198,7 +212,9 @@ export const compileShader = (root: Unit) => {
 	STEP 4: Collect uniforms.
 	*/
 	const uniforms = {
-		u_time: { value: 0 }
+		u_time: { value: 0 },
+		...vertexState.uniforms,
+		...fragmentState.uniforms
 	}
 
 	/*
@@ -227,5 +243,6 @@ const CompilerState = () => ({
 	header: new Array<Part>(),
 	body: new Array<Part>(),
 	nextid: idGenerator(),
-	seen: new Set<Unit | Expression | Snippet>()
+	seen: new Set<Unit | Expression | Snippet>(),
+	uniforms: {} as Record<string, UniformConfiguration<any, any>>
 })

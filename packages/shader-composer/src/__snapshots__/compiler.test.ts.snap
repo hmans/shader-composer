@@ -228,3 +228,39 @@ void main()
   
 }"
 `;
+
+exports[`compileShader when rendering units with registered uniforms adds uniform declarations to the program headers 1`] = `
+"/*** PROGRAM: VERTEX ***/
+
+precision highp float;
+
+/*** UNIT: Anonymous ***/
+uniform float u_foo;
+
+
+void main()
+{
+  /*** UNIT: Anonymous ***/
+  float Anonymous_1 = u_time;
+  
+  
+}"
+`;
+
+exports[`compileShader when rendering units with registered uniforms adds uniform declarations to the program headers 2`] = `
+"/*** PROGRAM: FRAGMENT ***/
+
+precision highp float;
+
+/*** UNIT: Anonymous ***/
+uniform float u_foo;
+
+
+void main()
+{
+  /*** UNIT: Anonymous ***/
+  float Anonymous_1 = u_time;
+  
+  
+}"
+`;

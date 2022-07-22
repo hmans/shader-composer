@@ -2,7 +2,7 @@ import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
 import { GLSLType, isUnit, Value } from "./units"
 
 export const glslType = <T extends GLSLType>(value: Value<T>): T => {
-	if (isUnit(value)) return value.type
+	if (isUnit(value)) return value._unitConfig.type
 
 	if (typeof value === "number") return "float" as T
 	if (value instanceof Vector4) return "vec4" as T

@@ -1,16 +1,33 @@
+import { Vector2 } from "three"
 import { $ } from "../expressions"
-import { GLSLType, Unit } from "../units"
+import { GLSLType, JSTypes, UniformConfiguration, Unit } from "../units"
 
-export const Uniform = <T extends GLSLType>(type: T, name: string) => {
-	const header = $`uniform ${type} ${name};`
+export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
+	type: T,
+	name: string,
+	value: U
+) => {
+	const uniform: UniformConfiguration<T, U> = { type, value }
 
-	return Unit<T>(type, $`${name}`, {
+	const unit = Unit<T>(type, $`${name}`, {
 		name: `Uniform: ${name}`,
-		vertex: { header },
-		fragment: { header }
+		uniforms: { [name]: uniform }
 	})
+
+	return {
+		...unit,
+
+		set value(v: U) {
+			console.log("WAGH")
+			uniform.value = v
+		},
+
+		get value(): U {
+			return uniform.value
+		}
+	}
 }
 
-export const Time = Uniform("float", "u_time")
+export const Time = Uniform("float", "u_time", 0)
 
-export const Resolution = Uniform("vec2", "u_resolution")
+export const Resolution = Uniform("vec2", "u_resolution", new Vector2(0, 0))
