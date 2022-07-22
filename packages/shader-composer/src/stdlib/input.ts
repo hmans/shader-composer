@@ -1,11 +1,19 @@
 import { $ } from "../expressions"
-import { GLSLType, Unit } from "../units"
+import { GLSLType, UniformConfiguration, Unit, withAPI } from "../units"
 
-export const Uniform = <T extends GLSLType>(type: T, name: string, value?: any) =>
-	Unit<T>(type, $`${name}`, {
+export const Uniform = <T extends GLSLType>(type: T, name: string, value?: any) => {
+	const uniform: UniformConfiguration<T> = { type, value }
+
+	const unit = Unit<T>(type, $`${name}`, {
 		name: `Uniform: ${name}`,
-		uniforms: { [name]: { type, value } }
+		uniforms: { [name]: uniform }
 	})
+
+	return {
+		...unit,
+		uniform
+	}
+}
 
 export const Time = Uniform("float", "u_time", 0)
 
