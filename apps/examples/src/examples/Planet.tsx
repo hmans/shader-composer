@@ -79,7 +79,7 @@ function Planet() {
 
 	return (
 		<mesh>
-			<icosahedronGeometry args={[1.5, 12]} />
+			<icosahedronGeometry args={[1, 12]} />
 			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} />
 		</mesh>
 	)
@@ -116,7 +116,7 @@ function Atmosphere() {
 
 	return (
 		<mesh>
-			<icosahedronGeometry args={[1.75, 12]} />
+			<icosahedronGeometry args={[1.15, 12]} />
 			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} transparent />
 		</mesh>
 	)

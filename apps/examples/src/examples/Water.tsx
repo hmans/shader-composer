@@ -59,8 +59,8 @@ function Water() {
 	})
 
 	return (
-		<mesh position-y={-16}>
-			<boxGeometry args={[70, 16, 70, 100, 1, 100]} />
+		<mesh position-y={-12}>
+			<boxGeometry args={[70, 16, 70, 120, 1, 120]} />
 			<CustomShaderMaterial
 				baseMaterial={MeshPhysicalMaterial}
 				{...shader}
