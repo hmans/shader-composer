@@ -3,9 +3,11 @@ import {
 	BlendFunction,
 	EffectComposer,
 	EffectPass,
+	FXAAEffect,
 	Pass,
 	RenderPass,
 	SelectiveBloomEffect,
+	SMAAEffect,
 	VignetteEffect
 } from "postprocessing"
 import { useLayoutEffect, useMemo } from "react"
@@ -44,6 +46,7 @@ export const PostProcessing = () => {
 	usePass(composer, () => new EffectPass(camera, bloomEffect), [bloomEffect, camera])
 
 	usePass(composer, () => new EffectPass(camera, new VignetteEffect()), [camera])
+	usePass(composer, () => new EffectPass(camera, new SMAAEffect()), [camera])
 
 	useFrame(() => {
 		composer.render()
