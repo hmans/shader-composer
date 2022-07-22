@@ -1,7 +1,9 @@
-import HelloWorld from "./HelloWorld"
-import Textures from "./Textures"
-import Planet from "./Planet"
-import Water from "./Water"
+import { lazy } from "react"
+
+const HelloWorld = lazy(() => import("./HelloWorld"))
+const Textures = lazy(() => import("./Textures"))
+const Planet = lazy(() => import("./Planet"))
+const Water = lazy(() => import("./Water"))
 
 export default {
 	HelloWorld,
