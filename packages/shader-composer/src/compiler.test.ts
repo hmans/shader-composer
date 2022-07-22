@@ -89,7 +89,7 @@ describe("compileShader", () => {
 		const getShader = () => {
 			const unitWithUniform = Float($`u_time`, {
 				uniforms: {
-					u_time: { type: "float", value: 0 }
+					u_foo: { type: "float", value: 0 }
 				}
 			})
 
@@ -101,6 +101,16 @@ describe("compileShader", () => {
 		it("adds uniform declarations to the program headers", () => {
 			expect(getShader().vertexShader).toMatchSnapshot()
 			expect(getShader().fragmentShader).toMatchSnapshot()
+		})
+
+		it("adds the uniform value object to the returned uniforms object", () => {
+			expect(getShader().uniforms).toMatchInlineSnapshot(`
+			Object {
+			  "u_time": Object {
+			    "value": 0,
+			  },
+			}
+		`)
 		})
 	})
 })

@@ -235,7 +235,7 @@ exports[`compileShader when rendering units with registered uniforms adds unifor
 precision highp float;
 
 /*** UNIT: Anonymous ***/
-uniform float u_time;
+uniform float u_foo;
 
 
 void main()
@@ -253,7 +253,7 @@ exports[`compileShader when rendering units with registered uniforms adds unifor
 precision highp float;
 
 /*** UNIT: Anonymous ***/
-uniform float u_time;
+uniform float u_foo;
 
 
 void main()
