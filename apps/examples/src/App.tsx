@@ -5,7 +5,7 @@ import { Venue } from "./r3f-venue/Venue"
 
 function App() {
 	return (
-		<Suspense fallback={<p>Loading...</p>}>
+		<Suspense>
 			<Venue examples={examples} />
 		</Suspense>
 	)
