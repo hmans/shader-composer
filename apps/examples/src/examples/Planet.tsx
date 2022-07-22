@@ -1,4 +1,3 @@
-import { pipe } from "fp-ts/es6/function"
 import {
 	Add,
 	Clamp,
@@ -7,6 +6,7 @@ import {
 	Fresnel,
 	Mix,
 	Mul,
+	pipe,
 	Sin,
 	Smoothstep,
 	SplitVector3,

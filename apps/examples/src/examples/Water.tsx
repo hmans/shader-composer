@@ -1,9 +1,9 @@
-import { pipe } from "fp-ts/es6/function"
 import {
 	Add,
 	CustomShaderMaterialMaster,
 	Int,
 	Mul,
+	pipe,
 	Remap,
 	SplitVector3,
 	Time,

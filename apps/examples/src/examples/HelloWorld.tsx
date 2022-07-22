@@ -1,9 +1,9 @@
-import { pipe } from "fp-ts/es6/function"
 import {
 	$,
 	Add,
 	Fresnel,
 	Mix,
+	pipe,
 	ShaderMaterialMaster,
 	Sin,
 	Time,
