@@ -19,7 +19,7 @@ import { useShader } from "shader-composer-r3f"
 import { Color } from "three"
 
 export default function HelloWorld() {
-	const opts = useControls({ color1: "hotpink", color2: "white" })
+	const leva = useControls({ color1: "hotpink", color2: "white" })
 
 	const blackboard = {
 		color1: Uniform("vec3", "u_color1"),
@@ -43,19 +43,19 @@ export default function HelloWorld() {
 	const myUniforms = useMemo(
 		() => ({
 			...uniforms,
-			u_color1: { value: new Color(opts.color1) },
-			u_color2: { value: new Color(opts.color2) }
+			u_color1: { value: new Color(leva.color1) },
+			u_color2: { value: new Color(leva.color2) }
 		}),
 		[uniforms]
 	)
 
 	useEffect(() => {
-		myUniforms.u_color1.value.set(opts.color1)
-	}, [opts.color1])
+		myUniforms.u_color1.value.set(leva.color1)
+	}, [leva.color1])
 
 	useEffect(() => {
-		myUniforms.u_color2.value.set(opts.color2)
-	}, [opts.color2])
+		myUniforms.u_color2.value.set(leva.color2)
+	}, [leva.color2])
 
 	return (
 		<mesh>
