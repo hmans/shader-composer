@@ -43,12 +43,10 @@ export default function HelloWorld() {
 
 	useEffect(() => {
 		blackboard.color1.uniform.value.set(leva.color1)
-		// shader.uniforms.u_color1.value.set(leva.color1)
 	}, [leva.color1])
 
 	useEffect(() => {
 		blackboard.color2.uniform.value.set(leva.color2)
-		// shader.uniforms.u_color2.value.set(leva.color2)
 	}, [leva.color2])
 
 	return (
