@@ -11,7 +11,7 @@ import {
 	ShaderMaterialMaster,
 	Sin,
 	Time,
-	Uniform,
+	UniformConfiguration,
 	Vec3,
 	VertexPosition
 } from "shader-composer"
