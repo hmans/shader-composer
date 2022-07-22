@@ -1,6 +1,7 @@
 import { useFrame, useThree } from "@react-three/fiber"
 import {
 	BlendFunction,
+	Effect,
 	EffectComposer,
 	EffectPass,
 	FXAAEffect,
@@ -11,7 +12,7 @@ import {
 	VignetteEffect
 } from "postprocessing"
 import { useLayoutEffect, useMemo } from "react"
-import { HalfFloatType } from "three"
+import { Camera, HalfFloatType } from "three"
 
 const usePass = (composer: EffectComposer, factory: () => Pass, deps: any[] = []) => {
 	useLayoutEffect(() => {
@@ -19,6 +20,16 @@ const usePass = (composer: EffectComposer, factory: () => Pass, deps: any[] = []
 		composer.addPass(pass)
 		return () => composer.removePass(pass)
 	}, [composer, ...deps])
+}
+
+const useEffect = (
+	composer: EffectComposer,
+	camera: Camera,
+	factory: () => Effect,
+	deps: any[] = []
+) => {
+	const effect = useMemo(factory, [camera, ...deps])
+	usePass(composer, () => new EffectPass(camera, effect), [effect])
 }
 
 export const PostProcessing = () => {
@@ -43,10 +54,9 @@ export const PostProcessing = () => {
 		return effect
 	}, [scene, camera])
 
-	usePass(composer, () => new EffectPass(camera, bloomEffect), [bloomEffect, camera])
-
-	usePass(composer, () => new EffectPass(camera, new VignetteEffect()), [camera])
-	usePass(composer, () => new EffectPass(camera, new SMAAEffect()), [camera])
+	useEffect(composer, camera, () => bloomEffect)
+	useEffect(composer, camera, () => new VignetteEffect())
+	useEffect(composer, camera, () => new SMAAEffect())
 
 	useFrame(() => {
 		composer.render()
