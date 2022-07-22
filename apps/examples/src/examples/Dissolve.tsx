@@ -4,13 +4,7 @@ import { useMemo } from "react"
 import { CustomShaderMaterialMaster, Mix, pipe, Uniform } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { Dissolve } from "shader-composer-toybox"
-import {
-	Color,
-	DoubleSide,
-	MeshPhongMaterial,
-	MeshPhysicalMaterial,
-	MeshStandardMaterial
-} from "three"
+import { Color, DoubleSide, MeshPhysicalMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function DissolveExample() {
