@@ -4,6 +4,7 @@ import { Perf } from "r3f-perf"
 import { FC, ReactNode, Suspense, useRef } from "react"
 import { Mesh } from "three"
 import { Link, useRoute } from "wouter"
+import { PostProcessing } from "./PostProcessing"
 import Stage from "./Stage"
 
 function Navigation({ examples }: { examples: Examples }) {
@@ -56,6 +57,7 @@ export const Venue: FC<{
 				<Environment preset="sunset" />
 				<fogExp2 args={["#000", 0.03]} attach="fog" />
 				<PerspectiveCamera position={[0, 0, 5]} makeDefault />
+				<PostProcessing />
 
 				<OrbitControls
 					makeDefault

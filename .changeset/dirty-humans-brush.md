@@ -1,0 +1,5 @@
+---
+"examples": patch
+---
+
+Added postprocessing.
