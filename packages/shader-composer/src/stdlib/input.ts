@@ -1,5 +1,5 @@
 import { $ } from "../expressions"
-import { GLSLType, UniformConfiguration, Unit, withAPI } from "../units"
+import { GLSLType, JSTypes, UniformConfiguration, Unit, withAPI } from "../units"
 
 export const Uniform = <T extends GLSLType>(type: T, name: string, value?: any) => {
 	const uniform: UniformConfiguration<T> = { type, value }
@@ -11,7 +11,14 @@ export const Uniform = <T extends GLSLType>(type: T, name: string, value?: any) 
 
 	return {
 		...unit,
-		uniform
+
+		get value() {
+			return uniform.value
+		},
+
+		set value(v: any) {
+			uniform.value = v
+		}
 	}
 }
 

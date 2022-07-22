@@ -42,11 +42,11 @@ export default function HelloWorld() {
 	}, [])
 
 	useEffect(() => {
-		blackboard.color1.uniform.value.set(leva.color1)
+		blackboard.color1.value.set(leva.color1)
 	}, [leva.color1])
 
 	useEffect(() => {
-		blackboard.color2.uniform.value.set(leva.color2)
+		blackboard.color2.value = new Color(leva.color2)
 	}, [leva.color2])
 
 	return (
