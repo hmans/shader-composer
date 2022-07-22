@@ -106,6 +106,10 @@ describe("compileShader", () => {
 		it("adds the uniform value object to the returned uniforms object", () => {
 			expect(getShader().uniforms).toMatchInlineSnapshot(`
 			Object {
+			  "u_foo": Object {
+			    "type": "float",
+			    "value": 0,
+			  },
 			  "u_time": Object {
 			    "value": 0,
 			  },

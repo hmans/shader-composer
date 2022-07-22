@@ -1,7 +1,8 @@
+import { stringifyJSON } from "fp-ts/es6/Either"
 import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
-import { isUnit, Program, Unit } from "./units"
+import { isUnit, Program, UniformConfiguration, Unit } from "./units"
 import {
 	assignment,
 	block,
@@ -80,6 +81,10 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 
 	/* Declare uniforms, if any are configured. */
 	if (unit._unitConfig.uniforms) {
+		/* Register uniforms with compiler state */
+		state.uniforms = { ...state.uniforms, ...unit._unitConfig.uniforms }
+
+		/* Declare uniforms in header */
 		Object.entries(unit._unitConfig.uniforms).forEach(([name, { type }]) => {
 			header.push(statement("uniform", type, name))
 		})
@@ -177,14 +182,6 @@ const compileProgram = (unit: Unit, program: Program, state: CompilerState): str
 	)
 }
 
-const collectUniforms = (unit: Unit) => {
-	/* Insert cool code here */
-
-	return {
-		u_time: { value: 0 }
-	}
-}
-
 export const compileShader = (root: Unit) => {
 	/* STEP 1: prepare all units and their dependencies! */
 	prepareItem(root)
@@ -212,7 +209,11 @@ export const compileShader = (root: Unit) => {
 	/*
 	STEP 4: Collect uniforms.
 	*/
-	const uniforms = collectUniforms(root)
+	const uniforms = {
+		u_time: { value: 0 },
+		...vertexState.uniforms,
+		...fragmentState.uniforms
+	}
 
 	/*
 	STEP 4: Build per-frame update function.
@@ -240,5 +241,6 @@ const CompilerState = () => ({
 	header: new Array<Part>(),
 	body: new Array<Part>(),
 	nextid: idGenerator(),
-	seen: new Set<Unit | Expression | Snippet>()
+	seen: new Set<Unit | Expression | Snippet>(),
+	uniforms: {} as Record<string, UniformConfiguration<any>>
 })
