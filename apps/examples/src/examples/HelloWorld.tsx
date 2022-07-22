@@ -1,4 +1,3 @@
-import { useFrame } from "@react-three/fiber"
 import { useControls } from "leva"
 import { useEffect, useMemo } from "react"
 import {
