@@ -14,15 +14,18 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 		uniforms: { [name]: uniform }
 	})
 
-	return withAPI(unit, {
-		get value(): U {
-			return uniform.value
-		},
+	return {
+		...unit,
 
 		set value(v: U) {
+			console.log("WAGH")
 			uniform.value = v
+		},
+
+		get value(): U {
+			return uniform.value
 		}
-	})
+	}
 }
 
 export const Time = Uniform("float", "u_time", 0)
