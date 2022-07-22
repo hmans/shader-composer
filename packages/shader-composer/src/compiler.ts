@@ -244,5 +244,5 @@ const CompilerState = () => ({
 	body: new Array<Part>(),
 	nextid: idGenerator(),
 	seen: new Set<Unit | Expression | Snippet>(),
-	uniforms: {} as Record<string, UniformConfiguration<any>>
+	uniforms: {} as Record<string, UniformConfiguration<any, any>>
 })

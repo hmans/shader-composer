@@ -27,9 +27,9 @@ export type JSTypes = {
 
 export type Value<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
 
-export type UniformConfiguration<T extends GLSLType> = {
+export type UniformConfiguration<T extends GLSLType, U extends JSTypes[T]> = {
 	type: T
-	value: JSTypes[T]
+	value: U
 }
 
 export type UnitConfig<T extends GLSLType> = {
@@ -42,7 +42,7 @@ export type UnitConfig<T extends GLSLType> = {
 	only?: Program
 	varying: boolean
 
-	uniforms?: Record<string, UniformConfiguration<any>>
+	uniforms?: Record<string, UniformConfiguration<any, any>>
 
 	/* Chunks */
 	vertex?: {
