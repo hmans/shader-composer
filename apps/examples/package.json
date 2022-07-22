@@ -1,7 +1,7 @@
 {
 	"name": "examples",
 	"private": true,
-	"version": "0.0.1-next.0",
+	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
@@ -15,9 +15,9 @@
 		"r3f-perf": "^6.4.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"shader-composer": "^0.0.4-next.0",
-		"shader-composer-r3f": "^0.0.4-next.0",
-		"shader-composer-toybox": "^0.0.4-next.1",
+		"shader-composer": "^0.0.4",
+		"shader-composer-r3f": "^0.0.4",
+		"shader-composer-toybox": "^0.0.4",
 		"three": "^0.142.0",
 		"three-custom-shader-material": "^3.4.4",
 		"wouter": "^2.8.0-alpha.2"
