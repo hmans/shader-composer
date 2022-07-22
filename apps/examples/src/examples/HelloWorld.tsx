@@ -15,7 +15,7 @@ import { useShader, useUniform } from "shader-composer-r3f"
 import { Color } from "three"
 
 export default function HelloWorld() {
-	const leva = useControls("Uniforms", { color1: "hotpink", color2: "white" })
+	const leva = useControls("Uniforms", { color1: "#bc23c2", color2: "#c7be13" })
 
 	const color1 = useUniform("vec3", new Color(leva.color1))
 	const color2 = useUniform("vec3", new Color(leva.color2))
