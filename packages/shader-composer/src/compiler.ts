@@ -177,6 +177,14 @@ const compileProgram = (unit: Unit, program: Program, state: CompilerState): str
 	)
 }
 
+const collectUniforms = (unit: Unit) => {
+	/* Insert cool code here */
+
+	return {
+		u_time: { value: 0 }
+	}
+}
+
 export const compileShader = (root: Unit) => {
 	/* STEP 1: prepare all units and their dependencies! */
 	prepareItem(root)
@@ -204,9 +212,7 @@ export const compileShader = (root: Unit) => {
 	/*
 	STEP 4: Collect uniforms.
 	*/
-	const uniforms = {
-		u_time: { value: 0 }
-	}
+	const uniforms = collectUniforms(root)
 
 	/*
 	STEP 4: Build per-frame update function.
