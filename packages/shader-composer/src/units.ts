@@ -1,4 +1,4 @@
-import { Color, IUniform, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
+import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
 import { $, Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
@@ -32,9 +32,12 @@ export type UniformConfiguration<T extends GLSLType> = {
 	value: JSTypes[T]
 }
 
-export type UnitConfig = {
+export type UnitConfig<T extends GLSLType> = {
 	name: string
 	variableName: string
+
+	type: T
+	value: Value<T>
 
 	only?: Program
 	varying: boolean
@@ -55,19 +58,19 @@ export type UnitConfig = {
 
 export type Unit<T extends GLSLType = any, A extends {} = {}> = {
 	_: "Unit"
-	_unitConfig: UnitConfig
-	type: T
-	value: Value<T>
+	_unitConfig: UnitConfig<T>
 	toString: () => string
 } & A
 
 export const Unit = <T extends GLSLType>(
 	type: T,
 	value: Value<T>,
-	_config?: Partial<UnitConfig>
+	_config?: Partial<UnitConfig<T>>
 ): Unit<T> => {
-	const config: UnitConfig = {
+	const config: UnitConfig<T> = {
 		name: "Anonymous",
+		type,
+		value,
 		varying: false,
 		variableName: identifier("var", Math.floor(Math.random() * 1000000)),
 		..._config
@@ -75,8 +78,6 @@ export const Unit = <T extends GLSLType>(
 
 	const unit: Unit<T> = {
 		_: "Unit",
-		type,
-		value,
 		toString: () => config.variableName,
 		_unitConfig: config
 	}
@@ -96,7 +97,7 @@ export const withAPI = <T extends GLSLType, A extends {}>(unit: Unit<T>, api: A)
 
 const makeUnit = <T extends GLSLType>(type: T) => (
 	v: Value<T>,
-	extras?: Partial<UnitConfig>
+	extras?: Partial<UnitConfig<T>>
 ) => Unit(type, v, extras) as Unit<T>
 
 export const Float = makeUnit("float")
@@ -111,14 +112,14 @@ export const Mat4 = makeUnit("mat4")
 export const vec2 = (
 	x: Value<"float">,
 	y: Value<"float">,
-	extras?: Partial<UnitConfig>
+	extras?: Partial<UnitConfig<"vec2">>
 ) => Vec2($`vec2(${x}, ${y})`, extras)
 
 export const vec3 = (
 	x: Value<"float">,
 	y: Value<"float">,
 	z: Value<"float">,
-	extras?: Partial<UnitConfig>
+	extras?: Partial<UnitConfig<"vec3">>
 ) => Vec3($`vec3(${x}, ${y}, ${z})`, extras)
 
 export const vec4 = (
@@ -126,7 +127,7 @@ export const vec4 = (
 	y: Value<"float">,
 	z: Value<"float">,
 	w: Value<"float">,
-	extras?: Partial<UnitConfig>
+	extras?: Partial<UnitConfig<"vec4">>
 ) => Vec4($`vec4(${x}, ${y}, ${z}, ${w})`, extras)
 
-export const Master = (extras?: Partial<UnitConfig>) => Bool(true, extras)
+export const Master = (extras?: Partial<UnitConfig<"bool">>) => Bool(true, extras)
