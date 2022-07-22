@@ -1,5 +1,4 @@
 import { Vector2, Vector3, Vector4 } from "three"
-import { glslRepresentation } from "../glslRepresentation"
 import { SplitVector2, SplitVector3, SplitVector4 } from "./vectors"
 
 describe("Split", () => {
