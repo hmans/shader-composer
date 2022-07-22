@@ -41,7 +41,7 @@ export default function DissolveExample() {
 
 	return (
 		<mesh>
-			<sphereGeometry args={[2]} />
+			<icosahedronGeometry args={[2, 10]} />
 			<CustomShaderMaterial
 				baseMaterial={MeshStandardMaterial}
 				{...shader}
