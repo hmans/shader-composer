@@ -1,7 +1,7 @@
 import { Environment, OrbitControls } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { Perf } from "r3f-perf"
-import { FC, ReactNode } from "react"
+import { FC, ReactNode, Suspense } from "react"
 import { Link, useRoute } from "wouter"
 import Stage from "./Stage"
 
@@ -54,7 +54,8 @@ export const Venue: FC<{
 
 				<Stage />
 
-				{examples && <Example examples={examples} />}
+				<Suspense>{examples && <Example examples={examples} />}</Suspense>
+
 				{children}
 			</Canvas>
 		</>
