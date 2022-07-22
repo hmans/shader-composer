@@ -1,3 +1,4 @@
+import { useControls } from "leva"
 import {
 	$,
 	Add,
@@ -14,10 +15,12 @@ import { useShader } from "shader-composer-r3f"
 import { Color } from "three"
 
 export default function HelloWorld() {
+	const opts = useControls({ color: "hotpink" })
+
 	const shader = useShader(() =>
 		ShaderMaterialMaster({
 			color: pipe(
-				Vec3(new Color("hotpink")),
+				Vec3(new Color(opts.color)),
 				(v) => Mix(v, new Color("white"), Sin(Time)),
 				(v) => Add(v, Fresnel())
 			),
