@@ -18,6 +18,7 @@ export default function DissolveExample() {
 	const dissolveOpts = useControls("Dissolve", {
 		edgeColor: "#0ef",
 		edgeThickness: { value: 0.2, min: 0, max: 1 },
+		scale: { value: 2.5, min: 0, max: 5 },
 		visibility: { value: 0.5, min: 0, max: 1 }
 	})
 
@@ -28,6 +29,7 @@ export default function DissolveExample() {
 			},
 			dissolve: {
 				visibility: Uniform("float", "u_visibility", dissolveOpts.visibility),
+				scale: Uniform("float", "u_scale", dissolveOpts.scale),
 				edgeColor: Uniform("vec3", "u_dissolveColor", new Color(dissolveOpts.edgeColor)),
 				edgeThickness: Uniform("float", "u_edgeThickness", dissolveOpts.edgeThickness)
 			}
@@ -38,7 +40,7 @@ export default function DissolveExample() {
 	const shader = useShader(() => {
 		const dissolve = Dissolve(
 			blackboard.dissolve.visibility,
-			1,
+			blackboard.dissolve.scale,
 			blackboard.dissolve.edgeThickness
 		)
 
@@ -56,6 +58,7 @@ export default function DissolveExample() {
 		blackboard.dissolve.edgeColor.value.set(dissolveOpts.edgeColor)
 		blackboard.dissolve.edgeThickness.value = dissolveOpts.edgeThickness
 		blackboard.dissolve.visibility.value = dissolveOpts.visibility
+		blackboard.dissolve.scale.value = dissolveOpts.scale
 	})
 
 	return (
