@@ -13,7 +13,7 @@ import {
 	vec2
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { Color, MeshStandardMaterial, Vector2 } from "three"
+import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { useRepeatingTexture } from "./helpers"
 
