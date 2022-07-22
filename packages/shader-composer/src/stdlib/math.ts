@@ -1,7 +1,7 @@
 import { $ } from "../expressions"
 import { type } from "../glslType"
 import { Snippet } from "../snippets"
-import { Float, GLSLType, Unit, Value, withAPI } from "../units"
+import { Float, GLSLType, Unit, Value } from "../units"
 import { VertexNormal, ViewDirection } from "./geometry"
 
 export const Operator = (title: string, operator: "+" | "-" | "*" | "/") => <
@@ -32,13 +32,13 @@ export const Clamp01 = (x: Value<"float">) => Clamp(x, 0, 1)
 export const Mix = <T extends GLSLType>(a: Value<T>, b: Value<T>, f: Value<"float">) =>
 	Unit(type(a), $`mix(${a}, ${b}, ${f})`)
 
-export const With = <T extends GLSLType>(unit: Unit<T>) =>
-	withAPI(unit, {
-		Add: (b: Value) => With(Add(unit, b)),
-		Sub: (b: Value) => With(Sub(unit, b)),
-		Mul: (b: Value) => With(Mul(unit, b)),
-		Div: (b: Value) => With(Div(unit, b))
-	})
+export const With = <T extends GLSLType>(unit: Unit<T>) => ({
+	...unit,
+	Add: (b: Value) => With(Add(unit, b)),
+	Sub: (b: Value) => With(Sub(unit, b)),
+	Mul: (b: Value) => With(Mul(unit, b)),
+	Div: (b: Value) => With(Div(unit, b))
+})
 
 export type FresnelProps = {
 	normal?: Value<"vec3">

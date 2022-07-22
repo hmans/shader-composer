@@ -1,6 +1,6 @@
 import { Vector2 } from "three"
 import { $ } from "../expressions"
-import { GLSLType, JSTypes, UniformConfiguration, Unit, withAPI } from "../units"
+import { GLSLType, JSTypes, UniformConfiguration, Unit } from "../units"
 
 export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 	type: T,

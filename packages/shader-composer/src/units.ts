@@ -92,9 +92,6 @@ export function isUnit(value: any): value is Unit {
 export const isUnitInProgram = (unit: Unit, program: Program) =>
 	[undefined, program].includes(unit._unitConfig.only)
 
-export const withAPI = <T extends GLSLType, A extends {}>(unit: Unit<T>, api: A) =>
-	({ ...unit, ...api } as Unit<T, A>)
-
 const makeUnit = <T extends GLSLType>(type: T) => (
 	v: Value<T>,
 	extras?: Partial<UnitConfig<T>>
