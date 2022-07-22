@@ -1,7 +1,8 @@
 import { Environment, OrbitControls } from "@react-three/drei"
-import { Canvas } from "@react-three/fiber"
+import { Canvas, useFrame } from "@react-three/fiber"
 import { Perf } from "r3f-perf"
-import { FC, ReactNode } from "react"
+import { FC, ReactNode, Suspense, useRef } from "react"
+import { Mesh } from "three"
 import { Link, useRoute } from "wouter"
 import Stage from "./Stage"
 
@@ -26,6 +27,22 @@ function Example({ examples }: { examples: Examples }) {
 }
 
 export type Examples = Record<string, any>
+
+const Spinner = () => {
+	const mesh = useRef<Mesh>(null!)
+
+	useFrame(({ clock }, dt) => {
+		const a = Math.pow((Math.sin(clock.elapsedTime * 7) + 2) * 0.5, 3)
+		mesh.current.rotation.y += (1 + a) * dt
+	})
+
+	return (
+		<mesh ref={mesh} scale={0.2}>
+			<dodecahedronGeometry />
+			<meshStandardMaterial color="#666" />
+		</mesh>
+	)
+}
 
 export const Venue: FC<{
 	children?: ReactNode
@@ -54,7 +71,10 @@ export const Venue: FC<{
 
 				<Stage />
 
-				{examples && <Example examples={examples} />}
+				<Suspense fallback={<Spinner />}>
+					{examples && <Example examples={examples} />}
+				</Suspense>
+
 				{children}
 			</Canvas>
 		</>

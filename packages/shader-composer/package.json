@@ -62,6 +62,7 @@
 		]
 	},
 	"dependencies": {
-		"crypto-js": "^4.1.1"
+		"crypto-js": "^4.1.1",
+		"fp-ts": "^2.12.1"
 	}
 }
