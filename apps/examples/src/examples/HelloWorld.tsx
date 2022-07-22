@@ -19,10 +19,13 @@ import { Color } from "three"
 export default function HelloWorld() {
 	const leva = useControls({ color1: "hotpink", color2: "white" })
 
-	const blackboard = {
-		color1: Uniform("vec3", "u_color1", new Color(leva.color1)),
-		color2: Uniform("vec3", "u_color2", new Color(leva.color2))
-	}
+	const blackboard = useMemo(
+		() => ({
+			color1: Uniform("vec3", "u_color1", new Color(leva.color1)),
+			color2: Uniform("vec3", "u_color2", new Color(leva.color2))
+		}),
+		[]
+	)
 
 	const shader = useShader(() => {
 		console.log("Recompiling shader. You should not see this when changing the color.")
@@ -40,12 +43,12 @@ export default function HelloWorld() {
 
 	useEffect(() => {
 		blackboard.color1.uniform.value.set(leva.color1)
-		shader.uniforms.u_color1.value.set(leva.color1)
+		// shader.uniforms.u_color1.value.set(leva.color1)
 	}, [leva.color1])
 
 	useEffect(() => {
 		blackboard.color2.uniform.value.set(leva.color2)
-		shader.uniforms.u_color2.value.set(leva.color2)
+		// shader.uniforms.u_color2.value.set(leva.color2)
 	}, [leva.color2])
 
 	return (
