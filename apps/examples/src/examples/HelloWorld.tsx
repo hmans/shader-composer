@@ -22,8 +22,8 @@ export default function HelloWorld() {
 	const leva = useControls({ color1: "hotpink", color2: "white" })
 
 	const blackboard = {
-		color1: Uniform("vec3", "u_color1"),
-		color2: Uniform("vec3", "u_color2")
+		color1: Uniform("vec3", "u_color1", leva.color1),
+		color2: Uniform("vec3", "u_color2", leva.color2)
 	}
 
 	const { uniforms, ...shader } = useShader(() => {

@@ -78,6 +78,13 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 		header.push(`varying ${unit.type} v_${unit._unitConfig.variableName};`)
 	}
 
+	/* Declare uniforms, if any are configured. */
+	if (unit._unitConfig.uniforms) {
+		Object.entries(unit._unitConfig.uniforms).forEach(([name, { type }]) => {
+			header.push(statement("uniform", type, name))
+		})
+	}
+
 	/* Add header if present */
 	if (unit._unitConfig[program]?.header) {
 		header.push(unit._unitConfig[program]?.header)

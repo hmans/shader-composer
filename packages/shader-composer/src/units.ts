@@ -1,4 +1,4 @@
-import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
+import { Color, IUniform, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
 import { $, Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
@@ -27,12 +27,19 @@ export type JSTypes = {
 
 export type Value<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
 
+export type Uniform<T extends GLSLType> = {
+	type: T
+	value: JSTypes[T]
+}
+
 export type UnitConfig = {
 	name: string
 	variableName: string
 
 	only?: Program
 	varying: boolean
+
+	uniforms?: Record<string, Uniform<any>>
 
 	/* Chunks */
 	vertex?: {
