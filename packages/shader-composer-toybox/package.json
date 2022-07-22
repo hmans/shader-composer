@@ -7,7 +7,7 @@
 		"url": "https://hmans.co"
 	},
 	"description": "Assorted effects and units for shader-composer.",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"main": "dist/shader-composer-toybox.cjs.js",
 	"module": "dist/shader-composer-toybox.esm.js",
 	"types": "dist/shader-composer-toybox.cjs.d.ts",
@@ -39,7 +39,7 @@
 		"jest": "^28.1.1",
 		"jest-environment-jsdom": "^28.1.1",
 		"rimraf": "^3.0.2",
-		"shader-composer": "^0.0.4",
+		"shader-composer": "^0.0.5",
 		"three": "^0.142.0",
 		"ts-jest": "^28.0.4",
 		"tslib": "^2.4.0",
