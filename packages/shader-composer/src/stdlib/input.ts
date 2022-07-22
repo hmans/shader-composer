@@ -18,7 +18,6 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 		...unit,
 
 		set value(v: U) {
-			console.log("WAGH")
 			uniform.value = v
 		},
 
