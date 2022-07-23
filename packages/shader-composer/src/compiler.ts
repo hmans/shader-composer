@@ -1,8 +1,9 @@
-import { stringifyJSON } from "fp-ts/es6/Either"
+import { IUniform } from "three"
 import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
-import { isUnit, Program, UniformConfiguration, Unit } from "./units"
+import { uniformName } from "./stdlib"
+import { isUnit, Program, Unit, UpdateCallback } from "./units"
 import {
 	assignment,
 	block,
@@ -71,6 +72,11 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 		compileItem(dep, program, state)
 	})
 
+	/* Register update callback, if given */
+	if (unit._unitConfig.update) {
+		state.updates.add(unit._unitConfig.update)
+	}
+
 	/* HEADER */
 	const header = new Array<Part>()
 
@@ -79,15 +85,13 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 		header.push(`varying ${unit._unitConfig.type} v_${unit._unitConfig.variableName};`)
 	}
 
-	/* Declare uniforms, if any are configured. */
-	if (unit._unitConfig.uniforms) {
-		/* Register uniforms with compiler state */
-		state.uniforms = { ...state.uniforms, ...unit._unitConfig.uniforms }
+	/* Declare uniform, if one is configured. */
+	if (unit._unitConfig.uniform) {
+		/* Register uniform with compiler state */
+		state.uniforms.set(uniformName(unit), unit._unitConfig.uniform)
 
 		/* Declare uniforms in header */
-		Object.entries(unit._unitConfig.uniforms).forEach(([name, { type }]) => {
-			header.push(statement("uniform", type, name))
-		})
+		header.push(statement("uniform", unit._unitConfig.type, uniformName(unit)))
 	}
 
 	/* Add header if present */
@@ -102,6 +106,8 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	const value =
 		unit._unitConfig.varying && program === "fragment"
 			? `v_${unit._unitConfig.variableName}`
+			: unit._unitConfig.uniform
+			? uniformName(unit)
 			: glslRepresentation(unit._unitConfig.value, unit._unitConfig.type)
 
 	state.body.push(beginUnit(unit))
@@ -109,9 +115,11 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	/*
 	Declare the unit's global variable, and assign the specified value to it.
 	*/
-	state.body.push(
-		statement(unit._unitConfig.type, unit._unitConfig.variableName, "=", value)
-	)
+	if (unit._unitConfig.variable) {
+		state.body.push(
+			statement(unit._unitConfig.type, unit._unitConfig.variableName, "=", value)
+		)
+	}
 
 	/*
 	If a body chunk is given, we'll create a scoped block with a local variable called
@@ -120,16 +128,22 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	if (unit._unitConfig[program]?.body)
 		state.body.push(
 			block(
-				statement(unit._unitConfig.type, "value", "=", unit._unitConfig.variableName),
+				/* Declare local value variable */
+				unit._unitConfig.variable &&
+					statement(unit._unitConfig.type, "value", "=", unit._unitConfig.variableName),
+
+				/* Include body chunk */
 				unit._unitConfig[program]?.body,
-				assignment(unit._unitConfig.variableName, "value")
+
+				/* Re-assign local value variable to global variable */
+				unit._unitConfig.variable && assignment(unit._unitConfig.variableName, "value")
 			)
 		)
 
 	/*
 	If we're in varying mode and vertex, write value to the varying, too.
 	*/
-	if (unit._unitConfig.varying && program === "vertex") {
+	if (unit._unitConfig.variable && unit._unitConfig.varying && program === "vertex") {
 		state.body.push(
 			assignment(`v_${unit._unitConfig.variableName}`, unit._unitConfig.variableName)
 		)
@@ -201,27 +215,38 @@ export const compileShader = (root: Unit) => {
 	units with varyings.
 	*/
 	const vertexState = CompilerState()
+
+	/* Explicitly add all units with varyings. */
 	fragmentState.seen.forEach((item) => {
 		if (isUnit(item) && item._unitConfig.varying) {
 			compileItem(item, "vertex", vertexState)
 		}
 	})
+
+	/* Explicitly add all uniforms we've seen so far */
+	vertexState.uniforms = fragmentState.uniforms
+
+	/* Compile! */
 	const vertexShader = compileProgram(root, "vertex", vertexState)
 
 	/*
 	STEP 4: Collect uniforms.
 	*/
-	const uniforms = {
-		u_time: { value: 0 },
-		...vertexState.uniforms,
-		...fragmentState.uniforms
-	}
+	const uniforms = Object.fromEntries(vertexState.uniforms)
 
 	/*
-	STEP 4: Build per-frame update function.
+	STEP 5: Collect update callbacks.
+	*/
+	const updates = new Set<UpdateCallback>([
+		...vertexState.updates,
+		...fragmentState.updates
+	])
+
+	/*
+	STEP 6: Build per-frame update function.
 	*/
 	const update = (dt: number) => {
-		uniforms.u_time.value += dt
+		updates.forEach((u) => u(dt))
 	}
 
 	/*
@@ -244,5 +269,6 @@ const CompilerState = () => ({
 	body: new Array<Part>(),
 	nextid: idGenerator(),
 	seen: new Set<Unit | Expression | Snippet>(),
-	uniforms: {} as Record<string, UniformConfiguration<any, any>>
+	uniforms: new Map<string, IUniform>(),
+	updates: new Set<UpdateCallback>()
 })

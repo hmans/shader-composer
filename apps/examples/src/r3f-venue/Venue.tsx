@@ -53,29 +53,40 @@ export const Venue: FC<{
 	return (
 		<>
 			{examples && <Navigation examples={examples} />}
-			<Canvas>
-				<Environment preset="sunset" />
-				<fogExp2 args={["#000", 0.03]} attach="fog" />
-				<PerspectiveCamera position={[0, 0, 5]} makeDefault />
-				<PostProcessing />
+			<Canvas
+				flat
+				gl={{
+					powerPreference: "high-performance",
+					alpha: false,
+					depth: true,
+					stencil: false,
+					antialias: false
+				}}
+			>
+				<Suspense>
+					<Environment preset="sunset" />
+					<fogExp2 args={["#000", 0.03]} attach="fog" />
+					<PerspectiveCamera position={[0, 0, 5]} makeDefault />
+					<PostProcessing />
 
-				<OrbitControls
-					makeDefault
-					maxDistance={10}
-					minDistance={3}
-					minPolarAngle={Math.PI * 0.25}
-					maxPolarAngle={Math.PI * 0.75}
-				/>
+					<OrbitControls
+						makeDefault
+						maxDistance={10}
+						minDistance={3}
+						minPolarAngle={Math.PI * 0.25}
+						maxPolarAngle={Math.PI * 0.75}
+					/>
 
-				{performance && <Perf position="bottom-right" />}
+					{performance && <Perf position="bottom-right" />}
 
-				<Stage />
+					<Stage />
 
-				<Suspense fallback={<Spinner />}>
-					{examples && <Example examples={examples} />}
+					<Suspense fallback={<Spinner />}>
+						{examples && <Example examples={examples} />}
+					</Suspense>
+
+					{children}
 				</Suspense>
-
-				{children}
 			</Canvas>
 		</>
 	)

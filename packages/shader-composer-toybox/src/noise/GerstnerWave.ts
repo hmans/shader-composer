@@ -25,7 +25,7 @@ export const GerstnerWave = (
 	direction: Value<"vec2"> = new Vector2(1, 0),
 	steepness: Value<"float"> = 1,
 	wavelength: Value<"float"> = 1,
-	offset: Value<"float"> = Time
+	offset: Value<"float"> = 0
 ) =>
 	Vec3($`${gerstnerWave}(${p}, ${direction}, ${steepness}, ${wavelength}, ${offset})`, {
 		name: "Gerstner Wave"

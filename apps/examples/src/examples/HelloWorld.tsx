@@ -1,5 +1,4 @@
 import { useControls } from "leva"
-import { useEffect, useMemo } from "react"
 import {
 	$,
 	Add,
@@ -10,46 +9,35 @@ import {
 	ShaderMaterialMaster,
 	Sin,
 	Time,
-	Uniform,
 	VertexPosition
 } from "shader-composer"
-import { useShader } from "shader-composer-r3f"
+import { useShader, useUniform } from "shader-composer-r3f"
 import { Color } from "three"
 
 export default function HelloWorld() {
-	const leva = useControls("Uniforms", { color1: "#bc23c2", color2: "#c7be13" })
+	const leva = useControls("Uniforms", {
+		color1: "#bc23c2",
+		color2: "#c7be13"
+	})
 
-	const blackboard = useMemo(
-		() => ({
-			color1: Uniform("vec3", "u_color1", new Color(leva.color1)) /* Set initial value */,
-			color2: Uniform("vec3", "u_color2", new Color(leva.color2))
-		}),
-		[]
-	)
+	const color1 = useUniform("vec3", new Color(leva.color1))
+	const color2 = useUniform("vec3", new Color(leva.color2))
 
-	const shader = useShader(
-		() =>
-			ShaderMaterialMaster({
-				color: pipe(
-					blackboard.color1,
-					(v) => Mix(v, blackboard.color2, Remap(Sin(Time), -1, 1, 0, 1)),
-					(v) => Add(v, Fresnel())
-				),
+	const shader = useShader(() => {
+		const time = Time()
 
-				position: $`${VertexPosition} * (1.0 + sin(${Time} + ${VertexPosition}.y * 2.0) * 0.2)`
-			}),
-		[]
-	)
+		return ShaderMaterialMaster({
+			color: pipe(
+				color1,
+				(v) => Mix(v, color2, Remap(Sin(time), -1, 1, 0, 1)),
+				(v) => Add(v, Fresnel())
+			),
 
-	useEffect(() => {
-		/* Interact with uniform value */
-		blackboard.color1.value.set(leva.color1)
-	}, [leva.color1])
+			position: $`${VertexPosition} * (1.0 + sin(${time} + ${VertexPosition}.y * 2.0) * 0.2)`
+		})
+	}, [])
 
-	useEffect(() => {
-		/* Or replace it wholesale */
-		blackboard.color2.value = new Color(leva.color2)
-	}, [leva.color2])
+	console.log(shader.vertexShader)
 
 	return (
 		<mesh>

@@ -235,13 +235,13 @@ exports[`compileShader when rendering units with registered uniforms adds unifor
 precision highp float;
 
 /*** UNIT: Anonymous ***/
-uniform float u_foo;
+uniform float u_Anonymous_1;
 
 
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = u_time;
+  float Anonymous_1 = u_Anonymous_1;
   
   
 }"
@@ -253,13 +253,45 @@ exports[`compileShader when rendering units with registered uniforms adds unifor
 precision highp float;
 
 /*** UNIT: Anonymous ***/
-uniform float u_foo;
+uniform float u_Anonymous_1;
 
 
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = u_time;
+  float Anonymous_1 = u_Anonymous_1;
+  
+  
+}"
+`;
+
+exports[`compileShader when rendering units without variables doesn't declare global or local value variables 1`] = `
+"/*** PROGRAM: VERTEX ***/
+
+precision highp float;
+
+void main()
+{
+  /*** UNIT: Anonymous ***/
+  {
+    /* Hi from the vertex program */
+  }
+  
+  
+}"
+`;
+
+exports[`compileShader when rendering units without variables doesn't declare global or local value variables 2`] = `
+"/*** PROGRAM: FRAGMENT ***/
+
+precision highp float;
+
+void main()
+{
+  /*** UNIT: Anonymous ***/
+  {
+    /* Hi from the vertex program */
+  }
   
   
 }"

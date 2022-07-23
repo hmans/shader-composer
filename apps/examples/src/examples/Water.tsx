@@ -23,13 +23,14 @@ const NormalizeNoise = (v: Value<"float">) => Remap(v, -1, 1, 0, 1)
 function Water() {
 	const shader = useShader(() => {
 		const diffuseColor = new Color("#acd")
+		const time = Time()
 
 		const { position, normal } = ModifyVertex(VertexPosition, VertexNormal, (v) => {
 			const [x, y, z] = SplitVector3(v)
 			const xy = vec2(x, z)
 
 			const fbm = NormalizeNoise(
-				FBMNoise(vec2(Add(x, Time), z), {
+				FBMNoise(vec2(Add(x, Time()), z), {
 					seed: Math.random(),
 					persistance: 2.2,
 					lacunarity: 1.3,
@@ -43,10 +44,10 @@ function Water() {
 
 			return pipe(
 				v,
-				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.5, 20.0), 0.8)),
-				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0.2, 1), 0.2, 10), 0.8)),
-				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0, -1), 0.2, 5), 0.5)),
-				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.2, 8), 0.3)),
+				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.5, 20.0, time), 0.8)),
+				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0.2, 1), 0.2, 10, time), 0.8)),
+				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0, -1), 0.2, 5, time), 0.5)),
+				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.2, 8, time), 0.3)),
 				(v) => Add(v, Mul(vec3(0, 0.005, 0), fbm))
 			)
 		})

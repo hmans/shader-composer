@@ -4,7 +4,6 @@ import {
 	Effect,
 	EffectComposer,
 	EffectPass,
-	FXAAEffect,
 	Pass,
 	RenderPass,
 	SelectiveBloomEffect,
@@ -46,11 +45,18 @@ export const PostProcessing = () => {
 		const effect = new SelectiveBloomEffect(scene, camera, {
 			blendFunction: BlendFunction.ADD,
 			mipmapBlur: true,
-			luminanceThreshold: 0.95,
-			luminanceSmoothing: 0.3,
+			luminanceThreshold: 0.9,
+			luminanceSmoothing: 0.5,
 			intensity: 4
 		} as any)
+
+		/*
+		This effect is designed to only bloom selected objects. We're not
+		interested in that, so let's "invert" it -- making all objects
+		selected by default!
+		*/
 		effect.inverted = true
+
 		return effect
 	}, [scene, camera])
 
