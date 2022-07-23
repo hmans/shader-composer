@@ -18,7 +18,7 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 
 	/* Create the actual unit that represents the uniform. */
 
-	const unit = Unit<T>(type, $`/* BREAK */`, {
+	const unit = Unit<T>(type, $`/* placeholder */`, {
 		name: `Uniform (${type})`,
 		...extras,
 		uniform,
