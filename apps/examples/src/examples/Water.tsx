@@ -1,6 +1,7 @@
 import {
 	Add,
 	CustomShaderMaterialMaster,
+	Float,
 	Int,
 	Mul,
 	pipe,
@@ -32,7 +33,7 @@ function Water() {
 			const fbm = NormalizeNoise(
 				FBMNoise(vec2(x, z), {
 					seed: Math.random(),
-					persistance: 10.4,
+					persistance: 0.4,
 					lacunarity: 2.3,
 					scale: 0.4,
 					redistribution: 1,
