@@ -4,7 +4,6 @@ import {
 	CustomShaderMaterialMaster,
 	Fresnel,
 	Mul,
-	Sampler2D,
 	Texture2D,
 	TilingUV,
 	Time,
