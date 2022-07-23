@@ -88,7 +88,7 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	/* Declare uniform, if one is configured. */
 	if (unit._unitConfig.uniform) {
 		/* Register uniform with compiler state */
-		state.uniforms[uniformName(unit)] = unit._unitConfig.uniform
+		state.uniforms.set(uniformName(unit), unit._unitConfig.uniform)
 
 		/* Declare uniforms in header */
 		header.push(statement("uniform", unit._unitConfig.type, uniformName(unit)))
@@ -215,20 +215,24 @@ export const compileShader = (root: Unit) => {
 	units with varyings.
 	*/
 	const vertexState = CompilerState()
+
+	/* Explicitly add all units with varyings. */
 	fragmentState.seen.forEach((item) => {
 		if (isUnit(item) && item._unitConfig.varying) {
 			compileItem(item, "vertex", vertexState)
 		}
 	})
+
+	/* Explicitly add all uniforms we've seen so far */
+	vertexState.uniforms = fragmentState.uniforms
+
+	/* Compile! */
 	const vertexShader = compileProgram(root, "vertex", vertexState)
 
 	/*
 	STEP 4: Collect uniforms.
 	*/
-	const uniforms = {
-		...vertexState.uniforms,
-		...fragmentState.uniforms
-	}
+	const uniforms = Object.fromEntries(vertexState.uniforms)
 
 	/*
 	STEP 5: Collect update callbacks.
@@ -265,6 +269,6 @@ const CompilerState = () => ({
 	body: new Array<Part>(),
 	nextid: idGenerator(),
 	seen: new Set<Unit | Expression | Snippet>(),
-	uniforms: {} as Record<string, IUniform>,
+	uniforms: new Map<string, IUniform>(),
 	updates: new Set<UpdateCallback>()
 })
