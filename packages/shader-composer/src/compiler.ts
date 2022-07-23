@@ -3,7 +3,7 @@ import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
 import { uniformName } from "./stdlib"
-import { isUnit, Program, UniformConfiguration, Unit, UpdateCallback } from "./units"
+import { isUnit, Program, Unit, UpdateCallback } from "./units"
 import {
 	assignment,
 	block,

@@ -52,11 +52,6 @@ export type GLSLTypeFor<T extends any> = T extends boolean
 
 export type Value<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
 
-export type UniformConfiguration<T extends GLSLType, U extends JSTypes[T]> = {
-	type: T
-	value: U
-}
-
 export type UpdateCallback = (dt: number) => void
 
 export type UnitConfig<T extends GLSLType> = {
