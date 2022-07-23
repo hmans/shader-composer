@@ -1,5 +1,4 @@
-import { $, Float, Int, Snippet, Value } from "shader-composer"
-import { type } from "shader-composer/src/glslType"
+import { $, Float, Int, Snippet, type, Value } from "shader-composer"
 import { perlin } from "./PerlinNoise"
 
 export type FBMOptions = {

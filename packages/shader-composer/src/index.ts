@@ -1,4 +1,5 @@
 export { compileShader } from "./compiler"
+export * from "./glslType"
 export * from "./expressions"
 export * from "./snippets"
 export * from "./stdlib"
