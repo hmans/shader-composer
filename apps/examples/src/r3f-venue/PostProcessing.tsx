@@ -4,7 +4,6 @@ import {
 	Effect,
 	EffectComposer,
 	EffectPass,
-	FXAAEffect,
 	Pass,
 	RenderPass,
 	SelectiveBloomEffect,

@@ -2,7 +2,7 @@ import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Perf } from "r3f-perf"
 import { FC, ReactNode, Suspense, useRef } from "react"
-import { LinearEncoding, Mesh, sRGBEncoding } from "three"
+import { Mesh } from "three"
 import { Link, useRoute } from "wouter"
 import { PostProcessing } from "./PostProcessing"
 import Stage from "./Stage"
