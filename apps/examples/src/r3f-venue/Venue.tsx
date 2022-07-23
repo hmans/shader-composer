@@ -1,5 +1,6 @@
 import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei"
 import { Canvas, useFrame } from "@react-three/fiber"
+import { useControls } from "leva"
 import { Perf } from "r3f-perf"
 import { FC, ReactNode, Suspense, useRef } from "react"
 import { Mesh } from "three"
@@ -50,10 +51,12 @@ export const Venue: FC<{
 	examples?: Examples
 	performance?: boolean
 }> = ({ children, examples, performance = true }) => {
+	const opts = useControls("Rendering", { dpr: { value: 1, min: 0.125, max: 2 } })
 	return (
 		<>
 			{examples && <Navigation examples={examples} />}
 			<Canvas
+				dpr={opts.dpr}
 				flat
 				gl={{
 					powerPreference: "high-performance",
