@@ -48,7 +48,7 @@ function Planet() {
 		)
 
 		const water = pipe(
-			Time,
+			Time(),
 			(v) => Add(v, SplitVector3(VertexPosition)[1]),
 			(v) => Sin(v),
 			(v) => Mul(v, 0.008),
@@ -87,14 +87,16 @@ function Planet() {
 
 function Atmosphere() {
 	const shader = useShader(() => {
+		const time = Time()
+
 		const cloudSpeed = 0.02
 		const cloudThreshold = 0.5
 		const cloudDensity = 0.9
 		const atmosphereDensity = 0.05
 
 		const cloudNoise = Add(
-			getNoise(0.5, 1, Mul(Time, cloudSpeed)),
-			getNoise(0.2, 1, Mul(Time, cloudSpeed * -0.5))
+			getNoise(0.5, 1, Mul(time, cloudSpeed)),
+			getNoise(0.2, 1, Mul(time, cloudSpeed * -0.5))
 		)
 
 		const clouds = pipe(

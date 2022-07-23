@@ -24,14 +24,16 @@ export default function HelloWorld() {
 	const color2 = useUniform("vec3", new Color(leva.color2))
 
 	const shader = useShader(() => {
+		const time = Time()
+
 		return ShaderMaterialMaster({
 			color: pipe(
 				color1,
-				(v) => Mix(v, color2, Remap(Sin(Time), -1, 1, 0, 1)),
+				(v) => Mix(v, color2, Remap(Sin(time), -1, 1, 0, 1)),
 				(v) => Add(v, Fresnel())
 			),
 
-			position: $`${VertexPosition} * (1.0 + sin(${Time} + ${VertexPosition}.y * 2.0) * 0.2)`
+			position: $`${VertexPosition} * (1.0 + sin(${time} + ${VertexPosition}.y * 2.0) * 0.2)`
 		})
 	}, [])
 

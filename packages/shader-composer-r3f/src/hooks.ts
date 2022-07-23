@@ -11,7 +11,7 @@ export const useShader = (ctor: () => Unit, deps?: any) => {
 export const useUniform = <T extends GLSLType>(type: T, value: JSTypes[T]) => {
 	const uniform = useMemo(() => {
 		const name = `u_${Math.floor(Math.random() * 10000)}`
-		return Uniform(type, name, value)
+		return Uniform({ type, value }, name)
 	}, [])
 
 	useLayoutEffect(() => {

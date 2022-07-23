@@ -3,14 +3,11 @@ import { $ } from "../expressions"
 import { GLSLType, JSTypes, UniformConfiguration, Unit, UnitConfig } from "../units"
 
 export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
-	type: T,
+	uniform: UniformConfiguration<T, U>,
 	name: string,
-	value: U,
 	extras?: Partial<UnitConfig<T>>
 ) => {
-	const uniform: UniformConfiguration<T, U> = { type, value }
-
-	const unit = Unit<T>(type, $`${name}`, {
+	const unit = Unit<T>(uniform.type, $`${name}`, {
 		...extras,
 		name: `Uniform: ${name}`,
 		uniforms: { [name]: uniform },
@@ -32,8 +29,17 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 	}
 }
 
-export const Time = Uniform("float", "u_time", 0, {
-	update: (dt) => console.log(dt)
-})
+export const Time = () => {
+	const time: UniformConfiguration<"float", number> = { type: "float", value: 0 }
 
-export const Resolution = Uniform("vec2", "u_resolution", new Vector2(0, 0))
+	return Uniform(time, uniqueUniformName(), {
+		update: (dt) => (time.value += dt)
+	})
+}
+
+export const Resolution = Uniform(
+	{ type: "vec2", value: new Vector2(0, 0) },
+	"u_resolution"
+)
+
+export const uniqueUniformName = () => `u_${Math.floor(Math.random() * 1000000)}`

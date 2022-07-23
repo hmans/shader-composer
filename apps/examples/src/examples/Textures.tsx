@@ -20,10 +20,10 @@ export default function Playground() {
 	const texture = useRepeatingTexture("/textures/hexgrid.jpg")
 
 	const shader = useShader(() => {
-		const offset = vec2(Mul(Time, 0.05), 0)
+		const offset = vec2(Mul(Time(), 0.05), 0)
 
 		/* Create a texture sampler */
-		const sampler2D = Uniform("sampler2D", "u_texture2", texture)
+		const sampler2D = Uniform({ type: "sampler2D", value: texture }, "u_texture2")
 
 		/* Get the texture information for the current fragment */
 		const tex2d = Texture2D(sampler2D, TilingUV(UV, vec2(2, 1), offset))
