@@ -77,11 +77,11 @@ const fbmNoise = Snippet(
 
 				float noiseVal = ${perlin}(p);
 
-				// if (turbulence)
-				// 	noiseVal = abs(noiseVal);
+				if (turbulence)
+					noiseVal = abs(noiseVal);
 
-				// if (ridge)
-				// 	noiseVal = -1.0 * noiseVal;
+				if (ridge)
+					noiseVal = -1.0 * noiseVal;
 
 				result += noiseVal * amplitude;
 
@@ -116,11 +116,11 @@ const fbmNoise = Snippet(
 
 				float noiseVal = ${perlin}(p);
 
-				// if (turbulence)
-				// 	noiseVal = abs(noiseVal);
+				if (turbulence)
+					noiseVal = abs(noiseVal);
 
-				// if (ridge)
-				// 	noiseVal = -1.0 * noiseVal;
+				if (ridge)
+					noiseVal = -1.0 * noiseVal;
 
 				result += noiseVal * amplitude;
 
