@@ -102,10 +102,8 @@ describe("compileShader", () => {
 
 	describe("when rendering units with registered uniforms", () => {
 		const getShader = () => {
-			const unitWithUniform = Float($`u_time`, {
-				uniforms: {
-					u_foo: { type: "float", value: 0 }
-				}
+			const unitWithUniform = Float(0, {
+				uniform: { value: 0 }
 			})
 
 			const [shader] = compileShader(unitWithUniform)
@@ -121,11 +119,7 @@ describe("compileShader", () => {
 		it("adds the uniform value object to the returned uniforms object", () => {
 			expect(getShader().uniforms).toMatchInlineSnapshot(`
 			Object {
-			  "u_foo": Object {
-			    "type": "float",
-			    "value": 0,
-			  },
-			  "u_time": Object {
+			  "u_Anonymous_1": Object {
 			    "value": 0,
 			  },
 			}

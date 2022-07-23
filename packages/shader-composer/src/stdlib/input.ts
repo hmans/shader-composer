@@ -2,25 +2,26 @@ import { Vector2 } from "three"
 import { $ } from "../expressions"
 import { Float, GLSLType, JSTypes, Unit, UnitConfig } from "../units"
 
+export const uniformName = (unit: Unit) => `u_${unit._unitConfig.variableName}`
+
 export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 	type: T,
 	value: U,
-	name: string = uniqueUniformName(),
 	extras?: Partial<UnitConfig<T>>
 ) => {
-	const uniform = { type, value }
+	const uniform = { value }
 
-	const unit = Unit<T>(type, $`${name}`, {
+	const unit = Unit<T>(type, $`/* BREAK */`, {
+		name: `Uniform (${type})`,
 		...extras,
-		name: `Uniform: ${name}`,
-		uniforms: { [name]: uniform },
+		uniform,
 		variable: false
 	})
 
 	return {
 		...unit,
 
-		toString: () => name,
+		toString: () => `u_${unit._unitConfig.variableName}`,
 
 		set value(v: U) {
 			uniform.value = v
@@ -33,11 +34,12 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 }
 
 export const Time = () => {
-	const uniform = Uniform("float", 0)
+	const uniform = Uniform("float", 0, { name: "Time Uniform" })
 
-	return Float(uniform, { update: (dt) => (uniform.value += dt) })
+	return Float(uniform, {
+		name: "Time",
+		update: (dt) => (uniform.value += dt)
+	})
 }
 
-export const Resolution = Uniform("vec2", new Vector2(0, 0), "u_resolution")
-
-export const uniqueUniformName = () => `u_${Math.floor(Math.random() * 1000000)}`
+export const Resolution = Uniform("vec2", new Vector2(0, 0))

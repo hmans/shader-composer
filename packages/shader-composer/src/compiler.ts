@@ -1,6 +1,8 @@
+import { IUniform } from "three"
 import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
+import { uniformName } from "./stdlib"
 import { isUnit, Program, UniformConfiguration, Unit, UpdateCallback } from "./units"
 import {
 	assignment,
@@ -83,15 +85,13 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 		header.push(`varying ${unit._unitConfig.type} v_${unit._unitConfig.variableName};`)
 	}
 
-	/* Declare uniforms, if any are configured. */
-	if (unit._unitConfig.uniforms) {
-		/* Register uniforms with compiler state */
-		state.uniforms = { ...state.uniforms, ...unit._unitConfig.uniforms }
+	/* Declare uniform, if one is configured. */
+	if (unit._unitConfig.uniform) {
+		/* Register uniform with compiler state */
+		state.uniforms[uniformName(unit)] = unit._unitConfig.uniform
 
 		/* Declare uniforms in header */
-		Object.entries(unit._unitConfig.uniforms).forEach(([name, { type }]) => {
-			header.push(statement("uniform", type, name))
-		})
+		header.push(statement("uniform", unit._unitConfig.type, uniformName(unit)))
 	}
 
 	/* Add header if present */
@@ -106,6 +106,8 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	const value =
 		unit._unitConfig.varying && program === "fragment"
 			? `v_${unit._unitConfig.variableName}`
+			: unit._unitConfig.uniform
+			? uniformName(unit)
 			: glslRepresentation(unit._unitConfig.value, unit._unitConfig.type)
 
 	state.body.push(beginUnit(unit))
@@ -224,7 +226,6 @@ export const compileShader = (root: Unit) => {
 	STEP 4: Collect uniforms.
 	*/
 	const uniforms = {
-		u_time: { value: 0 },
 		...vertexState.uniforms,
 		...fragmentState.uniforms
 	}
@@ -265,6 +266,6 @@ const CompilerState = () => ({
 	body: new Array<Part>(),
 	nextid: idGenerator(),
 	seen: new Set<Unit | Expression | Snippet>(),
-	uniforms: {} as Record<string, UniformConfiguration<any, any>>,
+	uniforms: {} as Record<string, IUniform>,
 	updates: new Set<UpdateCallback>()
 })

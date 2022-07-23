@@ -1,4 +1,13 @@
-import { Color, Matrix3, Matrix4, Texture, Vector2, Vector3, Vector4 } from "three"
+import {
+	Color,
+	IUniform,
+	Matrix3,
+	Matrix4,
+	Texture,
+	Vector2,
+	Vector3,
+	Vector4
+} from "three"
 import { $, Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
@@ -104,7 +113,7 @@ export type UnitConfig<T extends GLSLType> = {
 	 * declared in the program headers, and also made available in the
 	 * object returned by `compilerShader`.
 	 */
-	uniforms?: Record<string, UniformConfiguration<any, any>>
+	uniform?: { value: JSTypes[T] }
 
 	/**
 	 * A callback that will be executed once per frame.
