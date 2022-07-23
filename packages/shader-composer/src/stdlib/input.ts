@@ -6,10 +6,17 @@ export const uniformName = (unit: Unit) => `u_${unit._unitConfig.variableName}`
 
 export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 	type: T,
-	value: U,
+	initialValue: U,
 	extras?: Partial<UnitConfig<T>>
 ) => {
-	const uniform = { value }
+	/*
+	Create a uniform object. One of the reasons we need to wrap the value here
+	is that there is a good chance that we will need to mutate it, and we can only
+	reliably do this for scalar values if they are wrapped.
+	*/
+	const uniform = { value: initialValue }
+
+	/* Create the actual unit that represents the uniform. */
 
 	const unit = Unit<T>(type, $`/* BREAK */`, {
 		name: `Uniform (${type})`,
@@ -18,11 +25,13 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 		variable: false
 	})
 
+	/* Return the unit with some API bits mixed in. */
 	return {
 		...unit,
 
 		toString: () => `u_${unit._unitConfig.variableName}`,
 
+		/** The uniform's value. */
 		set value(v: U) {
 			uniform.value = v
 		},
