@@ -24,6 +24,21 @@ export const Sin = (x: Value<"float">) => Float($`sin(${x})`)
 export const Cos = (x: Value<"float">) => Float($`cos(${x})`)
 export const Pow = (x: Value<"float">, y: Value<"float">) => Float($`pow(${x}, ${y})`)
 
+export const Round = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Value<T>) =>
+	Unit(type(v), $`round(${v})`)
+
+export const Fract = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Value<T>) =>
+	Unit(type(v), $`fract(${v})`)
+
+export const Floor = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Value<T>) =>
+	Unit(type(v), $`floor(${v})`)
+
+export const Ceil = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Value<T>) =>
+	Unit(type(v), $`ceil(${v})`)
+
+export const Modulo = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Value<T>) =>
+	Unit(type(v), $`mod(${v})`)
+
 export const Clamp = <T extends GLSLType>(x: Value<T>, min: Value<T>, max: Value<T>) =>
 	Unit(type(x), $`clamp(${x}, ${min}, ${max})`)
 
