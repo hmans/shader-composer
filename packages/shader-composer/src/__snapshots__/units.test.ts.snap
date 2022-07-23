@@ -3,8 +3,6 @@
 exports[`Unit supports a 'varying' flag that will automatically make it pass its data as a varying 1`] = `
 "/*** PROGRAM: VERTEX ***/
 
-precision highp float;
-
 /*** UNIT: A variable with a varying ***/
 varying float v_A_variable_with_a_varying_1;
 
@@ -26,8 +24,6 @@ void main()
 
 exports[`Unit supports a 'varying' flag that will automatically make it pass its data as a varying 2`] = `
 "/*** PROGRAM: FRAGMENT ***/
-
-precision highp float;
 
 /*** UNIT: A variable with a varying ***/
 varying float v_A_variable_with_a_varying_1;

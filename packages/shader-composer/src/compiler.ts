@@ -189,10 +189,7 @@ const compileProgram = (unit: Unit, program: Program, state: CompilerState): str
 
 	return concatenate(
 		`/*** PROGRAM: ${program.toUpperCase()} ***/\n`,
-		"precision highp float;\n",
-
 		state.header,
-
 		"void main()",
 		block(state.body)
 	)
