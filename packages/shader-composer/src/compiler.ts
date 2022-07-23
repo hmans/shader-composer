@@ -242,7 +242,6 @@ export const compileShader = (root: Unit) => {
 	STEP 6: Build per-frame update function.
 	*/
 	const update = (dt: number) => {
-		// uniforms.u_time.value += dt
 		updates.forEach((u) => u(dt))
 	}
 

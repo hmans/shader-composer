@@ -1,13 +1,4 @@
-import {
-	Color,
-	IUniform,
-	Matrix3,
-	Matrix4,
-	Texture,
-	Vector2,
-	Vector3,
-	Vector4
-} from "three"
+import { Color, Matrix3, Matrix4, Texture, Vector2, Vector3, Vector4 } from "three"
 import { $, Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
