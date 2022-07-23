@@ -81,7 +81,7 @@ export type UnitConfig<T extends GLSLType> = {
 	 * a JavaScript type that matches this unit's GLSL type, or
 	 * an Expression.
 	 */
-	value: Value<T>
+	value: Value<T> | undefined
 
 	/**
 	 * If this is set to "vertex" or "fragment", the compiler will
@@ -140,7 +140,7 @@ export type Unit<T extends GLSLType = any, A extends {} = {}> = {
 
 export const Unit = <T extends GLSLType>(
 	type: T,
-	value: Value<T>,
+	value: Value<T> | undefined,
 	_config?: Partial<UnitConfig<T>>
 ): Unit<T> => {
 	const config: UnitConfig<T> = {
