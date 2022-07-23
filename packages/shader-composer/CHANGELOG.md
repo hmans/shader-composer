@@ -1,5 +1,11 @@
 # shader-composer
 
+## 0.0.6
+
+### Patch Changes
+
+- 4ae847a: Export `glslType` from shader-composer.
+
 ## 0.0.5
 
 ### Patch Changes
