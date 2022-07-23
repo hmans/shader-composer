@@ -8,13 +8,9 @@ export const useShader = (ctor: () => Unit, deps?: any) => {
 	return shader
 }
 
-export const useUniform = <T extends GLSLType>(
-	type: T,
-	value: JSTypes[T],
-	name?: string
-) => {
+export const useUniform = <T extends GLSLType>(type: T, value: JSTypes[T]) => {
 	const uniform = useMemo(() => {
-		return Uniform(type, value, name)
+		return Uniform(type, value)
 	}, [])
 
 	useLayoutEffect(() => {
