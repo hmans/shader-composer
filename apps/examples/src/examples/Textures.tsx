@@ -1,4 +1,3 @@
-import { useMemo } from "react"
 import {
 	$,
 	Add,
@@ -13,18 +12,23 @@ import {
 	vec2
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { Color, MeshStandardMaterial, Vector2 } from "three"
+import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { useRepeatingTexture } from "./helpers"
 
 export default function Playground() {
 	const texture = useRepeatingTexture("/textures/hexgrid.jpg")
 
-	const { uniforms, ...shader } = useShader(() => {
+	const shader = useShader(() => {
 		const offset = vec2(Mul(Time, 0.05), 0)
 
-		const tex2d = Texture2D(Sampler2D("u_texture"), TilingUV(UV, vec2(2, 1), offset))
+		/* Create a texture sampler */
+		const sampler2D = Sampler2D("u_texture", texture)
 
+		/* Get the texture information for the current fragment */
+		const tex2d = Texture2D(sampler2D, TilingUV(UV, vec2(2, 1), offset))
+
+		/* Define a color to tint the texture with */
 		const color = new Color("hotpink")
 
 		return CustomShaderMaterialMaster({
@@ -33,23 +37,10 @@ export default function Playground() {
 		})
 	})
 
-	const myUniforms = useMemo(
-		() => ({
-			...uniforms,
-			u_texture: { value: texture }
-		}),
-		[uniforms]
-	)
-
 	return (
 		<mesh>
 			<icosahedronGeometry args={[1, 3]} />
-			<CustomShaderMaterial
-				baseMaterial={MeshStandardMaterial}
-				uniforms={myUniforms}
-				{...shader}
-				transparent
-			/>
+			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} transparent />
 		</mesh>
 	)
 }
