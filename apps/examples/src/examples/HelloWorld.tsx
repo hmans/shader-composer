@@ -37,8 +37,6 @@ export default function HelloWorld() {
 		})
 	}, [])
 
-	console.log(shader.vertexShader)
-
 	return (
 		<mesh>
 			<sphereGeometry />
