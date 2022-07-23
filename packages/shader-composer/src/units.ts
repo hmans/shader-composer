@@ -1,4 +1,4 @@
-import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
+import { Color, Matrix3, Matrix4, Texture, Vector2, Vector3, Vector4 } from "three"
 import { $, Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
@@ -13,6 +13,7 @@ export type GLSLType =
 	| "vec4"
 	| "mat3"
 	| "mat4"
+	| "sampler2D"
 
 export type JSTypes = {
 	bool: boolean
@@ -23,6 +24,7 @@ export type JSTypes = {
 	vec4: Vector4
 	mat3: Matrix3
 	mat4: Matrix4
+	sampler2D: Texture
 }
 
 export type GLSLTypeFor<T extends any> = T extends boolean
@@ -54,6 +56,7 @@ export type UnitConfig<T extends GLSLType> = {
 	value: Value<T>
 
 	only?: Program
+	variable: boolean
 	varying: boolean
 
 	uniforms?: Record<string, UniformConfiguration<any, any>>
@@ -85,6 +88,7 @@ export const Unit = <T extends GLSLType>(
 		name: "Anonymous",
 		type,
 		value,
+		variable: true,
 		varying: false,
 		variableName: identifier("var", Math.floor(Math.random() * 1000000)),
 		..._config

@@ -8,6 +8,7 @@ import {
 	Texture2D,
 	TilingUV,
 	Time,
+	Uniform,
 	UV,
 	vec2
 } from "shader-composer"
@@ -23,7 +24,7 @@ export default function Playground() {
 		const offset = vec2(Mul(Time, 0.05), 0)
 
 		/* Create a texture sampler */
-		const sampler2D = Sampler2D("u_texture", texture)
+		const sampler2D = Uniform("sampler2D", "u_texture2", texture)
 
 		/* Get the texture information for the current fragment */
 		const tex2d = Texture2D(sampler2D, TilingUV(UV, vec2(2, 1), offset))
@@ -36,6 +37,8 @@ export default function Playground() {
 			alpha: Add(Fresnel(), 0.1)
 		})
 	})
+
+	console.log(shader.fragmentShader)
 
 	return (
 		<mesh>

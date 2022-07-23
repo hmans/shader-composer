@@ -1,4 +1,5 @@
 import { stringifyJSON } from "fp-ts/es6/Either"
+import { Uint8Attribute } from "three"
 import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
@@ -109,9 +110,11 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	/*
 	Declare the unit's global variable, and assign the specified value to it.
 	*/
-	state.body.push(
-		statement(unit._unitConfig.type, unit._unitConfig.variableName, "=", value)
-	)
+	if (unit._unitConfig.variable) {
+		state.body.push(
+			statement(unit._unitConfig.type, unit._unitConfig.variableName, "=", value)
+		)
+	}
 
 	/*
 	If a body chunk is given, we'll create a scoped block with a local variable called
@@ -120,16 +123,22 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	if (unit._unitConfig[program]?.body)
 		state.body.push(
 			block(
-				statement(unit._unitConfig.type, "value", "=", unit._unitConfig.variableName),
+				/* Declare local value variable */
+				unit._unitConfig.variable &&
+					statement(unit._unitConfig.type, "value", "=", unit._unitConfig.variableName),
+
+				/* Include body chunk */
 				unit._unitConfig[program]?.body,
-				assignment(unit._unitConfig.variableName, "value")
+
+				/* Re-assign local value variable to global variable */
+				unit._unitConfig.variable && assignment(unit._unitConfig.variableName, "value")
 			)
 		)
 
 	/*
 	If we're in varying mode and vertex, write value to the varying, too.
 	*/
-	if (unit._unitConfig.varying && program === "vertex") {
+	if (unit._unitConfig.variable && unit._unitConfig.varying && program === "vertex") {
 		state.body.push(
 			assignment(`v_${unit._unitConfig.variableName}`, unit._unitConfig.variableName)
 		)

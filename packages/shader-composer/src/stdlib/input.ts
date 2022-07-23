@@ -11,11 +11,14 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 
 	const unit = Unit<T>(type, $`${name}`, {
 		name: `Uniform: ${name}`,
-		uniforms: { [name]: uniform }
+		uniforms: { [name]: uniform },
+		variable: false
 	})
 
 	return {
 		...unit,
+
+		toString: () => name,
 
 		set value(v: U) {
 			uniform.value = v

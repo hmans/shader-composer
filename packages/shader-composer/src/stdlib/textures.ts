@@ -1,6 +1,6 @@
 import { Texture } from "three"
 import { $ } from "../expressions"
-import { Bool, Float, Value, Vec3, Vec4 } from "../units"
+import { Bool, Float, Unit, Value, Vec3, Vec4 } from "../units"
 
 export const Sampler2D = (name: string, texture?: Texture) => ({
 	...Bool(true, {
@@ -13,7 +13,7 @@ export const Sampler2D = (name: string, texture?: Texture) => ({
 
 export type Sampler2D = ReturnType<typeof Sampler2D>
 
-export const Texture2D = (sampler2D: Sampler2D, xy: Value<"vec2">) => {
+export const Texture2D = (sampler2D: Unit<"sampler2D">, xy: Value<"vec2">) => {
 	const unit = Vec4($`texture2D(${sampler2D}, ${xy})`, {
 		name: "Texture2D"
 	})
