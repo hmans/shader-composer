@@ -1,18 +1,11 @@
 import { Vector2 } from "three"
 import { $ } from "../expressions"
-import {
-	Float,
-	GLSLType,
-	JSTypes,
-	UniformConfiguration,
-	Unit,
-	UnitConfig
-} from "../units"
+import { Float, GLSLType, JSTypes, Unit, UnitConfig } from "../units"
 
 export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 	type: T,
 	value: U,
-	name: string,
+	name: string = uniqueUniformName(),
 	extras?: Partial<UnitConfig<T>>
 ) => {
 	const uniform = { type, value }
@@ -40,7 +33,7 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 }
 
 export const Time = () => {
-	const uniform = Uniform("float", 0, uniqueUniformName())
+	const uniform = Uniform("float", 0)
 
 	return Float(uniform, { update: (dt) => (uniform.value += dt) })
 }
