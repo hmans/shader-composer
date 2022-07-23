@@ -8,9 +8,12 @@ export const useShader = (ctor: () => Unit, deps?: any) => {
 	return shader
 }
 
-export const useUniform = <T extends GLSLType>(type: T, value: JSTypes[T]) => {
+export const useUniform = <T extends GLSLType>(
+	type: T,
+	value: JSTypes[T],
+	name?: string
+) => {
 	const uniform = useMemo(() => {
-		const name = `u_${Math.floor(Math.random() * 10000)}`
 		return Uniform(type, value, name)
 	}, [])
 
