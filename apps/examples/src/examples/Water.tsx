@@ -30,13 +30,13 @@ function Water() {
 			const xy = vec2(x, z)
 
 			const fbm = NormalizeNoise(
-				FBMNoise(vec2(Add(x, Time()), z), {
+				FBMNoise(vec2(x, z), {
 					seed: Math.random(),
-					persistance: 2.2,
-					lacunarity: 1.3,
-					scale: 2.4,
+					persistance: 10.4,
+					lacunarity: 2.3,
+					scale: 0.4,
 					redistribution: 1,
-					octaves: Int(2),
+					octaves: Int(5),
 					turbulence: false,
 					ridge: false
 				})
