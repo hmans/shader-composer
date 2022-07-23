@@ -1,4 +1,6 @@
+import { useControls } from "leva"
 import {
+	$,
 	Add,
 	CustomShaderMaterialMaster,
 	Int,
@@ -13,7 +15,7 @@ import {
 	VertexNormal,
 	VertexPosition
 } from "shader-composer"
-import { useShader } from "shader-composer-r3f"
+import { useShader, useUniform } from "shader-composer-r3f"
 import { FBMNoise, GerstnerWave, ModifyVertex } from "shader-composer-toybox"
 import { Color, DoubleSide, MeshPhysicalMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
@@ -21,6 +23,12 @@ import CustomShaderMaterial from "three-custom-shader-material"
 const NormalizeNoise = (v: Value<"float">) => Remap(v, -1, 1, 0, 1)
 
 function Water() {
+	const opts = useControls("Water", {
+		unevenness: { value: 0.0008, min: 0, max: 0.001 }
+	})
+
+	const unevenness = useUniform("float", opts.unevenness)
+
 	const shader = useShader(() => {
 		const diffuseColor = new Color("#acd")
 		const time = Time()
@@ -30,7 +38,7 @@ function Water() {
 			const xy = vec2(x, z)
 
 			const fbm = NormalizeNoise(
-				FBMNoise(vec2(Add(x, Time()), z), {
+				FBMNoise(vec2(Add(x, time), z), {
 					seed: Math.random(),
 					persistance: 2.2,
 					lacunarity: 1.3,
@@ -47,8 +55,8 @@ function Water() {
 				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.5, 20.0, time), 0.8)),
 				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0.2, 1), 0.2, 10, time), 0.8)),
 				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0, -1), 0.2, 5, time), 0.5)),
-				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.2, 8, time), 0.3))
-				// (v) => Add(v, Mul(vec3(0, 0.005, 0), fbm))
+				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.2, 8, time), 0.3)),
+				(v) => Add(v, Mul(vec3(0, unevenness, 0), fbm))
 			)
 		})
 
