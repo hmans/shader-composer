@@ -49,16 +49,59 @@ export type UniformConfiguration<T extends GLSLType, U extends JSTypes[T]> = {
 }
 
 export type UnitConfig<T extends GLSLType> = {
+	/**
+	 * Human-readable name of this unit.
+	 */
 	name: string
+
+	/**
+	 * Machine-readable name of the global variable for this unit.
+	 * Will be recreated by the compiler, so no need to set this yourself.
+	 */
 	variableName: string
 
+	/**
+	 * The GLSL type of this unit.
+	 */
 	type: T
+
+	/**
+	 * The value of this unit. Can be a reference to another unit,
+	 * a JavaScript type that matches this unit's GLSL type, or
+	 * an Expression.
+	 */
 	value: Value<T>
 
+	/**
+	 * If this is set to "vertex" or "fragment", the compiler will
+	 * only ever render this node in the specified program. If you
+	 * have units referencing gl_* variables that only exist in one
+	 * of the programs, use this to make sure they never appear
+	 * in the other program (which would lead to compilation failure.)
+	 */
 	only?: Program
+
+	/**
+	 * When set to true, the value of this unit will be represented
+	 * as a "global" variable (within the program's `main` function.)
+	 * Defaults to true, since most units will want to use this.
+	 * When you set this to false, you need to override the unit's
+	 * `toString` function to allow other units to reference it.
+	 */
 	variable: boolean
+
+	/**
+	 * When set to true, this variable will automatically declare a varying,
+	 * calculate/source its value in the vertex program only, and pass the
+	 * result to the fragment program through that varying. Default: false.
+	 */
 	varying: boolean
 
+	/**
+	 * An object of uniforms. Uniforms added here will automatically be
+	 * declared in the program headers, and also made available in the
+	 * object returned by `compilerShader`.
+	 */
 	uniforms?: Record<string, UniformConfiguration<any, any>>
 
 	/* Chunks */
