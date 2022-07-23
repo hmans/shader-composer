@@ -48,8 +48,8 @@ function Water() {
 				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.5, 20.0, time), 0.8)),
 				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0.2, 1), 0.2, 10, time), 0.8)),
 				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0, -1), 0.2, 5, time), 0.5)),
-				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.2, 8, time), 0.3)),
-				(v) => Add(v, Mul(vec3(0, 0.005, 0), fbm))
+				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.2, 8, time), 0.3))
+				// (v) => Add(v, Mul(vec3(0, 0.005, 0), fbm))
 			)
 		})
 
