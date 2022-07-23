@@ -27,20 +27,6 @@ export type JSTypes = {
 	sampler2D: Texture
 }
 
-export type GLSLTypeFor<T extends any> = T extends boolean
-	? "bool"
-	: T extends number
-	? "float"
-	: T extends Vector2
-	? "vec2"
-	: T extends Vector3 | Color
-	? "vec3"
-	: T extends Matrix3
-	? "mat3"
-	: T extends Matrix4
-	? "mat4"
-	: never
-
 export type Value<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
 
 export type UpdateCallback = (dt: number) => void
