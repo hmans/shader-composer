@@ -1,5 +1,14 @@
 # shader-composer
 
+## 0.0.5
+
+### Patch Changes
+
+- 61458c3: Removed `withAPI`. It is no longer needed; just mix in your favorite properties, getters, setters etc. into the units you're creating.
+- 61458c3: **Better Uniform support!** The `Uniform` unit will now automatically register its uniform value objects with the material (so you no longer have to do it yourself). It also exposes a `value` getter/setter that you can use to update or otherwise interact with the uniform's value.
+- ea71657: Shader Composer now re-exports the extremely useful `pipe` from `fp-ts`.
+- 61458c3: Moved `value` and `type` into `_unitConfig` to make room for nicer user-facing APIs.
+
 ## 0.0.4
 
 ### Patch Changes
