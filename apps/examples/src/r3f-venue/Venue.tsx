@@ -51,7 +51,11 @@ export const Venue: FC<{
 	examples?: Examples
 	performance?: boolean
 }> = ({ children, examples, performance = true }) => {
-	const opts = useControls("Rendering", { dpr: { value: 1, min: 0.125, max: 2 } })
+	const opts = useControls("Rendering", {
+		dpr: { value: 1, min: 0.125, max: 2 },
+		postProcessing: true
+	})
+
 	return (
 		<>
 			{examples && <Navigation examples={examples} />}
@@ -70,7 +74,7 @@ export const Venue: FC<{
 					<Environment preset="sunset" />
 					<fogExp2 args={["#000", 0.03]} attach="fog" />
 					<PerspectiveCamera position={[0, 0, 5]} makeDefault />
-					<PostProcessing />
+					{opts.postProcessing && <PostProcessing />}
 
 					<OrbitControls
 						makeDefault
