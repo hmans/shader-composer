@@ -1,9 +1,7 @@
-import { stringifyJSON } from "fp-ts/es6/Either"
-import { Uint8Attribute } from "three"
 import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
-import { isUnit, Program, UniformConfiguration, Unit } from "./units"
+import { isUnit, Program, UniformConfiguration, Unit, UpdateCallback } from "./units"
 import {
 	assignment,
 	block,
@@ -71,6 +69,11 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	dependencies.forEach((dep) => {
 		compileItem(dep, program, state)
 	})
+
+	/* Register update callback, if given */
+	if (unit._unitConfig.update) {
+		state.updates.add(unit._unitConfig.update)
+	}
 
 	/* HEADER */
 	const header = new Array<Part>()
@@ -227,10 +230,19 @@ export const compileShader = (root: Unit) => {
 	}
 
 	/*
-	STEP 4: Build per-frame update function.
+	STEP 5: Collect update callbacks.
+	*/
+	const updates = new Set<UpdateCallback>([
+		...vertexState.updates,
+		...fragmentState.updates
+	])
+
+	/*
+	STEP 6: Build per-frame update function.
 	*/
 	const update = (dt: number) => {
-		uniforms.u_time.value += dt
+		// uniforms.u_time.value += dt
+		updates.forEach((u) => u(dt))
 	}
 
 	/*
@@ -253,5 +265,6 @@ const CompilerState = () => ({
 	body: new Array<Part>(),
 	nextid: idGenerator(),
 	seen: new Set<Unit | Expression | Snippet>(),
-	uniforms: {} as Record<string, UniformConfiguration<any, any>>
+	uniforms: {} as Record<string, UniformConfiguration<any, any>>,
+	updates: new Set<UpdateCallback>()
 })

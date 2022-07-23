@@ -48,6 +48,8 @@ export type UniformConfiguration<T extends GLSLType, U extends JSTypes[T]> = {
 	value: U
 }
 
+export type UpdateCallback = (dt: number) => void
+
 export type UnitConfig<T extends GLSLType> = {
 	/**
 	 * Human-readable name of this unit.
@@ -103,6 +105,11 @@ export type UnitConfig<T extends GLSLType> = {
 	 * object returned by `compilerShader`.
 	 */
 	uniforms?: Record<string, UniformConfiguration<any, any>>
+
+	/**
+	 * A callback that will be executed once per frame.
+	 */
+	update?: UpdateCallback
 
 	/* Chunks */
 	vertex?: {
