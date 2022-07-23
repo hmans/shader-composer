@@ -1,5 +1,15 @@
 # shader-composer-r3f
 
+## 0.0.5
+
+### Patch Changes
+
+- b59783e: New hook, `useUniform`. Will create a uniform of the specified type, and effectfully update its value when the passed value changes. Example:
+
+  ```js
+  const uniform = useUniform("float", 1)
+  ```
+
 ## 0.0.4
 
 ### Patch Changes

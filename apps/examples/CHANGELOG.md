@@ -1,5 +1,17 @@
 # examples
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [b59783e]
+- Updated dependencies [b59783e]
+- Updated dependencies [b59783e]
+- Updated dependencies [b59783e]
+- Updated dependencies [b59783e]
+  - shader-composer@0.0.7
+  - shader-composer-r3f@0.0.5
+
 ## 0.0.3
 
 ### Patch Changes

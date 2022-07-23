@@ -1,5 +1,29 @@
 # shader-composer
 
+## 0.0.7
+
+### Patch Changes
+
+- b59783e: Unit values can now be set to `undefined`. This is useful in units that are guaranteed to source their actual value in one of the shader chunks, or through a uniform.
+- b59783e: The `Time` unit now is a constructor, meaning that you need to invoke `Time()` instead of just using `Time` directly. This also means that right now, multiple invocations of `Time()` will create multiple time uniforms that will get updated separately, so it is advised that you create a single instance of this unit and then reuse that in your shader where needed:
+
+  ```ts
+  const time = Time()
+  ```
+
+- b59783e: Uniforms now generate their own names, so you can now create a new uniform like this:
+
+  ```ts
+  const uniform = Uniform("vec3", new Vector3())
+  ```
+
+- b59783e: `Sampler2D` is gone; in its stead, you can now just use a `Uniform` with the `sampler2D` type. Example:
+
+  ```ts
+  const sampler2D = Uniform("sampler2D", texture)
+  const tex2d = Texture2D(sampler2D)
+  ```
+
 ## 0.0.6
 
 ### Patch Changes
