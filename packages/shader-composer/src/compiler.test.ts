@@ -85,6 +85,21 @@ describe("compileShader", () => {
 		expect(shader.fragmentShader).toMatchSnapshot()
 	})
 
+	describe("when rendering units without variables", () => {
+		it("doesn't declare global or local value variables", () => {
+			const unitWithoutVariable = Float(1, {
+				variable: false,
+				vertex: { body: $`/* Hi from the vertex program */` },
+				fragment: { body: $`/* Hi from the vertex program */` }
+			})
+
+			const [shader] = compileShader(unitWithoutVariable)
+
+			expect(shader.vertexShader).toMatchSnapshot()
+			expect(shader.fragmentShader).toMatchSnapshot()
+		})
+	})
+
 	describe("when rendering units with registered uniforms", () => {
 		const getShader = () => {
 			const unitWithUniform = Float($`u_time`, {
