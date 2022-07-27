@@ -1,6 +1,6 @@
 import { Vector2 } from "three"
 import { $ } from "../expressions"
-import { Vec2, Vec3, Mat4, Value, Bool } from "../units"
+import { Vec2, Vec3, Mat4, Value, Bool, GLSLType, Unit } from "../units"
 
 export const UV = Vec2($`uv`, {
 	name: "UV",
@@ -59,3 +59,12 @@ export const TilingUV = (
       ${uv}.x * ${tiling}.x + ${offset}.x,
       ${uv}.y * ${tiling}.y + ${offset}.y)`
 	)
+
+export const Attribute = <T extends GLSLType>(type: T, name: string) =>
+	Unit(type, $`${name}`, {
+		name: `Attribute: ${name}`,
+		varying: true,
+		vertex: {
+			header: $`attribute ${type} ${name};`
+		}
+	})
