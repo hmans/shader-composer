@@ -1,5 +1,13 @@
 # examples
 
+## 0.0.8
+
+### Patch Changes
+
+- Updated dependencies [0514bca]
+- Updated dependencies [61d7881]
+  - shader-composer@0.0.11
+
 ## 0.0.7
 
 ### Patch Changes
