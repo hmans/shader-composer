@@ -1,12 +1,13 @@
-# Shader Composer
+![Shader Composer](https://user-images.githubusercontent.com/1061/181269819-f10d2300-6d01-4a45-bce2-5c7634139dc9.jpg)
 
-> **Warning**
->
-> This library is very extremely new. I'd love for you to give it a go and maybe provide some feedback, but I would currently recommend **strongly** against using it in any sort of production project, unless you're ready and willing to keep up with the changes every release. **Use at your own risk.**
 
 ## Summary
 
 Write GLSL shaders, but with JavaScript.
+
+> **Warning**
+>
+> This library is very extremely new. I'd love for you to give it a go and maybe provide some feedback, but I would currently recommend **strongly** against using it in any sort of production project, unless you're ready and willing to keep up with the changes every release. **Use at your own risk.**
 
 ## Examples & Sandboxes
 
