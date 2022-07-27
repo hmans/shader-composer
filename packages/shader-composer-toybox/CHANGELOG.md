@@ -1,5 +1,11 @@
 # shader-composer-toybox
 
+## 0.0.7
+
+### Patch Changes
+
+- cfee267: Add `Grid2D` unit.
+
 ## 0.0.6
 
 ### Patch Changes

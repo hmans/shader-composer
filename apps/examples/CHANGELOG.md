@@ -1,5 +1,15 @@
 # examples
 
+## 0.0.6
+
+### Patch Changes
+
+- Updated dependencies [267d8a2]
+- Updated dependencies [cfee267]
+- Updated dependencies [5622611]
+  - shader-composer@0.0.9
+  - shader-composer-toybox@0.0.7
+
 ## 0.0.5
 
 ### Patch Changes
