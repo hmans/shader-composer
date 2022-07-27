@@ -1,5 +1,17 @@
 # shader-composer
 
+## 0.0.11
+
+### Patch Changes
+
+- 0514bca: Added `Attribute` unit, for accessing geometry attributes, and automatically making their values accessible to the fragment shader by way of a varying.
+
+  ```js
+  const color = Attribute("vec3", "color")
+  ```
+
+- 61d7881: Also re-export `flow` from fp-ts. Thank you, fp-ts!
+
 ## 0.0.10
 
 ### Patch Changes
