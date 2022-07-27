@@ -14,7 +14,7 @@ Write GLSL shaders, but with JavaScript.
 
 ## Examples & Sandboxes
 
-- **[Official Examples App](https://shader-composer-examples.vercel.app/)** ([Open in CodeSandbox](https://codesandbox.io/p/github/hmans/shader-composer))
+- **[Official Examples App](https://shader-composer-examples.vercel.app/)** ([CodeSandbox](https://codesandbox.io/p/github/hmans/shader-composer), [Source Code](https://github.com/hmans/shader-composer/tree/main/apps/examples/src/examples))
 
 ## Documentation
 
