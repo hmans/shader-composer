@@ -1,5 +1,8 @@
 ![Shader Composer](https://user-images.githubusercontent.com/1061/181271132-f7f57f23-174b-418f-b5f1-225fc76b11c7.jpg)
 
+[![Version](https://img.shields.io/npm/v/shader-composer?style=for-the-badge)](https://www.npmjs.com/package/shader-composer)
+[![Downloads](https://img.shields.io/npm/dt/shader-composer.svg?style=for-the-badge)](https://www.npmjs.com/package/shader-composer)
+[![Bundle Size](https://img.shields.io/bundlephobia/min/shader-composer?label=bundle%20size&style=for-the-badge)](https://bundlephobia.com/result?p=shader-composer)
 
 ## Summary
 
