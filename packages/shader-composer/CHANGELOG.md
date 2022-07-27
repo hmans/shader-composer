@@ -1,5 +1,12 @@
 # shader-composer
 
+## 0.0.9
+
+### Patch Changes
+
+- 267d8a2: Re-export `Clamp01` as `Saturate`, because that's how people call it in that other tool.
+- 5622611: Add `OneMinus` unit.
+
 ## 0.0.8
 
 ### Patch Changes
