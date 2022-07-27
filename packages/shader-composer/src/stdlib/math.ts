@@ -44,6 +44,8 @@ export const Clamp = <T extends GLSLType>(x: Value<T>, min: Value<T>, max: Value
 
 export const Clamp01 = (x: Value<"float">) => Clamp(x, 0, 1)
 
+export const Saturate = Clamp01
+
 export const OneMinus = (v: Value<"float">) => Float(Sub(1, v), { name: "OneMinus" })
 
 export const Mix = <T extends GLSLType>(a: Value<T>, b: Value<T>, f: Value<"float">) =>
