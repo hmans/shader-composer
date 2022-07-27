@@ -1,5 +1,11 @@
 # shader-composer
 
+## 0.0.10
+
+### Patch Changes
+
+- f57f58e: New logo! Yay!
+
 ## 0.0.9
 
 ### Patch Changes
