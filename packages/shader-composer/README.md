@@ -1,4 +1,4 @@
-![Shader Composer](https://user-images.githubusercontent.com/1061/181269819-f10d2300-6d01-4a45-bce2-5c7634139dc9.jpg)
+![Shader Composer](https://user-images.githubusercontent.com/1061/181271132-f7f57f23-174b-418f-b5f1-225fc76b11c7.jpg)
 
 
 ## Summary
