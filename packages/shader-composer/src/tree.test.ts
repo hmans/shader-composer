@@ -13,6 +13,6 @@ describe("walkTree", () => {
 
 		walkTree(root, (item) => seen.push(item))
 
-		expect(seen).toEqual([a, snippet, expr, root])
+		expect(seen).toEqual([root, expr, snippet, a])
 	})
 })
