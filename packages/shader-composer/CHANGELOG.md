@@ -1,5 +1,12 @@
 # shader-composer
 
+## 0.1.2
+
+### Patch Changes
+
+- 0c0f413: `walkTree` now includes constant values (numbers, Vector and Color instances, etc.) in its traversal.
+- b70b206: Reverse order in which `walkTree` traverses the graph.
+
 ## 0.1.1
 
 ### Patch Changes
