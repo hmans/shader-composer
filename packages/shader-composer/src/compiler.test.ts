@@ -130,7 +130,7 @@ describe("compileShader", () => {
 	it("returns a list of all units contained in the tree", () => {
 		const a = Float(1)
 		const root = Float(a)
-		const [shader, _, units] = compileShader(root)
+		const [shader, { units }] = compileShader(root)
 
 		expect(units).toEqual([root, a])
 	})

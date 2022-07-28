@@ -260,15 +260,18 @@ export const compileShader = (root: Unit) => {
 	/*
 	DONE! Let's return everything and go on a lengthy vacation somewhere nice.
 	*/
-	return [
-		{
-			vertexShader,
-			fragmentShader,
-			uniforms
-		},
+	const shader = {
+		vertexShader,
+		fragmentShader,
+		uniforms
+	}
+
+	const meta = {
 		update,
 		units
-	] as const
+	}
+
+	return [shader, meta] as const
 }
 
 type CompilerState = ReturnType<typeof CompilerState>
