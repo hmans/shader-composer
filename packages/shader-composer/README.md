@@ -34,7 +34,7 @@ Currently, only WebGL (GLSL) is supported, but adding support for WebGPU and WGS
 
 Shader Composer is a code-first library, and there is no intention for it to provide a graphical node-based editor. It is definitely possible to build one on top of it, though. Any takers? :D
 
-### Why are units called units and not nodes?
+### Why are the graphs constructed from "units" and not "nodes"?
 
 Because I wanted this library to be a litte more unity.
 
