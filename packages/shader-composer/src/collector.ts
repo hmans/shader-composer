@@ -16,7 +16,8 @@ export const collectItems = (item: Item, program: Program, items = new Array<Ite
 	/* Add this item */
 	items.push(item)
 
-	return items
+	/* Return everything except expressions. */
+	return items.filter((item) => !isExpression(item))
 }
 
 const getDependencies = (item: Item, program: Program): Item[] => {
@@ -26,6 +27,10 @@ const getDependencies = (item: Item, program: Program): Item[] => {
 				item._unitConfig[program]?.header?.values,
 				item._unitConfig[program]?.body?.values
 		  ]
+		: isExpression(item)
+		? item.values
+		: isSnippet(item)
+		? item.expression.values
 		: []
 
 	return dependencies.flat().filter(isItem)
