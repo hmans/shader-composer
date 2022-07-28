@@ -31,6 +31,22 @@ export const walkTree = (
 }
 
 /**
+ * Walks the tree and returns all items found where the given callback function
+ * returns true.
+ */
+export const collectFromTree = (root: Item, check: (item: Item) => boolean) => {
+	const found = new Array<Item>()
+
+	walkTree(root, (item) => {
+		if (check(item)) {
+			found.push(item)
+		}
+	})
+
+	return found
+}
+
+/**
  * Given a unit, expression o snippet, returns that item's dependencies.
  *
  * @param item
