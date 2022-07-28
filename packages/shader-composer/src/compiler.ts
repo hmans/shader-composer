@@ -243,6 +243,14 @@ export const compileShader = (root: Unit) => {
 	])
 
 	/*
+	Build a complete list of all units included in the tree. The code consuming
+	this function might have a need for it!
+	*/
+	const units = [
+		...new Set<Unit>([...fragmentState.seen, ...vertexState.seen].filter(isUnit))
+	]
+
+	/*
 	STEP 6: Build per-frame update function.
 	*/
 	const update = (dt: number) => {
@@ -252,14 +260,18 @@ export const compileShader = (root: Unit) => {
 	/*
 	DONE! Let's return everything and go on a lengthy vacation somewhere nice.
 	*/
-	return [
-		{
-			vertexShader,
-			fragmentShader,
-			uniforms
-		},
-		update
-	] as const
+	const shader = {
+		vertexShader,
+		fragmentShader,
+		uniforms
+	}
+
+	const meta = {
+		update,
+		units
+	}
+
+	return [shader, meta] as const
 }
 
 type CompilerState = ReturnType<typeof CompilerState>

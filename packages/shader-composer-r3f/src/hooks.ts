@@ -3,7 +3,7 @@ import { useLayoutEffect, useMemo } from "react"
 import { compileShader, GLSLType, JSTypes, Uniform, Unit } from "shader-composer"
 
 export const useShader = (ctor: () => Unit, deps?: any) => {
-	const [shader, update] = useMemo(() => compileShader(ctor()), deps)
+	const [shader, { update }] = useMemo(() => compileShader(ctor()), deps)
 	useFrame((_, dt) => update(dt))
 	return shader
 }
