@@ -27,7 +27,7 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 	return {
 		...unit,
 
-		toString: () => `u_${unit._unitConfig.variableName}`,
+		toString: () => uniformName(unit),
 
 		/** The uniform's value. */
 		set value(v: U) {
