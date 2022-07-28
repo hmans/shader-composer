@@ -23,21 +23,15 @@ export const walkTree = (
 	callback(item)
 }
 
-export const collectItems = (item: Item, program: Program, items = new Array<Item>()) => {
-	/* Check if we've already collected this item */
-	if (items.includes(item)) return
+export const collectItems = (item: Item, program: Program) => {
+	const items = new Array<Item>()
 
-	/* Collect dependencies */
-	for (const dependency of getDependencies(item, program)) {
-		collectItems(dependency, program, items)
-	}
+	walkTree(item, program, (item) => {
+		if (shouldBeIncludedInProgram(item, program)) {
+			items.push(item)
+		}
+	})
 
-	/* Add this item */
-	if (shouldBeIncludedInProgram(item, program)) {
-		items.push(item)
-	}
-
-	/* Return everything except expressions. */
 	return items.filter((item) => !isExpression(item))
 }
 
