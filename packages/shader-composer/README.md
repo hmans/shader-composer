@@ -36,7 +36,7 @@ Shader Composer is a code-first library, and there is no intention for it to pro
 
 ### Why are the graphs constructed from "units" and not "nodes"?
 
-Because I wanted this library to be a litte more unity.
+Because I wanted this library to be a little more unity.
 
 ## License
 
