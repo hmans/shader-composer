@@ -19,4 +19,6 @@ export const collectItems = (
 
 	/* Add the given item */
 	state.items.add(item)
+
+	return [...state.items]
 }
