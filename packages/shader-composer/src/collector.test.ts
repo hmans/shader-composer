@@ -35,4 +35,12 @@ describe("collectItems", () => {
 
 		expect(items).toEqual([a, snip, root])
 	})
+
+	it("respects nodes marked for specific programs", () => {
+		const a = Float(1, { only: "fragment" })
+		const root = Float(a)
+		const items = collectItems(root, "vertex")
+
+		expect(items).toEqual([root])
+	})
 })

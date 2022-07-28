@@ -14,7 +14,9 @@ export const collectItems = (item: Item, program: Program, items = new Array<Ite
 	}
 
 	/* Add this item */
-	items.push(item)
+	if (shouldBeIncludedInProgram(item, program)) {
+		items.push(item)
+	}
 
 	/* Return everything except expressions. */
 	return items.filter((item) => !isExpression(item))
@@ -38,3 +40,8 @@ const getDependencies = (item: Item, program: Program): Item[] => {
 
 const isItem = (item: any): item is Item =>
 	isUnit(item) || isExpression(item) || isSnippet(item)
+
+const shouldBeIncludedInProgram = (item: Item, program: Program) =>
+	!isUnit(item) ||
+	item._unitConfig.only === undefined ||
+	item._unitConfig.only === program
