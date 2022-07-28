@@ -1,3 +1,5 @@
+import { Matrix3, Matrix4 } from "three"
+import { glsl } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 
 describe("glslRepresentation", () => {
@@ -11,5 +13,17 @@ describe("glslRepresentation", () => {
 
 	it("keeps exponents", () => {
 		expect(glslRepresentation(0.0000000001)).toBe("1e-10")
+	})
+
+	it("renders mat3", () => {
+		expect(glslRepresentation(new Matrix3())).toBe(
+			"mat3(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0)"
+		)
+	})
+
+	it("renders mat4", () => {
+		expect(glslRepresentation(new Matrix4())).toBe(
+			"mat4(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0)"
+		)
 	})
 })
