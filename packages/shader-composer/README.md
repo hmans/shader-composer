@@ -1,4 +1,4 @@
-![Shader Composer](https://user-images.githubusercontent.com/1061/181271132-f7f57f23-174b-418f-b5f1-225fc76b11c7.jpg)
+![Shader Composer](https://user-images.githubusercontent.com/1061/181591252-3bf47e47-2f66-4a7a-bb40-762ff6141248.jpg)
 
 [![Version](https://img.shields.io/npm/v/shader-composer?style=for-the-badge)](https://www.npmjs.com/package/shader-composer)
 [![Downloads](https://img.shields.io/npm/dt/shader-composer.svg?style=for-the-badge)](https://www.npmjs.com/package/shader-composer)
