@@ -16,9 +16,48 @@ Write GLSL shaders, but with JavaScript.
 
 - **[Official Examples App](https://shader-composer-examples.vercel.app/)** ([CodeSandbox](https://codesandbox.io/p/github/hmans/shader-composer), [Source Code](https://github.com/hmans/shader-composer/tree/main/apps/examples/src/examples))
 
-## Documentation
+## Questions and Answers
 
-For the time being, please take a look at the [examples provided within this repository](https://github.com/hmans/shader-composer/tree/main/apps/examples/src/examples). (Or open them in a [CodeSandbox](https://codesandbox.io/p/github/hmans/shader-composer)!)
+### Where is the documentation?
+
+I want to wait for things to stabilize some more before sitting down to write documentation. For the time being, please take a look at the [examples provided within this repository](https://github.com/hmans/shader-composer/tree/main/apps/examples/src/examples). (Or open them in a [CodeSandbox](https://codesandbox.io/p/github/hmans/shader-composer)!)
+
+### Does this reimplement Three's built-in materials?
+
+No, it only knows how to hook into them if you want to customize their behavior.
+
+### Does this work with WebGPU, WebGL, ...?
+
+Currently, only WebGL (GLSL) is supported, but adding support for WebGPU and WGSL is definitely possible and has a good chance of happening at some point.
+
+### Where is the node editor? I was expecting a node editor!
+
+Shader Composer is a code-first library, and there is no intention for it to provide a graphical node-based editor. It is definitely possible to build one on top of it, though. Any takers? :D
+
+## License
+
+```
+Copyright (c) 2022 Hendrik Mans
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
 
 [shadermaterial]: https://threejs.org/docs/#api/en/materials/ShaderMaterial
 [three.js]: https://threejs.org/
