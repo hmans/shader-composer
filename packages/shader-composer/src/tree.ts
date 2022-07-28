@@ -1,12 +1,13 @@
-import { Expression, isExpression } from "./expressions"
+import { isExpression } from "./expressions"
 import { isSnippet, Snippet } from "./snippets"
-import { isUnit, Unit } from "./units"
+import { isUnit, Unit, Value } from "./units"
 
-export type Item = Unit | Expression | Snippet
+export type Item = Value | Snippet
 
 /**
  * Given a root unit, iterate over the tree and invoke the given callback for each
- * item encountered.
+ * item encountered. Items include units, expressions, snippets, and any constant
+ * values.
  *
  * @param item The root of the tree to traverse.
  * @param callback The callback to execute for each item.
@@ -44,7 +45,7 @@ export const getDependencies = (item: Item): Item[] => {
 		? item.expression.values
 		: []
 
-	return dependencies.flat().filter(isItem)
+	return dependencies.flat().filter((i) => !!i)
 }
 
 const getUnitDependencies = ({ _unitConfig: config }: Unit) => {
@@ -53,8 +54,5 @@ const getUnitDependencies = ({ _unitConfig: config }: Unit) => {
 	dependencies.push(config.vertex?.header?.values, config.vertex?.body?.values)
 	dependencies.push(config.fragment?.header?.values, config.fragment?.body?.values)
 
-	return dependencies.filter(isItem)
+	return dependencies.filter((i) => !!i)
 }
-
-const isItem = (item: any): item is Item =>
-	isUnit(item) || isExpression(item) || isSnippet(item)
