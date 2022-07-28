@@ -14,7 +14,7 @@ export const collectItems = (item: Item, program: Program, items = new Array<Ite
 	}
 
 	/* Add this item */
-	items.unshift(item)
+	items.push(item)
 
 	return items
 }
