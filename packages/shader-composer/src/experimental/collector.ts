@@ -5,7 +5,7 @@ import { isUnit, Program } from "../units"
 export const collectItems = (item: Item, program: Program) => {
 	const items = new Array<Item>()
 
-	walkTree(item, program, (item) => {
+	walkTree(item, (item) => {
 		if (shouldBeIncludedInProgram(item, program)) {
 			items.push(item)
 		}
