@@ -1,5 +1,6 @@
 import { collectItems } from "./collector"
 import { $ } from "./expressions"
+import { Snippet } from "./snippets"
 import { Float } from "./units"
 
 describe("collectItems", () => {
@@ -24,5 +25,14 @@ describe("collectItems", () => {
 		const items = collectItems(root, "vertex")
 
 		expect(items).toEqual([a, root])
+	})
+
+	it("includes snippets and nodes referenced in snippets", () => {
+		const a = Float(1)
+		const snip = Snippet(() => $`${a}`)
+		const root = Float($`${snip}`)
+		const items = collectItems(root, "vertex")
+
+		expect(items).toEqual([a, snip, root])
 	})
 })
