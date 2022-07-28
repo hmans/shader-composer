@@ -3,6 +3,7 @@ export * from "./glslType"
 export * from "./expressions"
 export * from "./snippets"
 export * from "./stdlib"
+export * from "./tree"
 export * from "./units"
 
 /*
