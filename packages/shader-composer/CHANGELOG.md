@@ -1,5 +1,11 @@
 # shader-composer
 
+## 0.1.0
+
+### Minor Changes
+
+- 74e6d2a: **Breaking Change:** The return signature of `compileShader` has been changed. It now returns `[shader, meta]`, where `shader` is the object containing the shader properties (like before), and `meta` is an object containing the `update` function, and a `units` array containing all units used in the tree.
+
 ## 0.0.11
 
 ### Patch Changes
