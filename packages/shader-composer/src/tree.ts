@@ -6,7 +6,6 @@ export type Item = Unit | Expression | Snippet
 
 export const walkTree = (
 	item: Item,
-	program: Program,
 	callback: (item: Item) => void,
 	seen = new Set<Item>()
 ) => {
@@ -15,21 +14,17 @@ export const walkTree = (
 	seen.add(item)
 
 	/* Dive into dependencies */
-	for (const dependency of getDependencies(item, program)) {
-		walkTree(dependency, program, callback, seen)
+	for (const dependency of getDependencies(item)) {
+		walkTree(dependency, callback, seen)
 	}
 
 	/* Invoke callback */
 	callback(item)
 }
 
-export const getDependencies = (item: Item, program: Program): Item[] => {
+export const getDependencies = (item: Item): Item[] => {
 	const dependencies = isUnit(item)
-		? [
-				item._unitConfig.value,
-				item._unitConfig[program]?.header?.values,
-				item._unitConfig[program]?.body?.values
-		  ]
+		? getUnitDependencies(item)
 		: isExpression(item)
 		? item.values
 		: isSnippet(item)
@@ -37,6 +32,15 @@ export const getDependencies = (item: Item, program: Program): Item[] => {
 		: []
 
 	return dependencies.flat().filter(isItem)
+}
+
+const getUnitDependencies = ({ _unitConfig: config }: Unit) => {
+	const dependencies = [config.value]
+
+	dependencies.push(config.vertex?.header?.values, config.vertex?.body?.values)
+	dependencies.push(config.fragment?.header?.values, config.fragment?.body?.values)
+
+	return dependencies
 }
 
 const isItem = (item: any): item is Item =>
