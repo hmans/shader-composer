@@ -1,9 +1,16 @@
 import { Expression, isExpression } from "./expressions"
 import { isSnippet, Snippet } from "./snippets"
-import { isUnit, Program, Unit } from "./units"
+import { isUnit, Unit } from "./units"
 
 export type Item = Unit | Expression | Snippet
 
+/**
+ * Given a root unit, iterate over the tree and invoke the given callback for each
+ * item encountered.
+ *
+ * @param item The root of the tree to traverse.
+ * @param callback The callback to execute for each item.
+ */
 export const walkTree = (
 	item: Item,
 	callback: (item: Item) => void,
@@ -22,6 +29,12 @@ export const walkTree = (
 	callback(item)
 }
 
+/**
+ * Given a unit, expression o snippet, returns that item's dependencies.
+ *
+ * @param item
+ * @returns
+ */
 export const getDependencies = (item: Item): Item[] => {
 	const dependencies = isUnit(item)
 		? getUnitDependencies(item)
