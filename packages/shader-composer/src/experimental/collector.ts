@@ -1,6 +1,6 @@
-import { isExpression } from "./expressions"
-import { Item, walkTree } from "./tree"
-import { isUnit, Program } from "./units"
+import { isExpression } from "../expressions"
+import { Item, walkTree } from "../tree"
+import { isUnit, Program } from "../units"
 
 export const collectItems = (item: Item, program: Program) => {
 	const items = new Array<Item>()

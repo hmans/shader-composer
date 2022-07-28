@@ -1,7 +1,7 @@
 import { collectItems } from "./collector"
-import { $ } from "./expressions"
-import { Snippet } from "./snippets"
-import { Float } from "./units"
+import { $ } from "../expressions"
+import { Snippet } from "../snippets"
+import { Float } from "../units"
 
 describe("collectItems", () => {
 	it("collects all items within a graph, starting with a given root node", () => {
