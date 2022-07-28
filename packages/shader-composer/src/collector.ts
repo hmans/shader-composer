@@ -4,6 +4,25 @@ import { isUnit, Program, Unit } from "./units"
 
 type Item = Unit | Expression | Snippet
 
+export const walkTree = (
+	item: Item,
+	program: Program,
+	callback: (item: Item) => void,
+	seen = new Set<Item>()
+) => {
+	/* Visit each item only once */
+	if (seen.has(item)) return
+	seen.add(item)
+
+	/* Dive into dependencies */
+	for (const dependency of getDependencies(item, program)) {
+		walkTree(dependency, program, callback, seen)
+	}
+
+	/* Invoke callback */
+	callback(item)
+}
+
 export const collectItems = (item: Item, program: Program, items = new Array<Item>()) => {
 	/* Check if we've already collected this item */
 	if (items.includes(item)) return
