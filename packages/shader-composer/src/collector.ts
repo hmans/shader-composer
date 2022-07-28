@@ -1,24 +1,35 @@
-import { Expression } from "./expressions"
-import { Snippet } from "./snippets"
+import { Expression, isExpression } from "./expressions"
+import { isSnippet, Snippet } from "./snippets"
 import { isUnit, Program, Unit } from "./units"
 
 type Item = Unit | Expression | Snippet
 
-export const collectItems = (
-	item: Item,
-	program: Program,
-	state = { items: new Set<Item>() }
-) => {
+export const collectItems = (item: Item, program: Program, items = new Array<Item>()) => {
 	/* Check if we've already collected this item */
-	if (state.items.has(item)) return
-	state.items.add(item)
+	if (items.includes(item)) return
 
 	/* Collect dependencies */
-	if (isUnit(item)) {
+	for (const dependency of getDependencies(item, program)) {
+		collectItems(dependency, program, items)
 	}
 
-	/* Add the given item */
-	state.items.add(item)
+	/* Add this item */
+	items.unshift(item)
 
-	return [...state.items]
+	return items
 }
+
+const getDependencies = (item: Item, program: Program): Item[] => {
+	const dependencies = isUnit(item)
+		? [
+				item._unitConfig.value,
+				item._unitConfig[program]?.header?.values,
+				item._unitConfig[program]?.body?.values
+		  ]
+		: []
+
+	return dependencies.flat().filter(isItem)
+}
+
+const isItem = (item: any): item is Item =>
+	isUnit(item) || isExpression(item) || isSnippet(item)
