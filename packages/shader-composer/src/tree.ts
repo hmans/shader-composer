@@ -53,7 +53,7 @@ const getUnitDependencies = ({ _unitConfig: config }: Unit) => {
 	dependencies.push(config.vertex?.header?.values, config.vertex?.body?.values)
 	dependencies.push(config.fragment?.header?.values, config.fragment?.body?.values)
 
-	return dependencies
+	return dependencies.filter(isItem)
 }
 
 const isItem = (item: any): item is Item =>
