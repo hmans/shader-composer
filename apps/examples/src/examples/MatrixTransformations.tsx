@@ -1,27 +1,33 @@
 import {
 	$,
 	CustomShaderMaterialMaster,
+	glsl,
+	Mat4,
+	Mul,
+	Rotation3D,
+	Snippet,
 	Time,
 	Value,
-	Vec3,
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { MeshStandardMaterial, Vector4 } from "three"
+import { Euler, MeshStandardMaterial, Quaternion, Vector3 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
+
+const RotateAroundAxis = (
+	position: Value<"vec3">,
+	axis: Value<"vec3">,
+	angle: Value<"float">
+) => Mul(position, $`mat3(${Rotation3D(axis, angle)})`)
 
 export default function MatrixTransformations() {
 	const shader = useShader(() => {
 		const time = Time()
 
-		const StupidRotation = (v: Value<"vec3">, q: Value<"vec4">) =>
-			Vec3($`
-				${v} 
-					+ 2.0 * cross(${q}.xyz, cross(${q}.xyz, ${v})
-					+ ${q}.w * ${v})`)
+		const quat = new Quaternion().setFromEuler(new Euler(0, 0.5, 0))
 
 		return CustomShaderMaterialMaster({
-			position: StupidRotation(VertexPosition, new Vector4(0, 0, 0, 1))
+			position: RotateAroundAxis(VertexPosition, new Vector3(0.5, 1, 0), time)
 		})
 	}, [])
 
