@@ -1,5 +1,11 @@
 # shader-composer
 
+## 0.1.7
+
+### Patch Changes
+
+- a8466f2: **Fixed:** `CustomShaderMaterialMaster` now correctly sources the base material's texture map if one is given.
+
 ## 0.1.6
 
 ### Patch Changes
