@@ -1,12 +1,12 @@
 import { $ } from "../expressions"
 import { type } from "../glslType"
-import { Bool, GLSLType, Unit, Value } from "../units"
+import { Bool, GLSLType, Unit, Input } from "../units"
 
 export const If = <T extends GLSLType>(
-	expression: Value<"bool">,
-	then: Value<T>,
-	else_: Value<T>
+	expression: Input<"bool">,
+	then: Input<T>,
+	else_: Input<T>
 ) => Unit(type(then) as T, $`(${expression} ? ${then} : ${else_})`)
 
-export const GreaterOrEqual = <T extends GLSLType>(a: Value<T>, b: Value<T>) =>
+export const GreaterOrEqual = <T extends GLSLType>(a: Input<T>, b: Input<T>) =>
 	Bool($`(${a} >= ${b})`)

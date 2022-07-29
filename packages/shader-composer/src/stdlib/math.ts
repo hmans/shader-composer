@@ -1,14 +1,14 @@
 import { $ } from "../expressions"
 import { type } from "../glslType"
 import { Snippet } from "../snippets"
-import { Float, GLSLType, Unit, Value } from "../units"
+import { Float, GLSLType, Unit, Input } from "../units"
 import { VertexNormal, ViewDirection } from "./geometry"
 
 export const Operator = (title: string, operator: "+" | "-" | "*" | "/") => <
 	T extends GLSLType
 >(
-	a: Value<T>,
-	b: Value<any>
+	a: Input<T>,
+	b: Input<any>
 ) => {
 	return Unit(type(a), $`${a} ${operator} ${b}`, {
 		name: `${title} (${type(a)})`
@@ -20,52 +20,52 @@ export const Sub = Operator("Subtract", "-")
 export const Mul = Operator("Multiply", "*")
 export const Div = Operator("Divide", "/")
 
-export const Sin = (x: Value<"float">) => Float($`sin(${x})`)
-export const Cos = (x: Value<"float">) => Float($`cos(${x})`)
-export const Pow = (x: Value<"float">, y: Value<"float">) => Float($`pow(${x}, ${y})`)
+export const Sin = (x: Input<"float">) => Float($`sin(${x})`)
+export const Cos = (x: Input<"float">) => Float($`cos(${x})`)
+export const Pow = (x: Input<"float">, y: Input<"float">) => Float($`pow(${x}, ${y})`)
 
-export const Round = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Value<T>) =>
+export const Round = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
 	Unit(type(v), $`round(${v})`)
 
-export const Fract = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Value<T>) =>
+export const Fract = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
 	Unit(type(v), $`fract(${v})`)
 
-export const Floor = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Value<T>) =>
+export const Floor = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
 	Unit(type(v), $`floor(${v})`)
 
-export const Ceil = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Value<T>) =>
+export const Ceil = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
 	Unit(type(v), $`ceil(${v})`)
 
-export const Modulo = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Value<T>) =>
+export const Modulo = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
 	Unit(type(v), $`mod(${v})`)
 
-export const Clamp = <T extends GLSLType>(x: Value<T>, min: Value<T>, max: Value<T>) =>
+export const Clamp = <T extends GLSLType>(x: Input<T>, min: Input<T>, max: Input<T>) =>
 	Unit(type(x), $`clamp(${x}, ${min}, ${max})`)
 
-export const Clamp01 = (x: Value<"float">) => Clamp(x, 0, 1)
+export const Clamp01 = (x: Input<"float">) => Clamp(x, 0, 1)
 
 export const Saturate = Clamp01
 
-export const OneMinus = (v: Value<"float">) => Float(Sub(1, v), { name: "OneMinus" })
+export const OneMinus = (v: Input<"float">) => Float(Sub(1, v), { name: "OneMinus" })
 
-export const Mix = <T extends GLSLType>(a: Value<T>, b: Value<T>, f: Value<"float">) =>
+export const Mix = <T extends GLSLType>(a: Input<T>, b: Input<T>, f: Input<"float">) =>
 	Unit(type(a), $`mix(${a}, ${b}, ${f})`)
 
 export const With = <T extends GLSLType>(unit: Unit<T>) => ({
 	...unit,
-	Add: (b: Value) => With(Add(unit, b)),
-	Sub: (b: Value) => With(Sub(unit, b)),
-	Mul: (b: Value) => With(Mul(unit, b)),
-	Div: (b: Value) => With(Div(unit, b))
+	Add: (b: Input) => With(Add(unit, b)),
+	Sub: (b: Input) => With(Sub(unit, b)),
+	Mul: (b: Input) => With(Mul(unit, b)),
+	Div: (b: Input) => With(Div(unit, b))
 })
 
 export type FresnelProps = {
-	normal?: Value<"vec3">
-	alpha?: Value<"float">
-	bias?: Value<"float">
-	intensity?: Value<"float">
-	power?: Value<"float">
-	factor?: Value<"float">
+	normal?: Input<"vec3">
+	alpha?: Input<"float">
+	bias?: Input<"float">
+	intensity?: Input<"float">
+	power?: Input<"float">
+	factor?: Input<"float">
 }
 
 export const Fresnel = ({
@@ -86,10 +86,10 @@ export const Fresnel = ({
 		}
 	})
 
-export const Step = (edge: Value<"float">, v: Value<"float">) =>
+export const Step = (edge: Input<"float">, v: Input<"float">) =>
 	Float($`step(${edge}, ${v})`)
 
-export const Smoothstep = (min: Value<"float">, max: Value<"float">, v: Value<"float">) =>
+export const Smoothstep = (min: Input<"float">, max: Input<"float">, v: Input<"float">) =>
 	Float($`smoothstep(${min}, ${max}, ${v})`)
 
 const remap = Snippet(
@@ -112,11 +112,11 @@ const remap = Snippet(
 )
 
 export const Remap = <T extends "float" | "vec2" | "vec3" | "vec4">(
-	v: Value<T>,
-	inMin: Value<T>,
-	inMax: Value<T>,
-	outMin: Value<T>,
-	outMax: Value<T>
+	v: Input<T>,
+	inMin: Input<T>,
+	inMax: Input<T>,
+	outMin: Input<T>,
+	outMax: Input<T>
 ) => Unit(type(v), $`${remap}(${v}, ${inMin}, ${inMax}, ${outMin}, ${outMax})`)
 
-export const NormalizePlusMinusOne = (f: Value<"float">) => Remap(f, -1, 1, 0, 1)
+export const NormalizePlusMinusOne = (f: Input<"float">) => Remap(f, -1, 1, 0, 1)

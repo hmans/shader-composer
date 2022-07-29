@@ -12,7 +12,7 @@ import {
 	SplitVector3,
 	Step,
 	Time,
-	Value,
+	Input,
 	Vec3,
 	VertexPosition
 } from "shader-composer"
@@ -24,7 +24,7 @@ import CustomShaderMaterial from "three-custom-shader-material"
 const getNoise = (
 	scale: number,
 	amplitude: number,
-	offset: Value<"float" | "vec3"> = 0
+	offset: Input<"float" | "vec3"> = 0
 ) =>
 	pipe(
 		VertexPosition,
@@ -55,7 +55,7 @@ function Planet() {
 			(v) => Add(v, 0.02)
 		)
 
-		const applyColor = (color: Color, height: Value<"float">) => (v: Value<"vec3">) =>
+		const applyColor = (color: Color, height: Input<"float">) => (v: Input<"vec3">) =>
 			Mix(v, color, Step(height, totalHeight))
 
 		return CustomShaderMaterialMaster({

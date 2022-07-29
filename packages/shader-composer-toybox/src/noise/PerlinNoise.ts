@@ -1,9 +1,9 @@
-import { Float, glsl, Snippet, Value, type } from "shader-composer"
+import { Float, glsl, Snippet, Input, type } from "shader-composer"
 import { permute } from "./permute"
 import { rand4 } from "./random"
 import { taylorInvSqrt } from "./taylorInvSqrt"
 
-export const PerlinNoise = (p: Value<"vec3" | "vec2">) =>
+export const PerlinNoise = (p: Input<"vec3" | "vec2">) =>
 	Float(glsl`${perlin}(${p})`, { name: `Perlin Noise (${type(p)})` })
 
 const fade = Snippet(

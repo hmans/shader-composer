@@ -4,7 +4,7 @@ import {
 	Mul,
 	Rotation3D,
 	Time,
-	Value,
+	Input,
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
@@ -12,9 +12,9 @@ import { MeshStandardMaterial, Vector3 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 const RotateAroundAxis = (
-	position: Value<"vec3">,
-	axis: Value<"vec3">,
-	angle: Value<"float">
+	position: Input<"vec3">,
+	axis: Input<"vec3">,
+	angle: Input<"float">
 ) => Mul(position, $`mat3(${Rotation3D(axis, angle)})`)
 
 export default function MatrixTransformations() {

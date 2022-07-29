@@ -8,7 +8,7 @@ import {
 	Remap,
 	SplitVector3,
 	Time,
-	Value,
+	Input,
 	vec2,
 	vec3,
 	VertexNormal,
@@ -19,7 +19,7 @@ import { FBMNoise, GerstnerWave, ModifyVertex } from "shader-composer-toybox"
 import { Color, DoubleSide, MeshPhysicalMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
-const NormalizeNoise = (v: Value<"float">) => Remap(v, -1, 1, 0, 1)
+const NormalizeNoise = (v: Input<"float">) => Remap(v, -1, 1, 0, 1)
 
 function Water() {
 	const shader = useShader(() => {

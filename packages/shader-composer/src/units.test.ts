@@ -2,7 +2,7 @@ import { Vector2 } from "three"
 import { compileShader } from "./compiler"
 import { $ } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
-import { Float, Value, Unit, Vec2 } from "./units"
+import { Float, Input, Unit, Vec2 } from "./units"
 
 const glsl = glslRepresentation
 
@@ -52,26 +52,26 @@ describe("Unit", () => {
 	})
 
 	it("supports constructing nodes through constructor functions", () => {
-		const Double = (f: Value<"float">) => Float($`(${f}) * 2.0`)
+		const Double = (f: Input<"float">) => Float($`(${f}) * 2.0`)
 		const v = Double(1)
 		expect(glsl(v._unitConfig.value)).toBe("(1.0) * 2.0")
 	})
 
 	it("constructor functions can pass string values as expressions", () => {
-		const Double = (f: Value<"float">) => Float($`(${f}) * 2.0`)
+		const Double = (f: Input<"float">) => Float($`(${f}) * 2.0`)
 		const v = Double($`5.0`)
 		expect(glsl(v._unitConfig.value)).toBe(`(5.0) * 2.0`)
 	})
 
 	it("constructor functions can pass references to other nodes", () => {
-		const Double = (f: Value<"float">) => Float($`(${f}) * 2.0`)
+		const Double = (f: Input<"float">) => Float($`(${f}) * 2.0`)
 		const a = Float(1)
 		const v = Double(a)
 		expect(glsl(v._unitConfig.value)).toBe(`(${a._unitConfig.variableName}) * 2.0`)
 	})
 
 	it("constructor functions can pass expression values to other nodes", () => {
-		const Double = (f: Value<"float">) => Float($`(${f}) * 2.0`)
+		const Double = (f: Input<"float">) => Float($`(${f}) * 2.0`)
 		const a = Float(5)
 		const v = Double($`${a} + 5.0`)
 		expect(glsl(v._unitConfig.value)).toBe(`(${a._unitConfig.variableName} + 5.0) * 2.0`)

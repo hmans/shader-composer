@@ -1,5 +1,5 @@
 import {
-	Value,
+	Input,
 	SplitVector2,
 	Mul,
 	Fract,
@@ -10,9 +10,9 @@ import {
 } from "shader-composer"
 
 export const Grid2D = (
-	v: Value<"vec2">,
-	scale: Value<"float"> = 1,
-	thickness: Value<"float"> = 0.1
+	v: Input<"vec2">,
+	scale: Input<"float"> = 1,
+	thickness: Input<"float"> = 0.1
 ) => {
 	const [x, y] = SplitVector2(Mul(v, scale))
 

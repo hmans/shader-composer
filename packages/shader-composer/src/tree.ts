@@ -1,8 +1,8 @@
 import { isExpression } from "./expressions"
 import { isSnippet, Snippet } from "./snippets"
-import { isUnit, Unit, Value } from "./units"
+import { isUnit, Unit, Input } from "./units"
 
-export type Item = Value | Snippet
+export type Item = Input | Snippet
 
 /**
  * Given a root unit, iterate over the tree and invoke the given callback for each

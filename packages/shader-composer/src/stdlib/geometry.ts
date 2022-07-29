@@ -1,6 +1,6 @@
 import { Vector2 } from "three"
 import { $ } from "../expressions"
-import { Vec2, Vec3, Mat4, Value, Bool, GLSLType, Unit } from "../units"
+import { Vec2, Vec3, Mat4, Input, Bool, GLSLType, Unit } from "../units"
 
 export const UV = Vec2($`uv`, {
 	name: "UV",
@@ -50,9 +50,9 @@ export const ViewDirection = Vec3(
 export const IsFrontFacing = Bool($`gl_FrontFacing`, { only: "fragment" })
 
 export const TilingUV = (
-	uv: Value<"vec2"> = UV,
-	tiling: Value<"vec2"> = new Vector2(1, 1),
-	offset: Value<"vec2"> = new Vector2(0, 0)
+	uv: Input<"vec2"> = UV,
+	tiling: Input<"vec2"> = new Vector2(1, 1),
+	offset: Input<"vec2"> = new Vector2(0, 0)
 ) =>
 	Vec2(
 		$`vec2(

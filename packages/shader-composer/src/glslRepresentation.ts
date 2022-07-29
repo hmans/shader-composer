@@ -1,10 +1,10 @@
 import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
 import { isExpression } from "./expressions"
 import { isSnippet } from "./snippets"
-import { GLSLType, isUnit, Value } from "./units"
+import { GLSLType, isUnit, Input } from "./units"
 
 export const glslRepresentation = (
-	value: Value | undefined,
+	value: Input | undefined,
 	typeHint?: GLSLType
 ): string => {
 	if (value === undefined) return ""

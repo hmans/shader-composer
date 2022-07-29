@@ -1,19 +1,19 @@
-import { $, Float, Int, Snippet, type, Value } from "shader-composer"
+import { $, Float, Int, Snippet, type, Input } from "shader-composer"
 import { perlin } from "./PerlinNoise"
 
 export type FBMOptions = {
-	seed?: Value<"float">
-	persistance?: Value<"float">
-	lacunarity?: Value<"float">
-	scale?: Value<"float">
-	redistribution?: Value<"float">
-	octaves?: Value<"int">
-	turbulence?: Value<"bool">
-	ridge?: Value<"bool">
+	seed?: Input<"float">
+	persistance?: Input<"float">
+	lacunarity?: Input<"float">
+	scale?: Input<"float">
+	redistribution?: Input<"float">
+	octaves?: Input<"int">
+	turbulence?: Input<"bool">
+	ridge?: Input<"bool">
 }
 
 export const FBMNoise = (
-	p: Value<"vec2" | "vec3">,
+	p: Input<"vec2" | "vec3">,
 	{
 		seed = 0,
 		persistance = 0,

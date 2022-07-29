@@ -27,7 +27,15 @@ export type JSTypes = {
 	sampler2D: Texture
 }
 
-export type Value<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
+export type Input<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
+
+/*
+`Input` used to be named `Value`. We will export an alias here for backwards compatibility
+and remove it in a future release.
+
+TODO: Remove `Value` type!
+*/
+export type Value<T extends GLSLType> = Input<T>
 
 export type UpdateCallback = (dt: number) => void
 
@@ -53,7 +61,7 @@ export type UnitConfig<T extends GLSLType> = {
 	 * a JavaScript type that matches this unit's GLSL type, or
 	 * an Expression.
 	 */
-	value: Value<T> | undefined
+	value: Input<T> | undefined
 
 	/**
 	 * If this is set to "vertex" or "fragment", the compiler will
@@ -112,7 +120,7 @@ export type Unit<T extends GLSLType = any, A extends {} = {}> = {
 
 export const Unit = <T extends GLSLType>(
 	type: T,
-	value: Value<T> | undefined,
+	value: Input<T> | undefined,
 	_config?: Partial<UnitConfig<T>>
 ): Unit<T> => {
 	const config: UnitConfig<T> = {
@@ -142,7 +150,7 @@ export const isUnitInProgram = (unit: Unit, program: Program) =>
 	[undefined, program].includes(unit._unitConfig.only)
 
 const makeUnit = <T extends GLSLType>(type: T) => (
-	v: Value<T>,
+	v: Input<T>,
 	extras?: Partial<UnitConfig<T>>
 ) => Unit(type, v, extras) as Unit<T>
 
@@ -156,23 +164,23 @@ export const Mat3 = makeUnit("mat3")
 export const Mat4 = makeUnit("mat4")
 
 export const vec2 = (
-	x: Value<"float">,
-	y: Value<"float">,
+	x: Input<"float">,
+	y: Input<"float">,
 	extras?: Partial<UnitConfig<"vec2">>
 ) => Vec2($`vec2(${x}, ${y})`, extras)
 
 export const vec3 = (
-	x: Value<"float">,
-	y: Value<"float">,
-	z: Value<"float">,
+	x: Input<"float">,
+	y: Input<"float">,
+	z: Input<"float">,
 	extras?: Partial<UnitConfig<"vec3">>
 ) => Vec3($`vec3(${x}, ${y}, ${z})`, extras)
 
 export const vec4 = (
-	x: Value<"float">,
-	y: Value<"float">,
-	z: Value<"float">,
-	w: Value<"float">,
+	x: Input<"float">,
+	y: Input<"float">,
+	z: Input<"float">,
+	w: Input<"float">,
 	extras?: Partial<UnitConfig<"vec4">>
 ) => Vec4($`vec4(${x}, ${y}, ${z}, ${w})`, extras)
 

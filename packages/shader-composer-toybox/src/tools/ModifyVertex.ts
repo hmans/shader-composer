@@ -6,13 +6,13 @@ import {
 	Normalize,
 	Sub,
 	Tangent,
-	Value
+	Input
 } from "shader-composer"
 
 export const ModifyVertex = (
-	originalPosition: Value<"vec3">,
-	originalNormal: Value<"vec3">,
-	modifier: (v: Value<"vec3">) => Value<"vec3">,
+	originalPosition: Input<"vec3">,
+	originalNormal: Input<"vec3">,
+	modifier: (v: Input<"vec3">) => Input<"vec3">,
 	offset = 0.001
 ) => {
 	const tangent = Tangent(originalNormal)

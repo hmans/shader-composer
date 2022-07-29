@@ -6,15 +6,15 @@ import {
 	Smoothstep,
 	Step,
 	Sub,
-	Value,
+	Input,
 	VertexPosition
 } from "shader-composer"
 import { Simplex3DNoise } from "../noise/Simplex3DNoise"
 
 export const Dissolve = (
-	visibility: Value<"float"> = 0.5,
-	scale: Value<"float"> = 1,
-	edgeThickness: Value<"float"> = 0.1,
+	visibility: Input<"float"> = 0.5,
+	scale: Input<"float"> = 1,
+	edgeThickness: Input<"float"> = 0.1,
 	varying = false
 ) => {
 	const noise = pipe(

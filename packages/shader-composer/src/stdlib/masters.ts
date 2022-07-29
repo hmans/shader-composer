@@ -1,12 +1,12 @@
 import { Color } from "three"
 import { $ } from "../expressions"
-import { Master, Value } from "../units"
+import { Master, Input } from "../units"
 import { VertexNormal, VertexPosition } from "./geometry"
 
 export type ShaderMaterialMasterProps = {
-	color?: Value<"vec3">
-	alpha?: Value<"float">
-	position?: Value<"vec3">
+	color?: Input<"vec3">
+	alpha?: Input<"float">
+	position?: Input<"vec3">
 }
 
 export const ShaderMaterialMaster = ({
@@ -31,11 +31,11 @@ export const ShaderMaterialMaster = ({
 	})
 
 export type CustomShaderMaterialMasterProps = {
-	position?: Value<"vec3">
-	normal?: Value<"vec3">
-	diffuseColor?: Value<"vec3">
-	fragColor?: Value<"vec3">
-	alpha?: Value<"float">
+	position?: Input<"vec3">
+	normal?: Input<"vec3">
+	diffuseColor?: Input<"vec3">
+	fragColor?: Input<"vec3">
+	alpha?: Input<"float">
 }
 
 export const CustomShaderMaterialMaster = ({
