@@ -1,11 +1,11 @@
 import {
 	$,
 	CustomShaderMaterialMaster,
-	glsl,
-	Mat4,
 	Mul,
 	Rotation3D,
-	Snippet,
+	Rotation3DX,
+	Rotation3DY,
+	Rotation3DZ,
 	Time,
 	Value,
 	VertexPosition
