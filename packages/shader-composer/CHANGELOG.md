@@ -1,5 +1,11 @@
 # shader-composer
 
+## 0.1.5
+
+### Patch Changes
+
+- f9aa82b: **Added:** new `mat3(v)` and `mat4(v)` helpers -- they simply cast the given value `v` to their respective types.
+
 ## 0.1.4
 
 ### Patch Changes
