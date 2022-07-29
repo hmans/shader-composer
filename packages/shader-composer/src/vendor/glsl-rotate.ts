@@ -26,7 +26,7 @@ IN THE SOFTWARE.
 
 */
 
-import { $, glsl } from "../expressions"
+import { glsl } from "../expressions"
 import { Snippet } from "../snippets"
 
 export const rotation3d = Snippet(

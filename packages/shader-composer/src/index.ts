@@ -5,6 +5,7 @@ export * from "./snippets"
 export * from "./stdlib"
 export * from "./tree"
 export * from "./units"
+export * from "./vendor"
 
 /*
 We're re-exporting the very useful `pipe` from fp-ts here. Mostly
