@@ -184,4 +184,10 @@ export const vec4 = (
 	extras?: Partial<UnitConfig<"vec4">>
 ) => Vec4($`vec4(${x}, ${y}, ${z}, ${w})`, extras)
 
+/** Cast the given value to a mat3. */
+export const mat3 = (i: Input<"mat3" | "mat4">) => Mat3($`mat3(${i})`)
+
+/** Cast the given value to a mat4. */
+export const mat4 = (i: Input<"mat3" | "mat4">) => Mat4($`mat4(${i})`)
+
 export const Master = (extras?: Partial<UnitConfig<"bool">>) => Bool(true, extras)
