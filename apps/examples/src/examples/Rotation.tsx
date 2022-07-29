@@ -8,7 +8,7 @@ import {
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { Euler, MeshStandardMaterial, Quaternion, Vector3 } from "three"
+import { MeshStandardMaterial, Vector3 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 const RotateAroundAxis = (
@@ -19,12 +19,8 @@ const RotateAroundAxis = (
 
 export default function MatrixTransformations() {
 	const shader = useShader(() => {
-		const time = Time()
-
-		const quat = new Quaternion().setFromEuler(new Euler(0, 0.5, 0))
-
 		return CustomShaderMaterialMaster({
-			position: RotateAroundAxis(VertexPosition, new Vector3(0.5, 1, 0), time)
+			position: RotateAroundAxis(VertexPosition, new Vector3(0.5, 1, 0), Time())
 		})
 	}, [])
 
