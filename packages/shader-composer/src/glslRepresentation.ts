@@ -1,4 +1,4 @@
-import { Color, Vector2, Vector3, Vector4 } from "three"
+import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
 import { isExpression } from "./expressions"
 import { isSnippet } from "./snippets"
 import { GLSLType, isUnit, Value } from "./units"
@@ -28,11 +28,19 @@ export const glslRepresentation = (
 	if (value instanceof Vector3) return `vec3(${g(value.x)}, ${g(value.y)}, ${g(value.z)})`
 
 	if (value instanceof Vector4)
-		return ` vec4(${g(value.x)}, ${g(value.y)}, ${g(value.z)} ${g(value.w)})`
+		return `vec4(${g(value.x)}, ${g(value.y)}, ${g(value.z)}, ${g(value.w)})`
 
-	/* TODO: Matrix3 */
+	if (value instanceof Matrix3)
+		return `mat3(${value
+			.toArray()
+			.map((n) => g(n))
+			.join(", ")})`
 
-	/* TODO: Matrix4 */
+	if (value instanceof Matrix4)
+		return `mat4(${value
+			.toArray()
+			.map((n) => g(n))
+			.join(", ")})`
 
 	/* Fail */
 	throw new Error(`Could not render value to GLSL: ${value}`)

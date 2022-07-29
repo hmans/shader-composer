@@ -1,15 +1,10 @@
 import { lazy } from "react"
 
-const HelloWorld = lazy(() => import("./HelloWorld"))
-const Dissolve = lazy(() => import("./Dissolve"))
-const Textures = lazy(() => import("./Textures"))
-const Planet = lazy(() => import("./Planet"))
-const Water = lazy(() => import("./Water"))
-
 export default {
-	HelloWorld,
-	Dissolve,
-	Textures,
-	Planet,
-	Water
+	HelloWorld: lazy(() => import("./HelloWorld")),
+	Rotation: lazy(() => import("./Rotation")),
+	Dissolve: lazy(() => import("./Dissolve")),
+	Textures: lazy(() => import("./Textures")),
+	Planet: lazy(() => import("./Planet")),
+	Water: lazy(() => import("./Water"))
 }
