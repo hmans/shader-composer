@@ -12,6 +12,10 @@ Write GLSL shaders, but with JavaScript.
 >
 > This library is very extremely new. I'd love for you to give it a go and maybe provide some feedback, but I would currently recommend **strongly** against using it in any sort of production project, unless you're ready and willing to keep up with the changes every release. **Use at your own risk.**
 
+## Projects using Shader Composer
+
+- **[VFX Composer](https://github.com/hmans/vfx-composer)**, a visual effects-focused GPU particles runtime for Three.js.
+
 ## Examples & Sandboxes
 
 - **[Official Examples App](https://shader-composer-examples.vercel.app/)** ([CodeSandbox](https://codesandbox.io/p/github/hmans/shader-composer), [Source Code](https://github.com/hmans/shader-composer/tree/main/apps/examples/src/examples))
