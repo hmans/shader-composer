@@ -1,5 +1,14 @@
 # shader-composer
 
+## 0.1.3
+
+### Patch Changes
+
+- 3350f94: **Fixed:** `vec4` values were not rendering correctly in GLSL. Ouch!
+- 8b55c9c: **Added:** `collectFromTree`, which returns all items from the given tree matching a specific condition.
+- 3350f94: **Added:** `Rotation3DX(angle)`, `Rotation3DY(angle)`, `Rotation3DZ(angle)` and `Rotation3D(axis, angle)` units returning transformation matrices expressing the specified rotation. (Multiply your positions etc. with them to apply them!)
+- 3350f94: **Fixed:** `mat3` and `mat4` values were not rendering _at all_ in GLSL. Woops!
+
 ## 0.1.2
 
 ### Patch Changes
