@@ -1,4 +1,4 @@
-import { CustomShaderMaterialMaster, Time } from "shader-composer"
+import { CustomShaderMaterialMaster, Time, VertexPosition } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
@@ -6,12 +6,15 @@ import CustomShaderMaterial from "three-custom-shader-material"
 export default function MatrixTransformations() {
 	const shader = useShader(() => {
 		const time = Time()
-		return CustomShaderMaterialMaster({})
+
+		return CustomShaderMaterialMaster({
+			position: VertexPosition
+		})
 	}, [])
 
 	return (
 		<mesh>
-			<sphereGeometry />
+			<boxGeometry />
 			<CustomShaderMaterial
 				baseMaterial={MeshStandardMaterial}
 				color="orange"
