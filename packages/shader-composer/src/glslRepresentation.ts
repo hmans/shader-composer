@@ -28,7 +28,7 @@ export const glslRepresentation = (
 	if (value instanceof Vector3) return `vec3(${g(value.x)}, ${g(value.y)}, ${g(value.z)})`
 
 	if (value instanceof Vector4)
-		return ` vec4(${g(value.x)}, ${g(value.y)}, ${g(value.z)} ${g(value.w)})`
+		return `vec4(${g(value.x)}, ${g(value.y)}, ${g(value.z)}, ${g(value.w)})`
 
 	if (value instanceof Matrix3)
 		return `mat3(${value
