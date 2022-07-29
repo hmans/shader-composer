@@ -41,7 +41,7 @@ export type CustomShaderMaterialMasterProps = {
 export const CustomShaderMaterialMaster = ({
 	position = VertexPosition,
 	normal = VertexNormal,
-	diffuseColor = new Color("white"),
+	diffuseColor,
 	fragColor,
 	alpha = 1
 }: CustomShaderMaterialMasterProps = {}) =>
@@ -58,8 +58,10 @@ export const CustomShaderMaterialMaster = ({
 		fragment: {
 			/* FIXME: meh */
 			body: $`
-				${diffuseColor && $`csm_DiffuseColor = vec4(${diffuseColor}, ${alpha});`}
-				${fragColor && $`csm_FragColor = vec4(${fragColor}, ${alpha});`}
+				csm_DiffuseColor = vec4(diffuse, 1.0);
+  			${alpha !== undefined ? $`csm_DiffuseColor.a = ${alpha};` : ""}
+	  		${diffuseColor !== undefined ? $`csm_DiffuseColor.rgb = ${diffuseColor};` : ""}
+				${fragColor !== undefined ? $`csm_FragColor = vec4(${fragColor}, ${alpha});` : ""}
 			`
 		}
 	})

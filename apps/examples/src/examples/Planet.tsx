@@ -119,7 +119,12 @@ function Atmosphere() {
 	return (
 		<mesh>
 			<icosahedronGeometry args={[1.15, 12]} />
-			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} transparent />
+			<CustomShaderMaterial
+				baseMaterial={MeshStandardMaterial}
+				color="white"
+				{...shader}
+				transparent
+			/>
 		</mesh>
 	)
 }
