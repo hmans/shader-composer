@@ -1,5 +1,11 @@
 # shader-composer
 
+## 0.1.4
+
+### Patch Changes
+
+- 9f527d7: **Changed:** The `Value` type is now officially called `Input`, but an alias to `Value` is still being exported for the time being. This alias will be removed in a future minor/major version.
+
 ## 0.1.3
 
 ### Patch Changes

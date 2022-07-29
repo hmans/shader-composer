@@ -1,5 +1,11 @@
 # shader-composer-toybox
 
+## 0.0.8
+
+### Patch Changes
+
+- 9f527d7: **Changed:** The `Value` type is now officially called `Input`, but an alias to `Value` is still being exported for the time being. This alias will be removed in a future minor/major version.
+
 ## 0.0.7
 
 ### Patch Changes
