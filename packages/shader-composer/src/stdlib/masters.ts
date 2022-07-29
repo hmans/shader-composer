@@ -58,10 +58,17 @@ export const CustomShaderMaterialMaster = ({
 		fragment: {
 			/* FIXME: meh */
 			body: $`
+				/* Temporary fix to default to the diffuse color configured for the material */
 				csm_DiffuseColor = vec4(diffuse, 1.0);
+
   			${alpha !== undefined ? $`csm_DiffuseColor.a = ${alpha};` : ""}
-	  		${diffuseColor !== undefined ? $`csm_DiffuseColor.rgb = ${diffuseColor};` : ""}
+				${diffuseColor !== undefined ? $`csm_DiffuseColor.rgb = ${diffuseColor};` : ""}
 				${fragColor !== undefined ? $`csm_FragColor = vec4(${fragColor}, ${alpha});` : ""}
+
+				/* Mix in the texture. This may be obsolete with a future update to CSM. */
+        #ifdef USE_MAP
+          csm_DiffuseColor *= texture2D(map, vUv);
+        #endif
 			`
 		}
 	})
