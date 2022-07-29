@@ -1,5 +1,11 @@
 # shader-composer
 
+## 0.1.6
+
+### Patch Changes
+
+- 48c25c8: **Fixed:** `CustomShaderMaterialMaster` no longer overrides colors coming from the base material if no `diffuseColor` or `fragColor` inputs are specified.
+
 ## 0.1.5
 
 ### Patch Changes
