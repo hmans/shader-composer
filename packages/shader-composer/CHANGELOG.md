@@ -1,5 +1,12 @@
 # shader-composer
 
+## 0.1.8
+
+### Patch Changes
+
+- 41c92e8: **Added:** `Time` now takes an optional argument `n` that will be used as the initial value of the time uniform.
+- 41c92e8: **Added:** `Time().uniform` is now available as a reference to the uniform used by the `Time` unit. This allows you to source (or even change) the uniform's value in JS.
+
 ## 0.1.7
 
 ### Patch Changes
