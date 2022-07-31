@@ -1,5 +1,5 @@
 import { Vector2 } from "three"
-import { Float, GLSLType, JSTypes, Unit, UnitConfig } from "../units"
+import { Float, GLSLType, Input, JSTypes, Unit, UnitConfig } from "../units"
 
 export const uniformName = (unit: Unit) => `u_${unit._unitConfig.variableName}`
 
@@ -40,13 +40,20 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 	}
 }
 
-export const Time = () => {
-	const uniform = Uniform("float", 0, { name: "Time Uniform" })
+export const Time = (initial: number = 0) => {
+	const uniform = Uniform("float", initial, { name: "Time Uniform" })
 
-	return Float(uniform, {
+	const unit = Float(uniform, {
 		name: "Time",
 		update: (dt) => (uniform.value += dt)
 	})
+
+	return {
+		...unit,
+
+		/** The uniform unit used for storing the Time value. */
+		uniform
+	}
 }
 
 export const Resolution = Uniform("vec2", new Vector2(0, 0))
