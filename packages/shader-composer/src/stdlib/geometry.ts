@@ -33,16 +33,6 @@ export const InstanceMatrix = Mat4($`instanceMatrix`, {
 	varying: true
 })
 
-export const VertexNormalWorld = Vec3(
-	$`normalize(
-      mat3(
-        ${ModelMatrix}[0].xyz,
-        ${ModelMatrix}[1].xyz,
-        ${ModelMatrix}[2].xyz
-      ) * ${VertexNormal})`,
-	{ varying: true }
-)
-
 export const ViewDirection = Vec3(
 	$`vec3(-${ViewMatrix}[0][2], -${ViewMatrix}[1][2], -${ViewMatrix}[2][2])`,
 	{ varying: true }
