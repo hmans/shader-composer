@@ -2,6 +2,7 @@ import { IUniform } from "three"
 import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
+import { uniformName } from "./stdlib"
 import { isUnit, Program, Unit, UpdateCallback } from "./units"
 import {
 	assignment,
@@ -85,12 +86,12 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	}
 
 	/* Declare uniform, if one is configured. */
-	if (unit._unitConfig.uniform && unit._unitConfig.uniformName) {
+	if (unit._unitConfig.uniform) {
 		/* Register uniform with compiler state */
-		state.uniforms.set(unit._unitConfig.uniformName, unit._unitConfig.uniform)
+		state.uniforms.set(uniformName(unit), unit._unitConfig.uniform)
 
 		/* Declare uniforms in header */
-		header.push(statement("uniform", unit._unitConfig.type, unit._unitConfig.uniformName))
+		header.push(statement("uniform", unit._unitConfig.type, uniformName(unit)))
 	}
 
 	/* Add header if present */
@@ -105,8 +106,8 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	const value =
 		unit._unitConfig.varying && program === "fragment"
 			? `v_${unit._unitConfig.variableName}`
-			: unit._unitConfig.uniform && unit._unitConfig.uniformName
-			? unit._unitConfig.uniformName
+			: unit._unitConfig.uniform
+			? uniformName(unit)
 			: glslRepresentation(unit._unitConfig.value, unit._unitConfig.type)
 
 	state.body.push(beginUnit(unit))
@@ -181,11 +182,6 @@ const prepareItem = (item: Unit | Expression, state = CompilerState()) => {
 			sluggify(item._unitConfig.name),
 			state.nextid()
 		)
-
-		/* If a uniform is given, but no uniform name, make one up! */
-		if (item._unitConfig.uniform && !item._unitConfig.uniformName) {
-			item._unitConfig.uniformName = `u_${item._unitConfig.variableName}`
-		}
 	}
 }
 
