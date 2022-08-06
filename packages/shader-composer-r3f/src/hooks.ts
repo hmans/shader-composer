@@ -1,6 +1,6 @@
 import { useFrame } from "@react-three/fiber"
 import { useLayoutEffect, useMemo } from "react"
-import { compileShader, GLSLType, JSTypes, Unit } from "shader-composer"
+import { compileShader, GLSLType, JSTypes, Unit, UnitConfig } from "shader-composer"
 import { Uniform } from "shader-composer/stdlib"
 
 export const useShader = (ctor: () => Unit, deps?: any) => {
@@ -9,9 +9,13 @@ export const useShader = (ctor: () => Unit, deps?: any) => {
 	return shader
 }
 
-export const useUniform = <T extends GLSLType>(type: T, value: JSTypes[T]) => {
+export const useUniform = <T extends GLSLType>(
+	type: T,
+	value: JSTypes[T],
+	config?: UnitConfig<T>
+) => {
 	const uniform = useMemo(() => {
-		return Uniform(type, value)
+		return Uniform(type, value, config)
 	}, [])
 
 	useLayoutEffect(() => {
