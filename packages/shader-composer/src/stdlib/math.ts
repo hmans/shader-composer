@@ -1,8 +1,7 @@
 import { $ } from "../expressions"
 import { type } from "../glslType"
 import { Snippet } from "../snippets"
-import { GLSLType, Unit, Input } from "../units"
-import { VertexNormal, ViewDirection } from "./geometry"
+import { GLSLType, Input, Unit } from "../units"
 import { Float } from "./values"
 
 export const Operator = (title: string, operator: "+" | "-" | "*" | "/") => <
@@ -52,33 +51,6 @@ export const OneMinus = (v: Input<"float">) => Float(Sub(1, v), { name: "OneMinu
 
 export const Mix = <T extends GLSLType>(a: Input<T>, b: Input<T>, f: Input<"float">) =>
 	Unit(type(a), $`mix(${a}, ${b}, ${f})`)
-
-export type FresnelProps = {
-	normal?: Input<"vec3">
-	alpha?: Input<"float">
-	bias?: Input<"float">
-	intensity?: Input<"float">
-	power?: Input<"float">
-	factor?: Input<"float">
-}
-
-export const Fresnel = ({
-	normal = VertexNormal,
-	bias = 0,
-	intensity = 1,
-	power = 2,
-	factor = 1
-}: FresnelProps = {}) =>
-	Float(0, {
-		fragment: {
-			body: $`
-				float f_a = (${factor} + dot(${ViewDirection}, ${normal}));
-				float f_fresnel = ${bias} + ${intensity} * pow(abs(f_a), ${power});
-				f_fresnel = clamp(f_fresnel, 0.0, 1.0);
-				value = f_fresnel;
-			`
-		}
-	})
 
 export const Step = (edge: Input<"float">, v: Input<"float">) =>
 	Float($`step(${edge}, ${v})`)
