@@ -7,7 +7,7 @@ const makeUnit = <T extends GLSLType, A extends {} = {}>(
 	apiFun?: (unit: Unit<T>) => A
 ) => (v: Input<T>, extras?: Partial<UnitConfig<T>>) => {
 	const unit = Unit(type, v, extras) as Unit<T>
-	return bless(unit, apiFun!)
+	return apiFun ? bless(unit, apiFun) : unit
 }
 
 export const Float = makeUnit("float")
