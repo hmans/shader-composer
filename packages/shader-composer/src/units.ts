@@ -89,11 +89,12 @@ export type UnitConfig<T extends GLSLType> = {
 	varying: boolean
 
 	/**
-	 * An object of uniforms. Uniforms added here will automatically be
+	 * An optional uniform object. It will automatically be
 	 * declared in the program headers, and also made available in the
 	 * object returned by `compilerShader`.
 	 */
 	uniform?: { value: JSTypes[T] }
+	uniformName?: string
 
 	/**
 	 * A callback that will be executed once per frame.

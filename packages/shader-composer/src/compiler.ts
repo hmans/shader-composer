@@ -177,6 +177,7 @@ const prepareItem = (item: Unit | Expression, state = CompilerState()) => {
 
 	/* Prepare this unit */
 	if (isUnit(item)) {
+		/* Assign a variable name */
 		item._unitConfig.variableName = identifier(
 			sluggify(item._unitConfig.name),
 			state.nextid()
