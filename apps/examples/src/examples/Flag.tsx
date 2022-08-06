@@ -1,3 +1,4 @@
+import { useTexture } from "@react-three/drei"
 import { useShader } from "shader-composer-r3f"
 import {
 	Add,
@@ -9,10 +10,13 @@ import {
 	vec3,
 	VertexPosition
 } from "shader-composer/stdlib"
-import { MeshStandardMaterial } from "three"
+import { DoubleSide, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
+import textureUrl from "./textures/shader-composer-logo.jpg"
 
 export default function Flag() {
+	const texture = useTexture(textureUrl)
+
 	const shader = useShader(() => {
 		const time = Time()
 
@@ -20,15 +24,20 @@ export default function Flag() {
 			position: vec3(
 				VertexPosition.x,
 				VertexPosition.y,
-				Mul(Sin(Add(time, Add(UV.y, UV.x))), 0.2)
+				Mul(Sin(Add(Mul(time, 2), Add(Mul(UV.y, 8), Mul(UV.x, 14)))), 0.2)
 			)
 		})
 	}, [])
 
 	return (
 		<mesh>
-			<planeGeometry args={[3, 2, 30, 20]} />
-			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} wireframe />
+			<planeGeometry args={[4, 2, 40, 20]} />
+			<CustomShaderMaterial
+				baseMaterial={MeshStandardMaterial}
+				map={texture}
+				side={DoubleSide}
+				{...shader}
+			/>
 		</mesh>
 	)
 }
