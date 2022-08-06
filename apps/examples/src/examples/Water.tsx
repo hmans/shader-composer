@@ -1,9 +1,8 @@
 import { Input } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { FBMNoise, GerstnerWave, ModifyVertex } from "shader-composer-toybox"
-import { pipe } from "shader-composer/pipes"
+import { add, pipe } from "shader-composer/pipes"
 import {
-	Add,
 	CustomShaderMaterialMaster,
 	Int,
 	Mul,
@@ -28,6 +27,12 @@ function Water() {
 			const [x, y, z] = SplitVector3(v)
 			const xy = vec2(x, z)
 
+			/*
+			The FBM noise layer is currently disabled because it doesn't work on
+			Android for some reason.
+
+			https://github.com/hmans/shader-composer/issues/29
+			*/
 			const fbm = NormalizeNoise(
 				FBMNoise(vec2(x, z), {
 					seed: Math.random(),
@@ -43,11 +48,11 @@ function Water() {
 
 			return pipe(
 				v,
-				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.5, 20.0, time), 0.8)),
-				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0.2, 1), 0.2, 10, time), 0.8)),
-				(v) => Add(v, Mul(GerstnerWave(xy, vec2(0, -1), 0.2, 5, time), 0.5)),
-				(v) => Add(v, Mul(GerstnerWave(xy, vec2(1, 1), 0.2, 8, time), 0.3))
-				// (v) => Add(v, Mul(vec3(0, 0.005, 0), fbm))
+				add(Mul(GerstnerWave(xy, vec2(1, 1), 0.5, 20.0, time), 0.8)),
+				add(Mul(GerstnerWave(xy, vec2(0.2, 1), 0.2, 10, time), 0.8)),
+				add(Mul(GerstnerWave(xy, vec2(0, -1), 0.2, 5, time), 0.5)),
+				add(Mul(GerstnerWave(xy, vec2(1, 1), 0.2, 8, time), 0.3))
+				// add(Mul(vec3(0, 0.005, 0), fbm))
 			)
 		})
 
