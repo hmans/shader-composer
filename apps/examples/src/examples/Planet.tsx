@@ -1,3 +1,7 @@
+import { Input } from "shader-composer"
+import { useShader } from "shader-composer-r3f"
+import { Simplex3DNoise } from "shader-composer-toybox"
+import { pipe } from "shader-composer/pipes"
 import {
 	Add,
 	Clamp,
@@ -6,18 +10,14 @@ import {
 	Fresnel,
 	Mix,
 	Mul,
-	pipe,
 	Sin,
 	Smoothstep,
 	SplitVector3,
 	Step,
 	Time,
-	Input,
 	Vec3,
 	VertexPosition
-} from "shader-composer"
-import { useShader } from "shader-composer-r3f"
-import { Simplex3DNoise } from "shader-composer-toybox"
+} from "shader-composer/stdlib"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 

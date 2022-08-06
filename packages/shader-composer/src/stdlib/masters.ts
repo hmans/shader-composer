@@ -1,7 +1,8 @@
 import { Color } from "three"
 import { $ } from "../expressions"
-import { Master, Input } from "../units"
+import { Input } from "../units"
 import { VertexNormal, VertexPosition } from "./geometry"
+import { Master } from "./values"
 
 export type ShaderMaterialMasterProps = {
 	color?: Input<"vec3">

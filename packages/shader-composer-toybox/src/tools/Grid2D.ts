@@ -1,13 +1,6 @@
-import {
-	Input,
-	SplitVector2,
-	Mul,
-	Fract,
-	Step,
-	pipe,
-	OneMinus,
-	Float
-} from "shader-composer"
+import { Input } from "shader-composer"
+import { pipe } from "shader-composer/pipes"
+import { Float, Fract, Mul, OneMinus, SplitVector2, Step } from "shader-composer/stdlib"
 
 export const Grid2D = (
 	v: Input<"vec2">,

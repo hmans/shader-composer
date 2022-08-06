@@ -1,0 +1,4 @@
+{
+	"main": "dist/shader-composer-pipes.cjs.js",
+	"module": "dist/shader-composer-pipes.esm.js"
+}

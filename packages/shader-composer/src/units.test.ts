@@ -2,7 +2,8 @@ import { Vector2 } from "three"
 import { compileShader } from "./compiler"
 import { $ } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
-import { Float, Input, Unit, Vec2 } from "./units"
+import { Float, Vec2 } from "./stdlib"
+import { Input, Unit } from "./units"
 
 const glsl = glslRepresentation
 

@@ -1,7 +1,7 @@
 import { compileShader } from "./compiler"
 import { $, glsl } from "./expressions"
 import { Snippet } from "./snippets"
-import { Bool, Float, Master, Unit, Vec3 } from "./units"
+import { Bool, Master, Float } from "./stdlib"
 
 describe("compileShader", () => {
 	it("compiles shader programs from the given unit", () => {

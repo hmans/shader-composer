@@ -1,6 +1,7 @@
 import { $ } from "../expressions"
 import { type } from "../glslType"
-import { Bool, GLSLType, Unit, Input } from "../units"
+import { GLSLType, Unit, Input } from "../units"
+import { Bool } from "./values"
 
 export const If = <T extends GLSLType>(
 	expression: Input<"bool">,
