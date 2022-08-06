@@ -28,12 +28,12 @@
 		"docs": "typedoc"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.18.9",
-		"@babel/preset-env": "^7.18.2",
+		"@babel/core": "^7.18.10",
+		"@babel/preset-env": "^7.18.10",
 		"@babel/preset-react": "^7.18.6",
 		"@babel/preset-typescript": "^7.17.12",
-		"@react-three/fiber": "^8.2.0",
-		"@testing-library/jest-dom": "^5.16.4",
+		"@react-three/fiber": "^8.3.0",
+		"@testing-library/jest-dom": "^5.16.5",
 		"@types/jest": "^28.1.1",
 		"@types/react": "^18.0.15",
 		"@types/react-dom": "^18.0.6",
