@@ -93,6 +93,52 @@ void main()
 }"
 `;
 
+exports[`compileShader only includes the units needed in individual programs 1`] = `
+"/*** PROGRAM: VERTEX ***/
+
+precision highp float;
+
+void main()
+{
+  /*** UNIT: A ***/
+  float A_1 = 1.0;
+  
+  
+  /*** UNIT: Anonymous ***/
+  bool Anonymous_3 = true;
+  {
+    bool value = Anonymous_3;
+    foo = A_1;
+    Anonymous_3 = value;
+  }
+  
+  
+}"
+`;
+
+exports[`compileShader only includes the units needed in individual programs 2`] = `
+"/*** PROGRAM: FRAGMENT ***/
+
+precision highp float;
+
+void main()
+{
+  /*** UNIT: B ***/
+  float B_2 = 2.0;
+  
+  
+  /*** UNIT: Anonymous ***/
+  bool Anonymous_3 = true;
+  {
+    bool value = Anonymous_3;
+    bar = B_2
+    Anonymous_3 = value;
+  }
+  
+  
+}"
+`;
+
 exports[`compileShader resolves dependencies to expressions 1`] = `
 "/*** PROGRAM: VERTEX ***/
 

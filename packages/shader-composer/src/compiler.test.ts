@@ -127,6 +127,25 @@ describe("compileShader", () => {
 		})
 	})
 
+	it("only includes the units needed in individual programs", () => {
+		const a = Float(1, { name: "A" })
+		const b = Float(2, { name: "B" })
+
+		const master = Bool(true, {
+			vertex: {
+				body: $`foo = ${a};`
+			},
+			fragment: {
+				body: $`bar = ${b}`
+			}
+		})
+
+		const [shader] = compileShader(master)
+
+		expect(shader.vertexShader).toMatchSnapshot()
+		expect(shader.fragmentShader).toMatchSnapshot()
+	})
+
 	it("returns a list of all units contained in the tree", () => {
 		const a = Float(1)
 		const root = Float(a)
