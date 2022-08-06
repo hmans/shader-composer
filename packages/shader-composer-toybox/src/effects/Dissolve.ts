@@ -1,6 +1,14 @@
-import { Float, Input } from "shader-composer"
+import { Input } from "shader-composer"
 import { pipe } from "shader-composer/pipes"
-import { Mul, Remap, Smoothstep, Step, Sub, VertexPosition } from "shader-composer/stdlib"
+import {
+	Float,
+	Mul,
+	Remap,
+	Smoothstep,
+	Step,
+	Sub,
+	VertexPosition
+} from "shader-composer/stdlib"
 import { Simplex3DNoise } from "../noise/Simplex3DNoise"
 
 export const Dissolve = (

@@ -1,7 +1,7 @@
-import { $, glsl } from "../expressions"
-import { Snippet } from "../snippets"
-import { Input, Mat4, Mat3 } from "../units"
+import { $ } from "../expressions"
+import { Input } from "../units"
 import { rotation3d, rotation3dX, rotation3dY, rotation3dZ } from "../vendor/glsl-rotate"
+import { Mat3, Mat4 } from "./values"
 
 export const Rotation3D = (axis: Input<"vec3">, angle: Input<"float">) =>
 	Mat4($`${rotation3d}(${axis}, ${angle})`)

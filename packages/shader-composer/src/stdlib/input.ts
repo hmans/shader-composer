@@ -1,5 +1,6 @@
 import { Vector2 } from "three"
-import { Float, GLSLType, JSTypes, Unit, UnitConfig } from "../units"
+import { GLSLType, JSTypes, Unit, UnitConfig } from "../units"
+import { Float } from "./values"
 
 export const uniformName = (unit: Unit) => `u_${unit._unitConfig.variableName}`
 

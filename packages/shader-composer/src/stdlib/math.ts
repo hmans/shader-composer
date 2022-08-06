@@ -1,8 +1,9 @@
 import { $ } from "../expressions"
 import { type } from "../glslType"
 import { Snippet } from "../snippets"
-import { Float, GLSLType, Unit, Input } from "../units"
+import { GLSLType, Unit, Input } from "../units"
 import { VertexNormal, ViewDirection } from "./geometry"
+import { Float } from "./values"
 
 export const Operator = (title: string, operator: "+" | "-" | "*" | "/") => <
 	T extends GLSLType

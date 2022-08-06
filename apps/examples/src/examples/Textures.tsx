@@ -1,4 +1,4 @@
-import { $, vec2 } from "shader-composer"
+import { $ } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import {
 	Add,
@@ -9,7 +9,8 @@ import {
 	TilingUV,
 	Time,
 	Uniform,
-	UV
+	UV,
+	vec2
 } from "shader-composer/stdlib"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"

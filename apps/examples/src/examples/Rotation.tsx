@@ -1,7 +1,8 @@
-import { Input, mat3 } from "shader-composer"
+import { Input } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import {
 	CustomShaderMaterialMaster,
+	mat3,
 	Mul,
 	Rotation3D,
 	Time,

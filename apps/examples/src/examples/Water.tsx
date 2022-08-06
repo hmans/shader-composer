@@ -1,14 +1,16 @@
-import { Input, Int, vec2 } from "shader-composer"
+import { Input } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { FBMNoise, GerstnerWave, ModifyVertex } from "shader-composer-toybox"
 import { pipe } from "shader-composer/pipes"
 import {
 	Add,
 	CustomShaderMaterialMaster,
+	Int,
 	Mul,
 	Remap,
 	SplitVector3,
 	Time,
+	vec2,
 	VertexNormal,
 	VertexPosition
 } from "shader-composer/stdlib"

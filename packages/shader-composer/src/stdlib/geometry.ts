@@ -1,6 +1,7 @@
 import { Vector2 } from "three"
 import { $ } from "../expressions"
-import { Vec2, Vec3, Mat4, Input, Bool, GLSLType, Unit } from "../units"
+import { Input, GLSLType, Unit } from "../units"
+import { Vec2, Vec3, Mat4, Bool } from "./values"
 
 export const UV = Vec2($`uv`, {
 	name: "UV",

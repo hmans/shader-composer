@@ -1,8 +1,8 @@
 import { Color, Vector3 } from "three"
 import { $ } from "./expressions"
 import { Snippet } from "./snippets"
+import { Float, Vec3 } from "./stdlib"
 import { Item, walkTree } from "./tree"
-import { Float, Vec3 } from "./units"
 
 describe("walkTree", () => {
 	it("walks a given node tree", () => {

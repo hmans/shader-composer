@@ -1,4 +1,5 @@
-import { $, Snippet, Input, Vec3 } from "shader-composer"
+import { $, Snippet, Input } from "shader-composer"
+import { Vec3 } from "shader-composer/stdlib"
 import { Vector2 } from "three"
 
 /*

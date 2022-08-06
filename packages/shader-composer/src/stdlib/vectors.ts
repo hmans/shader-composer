@@ -1,6 +1,7 @@
 import { $ } from "../expressions"
 import { type } from "../glslType"
-import { Float, Unit, Input, Vec3 } from "../units"
+import { Input, Unit } from "../units"
+import { Float, Vec3 } from "./values"
 
 export const SplitVector2 = (vector: Input<"vec2">) =>
 	[Float($`${vector}.x`), Float($`${vector}.y`)] as const
