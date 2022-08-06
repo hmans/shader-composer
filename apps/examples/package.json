@@ -13,7 +13,7 @@
 		"@react-three/fiber": "^8.3.0",
 		"fp-ts": "^2.12.1",
 		"leva": "^0.9.29",
-		"postprocessing": "^6.28.4",
+		"postprocessing": "^6.28.5",
 		"r3f-perf": "^6.4.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
