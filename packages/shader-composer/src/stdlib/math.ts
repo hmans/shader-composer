@@ -53,14 +53,6 @@ export const OneMinus = (v: Input<"float">) => Float(Sub(1, v), { name: "OneMinu
 export const Mix = <T extends GLSLType>(a: Input<T>, b: Input<T>, f: Input<"float">) =>
 	Unit(type(a), $`mix(${a}, ${b}, ${f})`)
 
-export const With = <T extends GLSLType>(unit: Unit<T>) => ({
-	...unit,
-	Add: (b: Input) => With(Add(unit, b)),
-	Sub: (b: Input) => With(Sub(unit, b)),
-	Mul: (b: Input) => With(Mul(unit, b)),
-	Div: (b: Input) => With(Div(unit, b))
-})
-
 export type FresnelProps = {
 	normal?: Input<"vec3">
 	alpha?: Input<"float">
