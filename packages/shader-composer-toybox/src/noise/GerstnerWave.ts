@@ -1,4 +1,4 @@
-import { $, Snippet, Time, Input, Vec3 } from "shader-composer"
+import { $, Snippet, Input, Vec3 } from "shader-composer"
 import { Vector2 } from "three"
 
 /*

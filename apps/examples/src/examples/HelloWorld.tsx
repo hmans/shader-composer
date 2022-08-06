@@ -1,6 +1,8 @@
 import { useControls } from "leva"
+import { $ } from "shader-composer"
+import { pipe } from "shader-composer/pipes"
+import { useShader, useUniform } from "shader-composer-r3f"
 import {
-	$,
 	Add,
 	Fresnel,
 	Mix,
@@ -9,10 +11,7 @@ import {
 	Sin,
 	Time,
 	VertexPosition
-} from "shader-composer"
-import { pipe } from "shader-composer/pipes"
-
-import { useShader, useUniform } from "shader-composer-r3f"
+} from "shader-composer/stdlib"
 import { Color } from "three"
 
 export default function HelloWorld() {

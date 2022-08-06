@@ -1,5 +1,6 @@
+import { $, vec2 } from "shader-composer"
+import { useShader } from "shader-composer-r3f"
 import {
-	$,
 	Add,
 	CustomShaderMaterialMaster,
 	Fresnel,
@@ -8,10 +9,8 @@ import {
 	TilingUV,
 	Time,
 	Uniform,
-	UV,
-	vec2
-} from "shader-composer"
-import { useShader } from "shader-composer-r3f"
+	UV
+} from "shader-composer/stdlib"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { useRepeatingTexture } from "./helpers"

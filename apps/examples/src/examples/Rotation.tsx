@@ -1,13 +1,12 @@
+import { Input, mat3 } from "shader-composer"
+import { useShader } from "shader-composer-r3f"
 import {
 	CustomShaderMaterialMaster,
-	Input,
-	mat3,
 	Mul,
 	Rotation3D,
 	Time,
 	VertexPosition
-} from "shader-composer"
-import { useShader } from "shader-composer-r3f"
+} from "shader-composer/stdlib"
 import { MeshStandardMaterial, Vector3 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 

@@ -1,3 +1,4 @@
+import { Input } from "shader-composer"
 import {
 	Add,
 	Bitangent,
@@ -5,9 +6,8 @@ import {
 	Mul,
 	Normalize,
 	Sub,
-	Tangent,
-	Input
-} from "shader-composer"
+	Tangent
+} from "shader-composer/stdlib"
 
 export const ModifyVertex = (
 	originalPosition: Input<"vec3">,

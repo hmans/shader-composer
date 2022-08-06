@@ -12,8 +12,9 @@
 	"module": "dist/shader-composer.esm.js",
 	"types": "dist/shader-composer.cjs.d.ts",
 	"files": [
-		"pipes/**",
 		"dist/**",
+		"stdlib/**",
+		"pipes/**",
 		"LICENSE",
 		"README.md"
 	],
@@ -22,7 +23,8 @@
 	"preconstruct": {
 		"entrypoints": [
 			"index.ts",
-			"pipes/index.ts"
+			"pipes/index.ts",
+			"stdlib/index.ts"
 		]
 	},
 	"scripts": {
