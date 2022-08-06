@@ -4,13 +4,14 @@ import {
 	Add,
 	Fresnel,
 	Mix,
-	pipe,
 	Remap,
 	ShaderMaterialMaster,
 	Sin,
 	Time,
 	VertexPosition
 } from "shader-composer"
+import { pipe } from "shader-composer/pipes"
+
 import { useShader, useUniform } from "shader-composer-r3f"
 import { Color } from "three"
 

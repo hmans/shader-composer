@@ -1976,19 +1976,6 @@
     utility-types "^3.10.0"
     zustand "^3.5.13"
 
-"@react-three/fiber@^8.2.0":
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/@react-three/fiber/-/fiber-8.2.2.tgz#c8b197ffddb1a6ec20f73db663b7673ffa53cadb"
-  integrity sha512-NO/tOCYK8SQ2vuM2y2r98054X4SMGYIlHgiVRNaSo6JiXyoT3FN0aIH1nDzhDFJ5N/2C/PKa+yeg2M2/8YDFJg==
-  dependencies:
-    "@babel/runtime" "^7.17.8"
-    "@types/react-reconciler" "^0.26.7"
-    react-reconciler "^0.27.0"
-    react-use-measure "^2.1.1"
-    scheduler "^0.21.0"
-    suspend-react "^0.0.8"
-    zustand "^3.7.1"
-
 "@react-three/fiber@^8.3.0":
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/@react-three/fiber/-/fiber-8.3.0.tgz#e0bcf8392696a92ecfdb4af97398181d4b4191f4"

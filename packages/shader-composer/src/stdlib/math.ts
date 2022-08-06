@@ -15,6 +15,7 @@ export const Operator = (title: string, operator: "+" | "-" | "*" | "/") => <
 	})
 }
 
+/* Basic mathematical operations */
 export const Add = Operator("Add", "+")
 export const Sub = Operator("Subtract", "-")
 export const Mul = Operator("Multiply", "*")
