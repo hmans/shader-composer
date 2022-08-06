@@ -37,6 +37,8 @@ export type CustomShaderMaterialMasterProps = {
 	diffuseColor?: Input<"vec3">
 	fragColor?: Input<"vec3">
 	alpha?: Input<"float">
+	roughness?: Input<"float">
+	metalness?: Input<"float">
 }
 
 export const CustomShaderMaterialMaster = ({
@@ -44,6 +46,8 @@ export const CustomShaderMaterialMaster = ({
 	normal = VertexNormal,
 	diffuseColor,
 	fragColor,
+	roughness,
+	metalness,
 	alpha = 1
 }: CustomShaderMaterialMasterProps = {}) =>
 	Master({
@@ -70,6 +74,10 @@ export const CustomShaderMaterialMaster = ({
         #ifdef USE_MAP
           csm_DiffuseColor *= texture2D(map, vUv);
         #endif
-			`
+
+				${roughness !== undefined ? $`csm_Roughness = ${roughness};` : ""}
+				${metalness !== undefined ? $`csm_Metalness = ${metalness};` : ""}
+
+				`
 		}
 	})
