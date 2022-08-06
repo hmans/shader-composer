@@ -2,7 +2,8 @@ import { Vector2 } from "three"
 import { GLSLType, JSTypes, Unit, UnitConfig } from "../units"
 import { Float } from "./values"
 
-export const uniformName = (unit: Unit) => `u_${unit._unitConfig.variableName}`
+export const uniformName = (unit: Unit) =>
+	unit._unitConfig.uniformName ?? `u_${unit._unitConfig.variableName}`
 
 export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 	type: T,
