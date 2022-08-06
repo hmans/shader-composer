@@ -1,17 +1,34 @@
 import { $ } from "../expressions"
 import { GLSLType, Input, Unit, UnitConfig } from "../units"
 
-const makeUnit = <T extends GLSLType>(type: T) => (
-	v: Input<T>,
-	extras?: Partial<UnitConfig<T>>
-) => Unit(type, v, extras) as Unit<T>
+const makeUnit = <T extends GLSLType, A extends {} = {}>(
+	type: T,
+	apiFun?: (unit: Unit<T>) => A
+) => (v: Input<T>, extras?: Partial<UnitConfig<T>>) => {
+	const unit = Unit(type, v, extras)
+	const api = apiFun ? apiFun(unit) : {}
+	return { ...unit, ...api } as Unit<T> & A
+}
 
 export const Float = makeUnit("float")
 export const Int = makeUnit("int")
 export const Bool = makeUnit("bool")
-export const Vec2 = makeUnit("vec2")
-export const Vec3 = makeUnit("vec3")
-export const Vec4 = makeUnit("vec4")
+export const Vec2 = makeUnit("vec2", (unit) => ({
+	x: Float($`${unit}.x`),
+	y: Float($`${unit}.y`)
+}))
+export const Vec3 = makeUnit("vec3", (unit) => ({
+	x: Float($`${unit}.x`),
+	y: Float($`${unit}.y`),
+	z: Float($`${unit}.z`)
+}))
+export const Vec4 = makeUnit("vec4", (unit) => ({
+	x: Float($`${unit}.x`),
+	y: Float($`${unit}.y`),
+	z: Float($`${unit}.z`),
+	w: Float($`${unit}.w`)
+}))
+
 export const Mat3 = makeUnit("mat3")
 export const Mat4 = makeUnit("mat4")
 
