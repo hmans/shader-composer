@@ -1,22 +1,8 @@
 import { Vector2 } from "three"
 import { $ } from "../expressions"
 import { Input, GLSLType, Unit } from "../units"
+import { bless } from "../util/bless"
 import { Vec2, Vec3, Mat4, Bool } from "./values"
-
-export const UV = Vec2($`uv`, {
-	name: "UV",
-	varying: true
-})
-
-export const VertexPosition = Vec3($`position`, {
-	name: "Position",
-	varying: true
-})
-
-export const VertexNormal = Vec3($`normal`, {
-	name: "Normal",
-	varying: true
-})
 
 export const ViewMatrix = Mat4($`viewMatrix`, {
 	name: "View Matrix",
@@ -32,6 +18,32 @@ export const InstanceMatrix = Mat4($`instanceMatrix`, {
 	name: "Instance Matrix",
 	varying: true
 })
+
+export const UV = Vec2($`uv`, {
+	name: "UV",
+	varying: true
+})
+
+const matrixConversions = (unit: Unit<"vec3">) => ({
+	world: Vec3($`mat3(modelMatrix) * ${unit}`, { varying: true }),
+	view: Vec3($`mat3(modelViewMatrix) * ${unit}`, { varying: true })
+})
+
+export const VertexPosition = bless(
+	Vec3($`position`, {
+		name: "Position",
+		varying: true
+	}),
+	matrixConversions
+)
+
+export const VertexNormal = bless(
+	Vec3($`normal`, {
+		name: "Normal",
+		varying: true
+	}),
+	matrixConversions
+)
 
 export const ViewDirection = Vec3(
 	$`vec3(-${ViewMatrix}[0][2], -${ViewMatrix}[1][2], -${ViewMatrix}[2][2])`,
