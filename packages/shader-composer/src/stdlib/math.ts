@@ -151,3 +151,6 @@ export const Max = <T extends "float" | "vec2" | "vec3" | "vec4">(
 
 export const Sign = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
 	Unit(type(a), $`sign(${a})`)
+
+export const Distance = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
+	Float($`distance(${a})`)
