@@ -1,7 +1,7 @@
 import { Vector2 } from "three"
-import { $, Expression } from "../expressions"
-import { Input, GLSLType, Unit, UnitConfig } from "../units"
-import { Vec2, Vec3, Mat4, Bool } from "./values"
+import { $ } from "../expressions"
+import { GLSLType, Input, Unit } from "../units"
+import { Bool, Mat4, Vec2, Vec3 } from "./values"
 
 export const ViewMatrix = Mat4($`viewMatrix`, {
 	name: "View Matrix",
