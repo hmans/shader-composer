@@ -64,14 +64,16 @@ export default function Fireball() {
 			(v) => Add(VertexPosition, v),
 			(v) => Mul(v, 0.25),
 			(v) => Turbulence(v),
-			(v) => NormalizePlusMinusOne(v)
+			(v) => NormalizePlusMinusOne(v),
+			(v) => Pow(v, 0.5)
 		)
 
-		const tex2d = Texture2D(sampler2D, vec2(0, Pow(noise2, 0.5)))
+		const tex2d = Texture2D(sampler2D, vec2(0, noise2))
 
 		return CustomShaderMaterialMaster({
 			position: Add(VertexPosition, Mul(VertexNormal, displacement)),
-			diffuseColor: Mul(tex2d.color, 2)
+			diffuseColor: tex2d.color,
+			emissiveColor: Mul(tex2d.color, 0.5)
 		})
 	})
 

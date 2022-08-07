@@ -1,7 +1,7 @@
 import { Color } from "three"
 import { $ } from "../expressions"
 import { Input } from "../units"
-import { VertexNormal, VertexPosition } from "./geometry"
+import { VertexPosition } from "./geometry"
 import { Master } from "./values"
 
 export type ShaderMaterialMasterProps = {
@@ -35,6 +35,7 @@ export type CustomShaderMaterialMasterProps = {
 	position?: Input<"vec3">
 	normal?: Input<"vec3">
 	diffuseColor?: Input<"vec3">
+	emissiveColor?: Input<"vec3">
 	fragColor?: Input<"vec3">
 	alpha?: Input<"float">
 	roughness?: Input<"float">
@@ -45,6 +46,7 @@ export const CustomShaderMaterialMaster = ({
 	position,
 	normal,
 	diffuseColor,
+	emissiveColor,
 	fragColor,
 	roughness,
 	metalness,
@@ -68,6 +70,7 @@ export const CustomShaderMaterialMaster = ({
 
   			${alpha !== undefined ? $`csm_DiffuseColor.a = ${alpha};` : ""}
 				${diffuseColor !== undefined ? $`csm_DiffuseColor.rgb = ${diffuseColor};` : ""}
+				${emissiveColor !== undefined ? $`csm_Emissive = ${emissiveColor};` : ""}
 				${fragColor !== undefined ? $`csm_FragColor = vec4(${fragColor}, ${alpha});` : ""}
 
 				/* Mix in the texture. This may be obsolete with a future update to CSM. */
