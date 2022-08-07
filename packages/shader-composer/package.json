@@ -30,7 +30,7 @@
 	"scripts": {
 		"clean": "rimraf dist",
 		"dev": "preconstruct watch",
-		"docs": "typedoc --entryPointStrategy resolve  ./src/index.ts ./src/stdlib/index.ts",
+		"docs": "typedoc --excludeInternal --entryPointStrategy resolve --name 'Shader Composer' ./src/index.ts ./src/stdlib/*.ts --exclude **/*.test.ts",
 		"build": "preconstruct build",
 		"release": "yarn ci && yarn publish",
 		"test": "jest --passWithNoTests",

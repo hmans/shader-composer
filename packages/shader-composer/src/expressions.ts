@@ -26,6 +26,7 @@ export const glsl = (strings: TemplateStringsArray, ...values: any[]): Expressio
 	}
 }
 
+/** A shortcut for the `glsl` tagged template literal helper. */
 export const $ = glsl
 
 export function isExpression(v: any): v is Expression {

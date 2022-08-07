@@ -4,21 +4,38 @@ import { Snippet } from "../snippets"
 import { GLSLType, Input, Unit } from "../units"
 import { Float } from "./values"
 
+/**
+ * @internal
+ */
 export const Operator = (title: string, operator: "+" | "-" | "*" | "/") => <
-	T extends GLSLType
+	A extends GLSLType,
+	B extends GLSLType
 >(
-	a: Input<T>,
-	b: Input<any>
-) => {
-	return Unit(type(a), $`${a} ${operator} ${b}`, {
+	a: Input<A>,
+	b: Input<B>
+) =>
+	Unit(type(a), $`${a} ${operator} ${b}`, {
 		name: `${title} (${type(a)})`
 	})
-}
 
-/* Basic mathematical operations */
+/**
+ * A Shader Unit that adds two values and returns the result.
+ */
 export const Add = Operator("Add", "+")
+
+/**
+ * A Shader Unit that subtracts two values and returns the result.
+ */
 export const Sub = Operator("Subtract", "-")
+
+/**
+ * A Shader Unit that multiplies two values and returns the result.
+ */
 export const Mul = Operator("Multiply", "*")
+
+/**
+ * A Shader Unit that divides two values and returns the result.
+ */
 export const Div = Operator("Divide", "/")
 
 export const Sin = (x: Input<"float">) => Float($`sin(${x})`)

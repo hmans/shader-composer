@@ -4,6 +4,9 @@ import { identifier } from "./util/concatenator3000"
 
 export type Program = "vertex" | "fragment"
 
+/**
+ * Currently supported GLSLTypes. Probably incomplete!
+ */
 export type GLSLType =
 	| "bool"
 	| "int"
