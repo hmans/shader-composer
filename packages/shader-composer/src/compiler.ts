@@ -181,7 +181,7 @@ export const compileShader = (root: Unit) => {
 	/* Explicitly add all units with varyings. */
 	fragmentState.seen.forEach((item) => {
 		if (isUnit(item) && item._unitConfig.varying) {
-			compileItem(item, "vertex", vertexState)
+			walkTree(item, "vertex", (item) => compileItem(item, "vertex", vertexState))
 		}
 	})
 

@@ -2,6 +2,8 @@ import { compileShader } from "./compiler"
 import { $, glsl } from "./expressions"
 import { Snippet } from "./snippets"
 import { Bool, Master, Float } from "./stdlib"
+import { collectFromTree } from "./tree"
+import { isUnit } from "./units"
 
 describe("compileShader", () => {
 	it("compiles shader programs from the given unit", () => {
@@ -141,6 +143,24 @@ describe("compileShader", () => {
 		})
 
 		const [shader] = compileShader(master)
+
+		expect(shader.vertexShader).toMatchSnapshot()
+		expect(shader.fragmentShader).toMatchSnapshot()
+	})
+
+	it("when encountering a varying unit, its value dependencies should only be resolved in the vertex program", () => {
+		/* A unit that we expect only to show up in the vertex program. */
+		const a = Float($`onlyInVertexProgramForSomeReason`, { name: "A" })
+
+		/* A verying unit that sources `a`. It's also configured to use a varying, which
+		means that its value expression will only appear in the vertex program -- for this reason,
+		we also only need the value expression's dependencies in the vertex program. */
+		const b = Float($`${a} + 1.0`, { name: "B", varying: true })
+
+		/* A master unit that specifically uses the `b` unit from within the fragment program. */
+		const root = Master({ name: "Master", fragment: { body: $`value = ${b}` } })
+
+		const [shader] = compileShader(root)
 
 		expect(shader.vertexShader).toMatchSnapshot()
 		expect(shader.fragmentShader).toMatchSnapshot()

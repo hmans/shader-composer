@@ -275,6 +275,60 @@ void main()
 }"
 `;
 
+exports[`compileShader when encountering a varying unit, its value dependencies should only be resolved in the vertex program 1`] = `
+"/*** PROGRAM: VERTEX ***/
+
+precision highp float;
+
+/*** UNIT: B ***/
+varying float v_B_2;
+
+
+void main()
+{
+  /*** UNIT: A ***/
+  float A_1 = onlyInVertexProgramForSomeReason;
+  
+  
+  /*** UNIT: B ***/
+  float B_2 = A_1 + 1.0;
+  v_B_2 = B_2;
+  
+  
+  /*** UNIT: Master ***/
+  bool Master_3 = true;
+  
+  
+}"
+`;
+
+exports[`compileShader when encountering a varying unit, its value dependencies should only be resolved in the vertex program 2`] = `
+"/*** PROGRAM: FRAGMENT ***/
+
+precision highp float;
+
+/*** UNIT: B ***/
+varying float v_B_2;
+
+
+void main()
+{
+  /*** UNIT: B ***/
+  float B_2 = v_B_2;
+  
+  
+  /*** UNIT: Master ***/
+  bool Master_3 = true;
+  {
+    bool value = Master_3;
+    value = B_2
+    Master_3 = value;
+  }
+  
+  
+}"
+`;
+
 exports[`compileShader when rendering units with registered uniforms adds uniform declarations to the program headers 1`] = `
 "/*** PROGRAM: VERTEX ***/
 

@@ -70,7 +70,10 @@ export const getDependencies = (item: Item, program: Program | "any"): Item[] =>
 }
 
 const getUnitDependencies = ({ _unitConfig: config }: Unit, program: Program | "any") => {
-	const dependencies = [config.value]
+	const dependencies = new Array<Item>()
+
+	if (!config.varying || program === "any" || program === "vertex")
+		dependencies.push(config.value)
 
 	if (program === "any" || program === "vertex")
 		dependencies.push(config.vertex?.header?.values, config.vertex?.body?.values)
