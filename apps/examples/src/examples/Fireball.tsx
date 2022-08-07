@@ -9,6 +9,7 @@ import {
 	NormalizePlusMinusOne,
 	pipe,
 	Pow,
+	Snippet,
 	Texture2D,
 	Time,
 	Uniform,
@@ -23,16 +24,19 @@ import { MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import textureUrl from "./textures/explosion.png"
 
-const Turbulence = (p: Input<"vec3">) =>
+const Turbulence = (
+	p: Input<"vec3">,
+	octaves: Input<"float"> = 10,
+	noiseFun: Snippet = simplex3Dnoise
+) =>
 	Float(1, {
 		fragment: {
 			body: $`
-				float w = 100.0;
 				float t = -0.5;
 			
-				for (float f = 1.0 ; f <= 10.0 ; f++ ){
+				for (float f = 1.0 ; f <= ${octaves}; f++ ){
 					float power = pow(2.0, f);
-					t += abs(${simplex3Dnoise}(vec3(power * ${p})) / power);
+					t += abs(${noiseFun}(vec3(power * ${p})) / power);
 				}
 
 				value = t;
