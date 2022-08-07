@@ -4,29 +4,77 @@ import { Snippet } from "../snippets"
 import { GLSLType, Input, Unit } from "../units"
 import { Float } from "./values"
 
+/**
+ * @internal
+ */
 export const Operator = (title: string, operator: "+" | "-" | "*" | "/") => <
-	T extends GLSLType
+	A extends GLSLType,
+	B extends GLSLType
 >(
-	a: Input<T>,
-	b: Input<any>
-) => {
-	return Unit(type(a), $`${a} ${operator} ${b}`, {
+	a: Input<A>,
+	b: Input<B>
+) =>
+	Unit(type(a), $`${a} ${operator} ${b}`, {
 		name: `${title} (${type(a)})`
 	})
-}
 
-/* Basic mathematical operations */
+/**
+ * A Shader Unit that adds two values and returns the result.
+ */
 export const Add = Operator("Add", "+")
+
+/**
+ * A Shader Unit that subtracts two values and returns the result.
+ */
 export const Sub = Operator("Subtract", "-")
+
+/**
+ * A Shader Unit that multiplies two values and returns the result.
+ */
 export const Mul = Operator("Multiply", "*")
+
+/**
+ * A Shader Unit that divides two values and returns the result.
+ */
 export const Div = Operator("Divide", "/")
 
-export const Sin = (x: Input<"float">) => Float($`sin(${x})`)
-export const Cos = (x: Input<"float">) => Float($`cos(${x})`)
-export const Pow = (x: Input<"float">, y: Input<"float">) => Float($`pow(${x}, ${y})`)
+/**
+ * Calculates the sine value of the input value.
+ *
+ * @param a The input value.
+ * @returns A Shader Unit of type `float` that contains the sine value of `a`.
+ */
+export const Sin = (a: Input<"float">) => Float($`sin(${a})`)
 
-export const Round = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
-	Unit(type(v), $`round(${v})`)
+/**
+ * Calculates the cosine value of the input value.
+ *
+ * @param a The input value.
+ * @returns A Shader Unit of type `float` that contains the cosine value of `a`.
+ */
+export const Cos = (a: Input<"float">) => Float($`cos(${a})`)
+
+export const Pow = (a: Input<"float">, e: Input<"float">) => Float($`pow(${a}, ${e})`)
+
+/**
+ * A Shader Unit that finds the nearest integer less than or equal to the input value.
+ * It is equivalent to the GLSL expression `trunc(a)`.
+ *
+ * @param a The input value.
+ * @returns The truncated value of `a`.
+ */
+export const Trunc = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
+	Unit(type(a), $`trunc(${a})`)
+
+/**
+ * A Shader Unit that finds the nearest integer to the input value.
+ * It performs the GLSL expression `round(a)`.
+ *
+ * @param a The input value.
+ * @returns The rounded value of `a`.
+ */
+export const Round = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
+	Unit(type(a), $`round(${a})`)
 
 export const Fract = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
 	Unit(type(v), $`fract(${v})`)
