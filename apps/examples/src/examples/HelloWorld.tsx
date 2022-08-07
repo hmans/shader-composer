@@ -1,12 +1,12 @@
 import { useControls } from "leva"
 import { $ } from "shader-composer"
-import { pipe } from "shader-composer/pipes"
 import { useShader, useUniform } from "shader-composer-r3f"
+import { pipe } from "shader-composer/pipes"
 import {
 	Add,
 	Fresnel,
 	Mix,
-	Remap,
+	NormalizePlusMinusOne,
 	ShaderMaterialMaster,
 	Sin,
 	Time,
@@ -29,7 +29,7 @@ export default function HelloWorld() {
 		return ShaderMaterialMaster({
 			color: pipe(
 				color1,
-				(v) => Mix(v, color2, Remap(Sin(time), -1, 1, 0, 1)),
+				(v) => Mix(v, color2, NormalizePlusMinusOne(Sin(time))),
 				(v) => Add(v, Fresnel())
 			),
 
