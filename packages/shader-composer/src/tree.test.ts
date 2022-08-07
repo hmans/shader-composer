@@ -13,7 +13,7 @@ describe("walkTree", () => {
 
 		const seen = new Array<Item>()
 		walkTree(root, (item) => seen.push(item))
-		expect(seen).toEqual([root, expr, snippet, a, 1])
+		expect(seen).toEqual([1, a, snippet, expr, root])
 	})
 
 	it("includes constant values", () => {
@@ -22,6 +22,6 @@ describe("walkTree", () => {
 
 		const seen = new Array<Item>()
 		walkTree(root, (item) => seen.push(item))
-		expect(seen).toEqual([root, color])
+		expect(seen).toEqual([color, root])
 	})
 })

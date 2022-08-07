@@ -8,15 +8,15 @@ precision highp float;
 void main()
 {
   /*** UNIT: Position (Vertex Only) ***/
-  float Position_Vertex_Only_2 = 1.0;
+  float Position_Vertex_Only_1 = 1.0;
   
   
   /*** UNIT: Anonymous ***/
-  bool Anonymous_1 = true;
+  bool Anonymous_3 = true;
   {
-    bool value = Anonymous_1;
-    gl_Position = Position_Vertex_Only_2;
-    Anonymous_1 = value;
+    bool value = Anonymous_3;
+    gl_Position = Position_Vertex_Only_1;
+    Anonymous_3 = value;
   }
   
   
@@ -31,15 +31,15 @@ precision highp float;
 void main()
 {
   /*** UNIT: Color (Fragment Only) ***/
-  float Color_Fragment_Only_3 = 2.0;
+  float Color_Fragment_Only_2 = 2.0;
   
   
   /*** UNIT: Anonymous ***/
-  bool Anonymous_1 = true;
+  bool Anonymous_3 = true;
   {
-    bool value = Anonymous_1;
-    gl_FragColor = Color_Fragment_Only_3;
-    Anonymous_1 = value;
+    bool value = Anonymous_3;
+    gl_FragColor = Color_Fragment_Only_2;
+    Anonymous_3 = value;
   }
   
   
@@ -101,15 +101,15 @@ precision highp float;
 void main()
 {
   /*** UNIT: A ***/
-  float A_2 = 1.0;
+  float A_1 = 1.0;
   
   
   /*** UNIT: Anonymous ***/
-  bool Anonymous_1 = true;
+  bool Anonymous_3 = true;
   {
-    bool value = Anonymous_1;
-    foo = A_2;
-    Anonymous_1 = value;
+    bool value = Anonymous_3;
+    foo = A_1;
+    Anonymous_3 = value;
   }
   
   
@@ -124,15 +124,15 @@ precision highp float;
 void main()
 {
   /*** UNIT: B ***/
-  float B_3 = 2.0;
+  float B_2 = 2.0;
   
   
   /*** UNIT: Anonymous ***/
-  bool Anonymous_1 = true;
+  bool Anonymous_3 = true;
   {
-    bool value = Anonymous_1;
-    bar = B_3
-    Anonymous_1 = value;
+    bool value = Anonymous_3;
+    bar = B_2
+    Anonymous_3 = value;
   }
   
   
@@ -175,11 +175,11 @@ precision highp float;
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_2 = 123.0;
+  float Anonymous_1 = 123.0;
   
   
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = Anonymous_2;
+  float Anonymous_2 = Anonymous_1;
   
   
 }"
@@ -193,11 +193,11 @@ precision highp float;
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_2 = 123.0;
+  float Anonymous_1 = 123.0;
   
   
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = Anonymous_2;
+  float Anonymous_2 = Anonymous_1;
   
   
 }"
@@ -211,11 +211,11 @@ precision highp float;
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_2 = 123.0;
+  float Anonymous_1 = 123.0;
   
   
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = Anonymous_2 * 2.0;
+  float Anonymous_2 = Anonymous_1 * 2.0;
   
   
 }"
@@ -229,11 +229,11 @@ precision highp float;
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_2 = 123.0;
+  float Anonymous_1 = 123.0;
   
   
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = Anonymous_2 * 2.0;
+  float Anonymous_2 = Anonymous_1 * 2.0;
   
   
 }"

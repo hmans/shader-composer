@@ -21,13 +21,13 @@ export const walkTree = (
 	if (seen.has(item)) return
 	seen.add(item)
 
-	/* Invoke callback */
-	callback(item)
-
 	/* Dive into dependencies */
 	for (const dependency of getDependencies(item)) {
 		walkTree(dependency, callback, seen)
 	}
+
+	/* Invoke callback */
+	callback(item)
 }
 
 /**
