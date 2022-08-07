@@ -37,8 +37,6 @@ export default function Playground() {
 		})
 	})
 
-	console.log(shader.fragmentShader)
-
 	return (
 		<mesh>
 			<icosahedronGeometry args={[1, 3]} />
