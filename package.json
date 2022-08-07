@@ -38,7 +38,8 @@
 	"dependencies": {
 		"@changesets/cli": "^2.24.2",
 		"@manypkg/cli": "^0.19.1",
-		"@preconstruct/cli": "^2.1.5"
+		"@preconstruct/cli": "^2.1.5",
+		"typedoc": "^0.23.10"
 	},
 	"stackblitz": {
 		"startCommand": "cd apps/examples && yarn dev"

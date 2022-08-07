@@ -30,6 +30,7 @@
 	"scripts": {
 		"clean": "rimraf dist",
 		"dev": "preconstruct watch",
+		"docs": "typedoc --entryPointStrategy resolve  ./src/index.ts ./src/stdlib/index.ts",
 		"build": "preconstruct build",
 		"release": "yarn ci && yarn publish",
 		"test": "jest --passWithNoTests",
