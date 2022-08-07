@@ -1,13 +1,12 @@
 import { $ } from "../expressions"
 import { GLSLType, Input, Unit, UnitConfig } from "../units"
-import { bless } from "../util/bless"
 
 const makeUnit = <T extends GLSLType, A extends {} = {}>(
 	type: T,
-	apiFun?: (unit: Unit<T>) => A
+	apiFun: (unit: Unit<T>) => A = () => ({} as A)
 ) => (v: Input<T>, extras?: Partial<UnitConfig<T>>) => {
 	const unit = Unit(type, v, extras) as Unit<T>
-	return bless(unit, apiFun || (() => ({}))) as Unit<T> & A
+	return { ...unit, ...apiFun(unit) } as Unit<T> & A
 }
 
 export const Float = makeUnit("float")
