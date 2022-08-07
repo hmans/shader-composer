@@ -3,7 +3,7 @@ import { Expression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
 import { uniformName } from "./stdlib"
-import { walkTree } from "./tree"
+import { Item, walkTree } from "./tree"
 import { isUnit, Program, Unit, UpdateCallback } from "./units"
 import {
 	assignment,
@@ -25,7 +25,6 @@ const compileItem = (
 	program: Program,
 	state: CompilerState
 ) => {
-	/* Check if we've already seen this unit */
 	if (state.seen.has(item)) return
 	state.seen.add(item)
 
@@ -228,7 +227,7 @@ const CompilerState = () => ({
 	header: new Array<Part>(),
 	body: new Array<Part>(),
 	nextid: idGenerator(),
-	seen: new Set<Unit | Expression | Snippet>(),
+	seen: new Set<Item>(),
 	uniforms: new Map<string, IUniform>(),
 	updates: new Set<UpdateCallback>()
 })
