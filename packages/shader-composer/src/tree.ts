@@ -38,12 +38,12 @@ export const walkTree = (
 export const collectFromTree = (
 	root: Item,
 	program: Program | "any",
-	check: (item: Item) => boolean
+	check?: (item: Item) => boolean
 ) => {
 	const found = new Array<Item>()
 
 	walkTree(root, program, (item) => {
-		if (check(item)) {
+		if (check !== undefined ? check(item) : true) {
 			found.push(item)
 		}
 	})
