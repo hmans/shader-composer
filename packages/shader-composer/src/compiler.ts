@@ -3,6 +3,7 @@ import { Expression, isExpression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
 import { uniformName } from "./stdlib"
+import { walkTree } from "./tree"
 import { isUnit, Program, Unit, UpdateCallback } from "./units"
 import {
 	assignment,
@@ -152,36 +153,14 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	state.body.push(endUnit(unit))
 }
 
-const prepareItem = (item: Unit | Expression, state = CompilerState()) => {
-	if (state.seen.has(item)) return
-	state.seen.add(item)
-
-	const dependencies = new Array<any>()
-
-	/* Prepare dependencies */
-	if (isUnit(item)) {
-		dependencies.push(
-			item._unitConfig.value,
-			item._unitConfig.vertex?.header,
-			item._unitConfig.vertex?.body,
-			item._unitConfig.fragment?.header,
-			item._unitConfig.fragment?.body
-		)
-	}
-
-	if (isExpression(item)) {
-		dependencies.push(...item.values)
-	}
-
-	dependencies.flat().forEach((dep) => prepareItem(dep, state))
-
+const prepareItem = (
+	item: Unit | Expression | Snippet,
+	nextId: ReturnType<typeof idGenerator>
+) => {
 	/* Prepare this unit */
 	if (isUnit(item)) {
 		/* Assign a variable name */
-		item._unitConfig.variableName = identifier(
-			sluggify(item._unitConfig.name),
-			state.nextid()
-		)
+		item._unitConfig.variableName = identifier(sluggify(item._unitConfig.name), nextId())
 	}
 }
 
@@ -201,7 +180,8 @@ const compileProgram = (unit: Unit, program: Program, state: CompilerState): str
 
 export const compileShader = (root: Unit) => {
 	/* STEP 1: prepare all units and their dependencies! */
-	prepareItem(root)
+	const nextId = idGenerator()
+	walkTree(root, (item) => prepareItem(item, nextId))
 
 	/*
 	STEP 2: compile the fragment shader. We're going to compile it first because
