@@ -20,6 +20,7 @@ export const Fresnel = ({
 	factor = 1
 }: FresnelProps = {}) =>
 	Float(0, {
+		name: "Fresnel",
 		fragment: {
 			body: $`
 				float f_a = (${factor} + dot(${ViewDirection}, ${normal}));
