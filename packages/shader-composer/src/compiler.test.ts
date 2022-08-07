@@ -54,9 +54,9 @@ describe("compileShader", () => {
 		expect(shader.fragmentShader).toMatchSnapshot()
 	})
 
-	it("allows units to declare themselves to exist in one program only", () => {
-		const position = Float(1, { name: "Position (Vertex Only)", only: "vertex" })
-		const color = Float(2, { name: "Color (Fragment Only)", only: "fragment" })
+	it("allows resolves dependencies unique to specific programs", () => {
+		const position = Float(1, { name: "Position (Vertex Only)" })
+		const color = Float(2, { name: "Color (Fragment Only)" })
 
 		const root = Master({
 			vertex: { body: glsl`gl_Position = ${position};` },
