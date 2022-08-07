@@ -1,7 +1,7 @@
 import { IUniform } from "three"
 import { Expression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
-import { isSnippet, Snippet } from "./snippets"
+import { isSnippet, renameSnippet, Snippet } from "./snippets"
 import { uniformName } from "./stdlib"
 import { Item, walkTree } from "./tree"
 import { isUnit, isUnitInProgram, Program, Unit, UpdateCallback } from "./units"
@@ -135,6 +135,13 @@ const prepareItem = (
 	if (isUnit(item)) {
 		/* Assign a variable name */
 		item._unitConfig.variableName = identifier(sluggify(item._unitConfig.name), nextId())
+		return
+	}
+
+	/* Is it a snippet? */
+	if (isSnippet(item)) {
+		renameSnippet(item, `snippet_${nextId()}`)
+		return
 	}
 }
 
