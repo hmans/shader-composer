@@ -1,5 +1,4 @@
 import { useTexture } from "@react-three/drei"
-import { useShader } from "shader-composer-r3f"
 import {
 	Add,
 	CustomShaderMaterialMaster,
@@ -9,7 +8,8 @@ import {
 	UV,
 	vec3,
 	VertexPosition
-} from "shader-composer/stdlib"
+} from "shader-composer"
+import { useShader } from "shader-composer-r3f"
 import { DoubleSide, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import textureUrl from "./textures/shader-composer-logo.jpg"

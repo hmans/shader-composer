@@ -1,7 +1,13 @@
 import { useFrame } from "@react-three/fiber"
 import { useLayoutEffect, useMemo } from "react"
-import { compileShader, GLSLType, JSTypes, Unit, UnitConfig } from "shader-composer"
-import { Uniform } from "shader-composer/stdlib"
+import {
+	compileShader,
+	GLSLType,
+	JSTypes,
+	Uniform,
+	Unit,
+	UnitConfig
+} from "shader-composer"
 
 export const useShader = (ctor: () => Unit, deps?: any) => {
 	const [shader, { update }] = useMemo(() => compileShader(ctor()), deps)

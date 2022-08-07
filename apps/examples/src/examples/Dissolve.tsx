@@ -1,8 +1,7 @@
 import { useControls } from "leva"
+import { CustomShaderMaterialMaster, Mix, pipe } from "shader-composer"
 import { useShader, useUniform } from "shader-composer-r3f"
 import { Dissolve } from "shader-composer-toybox"
-import { pipe } from "shader-composer/pipes"
-import { CustomShaderMaterialMaster, Mix } from "shader-composer/stdlib"
 import { Color, DoubleSide, MeshPhysicalMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 

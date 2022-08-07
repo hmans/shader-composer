@@ -13,20 +13,11 @@
 	"types": "dist/shader-composer.cjs.d.ts",
 	"files": [
 		"dist/**",
-		"stdlib/**",
-		"pipes/**",
 		"LICENSE",
 		"README.md"
 	],
 	"license": "MIT",
 	"sideEffects": false,
-	"preconstruct": {
-		"entrypoints": [
-			"index.ts",
-			"pipes/index.ts",
-			"stdlib/index.ts"
-		]
-	},
 	"scripts": {
 		"clean": "rimraf dist",
 		"dev": "preconstruct watch",

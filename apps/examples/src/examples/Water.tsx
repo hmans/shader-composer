@@ -1,18 +1,19 @@
-import { Input } from "shader-composer"
-import { useShader } from "shader-composer-r3f"
-import { FBMNoise, GerstnerWave, ModifyVertex } from "shader-composer-toybox"
-import { add, pipe } from "shader-composer/pipes"
 import {
+	add,
 	CustomShaderMaterialMaster,
+	Input,
 	Int,
 	Mul,
+	pipe,
 	Remap,
 	SplitVector3,
 	Time,
 	vec2,
 	VertexNormal,
 	VertexPosition
-} from "shader-composer/stdlib"
+} from "shader-composer"
+import { useShader } from "shader-composer-r3f"
+import { FBMNoise, GerstnerWave, ModifyVertex } from "shader-composer-toybox"
 import { Color, DoubleSide, MeshPhysicalMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 

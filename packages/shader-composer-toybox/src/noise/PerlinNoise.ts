@@ -1,5 +1,4 @@
-import { glsl, Snippet, Input, type } from "shader-composer"
-import { Float } from "shader-composer/stdlib"
+import { Float, glsl, Input, Snippet, type } from "shader-composer"
 import { permute } from "./permute"
 import { rand4 } from "./random"
 import { taylorInvSqrt } from "./taylorInvSqrt"
