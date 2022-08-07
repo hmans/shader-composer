@@ -88,6 +88,8 @@ export const Ceil = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) 
 export const Modulo = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
 	Unit(type(v), $`mod(${v})`)
 
+export const Abs = <T extends GLSLType>(a: Input<T>) => Unit(type(a), $`abs(${a})`)
+
 export const Clamp = <T extends GLSLType>(x: Input<T>, min: Input<T>, max: Input<T>) =>
 	Unit(type(x), $`clamp(${x}, ${min}, ${max})`)
 
