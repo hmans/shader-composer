@@ -78,6 +78,10 @@ export const Log = SingleArgumentFunction("Log", "log")
 
 export const Log2 = SingleArgumentFunction("Log2", "log2")
 
+export const Sqrt = SingleArgumentFunction("Sqrt", "sqrt")
+
+export const InverseSqrt = SingleArgumentFunction("InverseSqrt", "inversesqrt")
+
 /**
  * A Shader Unit that finds the nearest integer less than or equal to the input value.
  * It is equivalent to the GLSL expression `trunc(a)`.
