@@ -54,6 +54,8 @@ export const Sin = (a: Input<"float">) => Float($`sin(${a})`)
  */
 export const Cos = (a: Input<"float">) => Float($`cos(${a})`)
 
+export const Tan = (a: Input<"float">) => Float($`tan(${a})`)
+
 export const Pow = (a: Input<"float">, e: Input<"float">) => Float($`pow(${a}, ${e})`)
 
 /**
