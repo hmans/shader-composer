@@ -46,52 +46,6 @@ void main()
 }"
 `;
 
-exports[`compileShader allows units to declare themselves to exist in one program only 1`] = `
-"/*** PROGRAM: VERTEX ***/
-
-precision highp float;
-
-void main()
-{
-  /*** UNIT: Position (Vertex Only) ***/
-  float Position_Vertex_Only_1 = 1.0;
-  
-  
-  /*** UNIT: Anonymous ***/
-  bool Anonymous_3 = true;
-  {
-    bool value = Anonymous_3;
-    gl_Position = Position_Vertex_Only_1;
-    Anonymous_3 = value;
-  }
-  
-  
-}"
-`;
-
-exports[`compileShader allows units to declare themselves to exist in one program only 2`] = `
-"/*** PROGRAM: FRAGMENT ***/
-
-precision highp float;
-
-void main()
-{
-  /*** UNIT: Color (Fragment Only) ***/
-  float Color_Fragment_Only_2 = 2.0;
-  
-  
-  /*** UNIT: Anonymous ***/
-  bool Anonymous_3 = true;
-  {
-    bool value = Anonymous_3;
-    gl_FragColor = Color_Fragment_Only_2;
-    Anonymous_3 = value;
-  }
-  
-  
-}"
-`;
-
 exports[`compileShader compiles shader programs from the given unit 1`] = `
 "/*** PROGRAM: VERTEX ***/
 
