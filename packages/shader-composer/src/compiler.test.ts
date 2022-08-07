@@ -151,6 +151,6 @@ describe("compileShader", () => {
 		const root = Float(a)
 		const [shader, { units }] = compileShader(root)
 
-		expect(units).toEqual([root, a])
+		expect(units).toEqual([a, root])
 	})
 })

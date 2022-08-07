@@ -1,8 +1,8 @@
-import { isExpression } from "./expressions"
+import { Expression, isExpression } from "./expressions"
 import { isSnippet, Snippet } from "./snippets"
-import { isUnit, Unit, Input } from "./units"
+import { isUnit, Unit, Input, Program } from "./units"
 
-export type Item = Input | Snippet
+export type Item = Input | Snippet | Expression
 
 /**
  * Given a root unit, iterate over the tree and invoke the given callback for each
@@ -14,6 +14,7 @@ export type Item = Input | Snippet
  */
 export const walkTree = (
 	item: Item,
+	program: Program | "any",
 	callback: (item: Item) => void,
 	seen = new Set<Item>()
 ) => {
@@ -22,8 +23,8 @@ export const walkTree = (
 	seen.add(item)
 
 	/* Dive into dependencies */
-	for (const dependency of getDependencies(item)) {
-		walkTree(dependency, callback, seen)
+	for (const dependency of getDependencies(item, program)) {
+		walkTree(dependency, program, callback, seen)
 	}
 
 	/* Invoke callback */
@@ -34,11 +35,15 @@ export const walkTree = (
  * Walks the tree and returns all items found where the given callback function
  * returns true.
  */
-export const collectFromTree = (root: Item, check: (item: Item) => boolean) => {
+export const collectFromTree = (
+	root: Item,
+	program: Program | "any",
+	check?: (item: Item) => boolean
+) => {
 	const found = new Array<Item>()
 
-	walkTree(root, (item) => {
-		if (check(item)) {
+	walkTree(root, program, (item) => {
+		if (check !== undefined ? check(item) : true) {
 			found.push(item)
 		}
 	})
@@ -52,9 +57,9 @@ export const collectFromTree = (root: Item, check: (item: Item) => boolean) => {
  * @param item
  * @returns
  */
-export const getDependencies = (item: Item): Item[] => {
+export const getDependencies = (item: Item, program: Program | "any"): Item[] => {
 	const dependencies = isUnit(item)
-		? getUnitDependencies(item)
+		? getUnitDependencies(item, program)
 		: isExpression(item)
 		? item.values
 		: isSnippet(item)
@@ -64,11 +69,14 @@ export const getDependencies = (item: Item): Item[] => {
 	return dependencies.flat().filter((i) => !!i)
 }
 
-const getUnitDependencies = ({ _unitConfig: config }: Unit) => {
+const getUnitDependencies = ({ _unitConfig: config }: Unit, program: Program | "any") => {
 	const dependencies = [config.value]
 
-	dependencies.push(config.vertex?.header?.values, config.vertex?.body?.values)
-	dependencies.push(config.fragment?.header?.values, config.fragment?.body?.values)
+	if (program === "any" || program === "vertex")
+		dependencies.push(config.vertex?.header?.values, config.vertex?.body?.values)
+
+	if (program === "any" || program === "fragment")
+		dependencies.push(config.fragment?.header?.values, config.fragment?.body?.values)
 
 	return dependencies.filter((i) => !!i)
 }

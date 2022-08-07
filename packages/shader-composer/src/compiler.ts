@@ -1,9 +1,9 @@
 import { IUniform } from "three"
-import { Expression, isExpression } from "./expressions"
+import { Expression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
 import { uniformName } from "./stdlib"
-import { walkTree } from "./tree"
+import { Item, walkTree } from "./tree"
 import { isUnit, Program, Unit, UpdateCallback } from "./units"
 import {
 	assignment,
@@ -25,54 +25,20 @@ const compileItem = (
 	program: Program,
 	state: CompilerState
 ) => {
-	/* Check if we've already seen this unit */
 	if (state.seen.has(item)) return
 	state.seen.add(item)
 
 	/* If the item is something we know, delegate to the corresponding function */
 	if (isUnit(item)) compileUnit(item, program, state)
-	else if (isExpression(item)) compileExpression(item, program, state)
 	else if (isSnippet(item)) compileSnippet(item, program, state)
 }
 
-const compileExpression = (exp: Expression, program: Program, state: CompilerState) => {
-	/*
-	Expressions automatically expand to their string representations, so we don't need to
-	add them to headers or bodies, but we _do_ need to resolve their dependencies (because
-	they may include other units.)
-	*/
-
-	exp.values.forEach((value) => {
-		compileItem(value, program, state)
-	})
-}
-
 const compileSnippet = (snippet: Snippet, program: Program, state: CompilerState) => {
-	/* Add dependencies */
-	snippet.expression.values.forEach((value) => {
-		compileItem(value, program, state)
-	})
-
 	/* Add snippet to header */
 	state.header.push(snippet.expression)
 }
 
 const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
-	/*
-	Before we add this unit, let's recurse into its dependencies. We're limiting
-	ourselves to direct dependencies (within the value), and dependencies of the
-	header and body of the program we're currenty compiling.
-	*/
-	const dependencies = [
-		unit._unitConfig.value,
-		unit._unitConfig[program]?.header?.values,
-		unit._unitConfig[program]?.body?.values
-	].flat()
-
-	dependencies.forEach((dep) => {
-		compileItem(dep, program, state)
-	})
-
 	/* Register update callback, if given */
 	if (unit._unitConfig.update) {
 		state.updates.add(unit._unitConfig.update)
@@ -165,7 +131,7 @@ const prepareItem = (
 }
 
 const compileProgram = (unit: Unit, program: Program, state: CompilerState): string => {
-	compileItem(unit, program, state)
+	walkTree(unit, program, (item) => compileItem(item, program, state))
 
 	return concatenate(
 		`/*** PROGRAM: ${program.toUpperCase()} ***/\n`,
@@ -181,7 +147,7 @@ const compileProgram = (unit: Unit, program: Program, state: CompilerState): str
 export const compileShader = (root: Unit) => {
 	/* STEP 1: prepare all units and their dependencies! */
 	const nextId = idGenerator()
-	walkTree(root, (item) => prepareItem(item, nextId))
+	walkTree(root, "any", (item) => prepareItem(item, nextId))
 
 	/*
 	STEP 2: compile the fragment shader. We're going to compile it first because
@@ -261,7 +227,7 @@ const CompilerState = () => ({
 	header: new Array<Part>(),
 	body: new Array<Part>(),
 	nextid: idGenerator(),
-	seen: new Set<Unit | Expression | Snippet>(),
+	seen: new Set<Item>(),
 	uniforms: new Map<string, IUniform>(),
 	updates: new Set<UpdateCallback>()
 })
