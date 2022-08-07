@@ -70,6 +70,14 @@ export const Pow = <T extends "float" | "vec2" | "vec3" | "vec4">(
 	e: Input<T>
 ) => Unit(type(a), $`pow(${a}, ${e})`, { name: `Pow (${type(a)})` })
 
+export const Exp = SingleArgumentFunction("Exp", "exp")
+
+export const Exp2 = SingleArgumentFunction("Exp2", "exp2")
+
+export const Log = SingleArgumentFunction("Log", "log")
+
+export const Log2 = SingleArgumentFunction("Log2", "log2")
+
 /**
  * A Shader Unit that finds the nearest integer less than or equal to the input value.
  * It is equivalent to the GLSL expression `trunc(a)`.
