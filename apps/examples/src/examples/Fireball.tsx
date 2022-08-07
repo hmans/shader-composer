@@ -84,7 +84,12 @@ export default function Fireball() {
 	return (
 		<mesh>
 			<icosahedronGeometry args={[1, 5]} />
-			<CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} />
+			<CustomShaderMaterial
+				baseMaterial={MeshStandardMaterial}
+				{...shader}
+				metalness={0.5}
+				roughness={0.5}
+			/>
 		</mesh>
 	)
 }
