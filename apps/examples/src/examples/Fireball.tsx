@@ -28,21 +28,23 @@ const Turbulence = (
 	p: Input<"vec3">,
 	octaves: Input<"float"> = 10,
 	noiseFun: Snippet = simplex3Dnoise
-) =>
-	Float(1, {
-		fragment: {
-			body: $`
-				float t = -0.5;
-			
-				for (float f = 1.0 ; f <= ${octaves}; f++ ){
-					float power = pow(2.0, f);
-					t += abs(${noiseFun}(vec3(power * ${p})) / power);
-				}
-
-				value = t;
-			`
+) => {
+	const body = $`
+		float t = -0.5;
+				
+		for (float f = 1.0 ; f <= ${octaves}; f++ ){
+			float power = pow(2.0, f);
+			t += abs(${noiseFun}(vec3(power * ${p})) / power);
 		}
+
+		value = t;
+	`
+
+	return Float(1, {
+		fragment: { body },
+		vertex: { body }
 	})
+}
 
 export default function Fireball() {
 	const texture = useTexture(textureUrl)
