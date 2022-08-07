@@ -113,11 +113,11 @@ export type UnitConfig<T extends GLSLType> = {
 	}
 }
 
-export type Unit<T extends GLSLType = any, A extends {} = {}> = {
+export type Unit<T extends GLSLType = any> = {
 	_: "Unit"
 	_unitConfig: UnitConfig<T>
 	toString: () => string
-} & A
+}
 
 export const Unit = <T extends GLSLType>(
 	type: T,
