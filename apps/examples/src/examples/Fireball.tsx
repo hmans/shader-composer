@@ -62,7 +62,7 @@ export default function Fireball() {
 			(v) => NormalizePlusMinusOne(v)
 		)
 
-		const displacement = Mul(noise, 0.4)
+		const displacement = Mul(noise, 0.3)
 
 		const noise2 = pipe(
 			time,
