@@ -2,7 +2,7 @@ import { $ } from "../expressions"
 import { type } from "../glslType"
 import { Snippet } from "../snippets"
 import { GLSLType, Input, Unit } from "../units"
-import { Float } from "./values"
+import { Float, vec3 } from "./values"
 
 /**
  * @internal
@@ -21,11 +21,13 @@ export const Operator = (name: string, operator: "+" | "-" | "*" | "/") => <
 /**
  * @internal
  */
-export const UnaryOperator = (name: string, functionName: string) => <
-	T extends "float" | "vec2" | "vec3" | "vec4"
+export const SingleArgumentFunction = <
+	TA extends GLSLType = "float" | "vec2" | "vec3" | "vec4"
 >(
-	a: Input<T>
-) => Unit(type(a), $`${functionName}(${a})`, { name: `${name} (${type(a)})` })
+	name: string,
+	functionName: string
+) => <A extends TA>(a: Input<A>) =>
+	Unit(type(a), $`${functionName}(${a})`, { name: `${name} (${type(a)})` })
 
 /**
  * A Shader Unit that adds two values and returns the result.
@@ -50,21 +52,23 @@ export const Div = Operator("Divide", "/")
 /**
  * Calculates the sine value of the input value.
  */
-export const Sin = UnaryOperator("Sin", "sin")
+export const Sin = SingleArgumentFunction("Sin", "sin")
 
 /**
  * Calculates the cosine value of the input value.
  */
-export const Cos = UnaryOperator("Cos", "cos")
+export const Cos = SingleArgumentFunction("Cos", "cos")
 
-export const Tan = UnaryOperator("Tan", "tan")
+export const Tan = SingleArgumentFunction("Tan", "tan")
 
-export const Asin = UnaryOperator("Asin", "asin")
+export const Asin = SingleArgumentFunction("Asin", "asin")
 
-export const Acos = UnaryOperator("Acos", "acos")
+export const Acos = SingleArgumentFunction("Acos", "acos")
 
-export const Pow = (a: Input<"float">, e: Input<"float">) =>
-	Float($`pow(${a}, ${e})`, { name: "Pow" })
+export const Pow = <T extends "float" | "vec2" | "vec3" | "vec4">(
+	a: Input<T>,
+	e: Input<T>
+) => Unit(type(a), $`pow(${a}, ${e})`, { name: `Pow (${type(a)})` })
 
 /**
  * A Shader Unit that finds the nearest integer less than or equal to the input value.
@@ -73,7 +77,7 @@ export const Pow = (a: Input<"float">, e: Input<"float">) =>
  * @param a The input value.
  * @returns The truncated value of `a`.
  */
-export const Trunc = UnaryOperator("Trunc", "trunc")
+export const Trunc = SingleArgumentFunction("Trunc", "trunc")
 
 /**
  * A Shader Unit that finds the nearest integer to the input value.
@@ -82,27 +86,27 @@ export const Trunc = UnaryOperator("Trunc", "trunc")
  * @param a The input value.
  * @returns The rounded value of `a`.
  */
-export const Round = UnaryOperator("Round", "round")
+export const Round = SingleArgumentFunction("Round", "round")
 
-export const Fract = UnaryOperator("Fract", "fract")
+export const Fract = SingleArgumentFunction("Fract", "fract")
 
-export const Floor = UnaryOperator("Floor", "floor")
+export const Floor = SingleArgumentFunction("Floor", "floor")
 
-export const Ceil = UnaryOperator("Ceil", "ceil")
+export const Ceil = SingleArgumentFunction("Ceil", "ceil")
 
-export const Abs = UnaryOperator("Abs", "abs")
+export const Abs = SingleArgumentFunction("Abs", "abs")
 
-export const Sign = UnaryOperator("Sign", "sign")
+export const Sign = SingleArgumentFunction("Sign", "sign")
 
 /**
  * Converts the given value from degrees to radians.
  */
-export const Radians = UnaryOperator("Radians", "radians")
+export const Radians = SingleArgumentFunction("Radians", "radians")
 
 /**
  * Converts the given value from radians to degrees.
  */
-export const Degrees = UnaryOperator("Degrees", "degrees")
+export const Degrees = SingleArgumentFunction("Degrees", "degrees")
 
 export const Modulo = <
 	A extends "float" | "vec2" | "vec3" | "vec4",
