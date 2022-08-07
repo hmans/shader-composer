@@ -63,7 +63,7 @@ export const Pow = (a: Input<"float">, e: Input<"float">) => Float($`pow(${a}, $
  * @param a The input value.
  * @returns The truncated value of `a`.
  */
-export const Truncate = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
+export const Trunc = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
 	Unit(type(a), $`trunc(${a})`)
 
 /**
