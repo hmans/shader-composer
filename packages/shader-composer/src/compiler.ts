@@ -4,7 +4,7 @@ import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
 import { uniformName } from "./stdlib"
 import { Item, walkTree } from "./tree"
-import { isUnit, Program, Unit, UpdateCallback } from "./units"
+import { isUnit, isUnitInProgram, Program, Unit, UpdateCallback } from "./units"
 import {
 	assignment,
 	block,
@@ -39,6 +39,14 @@ const compileSnippet = (snippet: Snippet, program: Program, state: CompilerState
 }
 
 const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
+	/* As a sanity check, check if the unit is even allowed to be compiled into
+	the requested program. */
+	if (!isUnitInProgram(unit, program)) {
+		throw new Error(
+			`Encountered a unit "${unit._unitConfig.name}" that is not allowed in the "${program}" program.`
+		)
+	}
+
 	/* Register update callback, if given */
 	if (unit._unitConfig.update) {
 		state.updates.add(unit._unitConfig.update)

@@ -131,7 +131,7 @@ describe("compileShader", () => {
 		const a = Float(1, { name: "A" })
 		const b = Float(2, { name: "B" })
 
-		const master = Bool(true, {
+		const master = Master({
 			vertex: {
 				body: $`foo = ${a};`
 			},
@@ -144,5 +144,13 @@ describe("compileShader", () => {
 
 		expect(shader.vertexShader).toMatchSnapshot()
 		expect(shader.fragmentShader).toMatchSnapshot()
+	})
+
+	it("throws an error when encountering a unit that is not able to run in the requested program", () => {
+		const a = Float(1, { name: "A", only: "vertex" })
+		const root = Master({ fragment: { body: $`${a}` } })
+		expect(() => compileShader(root)).toThrowErrorMatchingInlineSnapshot(
+			`"Encountered a unit \\"A\\" that is not allowed in the \\"fragment\\" program."`
+		)
 	})
 })
