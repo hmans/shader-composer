@@ -145,12 +145,4 @@ describe("compileShader", () => {
 		expect(shader.vertexShader).toMatchSnapshot()
 		expect(shader.fragmentShader).toMatchSnapshot()
 	})
-
-	it("returns a list of all units contained in the tree", () => {
-		const a = Float(1)
-		const root = Float(a)
-		const [shader, { units }] = compileShader(root)
-
-		expect(units).toEqual([a, root])
-	})
 })
