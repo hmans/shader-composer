@@ -24,6 +24,7 @@ import { MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import textureUrl from "./textures/explosion.png"
 
+// TODO: extract into toybox
 const Turbulence = (
 	p: Input<"vec3">,
 	octaves: Input<"float"> = 10,
