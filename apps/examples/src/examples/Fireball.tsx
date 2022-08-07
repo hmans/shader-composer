@@ -1,7 +1,10 @@
 import { useTexture } from "@react-three/drei"
 import {
+	$,
 	Add,
 	CustomShaderMaterialMaster,
+	Float,
+	Input,
 	Mul,
 	NormalizePlusMinusOne,
 	pipe,
@@ -15,10 +18,27 @@ import {
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { Simplex3DNoise } from "shader-composer-toybox"
+import { Simplex3DNoise, simplex3Dnoise } from "shader-composer-toybox"
 import { MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import textureUrl from "./textures/explosion.png"
+
+const Turbulence = (p: Input<"vec3">) =>
+	Float(1, {
+		fragment: {
+			body: $`
+				float w = 100.0;
+				float t = -0.5;
+			
+				for (float f = 1.0 ; f <= 10.0 ; f++ ){
+					float power = pow(2.0, f);
+					t += abs(${simplex3Dnoise}(vec3(power * ${p})) / power);
+				}
+
+				value = t;
+			`
+		}
+	})
 
 export default function Fireball() {
 	const texture = useTexture(textureUrl)
@@ -42,7 +62,8 @@ export default function Fireball() {
 			time,
 			(v) => vec3(Mul(v, 0.6), Mul(v, 0.8), 0),
 			(v) => Add(VertexPosition, v),
-			(v) => Simplex3DNoise(v),
+			(v) => Mul(v, 0.25),
+			(v) => Turbulence(v),
 			(v) => NormalizePlusMinusOne(v)
 		)
 
@@ -50,7 +71,7 @@ export default function Fireball() {
 
 		return CustomShaderMaterialMaster({
 			position: Add(VertexPosition, Mul(VertexNormal, displacement)),
-			diffuseColor: tex2d.color
+			diffuseColor: Mul(tex2d.color, 2)
 		})
 	})
 
