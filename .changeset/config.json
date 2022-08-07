@@ -1,5 +1,5 @@
 {
-	"$schema": "https://unpkg.com/@changesets/config@2.0.1/schema.json",
+	"$schema": "https://unpkg.com/@changesets/config/schema.json",
 	"changelog": "@changesets/cli/changelog",
 	"commit": false,
 	"fixed": [],
@@ -7,6 +7,9 @@
 	"access": "public",
 	"baseBranch": "main",
 	"updateInternalDependencies": "minor",
+	"snapshot": {
+		"useCalculatedVersion": true
+	},
 	"ignore": ["examples"],
 	"___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
 		"updateInternalDependents": "out-of-range",
