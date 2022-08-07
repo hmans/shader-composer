@@ -32,7 +32,13 @@ export const Normalize = <T extends "vec2" | "vec3" | "vec4">(a: Input<T>) =>
 export const cross = (a: Input<"vec3">, b: Input<"vec3">) => $`cross(${a}, ${b})`
 
 export const Cross = (a: Input<"vec3">, b: Input<"vec3">) =>
-	Vec3(cross(a, b), { name: "Cross" })
+	Vec3(cross(a, b), { name: "Cross Product" })
+
+export const dot = <T extends "vec2" | "vec3" | "vec4">(a: Input<T>, b: Input<T>) =>
+	$`dot(${a}, ${b})`
+
+export const Dot = <T extends "vec2" | "vec3" | "vec4">(a: Input<T>, b: Input<T>) =>
+	Float(dot(a, b), { name: "Dot Product" })
 
 export const Tangent = (v: Input<"vec3">) => Vec3(orthogonal(v), { name: "Tangent" })
 
