@@ -30,4 +30,4 @@ when used in a bundle splitting environment. :(
 In the long run, we will probably remove the dependency and provide
 our own Pipe implementation. (Any takers?)
 */
-export { flow, pipe } from "fp-ts/es6/function"
+export { flow, pipe } from "fp-ts/lib/function"
