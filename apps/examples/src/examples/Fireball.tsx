@@ -79,7 +79,7 @@ export default function Fireball() {
 		return CustomShaderMaterialMaster({
 			position: Add(VertexPosition, Mul(VertexNormal, displacement)),
 			diffuseColor: tex2d.color,
-			emissiveColor: Mul(tex2d.color, 0.5)
+			emissiveColor: Mul(tex2d.color, 1.5)
 		})
 	})
 
