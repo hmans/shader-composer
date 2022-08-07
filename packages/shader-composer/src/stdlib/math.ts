@@ -19,6 +19,15 @@ export const Operator = (title: string, operator: "+" | "-" | "*" | "/") => <
 	})
 
 /**
+ * @internal
+ */
+export const UnaryOperator = (name: string, functionName: string) => <
+	T extends "float" | "vec2" | "vec3" | "vec4"
+>(
+	a: Input<T>
+) => Unit(type(a), $`${functionName}(${a})`, { name })
+
+/**
  * A Shader Unit that adds two values and returns the result.
  */
 export const Add = Operator("Add", "+")
@@ -40,22 +49,19 @@ export const Div = Operator("Divide", "/")
 
 /**
  * Calculates the sine value of the input value.
- *
- * @param a The input value.
- * @returns A Shader Unit of type `float` that contains the sine value of `a`.
  */
-export const Sin = (a: Input<"float">) => Float($`sin(${a})`)
+export const Sin = UnaryOperator("Sin", "sin")
 
 /**
  * Calculates the cosine value of the input value.
- *
- * @param a The input value.
- * @returns A Shader Unit of type `float` that contains the cosine value of `a`.
  */
-export const Cos = (a: Input<"float">) => Float($`cos(${a})`)
+export const Cos = UnaryOperator("Cos", "cos")
 
-export const Tan = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
-	Unit(type(a), $`tan(${a})`)
+export const Tan = UnaryOperator("Tan", "tan")
+
+export const Asin = UnaryOperator("Asin", "asin")
+
+export const Acos = UnaryOperator("Acos", "acos")
 
 export const Pow = (a: Input<"float">, e: Input<"float">) => Float($`pow(${a}, ${e})`)
 
@@ -66,8 +72,7 @@ export const Pow = (a: Input<"float">, e: Input<"float">) => Float($`pow(${a}, $
  * @param a The input value.
  * @returns The truncated value of `a`.
  */
-export const Trunc = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
-	Unit(type(a), $`trunc(${a})`)
+export const Trunc = UnaryOperator("Trunc", "trunc")
 
 /**
  * A Shader Unit that finds the nearest integer to the input value.
@@ -76,22 +81,35 @@ export const Trunc = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>)
  * @param a The input value.
  * @returns The rounded value of `a`.
  */
-export const Round = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
-	Unit(type(a), $`round(${a})`)
+export const Round = UnaryOperator("Round", "round")
 
-export const Fract = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
-	Unit(type(v), $`fract(${v})`)
+export const Fract = UnaryOperator("Fract", "fract")
 
-export const Floor = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
-	Unit(type(v), $`floor(${v})`)
+export const Floor = UnaryOperator("Floor", "floor")
 
-export const Ceil = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
-	Unit(type(v), $`ceil(${v})`)
+export const Ceil = UnaryOperator("Ceil", "ceil")
 
-export const Modulo = <T extends "float" | "vec2" | "vec3" | "vec4">(v: Input<T>) =>
-	Unit(type(v), $`mod(${v})`)
+export const Abs = UnaryOperator("Abs", "abs")
 
-export const Abs = <T extends GLSLType>(a: Input<T>) => Unit(type(a), $`abs(${a})`)
+export const Sign = UnaryOperator("Sign", "sign")
+
+/**
+ * Converts the given value from degrees to radians.
+ */
+export const Radians = UnaryOperator("Radians", "radians")
+
+/**
+ * Converts the given value from radians to degrees.
+ */
+export const Degrees = UnaryOperator("Degrees", "degrees")
+
+export const Modulo = <
+	A extends "float" | "vec2" | "vec3" | "vec4",
+	B extends "float" | A
+>(
+	a: Input<A>,
+	b: Input<B>
+) => Unit(type(a), $`mod(${a}, ${b})`)
 
 export const Clamp = <T extends GLSLType>(x: Input<T>, min: Input<T>, max: Input<T>) =>
 	Unit(type(x), $`clamp(${x}, ${min}, ${max})`)
@@ -150,20 +168,7 @@ export const Max = <T extends "float" | "vec2" | "vec3" | "vec4">(
 	b: Input<T>
 ) => Unit(type(a), $`max(${a}, ${b})`)
 
-export const Sign = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
-	Unit(type(a), $`sign(${a})`)
-
-export const Distance = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
-	Float($`distance(${a})`)
-
-/**
- * Converts the given value from degrees to radians.
- */
-export const Radians = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
-	Unit(type(a), $`radians(${a})`)
-
-/**
- * Converts the given value from radians to degrees.
- */
-export const Degrees = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
-	Unit(type(a), $`degrees(${a})`)
+export const Distance = <T extends "float" | "vec2" | "vec3" | "vec4">(
+	a: Input<T>,
+	b: Input<T>
+) => Float($`distance(${a}, ${b})`)
