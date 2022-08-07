@@ -181,7 +181,7 @@ const compileProgram = (unit: Unit, program: Program, state: CompilerState): str
 export const compileShader = (root: Unit) => {
 	/* STEP 1: prepare all units and their dependencies! */
 	const nextId = idGenerator()
-	walkTree(root, (item) => prepareItem(item, nextId))
+	walkTree(root, "any", (item) => prepareItem(item, nextId))
 
 	/*
 	STEP 2: compile the fragment shader. We're going to compile it first because

@@ -1,6 +1,6 @@
 import { isExpression } from "./expressions"
 import { isSnippet, Snippet } from "./snippets"
-import { isUnit, Unit, Input } from "./units"
+import { isUnit, Unit, Input, Program } from "./units"
 
 export type Item = Input | Snippet
 
@@ -14,6 +14,7 @@ export type Item = Input | Snippet
  */
 export const walkTree = (
 	item: Item,
+	program: Program | "any",
 	callback: (item: Item) => void,
 	seen = new Set<Item>()
 ) => {
@@ -23,7 +24,7 @@ export const walkTree = (
 
 	/* Dive into dependencies */
 	for (const dependency of getDependencies(item)) {
-		walkTree(dependency, callback, seen)
+		walkTree(dependency, program, callback, seen)
 	}
 
 	/* Invoke callback */
@@ -34,10 +35,14 @@ export const walkTree = (
  * Walks the tree and returns all items found where the given callback function
  * returns true.
  */
-export const collectFromTree = (root: Item, check: (item: Item) => boolean) => {
+export const collectFromTree = (
+	root: Item,
+	program: Program | "any",
+	check: (item: Item) => boolean
+) => {
 	const found = new Array<Item>()
 
-	walkTree(root, (item) => {
+	walkTree(root, program, (item) => {
 		if (check(item)) {
 			found.push(item)
 		}

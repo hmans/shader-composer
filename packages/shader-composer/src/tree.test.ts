@@ -12,7 +12,7 @@ describe("walkTree", () => {
 		const root = Float(expr)
 
 		const seen = new Array<Item>()
-		walkTree(root, (item) => seen.push(item))
+		walkTree(root, "any", (item) => seen.push(item))
 		expect(seen).toEqual([1, a, snippet, expr, root])
 	})
 
@@ -21,7 +21,7 @@ describe("walkTree", () => {
 		const root = Vec3(color)
 
 		const seen = new Array<Item>()
-		walkTree(root, (item) => seen.push(item))
+		walkTree(root, "any", (item) => seen.push(item))
 		expect(seen).toEqual([color, root])
 	})
 })
