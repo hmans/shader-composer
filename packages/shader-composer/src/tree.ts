@@ -23,7 +23,7 @@ export const walkTree = (
 	seen.add(item)
 
 	/* Dive into dependencies */
-	for (const dependency of getDependencies(item)) {
+	for (const dependency of getDependencies(item, program)) {
 		walkTree(dependency, program, callback, seen)
 	}
 
@@ -57,9 +57,9 @@ export const collectFromTree = (
  * @param item
  * @returns
  */
-export const getDependencies = (item: Item): Item[] => {
+export const getDependencies = (item: Item, program: Program | "any"): Item[] => {
 	const dependencies = isUnit(item)
-		? getUnitDependencies(item)
+		? getUnitDependencies(item, program)
 		: isExpression(item)
 		? item.values
 		: isSnippet(item)
@@ -69,11 +69,14 @@ export const getDependencies = (item: Item): Item[] => {
 	return dependencies.flat().filter((i) => !!i)
 }
 
-const getUnitDependencies = ({ _unitConfig: config }: Unit) => {
+const getUnitDependencies = ({ _unitConfig: config }: Unit, program: Program | "any") => {
 	const dependencies = [config.value]
 
-	dependencies.push(config.vertex?.header?.values, config.vertex?.body?.values)
-	dependencies.push(config.fragment?.header?.values, config.fragment?.body?.values)
+	if (program === "any" || program === "vertex")
+		dependencies.push(config.vertex?.header?.values, config.vertex?.body?.values)
+
+	if (program === "any" || program === "fragment")
+		dependencies.push(config.fragment?.header?.values, config.fragment?.body?.values)
 
 	return dependencies.filter((i) => !!i)
 }
