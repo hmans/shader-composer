@@ -36,9 +36,17 @@ export default function Fireball() {
 			(v) => NormalizePlusMinusOne(v)
 		)
 
-		const tex2d = Texture2D(sampler2D, vec2(0, Pow(noise, 0.5)))
-
 		const displacement = Mul(noise, 0.4)
+
+		const noise2 = pipe(
+			time,
+			(v) => vec3(Mul(v, 0.6), Mul(v, 0.8), 0),
+			(v) => Add(VertexPosition, v),
+			(v) => Simplex3DNoise(v),
+			(v) => NormalizePlusMinusOne(v)
+		)
+
+		const tex2d = Texture2D(sampler2D, vec2(0, Pow(noise2, 0.5)))
 
 		return CustomShaderMaterialMaster({
 			position: Add(VertexPosition, Mul(VertexNormal, displacement)),
