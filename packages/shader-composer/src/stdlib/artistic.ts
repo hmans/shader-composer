@@ -13,7 +13,7 @@ export type FresnelProps = {
 }
 
 export const Fresnel = ({
-	normal = VertexNormal,
+	normal = VertexNormal.world,
 	bias = 0,
 	intensity = 1,
 	power = 2,
