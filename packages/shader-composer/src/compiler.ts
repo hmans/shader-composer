@@ -1,5 +1,5 @@
 import { IUniform } from "three"
-import { Expression, isExpression } from "./expressions"
+import { Expression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, Snippet } from "./snippets"
 import { uniformName } from "./stdlib"
@@ -31,16 +31,7 @@ const compileItem = (
 
 	/* If the item is something we know, delegate to the corresponding function */
 	if (isUnit(item)) compileUnit(item, program, state)
-	else if (isExpression(item)) compileExpression(item, program, state)
 	else if (isSnippet(item)) compileSnippet(item, program, state)
-}
-
-const compileExpression = (exp: Expression, program: Program, state: CompilerState) => {
-	/*
-	Expressions automatically expand to their string representations, so we don't need to
-	add them to headers or bodies, but we _do_ need to resolve their dependencies (because
-	they may include other units.)
-	*/
 }
 
 const compileSnippet = (snippet: Snippet, program: Program, state: CompilerState) => {
