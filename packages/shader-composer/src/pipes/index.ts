@@ -22,12 +22,8 @@ export const div = <B extends GLSLType>(b: Input<B>) => <A extends GLSLType>(
 ) => Div(a, b)
 
 /*
-We're re-exporting the very useful `pipe` from fp-ts here. Mostly
-because it's such a great tool for use with Shader Composer, but also
-because there seem to be some issues around importing from `fp-ts/lib/*`
-when used in a bundle splitting environment. :(
-
+We're re-exporting the very useful `pipe` from fp-ts here.
 In the long run, we will probably remove the dependency and provide
 our own Pipe implementation. (Any takers?)
 */
-export { flow, pipe } from "fp-ts/lib/function"
+export { flow, pipe } from "fp-ts/function"
