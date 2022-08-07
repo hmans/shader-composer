@@ -139,8 +139,12 @@ export const Remap = <T extends "float" | "vec2" | "vec3" | "vec4">(
 
 export const NormalizePlusMinusOne = (f: Input<"float">) => Remap(f, -1, 1, 0, 1)
 
-export const Min = <T extends GLSLType>(a: Input<T>, b: Input<T>) =>
-	Unit(type(a), $`min(${a}, ${b})`)
+export const Min = <T extends "float" | "vec2" | "vec3" | "vec4">(
+	a: Input<T>,
+	b: Input<T>
+) => Unit(type(a), $`min(${a}, ${b})`)
 
-export const Max = <T extends GLSLType>(a: Input<T>, b: Input<T>) =>
-	Unit(type(a), $`max(${a}, ${b})`)
+export const Max = <T extends "float" | "vec2" | "vec3" | "vec4">(
+	a: Input<T>,
+	b: Input<T>
+) => Unit(type(a), $`max(${a}, ${b})`)
