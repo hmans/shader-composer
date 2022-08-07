@@ -41,38 +41,14 @@ const compileExpression = (exp: Expression, program: Program, state: CompilerSta
 	add them to headers or bodies, but we _do_ need to resolve their dependencies (because
 	they may include other units.)
 	*/
-
-	exp.values.forEach((value) => {
-		compileItem(value, program, state)
-	})
 }
 
 const compileSnippet = (snippet: Snippet, program: Program, state: CompilerState) => {
-	/* Add dependencies */
-	snippet.expression.values.forEach((value) => {
-		compileItem(value, program, state)
-	})
-
 	/* Add snippet to header */
 	state.header.push(snippet.expression)
 }
 
 const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
-	/*
-	Before we add this unit, let's recurse into its dependencies. We're limiting
-	ourselves to direct dependencies (within the value), and dependencies of the
-	header and body of the program we're currenty compiling.
-	*/
-	const dependencies = [
-		unit._unitConfig.value,
-		unit._unitConfig[program]?.header?.values,
-		unit._unitConfig[program]?.body?.values
-	].flat()
-
-	dependencies.forEach((dep) => {
-		compileItem(dep, program, state)
-	})
-
 	/* Register update callback, if given */
 	if (unit._unitConfig.update) {
 		state.updates.add(unit._unitConfig.update)
@@ -165,7 +141,7 @@ const prepareItem = (
 }
 
 const compileProgram = (unit: Unit, program: Program, state: CompilerState): string => {
-	compileItem(unit, program, state)
+	walkTree(unit, program, (item) => compileItem(item, program, state))
 
 	return concatenate(
 		`/*** PROGRAM: ${program.toUpperCase()} ***/\n`,
