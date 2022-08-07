@@ -23,7 +23,8 @@ export const Fresnel = ({
 }: FresnelProps = {}) =>
 	Float(
 		pipe(
-			Dot(ViewDirection, normal),
+			normal,
+			(v) => Dot(ViewDirection, v),
 			(v) => Add(factor, v),
 			(v) => Abs(v),
 			(v) => Pow(v, power),
