@@ -154,3 +154,15 @@ export const Sign = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) 
 
 export const Distance = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
 	Float($`distance(${a})`)
+
+/**
+ * Converts the given value from degrees to radians.
+ */
+export const Radians = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
+	Unit(type(a), $`radians(${a})`)
+
+/**
+ * Converts the given value from radians to degrees.
+ */
+export const Degrees = <T extends "float" | "vec2" | "vec3" | "vec4">(a: Input<T>) =>
+	Unit(type(a), $`degrees(${a})`)
