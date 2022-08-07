@@ -42,8 +42,8 @@ export type CustomShaderMaterialMasterProps = {
 }
 
 export const CustomShaderMaterialMaster = ({
-	position = VertexPosition,
-	normal = VertexNormal,
+	position,
+	normal,
 	diffuseColor,
 	fragColor,
 	roughness,
@@ -55,8 +55,8 @@ export const CustomShaderMaterialMaster = ({
 
 		vertex: {
 			body: $`
-				csm_Position.xyz = ${position};
-				csm_Normal = ${normal};
+				${position !== undefined ? $`csm_Position.xyz = ${position};` : ""}
+				${normal !== undefined ? $`csm_Normal = ${normal};` : ""}
 			`
 		},
 
