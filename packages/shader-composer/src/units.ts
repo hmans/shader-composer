@@ -126,7 +126,7 @@ export const Unit = <T extends GLSLType>(
 	type: T,
 	value: Input<T> | undefined,
 	_config?: Partial<UnitConfig<T>>
-): Unit<T> => {
+) => {
 	const config: UnitConfig<T> = {
 		name: "Anonymous",
 		type,
