@@ -24,9 +24,15 @@ export const UV = Vec2($`uv`, {
 	varying: true
 })
 
-const matrixConversions = (unit: Unit<"vec3">) => ({
-	world: Vec3($`mat3(modelMatrix) * ${unit}`, { varying: true }),
-	view: Vec3($`mat3(modelViewMatrix) * ${unit}`, { varying: true })
+const matrixConversions = (name: string) => (unit: Unit<"vec3">) => ({
+	world: Vec3($`mat3(modelMatrix) * ${unit}`, {
+		varying: true,
+		name: `${name} (World Space)`
+	}),
+	view: Vec3($`mat3(modelViewMatrix) * ${unit}`, {
+		varying: true,
+		name: `${name} (View Space)`
+	})
 })
 
 export const VertexPosition = bless(
@@ -34,7 +40,7 @@ export const VertexPosition = bless(
 		name: "Position",
 		varying: true
 	}),
-	matrixConversions
+	matrixConversions("Position")
 )
 
 export const VertexNormal = bless(
@@ -42,12 +48,12 @@ export const VertexNormal = bless(
 		name: "Normal",
 		varying: true
 	}),
-	matrixConversions
+	matrixConversions("Normal")
 )
 
 export const ViewDirection = Vec3(
 	$`vec3(-${ViewMatrix}[0][2], -${ViewMatrix}[1][2], -${ViewMatrix}[2][2])`,
-	{ varying: true }
+	{ varying: true, name: "View Direction" }
 )
 
 export const IsFrontFacing = Bool($`gl_FrontFacing`, { only: "fragment" })
