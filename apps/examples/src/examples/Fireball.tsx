@@ -31,14 +31,12 @@ const Turbulence = (
 	noiseFun: Snippet = simplex3Dnoise
 ) => {
 	const body = $`
-		float t = -0.5;
+		value = -0.5;
 				
-		for (float f = 1.0 ; f <= ${octaves}; f++ ){
+		for (float f = 1.0 ; f <= ${octaves}; f++) {
 			float power = pow(2.0, f);
-			t += abs(${noiseFun}(vec3(power * ${p})) / power);
+			value += abs(${noiseFun}(vec3(power * ${p})) / power);
 		}
-
-		value = t;
 	`
 
 	return Float(1, {
