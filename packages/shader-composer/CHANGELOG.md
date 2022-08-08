@@ -1,5 +1,11 @@
 # shader-composer
 
+## 0.2.1
+
+### Patch Changes
+
+- 252fe37: `CustomShaderMaterialMaster` now supports `emissiveColor`.
+
 ## 0.2.0
 
 This release contains a lot of new unit implementations, some useful new convenience features, an upgrade to how uniforms work, and a big, big number of internal refactorings and simplifications. But also some breaking changes, so let's start with those!
