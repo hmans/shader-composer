@@ -5,7 +5,7 @@ import {
   CustomShaderMaterialMaster,
   Div,
   Floor,
-  Modulo,
+  Fract,
   Mul,
   NormalizePlusMinusOne,
   OneMinus,
@@ -24,7 +24,6 @@ export default function DiscoCube() {
 
   const shader = useShader(() => {
     const time = Time()
-
     const resolution = 0.25
 
     const noise = pipe(
@@ -36,7 +35,7 @@ export default function DiscoCube() {
       (v) => PSRDNoise3D(v),
       (v) => NormalizePlusMinusOne(v),
       (v) => Sub(v, Mul(time, 0.1)),
-      (v) => Modulo(v, 1)
+      (v) => Fract(v)
     )
 
     return CustomShaderMaterialMaster({
@@ -57,8 +56,8 @@ export default function DiscoCube() {
       <boxGeometry args={[1.5, 1.5, 1.5]} />
       <CustomShaderMaterial
         baseMaterial={MeshPhysicalMaterial}
-        {...shader}
         clearcoat={0.2}
+        {...shader}
       />
     </mesh>
   )
