@@ -6,7 +6,7 @@ With many thanks to glNoise:
 https://github.com/FarazzShaikh/glNoise/blob/master/src/GerstnerWave.glsl
 */
 
-const gerstnerWave = Snippet(
+export const gerstnerWave = Snippet(
 	(gerstnerWave) => $`
 		vec3 ${gerstnerWave}(in vec2 p, in vec2 direction, in float steepness, in float wavelength, in float dt) {
 			float k = 2.0 * PI / wavelength;

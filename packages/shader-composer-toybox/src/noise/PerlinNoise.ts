@@ -4,7 +4,7 @@ import { rand4 } from "./random"
 import { taylorInvSqrt } from "./taylorInvSqrt"
 
 export const PerlinNoise = (p: Input<"vec3" | "vec2">) =>
-	Float(glsl`${perlin}(${p})`, { name: `Perlin Noise (${type(p)})` })
+	Float(glsl`${pnoise}(${p})`, { name: `Perlin Noise (${type(p)})` })
 
 const fade = Snippet(
 	(fade) => glsl`
@@ -13,9 +13,9 @@ const fade = Snippet(
   `
 )
 
-export const perlin = Snippet(
-	(perlin) => glsl`
-		float ${perlin}(vec2 P) {
+export const pnoise = Snippet(
+	(pnoise) => glsl`
+		float ${pnoise}(vec2 P) {
 			vec4 Pi = floor(P.xyxy) + vec4(0.0, 0.0, 1.0, 1.0);
 			vec4 Pf = fract(P.xyxy) - vec4(0.0, 0.0, 1.0, 1.0);
 			Pi = mod(Pi, 289.0); // To avoid truncation effects in permutation
@@ -49,7 +49,7 @@ export const perlin = Snippet(
 			return 2.3 * n_xy;
 		}
 
-		float ${perlin}(vec3 P) {
+		float ${pnoise}(vec3 P) {
 			vec3 Pi0 = floor(P);        // Integer part for indexing
 			vec3 Pi1 = Pi0 + vec3(1.0); // Integer part + 1
 			Pi0 = mod(Pi0, 289.0);

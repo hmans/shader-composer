@@ -2,9 +2,9 @@ import { Float, glsl, Input, Snippet } from "shader-composer"
 import { permute } from "./permute"
 import { taylorInvSqrt } from "./taylorInvSqrt"
 
-export const Simplex3DNoise = (p: Input<"vec3">) => Float(glsl`${noise}(${p})`)
+export const Simplex3DNoise = (p: Input<"vec3">) => Float(glsl`${simplex3Dnoise}(${p})`)
 
-const noise = Snippet(
+export const simplex3Dnoise = Snippet(
 	(name) => glsl`
 		float ${name}(vec3 v){
 			const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;

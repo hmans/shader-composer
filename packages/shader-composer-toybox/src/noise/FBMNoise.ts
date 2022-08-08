@@ -1,5 +1,5 @@
 import { $, Float, Input, Int, Snippet, type } from "shader-composer"
-import { perlin } from "./PerlinNoise"
+import { pnoise } from "./PerlinNoise"
 
 export type FBMOptions = {
 	seed?: Input<"float">
@@ -75,7 +75,7 @@ const fbmNoise = Snippet(
 
 				vec2 p = p * frequency * opts.scale;
 
-				float noiseVal = ${perlin}(p);
+				float noiseVal = ${pnoise}(p);
 
 				if (turbulence)
 					noiseVal = abs(noiseVal);
@@ -114,7 +114,7 @@ const fbmNoise = Snippet(
 
 				vec3 p = p * frequency * opts.scale;
 
-				float noiseVal = ${perlin}(p);
+				float noiseVal = ${pnoise}(p);
 
 				if (turbulence)
 					noiseVal = abs(noiseVal);
