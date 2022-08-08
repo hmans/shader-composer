@@ -1,31 +1,22 @@
 import { useTexture } from "@react-three/drei"
 import { useControls } from "leva"
 import {
-  $,
   Add,
   CustomShaderMaterialMaster,
-  Input,
   Mul,
   NormalizePlusMinusOne,
   pipe,
   Pow,
-  Snippet,
   Texture2D,
   Time,
-  Unit,
   vec2,
   vec3,
   VertexNormal,
   VertexPosition
 } from "shader-composer"
 import { useShader, useUniform } from "shader-composer-r3f"
-import {
-  psrdnoise3,
-  PSRDNoise3D,
-  Simplex3DNoise,
-  Turbulence3D
-} from "shader-composer-toybox"
-import { MeshStandardMaterial, Vector3 } from "three"
+import { Simplex3DNoise, Turbulence3D } from "shader-composer-toybox"
+import { MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import textureUrl from "./textures/explosion.png"
 
@@ -50,19 +41,9 @@ export default function Fireball() {
     const displacement = pipe(
       VertexPosition,
       (v) => Add(v, Mul(time, 0.3)),
-      (v) => PSRDNoise3D(v),
+      (v) => Simplex3DNoise(v),
       (v) => Mul(v, 0.1)
     )
-
-    const eh = (period = new Vector3(), alpha = 0) =>
-      Snippet(
-        (name) => $`
-          float ${name}(vec3 p) {
-            vec3 g;
-            return ${psrdnoise3}(p, ${period}, ${alpha}, g);
-          }
-      `
-      )
 
     /* Create another unit that calculates the fragment color based on
 		noise turbulence. */
@@ -76,7 +57,7 @@ export default function Fireball() {
       (v) => Mul(v, turbulenceScale),
 
       /* Calculate the turbulence. */
-      (v) => Turbulence3D(v, turbulenceOctaves, eh()),
+      (v) => Turbulence3D(v, turbulenceOctaves),
       (v) => NormalizePlusMinusOne(v),
       (v) => Pow(v, 0.5),
 
