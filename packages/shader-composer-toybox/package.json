@@ -38,7 +38,7 @@
 		"jest": "^28.1.1",
 		"jest-environment-jsdom": "^28.1.1",
 		"rimraf": "^3.0.2",
-		"shader-composer": "^0.1.4",
+		"shader-composer": "^0.2.0",
 		"three": "^0.143.0",
 		"ts-jest": "^28.0.4",
 		"tslib": "^2.4.0",
