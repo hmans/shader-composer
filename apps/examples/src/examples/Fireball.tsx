@@ -15,7 +15,7 @@ import {
   VertexPosition
 } from "shader-composer"
 import { useShader, useUniform } from "shader-composer-r3f"
-import { Simplex3DNoise, Turbulence3D } from "shader-composer-toybox"
+import { PSRDNoise3D, Turbulence3D } from "shader-composer-toybox"
 import { MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import textureUrl from "./textures/explosion.png"
@@ -41,7 +41,7 @@ export default function Fireball() {
     const displacement = pipe(
       VertexPosition,
       (v) => Add(v, Mul(time, 0.3)),
-      (v) => Simplex3DNoise(v),
+      (v) => PSRDNoise3D(v),
       (v) => Mul(v, 0.1)
     )
 

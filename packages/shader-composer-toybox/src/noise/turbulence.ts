@@ -1,24 +1,25 @@
 import { $, Float, Input, Snippet } from "shader-composer"
-import { simplex3Dnoise } from "./Simplex3DNoise"
+import { psrdnoise3 } from "./PSRDNoise"
 
-export const turbulence3D = (noiseFun: Snippet) =>
-	Snippet(
-		(turbulence3D) => $`
+export const turbulence3D = Snippet(
+  (turbulence3D) => $`
 			float ${turbulence3D}(vec3 p, float octaves) {
 				float t = -0.5;
+
+        float alpha = 0.0;
+        vec3 period;
+        vec3 gradient;
 					
 				for (float f = 1.0 ; f <= octaves; f++) {
 					float power = pow(2.0, f);
-					t += abs(${noiseFun}(vec3(power * p)) / power);
+          float noise = ${psrdnoise3}(vec3(power * p), period, alpha, gradient);
+					t += abs(noise / power);
 				}
 
 				return t;
 			}
 		`
-	)
+)
 
-export const Turbulence3D = (
-	p: Input<"vec3">,
-	octaves: Input<"float"> = 10,
-	noiseFun: Snippet = simplex3Dnoise
-) => Float($`${turbulence3D(noiseFun)}(${p}, ${octaves})`, { name: `Turbulence3D` })
+export const Turbulence3D = (p: Input<"vec3">, octaves: Input<"float"> = 10) =>
+  Float($`${turbulence3D}(${p}, ${octaves})`, { name: `Turbulence3D` })
