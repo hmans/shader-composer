@@ -9,7 +9,7 @@ Original license notices are included with the functions.
 
 */
 
-import { glsl, Snippet } from "shader-composer"
+import { $, Float, glsl, Input, Snippet, vec3 } from "shader-composer"
 
 export const psrdnoise2 = Snippet(
   (psrdnoise2) => glsl`
@@ -97,28 +97,28 @@ export const psrdnoise2 = Snippet(
       vec2 i2 = i0 + vec2(1.0, 1.0);
     
       // Transform corners back to texture space
-      vec2 v0 = vec2(i0.x - i0.y * 0.5, i0.y);
-      vec2 v1 = vec2(v0.x + o1.x - o1.y * 0.5, v0.y + o1.y);
-      vec2 v2 = vec2(v0.x + 0.5, v0.y + 1.0);
+      vec2 _v0 = vec2(i0.x - i0.y * 0.5, i0.y);
+      vec2 _v1 = vec2(_v0.x + o1.x - o1.y * 0.5, _v0.y + o1.y);
+      vec2 _v2 = vec2(_v0.x + 0.5, _v0.y + 1.0);
     
       // Compute vectors from v to each of the simplex corners
-      vec2 x0 = x - v0;
-      vec2 x1 = x - v1;
-      vec2 x2 = x - v2;
+      vec2 x0 = x - _v0;
+      vec2 x1 = x - _v1;
+      vec2 x2 = x - _v2;
     
       vec3 iu, iv;
       vec3 xw, yw;
     
       // Wrap to periods, if desired
       if(any(greaterThan(period, vec2(0.0)))) {
-        xw = vec3(v0.x, v1.x, v2.x);
-        yw = vec3(v0.y, v1.y, v2.y);
+        xw = vec3(_v0.x, _v1.x, _v2.x);
+        yw = vec3(_v0.y, _v1.y, _v2.y);
 
         if(period.x > 0.0)
-          xw = mod(vec3(v0.x, v1.x, v2.x), period.x);
+          xw = mod(vec3(_v0.x, _v1.x, _v2.x), period.x);
 
         if(period.y > 0.0)
-          yw = mod(vec3(v0.y, v1.y, v2.y), period.y);
+          yw = mod(vec3(_v0.y, _v1.y, _v2.y), period.y);
 
         // Transform back to simplex space and fix rounding errors
         iu = floor(xw + 0.5*yw + 0.5);
@@ -238,7 +238,7 @@ export const psrdnoise3 = Snippet(
     // Permutation polynomial for the hash value
     vec4 ${psrdnoise3}_permute(vec4 x) {
       vec4 xm = mod(x, 289.0);
-      return mod(((xm*34.0)+10.0)*xm, 289.0);
+      return mod(((xm * 34.0) + 10.0) * xm, 289.0);
     }
 
     //
@@ -264,18 +264,18 @@ export const psrdnoise3 = Snippet(
     // eliminate the code for computing it. This speeds up the function by
     // around 10%.
     //
+
     float ${psrdnoise3}(vec3 x, vec3 period, float alpha, out vec3 gradient)
     {
-
       #ifndef PERLINGRID
       // Transformation matrices for the axis-aligned simplex grid
       const mat3 M = mat3(0.0, 1.0, 1.0,
                           1.0, 0.0, 1.0,
-                        1.0, 1.0, 0.0);
+                          1.0, 1.0, 0.0);
 
       const mat3 Mi = mat3(-0.5, 0.5, 0.5,
-                          0.5,-0.5, 0.5,
-                          0.5, 0.5,-0.5);
+                            0.5,-0.5, 0.5,
+                            0.5, 0.5,-0.5);
       #endif
 
       vec3 uvw;
@@ -309,64 +309,69 @@ export const psrdnoise3 = Snippet(
       vec3 i1 = i0 + o1;
       vec3 i2 = i0 + o2;
       vec3 i3 = i0 + vec3(1.0);
-
-      vec3 v0, v1, v2, v3;
+      vec3 _v0;
+      vec3 _v1;
+      vec3 _v2;
+      vec3 v3;
 
       // Transform the corners back to texture space
       #ifndef PERLINGRID
-      v0 = Mi * i0;
-      v1 = Mi * i1;
-      v2 = Mi * i2;
-      v3 = Mi * i3;
+        _v0 = Mi * i0;
+        _v1 = Mi * i1;
+        _v2 = Mi * i2;
+        v3 = Mi * i3;
       #else
-      // Optimised transformation (mostly slightly faster than a matrix)
-      v0 = i0 - dot(i0, vec3(1.0/6.0));
-      v1 = i1 - dot(i1, vec3(1.0/6.0));
-      v2 = i2 - dot(i2, vec3(1.0/6.0));
-      v3 = i3 - dot(i3, vec3(1.0/6.0));
+        // Optimised transformation (mostly slightly faster than a matrix)
+        _v0 = i0 - dot(i0, vec3(1.0/6.0));
+        _v1 = i1 - dot(i1, vec3(1.0/6.0));
+        _v2 = i2 - dot(i2, vec3(1.0/6.0));
+        v3 = i3 - dot(i3, vec3(1.0/6.0));
       #endif
 
       // Compute vectors to each of the simplex corners
-      vec3 x0 = x - v0;
-      vec3 x1 = x - v1;
-      vec3 x2 = x - v2;
+      vec3 x0 = x - _v0;
+      vec3 x1 = x - _v1;
+      vec3 x2 = x - _v2;
       vec3 x3 = x - v3;
 
       if(any(greaterThan(period, vec3(0.0)))) {
-      // Wrap to periods and transform back to simplex space
-      vec4 vx = vec4(v0.x, v1.x, v2.x, v3.x);
-      vec4 vy = vec4(v0.y, v1.y, v2.y, v3.y);
-      vec4 vz = vec4(v0.z, v1.z, v2.z, v3.z);
-      // Wrap to periods where specified
-      if(period.x > 0.0) vx = mod(vx, period.x);
-      if(period.y > 0.0) vy = mod(vy, period.y);
-      if(period.z > 0.0) vz = mod(vz, period.z);
-      // Transform back
-      #ifndef PERLINGRID
-      i0 = M * vec3(vx.x, vy.x, vz.x);
-      i1 = M * vec3(vx.y, vy.y, vz.y);
-      i2 = M * vec3(vx.z, vy.z, vz.z);
-      i3 = M * vec3(vx.w, vy.w, vz.w);
-      #else
-      v0 = vec3(vx.x, vy.x, vz.x);
-      v1 = vec3(vx.y, vy.y, vz.y);
-      v2 = vec3(vx.z, vy.z, vz.z);
-      v3 = vec3(vx.w, vy.w, vz.w);
-      // Transform wrapped coordinates back to uvw
-      i0 = v0 + dot(v0, vec3(1.0/3.0));
-      i1 = v1 + dot(v1, vec3(1.0/3.0));
-      i2 = v2 + dot(v2, vec3(1.0/3.0));
-      i3 = v3 + dot(v3, vec3(1.0/3.0));
-      #endif
-      // Fix rounding errors
-      i0 = floor(i0 + 0.5);
-      i1 = floor(i1 + 0.5);
-      i2 = floor(i2 + 0.5);
-      i3 = floor(i3 + 0.5);
+        // Wrap to periods and transform back to simplex space
+        vec4 vx = vec4(_v0.x, _v1.x, _v2.x, v3.x);
+        vec4 vy = vec4(_v0.y, _v1.y, _v2.y, v3.y);
+        vec4 vz = vec4(_v0.z, _v1.z, _v2.z, v3.z);
+        
+        // Wrap to periods where specified
+        if (period.x > 0.0) vx = mod(vx, period.x);
+        if (period.y > 0.0) vy = mod(vy, period.y);
+        if (period.z > 0.0) vz = mod(vz, period.z);
+
+        // Transform back
+        #ifndef PERLINGRID
+          i0 = M * vec3(vx.x, vy.x, vz.x);
+          i1 = M * vec3(vx.y, vy.y, vz.y);
+          i2 = M * vec3(vx.z, vy.z, vz.z);
+          i3 = M * vec3(vx.w, vy.w, vz.w);
+        #else
+          _v0 = vec3(vx.x, vy.x, vz.x);
+          _v1 = vec3(vx.y, vy.y, vz.y);
+          _v2 = vec3(vx.z, vy.z, vz.z);
+          v3 = vec3(vx.w, vy.w, vz.w);
+          // Transform wrapped coordinates back to uvw
+          i0 = _v0 + dot(_v0, vec3(1.0/3.0));
+          i1 = _v1 + dot(_v1, vec3(1.0/3.0));
+          i2 = _v2 + dot(_v2, vec3(1.0/3.0));
+          i3 = v3 + dot(v3, vec3(1.0/3.0));
+        #endif
+
+        // Fix rounding errors
+        i0 = floor(i0 + 0.5);
+        i1 = floor(i1 + 0.5);
+        i2 = floor(i2 + 0.5);
+        i3 = floor(i3 + 0.5);
       }
 
       // Compute one pseudo-random hash value for each corner
-      vec4 hash = permute( permute( permute( 
+      vec4 hash = ${psrdnoise3}_permute( ${psrdnoise3}_permute( ${psrdnoise3}_permute( 
                 vec4(i0.z, i1.z, i2.z, i3.z ))
               + vec4(i0.y, i1.y, i2.y, i3.y ))
               + vec4(i0.x, i1.x, i2.x, i3.x ));
@@ -384,50 +389,49 @@ export const psrdnoise3 = Snippet(
 
       // Rotate gradients by angle alpha around a pseudo-random ortogonal axis
       #ifdef FASTROTATION
-      // Fast algorithm, but without dynamic shortcut for alpha = 0
-      vec4 qx = St;         // q' = norm ( cross(s, n) )  on the equator
-      vec4 qy = -Ct; 
-      vec4 qz = vec4(0.0);
+        // Fast algorithm, but without dynamic shortcut for alpha = 0
+        vec4 qx = St;         // q' = norm ( cross(s, n) )  on the equator
+        vec4 qy = -Ct; 
+        vec4 qz = vec4(0.0);
 
-      vec4 px =  sz * qy;   // p' = cross(q, s)
-      vec4 py = -sz * qx;
-      vec4 pz = sz_prime;
+        vec4 px =  sz * qy;   // p' = cross(q, s)
+        vec4 py = -sz * qx;
+        vec4 pz = sz_prime;
 
-      psi += alpha;         // psi and alpha in the same plane
-      vec4 Sa = sin(psi);
-      vec4 Ca = cos(psi);
+        psi += alpha;         // psi and alpha in the same plane
+        vec4 Sa = sin(psi);
+        vec4 Ca = cos(psi);
 
-      gx = Ca * px + Sa * qx;
-      gy = Ca * py + Sa * qy;
-      gz = Ca * pz + Sa * qz;
+        gx = Ca * px + Sa * qx;
+        gy = Ca * py + Sa * qy;
+        gz = Ca * pz + Sa * qz;
       #else
-      // Slightly slower algorithm, but with g = s for alpha = 0, and a
-      // useful conditional speedup for alpha = 0 across all fragments
-      if(alpha != 0.0) {
-      vec4 Sp = sin(psi);          // q' from psi on equator
-      vec4 Cp = cos(psi);
+        // Slightly slower algorithm, but with g = s for alpha = 0, and a
+        // useful conditional speedup for alpha = 0 across all fragments
+        if(alpha != 0.0) {
+          vec4 Sp = sin(psi);          // q' from psi on equator
+          vec4 Cp = cos(psi);
 
-      vec4 px = Ct * sz_prime;     // px = sx
-      vec4 py = St * sz_prime;     // py = sy
-      vec4 pz = sz;
+          vec4 px = Ct * sz_prime;     // px = sx
+          vec4 py = St * sz_prime;     // py = sy
+          vec4 pz = sz;
 
-      vec4 Ctp = St*Sp - Ct*Cp;    // q = (rotate( cross(s,n), dot(s,n))(q')
-      vec4 qx = mix( Ctp*St, Sp, sz);
-      vec4 qy = mix(-Ctp*Ct, Cp, sz);
-      vec4 qz = -(py*Cp + px*Sp);
+          vec4 Ctp = St*Sp - Ct*Cp;    // q = (rotate( cross(s,n), dot(s,n))(q')
+          vec4 qx = mix( Ctp*St, Sp, sz);
+          vec4 qy = mix(-Ctp*Ct, Cp, sz);
+          vec4 qz = -(py*Cp + px*Sp);
 
-      vec4 Sa = vec4(sin(alpha));       // psi and alpha in different planes
-      vec4 Ca = vec4(cos(alpha));
+          vec4 Sa = vec4(sin(alpha));       // psi and alpha in different planes
+          vec4 Ca = vec4(cos(alpha));
 
-      gx = Ca * px + Sa * qx;
-      gy = Ca * py + Sa * qy;
-      gz = Ca * pz + Sa * qz;
-      }
-      else {
-      gx = Ct * sz_prime;  // alpha = 0, use s directly as gradient
-      gy = St * sz_prime;
-      gz = sz;  
-      }
+          gx = Ca * px + Sa * qx;
+          gy = Ca * py + Sa * qy;
+          gz = Ca * pz + Sa * qz;
+        } else {
+          gx = Ct * sz_prime;  // alpha = 0, use s directly as gradient
+          gy = St * sz_prime;
+          gz = sz;  
+        }
       #endif
 
       // Reorganize for dot products below
@@ -461,3 +465,22 @@ export const psrdnoise3 = Snippet(
     }	
   `
 )
+
+export const PSRDNoise3D = (
+  p: Input<"vec3">,
+  period: Input<"vec3"> = vec3(0, 0, 0),
+  alpha: Input<"float"> = 0
+) => {
+  const gradient = vec3(0, 0, 0, {
+    name: "PSRDNoise3D Gradient"
+  })
+
+  const unit = Float($`${psrdnoise3}(${p}, ${period}, ${alpha}, ${gradient})`, {
+    name: "PSRDNoise3D"
+  })
+
+  return {
+    ...unit,
+    gradient
+  }
+}
