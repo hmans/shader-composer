@@ -9,7 +9,7 @@ Original license notices are included with the functions.
 
 */
 
-import { $, Float, glsl, Input, Snippet, Time, vec3 } from "shader-composer"
+import { $, Float, glsl, Input, Snippet, Time, vec2, vec3 } from "shader-composer"
 
 export const psrdnoise2 = Snippet(
   (psrdnoise2) => glsl`
@@ -169,6 +169,25 @@ export const psrdnoise2 = Snippet(
     }
   `
 )
+
+export const PSRDNoise2D = (
+  p: Input<"vec2">,
+  period: Input<"vec2"> = vec2(0, 0),
+  alpha: Input<"float"> = 0
+) => {
+  const gradient = vec2(0, 0, {
+    name: "PSRDNoise2D Gradient"
+  })
+
+  const unit = Float($`${psrdnoise2}(${p}, ${period}, ${alpha}, ${gradient})`, {
+    name: "PSRDNoise2D"
+  })
+
+  return {
+    ...unit,
+    gradient
+  }
+}
 
 export const psrdnoise3 = Snippet(
   (psrdnoise3) => glsl`
