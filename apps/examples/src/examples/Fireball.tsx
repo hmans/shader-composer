@@ -1,8 +1,10 @@
 import { useTexture } from "@react-three/drei"
 import {
 	$,
+	Abs,
 	Add,
 	CustomShaderMaterialMaster,
+	Div,
 	Float,
 	Input,
 	Mul,
@@ -24,7 +26,21 @@ import { MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import textureUrl from "./textures/explosion.png"
 
-// TODO: extract into toybox
+const IdiomaticTurbulence = (
+	p: Input<"vec3">,
+	octaves: Input<"float"> = 10,
+	noiseUnit: (p: Input<"vec3">) => Input<"float"> = Simplex3DNoise
+) => {
+	let value = Float(-0.5)
+
+	for (let f = 0; f <= octaves; f++) {
+		const power = Math.pow(2, f)
+		value = Add(value, Abs(Div(noiseUnit(Mul(p, power)), power)))
+	}
+
+	return value
+}
+
 const Turbulence = (
 	p: Input<"vec3">,
 	octaves: Input<"float"> = 10,
@@ -68,7 +84,7 @@ export default function Fireball() {
 			(v) => vec3(Mul(v, 0.6), Mul(v, 0.8), 0),
 			(v) => Add(VertexPosition, v),
 			(v) => Mul(v, 0.25),
-			(v) => Turbulence(v),
+			(v) => IdiomaticTurbulence(v),
 			(v) => NormalizePlusMinusOne(v),
 			(v) => Pow(v, 0.5)
 		)
