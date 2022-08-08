@@ -13,22 +13,22 @@ export type Item = Input | Snippet | Expression
  * @param callback The callback to execute for each item.
  */
 export const walkTree = (
-	item: Item,
-	program: Program | "any",
-	callback: (item: Item) => void,
-	seen = new Set<Item>()
+  item: Item,
+  program: Program | "any",
+  callback: (item: Item) => void,
+  seen = new Set<Item>()
 ) => {
-	/* Visit each item only once */
-	if (seen.has(item)) return
-	seen.add(item)
+  /* Visit each item only once */
+  if (seen.has(item)) return
+  seen.add(item)
 
-	/* Dive into dependencies */
-	for (const dependency of getDependencies(item, program)) {
-		walkTree(dependency, program, callback, seen)
-	}
+  /* Dive into dependencies */
+  for (const dependency of getDependencies(item, program)) {
+    walkTree(dependency, program, callback, seen)
+  }
 
-	/* Invoke callback */
-	callback(item)
+  /* Invoke callback */
+  callback(item)
 }
 
 /**
@@ -36,19 +36,19 @@ export const walkTree = (
  * returns true.
  */
 export const collectFromTree = (
-	root: Item,
-	program: Program | "any",
-	check?: (item: Item) => boolean
+  root: Item,
+  program: Program | "any",
+  check?: (item: Item) => boolean
 ) => {
-	const found = new Array<Item>()
+  const found = new Array<Item>()
 
-	walkTree(root, program, (item) => {
-		if (check !== undefined ? check(item) : true) {
-			found.push(item)
-		}
-	})
+  walkTree(root, program, (item) => {
+    if (check !== undefined ? check(item) : true) {
+      found.push(item)
+    }
+  })
 
-	return found
+  return found
 }
 
 /**
@@ -58,28 +58,28 @@ export const collectFromTree = (
  * @returns
  */
 export const getDependencies = (item: Item, program: Program | "any"): Item[] => {
-	const dependencies = isUnit(item)
-		? getUnitDependencies(item, program)
-		: isExpression(item)
-		? item.values
-		: isSnippet(item)
-		? item.expression.values
-		: []
+  const dependencies = isUnit(item)
+    ? getUnitDependencies(item, program)
+    : isExpression(item)
+    ? item.values
+    : isSnippet(item)
+    ? item.expression.values
+    : []
 
-	return dependencies.flat().filter((i) => !!i)
+  return dependencies.flat().filter((i) => !!i)
 }
 
 const getUnitDependencies = ({ _unitConfig: config }: Unit, program: Program | "any") => {
-	const dependencies = new Array<Item>()
+  const dependencies = new Array<Item>()
 
-	if (!config.varying || program === "any" || program === "vertex")
-		dependencies.push(config.value)
+  if (!config.varying || program === "any" || program === "vertex")
+    dependencies.push(config.value)
 
-	if (program === "any" || program === "vertex")
-		dependencies.push(config.vertex?.header?.values, config.vertex?.body?.values)
+  if (program === "any" || program === "vertex")
+    dependencies.push(config.vertex?.header?.values, config.vertex?.body?.values)
 
-	if (program === "any" || program === "fragment")
-		dependencies.push(config.fragment?.header?.values, config.fragment?.body?.values)
+  if (program === "any" || program === "fragment")
+    dependencies.push(config.fragment?.header?.values, config.fragment?.body?.values)
 
-	return dependencies.filter((i) => !!i)
+  return dependencies.filter((i) => !!i)
 }
