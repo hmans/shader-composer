@@ -41,7 +41,7 @@ export default function HelloWorld() {
 	return (
 		<mesh>
 			<sphereGeometry />
-			<shaderMaterial {...shader} key={Math.random()} />
+			<shaderMaterial {...shader} />
 		</mesh>
 	)
 }
