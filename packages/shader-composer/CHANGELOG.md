@@ -1,5 +1,42 @@
 # shader-composer
 
+## 0.2.0
+
+This release contains a lot of new unit implementations, some useful new convenience features, an upgrade to how uniforms work, and a big, big number of internal refactorings and simplifications. But also some breaking changes, so let's start with those!
+
+### Breaking Changes
+
+- 9cedc98: **Removed:** removed `With` math builder. It was experimental and not very good. You probably weren't using it, anyway. If we really want something like this, it should live in `toybox` or another separate package, anyway.
+- bb9b9c9: **Removed:** The second value returned by `compilerShader` no longer includes the `units` property. Please use the `walkTree` and `collectFromTree` functions to inspect the unit tree.
+- dc7bac6: **Removed:** The export `VertexNormalWorld` has been removed. If you need The vertex normal in world space, you can now use `VertexNormal.world`, or calculate it yourself by multiplying `VertexNormal` with `ModelMatrix`.
+
+### New Units
+
+- 298f5f1: **Added:** `Rotate3DX`, `Rotate3DY`, `Rotate3DZ` and `Rotate3D`, units that will immediately rotate a given vector (unlike `Rotation3DX`, `Rotation3D` etc., which just generate matrices representing the rotations.)
+- c5df072: **Added:** `Exp`, `Exp2`, `Log` and `Log2`
+- c214c76: **Added:** `Dot`, a unit that calculates the dot product of two vectors.
+- 4abb089: **Added:** `Tan(a)`, wrapping the GLSL expression `tan(a)`
+- 8559c99: **Added:** `Asin`, `Acos`
+- 5b64d3c: **Added:** `Trunc`, a new unit wrapping the GLSL `trunc` function.
+- 901ff79: **Added:** `Min(a, b)` and `Max(a, b)`.
+- 05bbe5f: **Added:** `Distance(a, b)`, returning the distance (`float`) between `a` and `b`.
+- 0d9261f: **Added:** `Length`, `Reflect` and `Refract`
+- c9e35d9: **Added:** `Sqrt` and `InverseSqrt`
+- f071317: **Added:** `Sign(a)`, wrapping the GLSL expression `sign(a)`.
+- 3447459: **Added:** `Radians(a)` and `Degrees(a)`.
+- 9277d9f: **Added:** `Abs` unit, returning the absolute value of the given input.
+
+### Other new bits
+
+- 094b196: **Added:** Units with uniforms now have a new configuration property `uniformName` which can be set by the user to explicitly configure the name of the shader uniform. If the name is omitted, a unique name will be generated automatically (as before).
+- 42b0798: **Added:** Vec2/3/4 units now expose `.x`, `.y`, `.z`, `.w` accessors for their components, so you can now, for example, directly refer to `UV.x` or `VertexNormal.z`. Sorry, no swizzling support -- _yet_! :-)
+- 3990c13: **Added:** `VertexPosition` and `VertexNormal` now expose `.world` and `.view` properties, returning the position/normal in world or view space, respectively.
+- 6201363: **Added:** `CustomShaderMaterialMaster` now supports `roughness` and `metalness` inputs (supported by CSM 3.5.0 and up.)
+
+### Fixes
+
+- ba000d6: **Fixed:** `Fresnel` now uses the vertex normal _in world space_ if no other normal input is provided.
+
 ## 0.1.8
 
 ### Patch Changes
