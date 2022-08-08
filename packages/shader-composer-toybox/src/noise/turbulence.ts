@@ -3,8 +3,8 @@ import { simplex3Dnoise } from "./Simplex3DNoise"
 
 export const turbulence3D = (noiseFun: Snippet) =>
 	Snippet(
-		(turbulence) => $`
-			float ${turbulence}(vec3 p, float octaves) {
+		(turbulence3D) => $`
+			float ${turbulence3D}(vec3 p, float octaves) {
 				float t = -0.5;
 					
 				for (float f = 1.0 ; f <= octaves; f++) {
