@@ -147,10 +147,25 @@ export const Unit = <T extends GLSLType>(
     toString: () => config.variableName,
     _unitConfig: config,
 
-    add: (other: Input) => Unit(type, $`(${unit} + ${other})`),
-    sub: (other: Input) => Unit(type, $`(${unit} - ${other})`),
-    mul: (other: Input) => Unit(type, $`(${unit} * ${other})`),
-    div: (other: Input) => Unit(type, $`(${unit} / ${other})`)
+    add: (other: Input) =>
+      Unit(type, $`(${unit} + ${other})`, {
+        name: `Add (${type})`
+      }),
+
+    sub: (other: Input) =>
+      Unit(type, $`(${unit} - ${other})`, {
+        name: `Subtract (${type})`
+      }),
+
+    mul: (other: Input) =>
+      Unit(type, $`(${unit} * ${other})`, {
+        name: `Multiply (${type})`
+      }),
+
+    div: (other: Input) =>
+      Unit(type, $`(${unit} / ${other})`, {
+        name: `Divide (${type})`
+      })
   }
 
   return unit
