@@ -1,5 +1,5 @@
 import { Color, Matrix3, Matrix4, Texture, Vector2, Vector3, Vector4 } from "three"
-import { Expression } from "./expressions"
+import { $, Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
 export type Program = "vertex" | "fragment"
@@ -120,6 +120,11 @@ export type Unit<T extends GLSLType = any> = {
   _: "Unit"
   _unitConfig: UnitConfig<T>
   toString: () => string
+
+  add: (other: Input) => Unit<T>
+  sub: (other: Input) => Unit<T>
+  mul: (other: Input) => Unit<T>
+  div: (other: Input) => Unit<T>
 }
 
 export const Unit = <T extends GLSLType>(
@@ -140,7 +145,12 @@ export const Unit = <T extends GLSLType>(
   const unit: Unit<T> = {
     _: "Unit",
     toString: () => config.variableName,
-    _unitConfig: config
+    _unitConfig: config,
+
+    add: (other: Input) => Unit(type, $`(${unit} + ${other})`),
+    sub: (other: Input) => Unit(type, $`(${unit} - ${other})`),
+    mul: (other: Input) => Unit(type, $`(${unit} * ${other})`),
+    div: (other: Input) => Unit(type, $`(${unit} / ${other})`)
   }
 
   return unit
