@@ -5,39 +5,82 @@ Stefan Gustavson's and Ian McEwan's PSRDNoise algorithms, from this repository:
 
 https://github.com/stegu/psrdnoise/tree/main/src
 
-Original license notice follows:
-
-// Authors: Stefan Gustavson (stefan.gustavson@gmail.com)
-// and Ian McEwan (ijm567@gmail.com)
-// Version 2021-12-02, published under the MIT license (see below)
-//
-// Copyright (c) 2021 Stefan Gustavson and Ian McEwan.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the "Software"),
-// to deal in the Software without restriction, including without limitation
-// the rights to use, copy, modify, merge, publish, distribute, sublicense,
-// and/or sell copies of the Software, and to permit persons to whom the
-// Software is furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
+Original license notices are included with the functions.
 
 */
 
 import { glsl, Snippet } from "shader-composer"
 
-export const psrdnoise = Snippet(
-	(psrdnoise) => glsl`
-		float ${psrdnoise}(vec2 x, vec2 period, float alpha, out vec2 gradient) {
+export const psrdnoise2 = Snippet(
+	(psrdnoise2) => glsl`
+		//
+		// psrdnoise2.glsl
+		//
+		// Authors: Stefan Gustavson (stefan.gustavson@gmail.com)
+		// and Ian McEwan (ijm567@gmail.com)
+		// Version 2021-12-02, published under the MIT license (see below)
+		//
+		// Copyright (c) 2021 Stefan Gustavson and Ian McEwan.
+		//
+		// Permission is hereby granted, free of charge, to any person obtaining a
+		// copy of this software and associated documentation files (the "Software"),
+		// to deal in the Software without restriction, including without limitation
+		// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+		// and/or sell copies of the Software, and to permit persons to whom the
+		// Software is furnished to do so, subject to the following conditions:
+		//
+		// The above copyright notice and this permission notice shall be included
+		// in all copies or substantial portions of the Software.
+		//
+		// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+		// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+		// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+		// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+		// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+		// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+		// DEALINGS IN THE SOFTWARE.
+		//
+
+		//
+		// Periodic (tiling) 2-D simplex noise (hexagonal lattice gradient noise)
+		// with rotating gradients and analytic derivatives.
+		//
+		// This is (yet) another variation on simplex noise. Unlike previous
+		// implementations, the grid is axis-aligned and slightly stretched in
+		// the y direction to permit rectangular tiling.
+		// The noise pattern can be made to tile seamlessly to any integer period
+		// in x and any even integer period in y. Odd periods may be specified
+		// for y, but then the actual tiling period will be twice that number.
+		//
+		// The rotating gradients give the appearance of a swirling motion, and
+		// can serve a similar purpose for animation as motion along z in 3-D
+		// noise. The rotating gradients in conjunction with the analytic
+		// derivatives allow for "flow noise" effects as presented by Ken
+		// Perlin and Fabrice Neyret.
+		//
+
+
+		//
+		// 2-D tiling simplex noise with rotating gradients and analytical derivative.
+		// "vec2 x" is the point (x,y) to evaluate,
+		// "vec2 period" is the desired periods along x and y, and
+		// "float alpha" is the rotation (in radians) for the swirling gradients.
+		// The "float" return value is the noise value, and
+		// the "out vec2 gradient" argument returns the x,y partial derivatives.
+		//
+		// Setting either period to 0.0 or a negative value will skip the wrapping
+		// along that dimension. Setting both periods to 0.0 makes the function
+		// execute about 15% faster.
+		//
+		// Not using the return value for the gradient will make the compiler
+		// eliminate the code for computing it. This speeds up the function
+		// by 10-15%.
+		//
+		// The rotation by alpha uses one single addition. Unlike the 3-D version
+		// of psrdnoise(), setting alpha == 0.0 gives no speedup.
+		//
+
+		float ${psrdnoise2}(vec2 x, vec2 period, float alpha, out vec2 gradient) {
 			// Transform to simplex space (axis-aligned hexagonal grid)
 			vec2 uv = vec2(x.x + x.y*0.5, x.y);
 		
