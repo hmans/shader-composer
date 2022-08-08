@@ -5,14 +5,22 @@ exports[`compileShader allows resolves dependencies unique to specific programs 
 
 precision highp float;
 
+/*** UNIT: Position (Vertex Only) ***/
+float Position_Vertex_Only_1;
+
+
+/*** UNIT: Anonymous ***/
+bool Anonymous_3;
+
+
 void main()
 {
   /*** UNIT: Position (Vertex Only) ***/
-  float Position_Vertex_Only_1 = 1.0;
+  Position_Vertex_Only_1 = 1.0;
   
   
   /*** UNIT: Anonymous ***/
-  bool Anonymous_3 = true;
+  Anonymous_3 = true;
   {
     bool value = Anonymous_3;
     gl_Position = Position_Vertex_Only_1;
@@ -28,14 +36,22 @@ exports[`compileShader allows resolves dependencies unique to specific programs 
 
 precision highp float;
 
+/*** UNIT: Color (Fragment Only) ***/
+float Color_Fragment_Only_2;
+
+
+/*** UNIT: Anonymous ***/
+bool Anonymous_3;
+
+
 void main()
 {
   /*** UNIT: Color (Fragment Only) ***/
-  float Color_Fragment_Only_2 = 2.0;
+  Color_Fragment_Only_2 = 2.0;
   
   
   /*** UNIT: Anonymous ***/
-  bool Anonymous_3 = true;
+  Anonymous_3 = true;
   {
     bool value = Anonymous_3;
     gl_FragColor = Color_Fragment_Only_2;
@@ -51,10 +67,14 @@ exports[`compileShader compiles shader programs from the given unit 1`] = `
 
 precision highp float;
 
+/*** UNIT: Anonymous ***/
+bool Anonymous_1;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  bool Anonymous_1 = true;
+  Anonymous_1 = true;
   
   
 }"
@@ -65,10 +85,14 @@ exports[`compileShader compiles shader programs from the given unit 2`] = `
 
 precision highp float;
 
+/*** UNIT: Anonymous ***/
+bool Anonymous_1;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  bool Anonymous_1 = true;
+  Anonymous_1 = true;
   
   
 }"
@@ -79,10 +103,14 @@ exports[`compileShader embeds body chunks in scoped blocks, with a local \`value
 
 precision highp float;
 
+/*** UNIT: Anonymous ***/
+bool Anonymous_1;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  bool Anonymous_1 = true;
+  Anonymous_1 = true;
   {
     bool value = Anonymous_1;
     gl_FragColor.rgb = vec3(1.0, 0.0, 0.0);
@@ -98,14 +126,22 @@ exports[`compileShader only includes the units needed in individual programs 1`]
 
 precision highp float;
 
+/*** UNIT: A ***/
+float A_1;
+
+
+/*** UNIT: Anonymous ***/
+bool Anonymous_3;
+
+
 void main()
 {
   /*** UNIT: A ***/
-  float A_1 = 1.0;
+  A_1 = 1.0;
   
   
   /*** UNIT: Anonymous ***/
-  bool Anonymous_3 = true;
+  Anonymous_3 = true;
   {
     bool value = Anonymous_3;
     foo = A_1;
@@ -121,14 +157,22 @@ exports[`compileShader only includes the units needed in individual programs 2`]
 
 precision highp float;
 
+/*** UNIT: B ***/
+float B_2;
+
+
+/*** UNIT: Anonymous ***/
+bool Anonymous_3;
+
+
 void main()
 {
   /*** UNIT: B ***/
-  float B_2 = 2.0;
+  B_2 = 2.0;
   
   
   /*** UNIT: Anonymous ***/
-  bool Anonymous_3 = true;
+  Anonymous_3 = true;
   {
     bool value = Anonymous_3;
     bar = B_2
@@ -144,10 +188,14 @@ exports[`compileShader resolves dependencies to expressions 1`] = `
 
 precision highp float;
 
+/*** UNIT: Anonymous ***/
+float Anonymous_1;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = 123.0 + 4.0;
+  Anonymous_1 = 123.0 + 4.0;
   
   
 }"
@@ -158,10 +206,14 @@ exports[`compileShader resolves dependencies to expressions 2`] = `
 
 precision highp float;
 
+/*** UNIT: Anonymous ***/
+float Anonymous_1;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = 123.0 + 4.0;
+  Anonymous_1 = 123.0 + 4.0;
   
   
 }"
@@ -172,14 +224,22 @@ exports[`compileShader resolves dependencies to other units 1`] = `
 
 precision highp float;
 
+/*** UNIT: Anonymous ***/
+float Anonymous_1;
+
+
+/*** UNIT: Anonymous ***/
+float Anonymous_2;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = 123.0;
+  Anonymous_1 = 123.0;
   
   
   /*** UNIT: Anonymous ***/
-  float Anonymous_2 = Anonymous_1;
+  Anonymous_2 = Anonymous_1;
   
   
 }"
@@ -190,14 +250,22 @@ exports[`compileShader resolves dependencies to other units 2`] = `
 
 precision highp float;
 
+/*** UNIT: Anonymous ***/
+float Anonymous_1;
+
+
+/*** UNIT: Anonymous ***/
+float Anonymous_2;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = 123.0;
+  Anonymous_1 = 123.0;
   
   
   /*** UNIT: Anonymous ***/
-  float Anonymous_2 = Anonymous_1;
+  Anonymous_2 = Anonymous_1;
   
   
 }"
@@ -208,14 +276,22 @@ exports[`compileShader resolves dependencies to other units from within expressi
 
 precision highp float;
 
+/*** UNIT: Anonymous ***/
+float Anonymous_1;
+
+
+/*** UNIT: Anonymous ***/
+float Anonymous_2;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = 123.0;
+  Anonymous_1 = 123.0;
   
   
   /*** UNIT: Anonymous ***/
-  float Anonymous_2 = Anonymous_1 * 2.0;
+  Anonymous_2 = Anonymous_1 * 2.0;
   
   
 }"
@@ -226,14 +302,22 @@ exports[`compileShader resolves dependencies to other units from within expressi
 
 precision highp float;
 
+/*** UNIT: Anonymous ***/
+float Anonymous_1;
+
+
+/*** UNIT: Anonymous ***/
+float Anonymous_2;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = 123.0;
+  Anonymous_1 = 123.0;
   
   
   /*** UNIT: Anonymous ***/
-  float Anonymous_2 = Anonymous_1 * 2.0;
+  Anonymous_2 = Anonymous_1 * 2.0;
   
   
 }"
@@ -248,10 +332,14 @@ precision highp float;
 			float snippet_1(in float a) {
 				return a * 2.0;
 			}
+/*** UNIT: Anonymous ***/
+float Anonymous_2;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_2 = snippet_1(1.0);
+  Anonymous_2 = snippet_1(1.0);
   
   
 }"
@@ -266,10 +354,14 @@ precision highp float;
 			float snippet_1(in float a) {
 				return a * 2.0;
 			}
+/*** UNIT: Anonymous ***/
+float Anonymous_2;
+
+
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_2 = snippet_1(1.0);
+  Anonymous_2 = snippet_1(1.0);
   
   
 }"
@@ -280,23 +372,32 @@ exports[`compileShader when encountering a varying unit, its value dependencies 
 
 precision highp float;
 
+/*** UNIT: A ***/
+float A_1;
+
+
 /*** UNIT: B ***/
+float B_2;
 varying float v_B_2;
+
+
+/*** UNIT: Master ***/
+bool Master_3;
 
 
 void main()
 {
   /*** UNIT: A ***/
-  float A_1 = onlyInVertexProgramForSomeReason;
+  A_1 = onlyInVertexProgramForSomeReason;
   
   
   /*** UNIT: B ***/
-  float B_2 = A_1 + 1.0;
+  B_2 = A_1 + 1.0;
   v_B_2 = B_2;
   
   
   /*** UNIT: Master ***/
-  bool Master_3 = true;
+  Master_3 = true;
   
   
 }"
@@ -308,17 +409,22 @@ exports[`compileShader when encountering a varying unit, its value dependencies 
 precision highp float;
 
 /*** UNIT: B ***/
+float B_2;
 varying float v_B_2;
+
+
+/*** UNIT: Master ***/
+bool Master_3;
 
 
 void main()
 {
   /*** UNIT: B ***/
-  float B_2 = v_B_2;
+  B_2 = v_B_2;
   
   
   /*** UNIT: Master ***/
-  bool Master_3 = true;
+  Master_3 = true;
   {
     bool value = Master_3;
     value = B_2
@@ -335,13 +441,14 @@ exports[`compileShader when rendering units with registered uniforms adds unifor
 precision highp float;
 
 /*** UNIT: Anonymous ***/
+float Anonymous_1;
 uniform float u_Anonymous_1;
 
 
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = u_Anonymous_1;
+  Anonymous_1 = u_Anonymous_1;
   
   
 }"
@@ -353,13 +460,14 @@ exports[`compileShader when rendering units with registered uniforms adds unifor
 precision highp float;
 
 /*** UNIT: Anonymous ***/
+float Anonymous_1;
 uniform float u_Anonymous_1;
 
 
 void main()
 {
   /*** UNIT: Anonymous ***/
-  float Anonymous_1 = u_Anonymous_1;
+  Anonymous_1 = u_Anonymous_1;
   
   
 }"

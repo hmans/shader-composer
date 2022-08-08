@@ -55,6 +55,11 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
   /* HEADER */
   const header = new Array<Part>()
 
+  /* Declare the unit's global variable. */
+  if (unit._unitConfig.variable) {
+    header.push(statement(unit._unitConfig.type, unit._unitConfig.variableName))
+  }
+
   /* Declare varying if this unit has varying mode */
   if (unit._unitConfig.varying) {
     header.push(`varying ${unit._unitConfig.type} v_${unit._unitConfig.variableName};`)
@@ -88,12 +93,10 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
   state.body.push(beginUnit(unit))
 
   /*
-	Declare the unit's global variable, and assign the specified value to it.
+	Assign the unit's value to its global variable.
 	*/
   if (unit._unitConfig.variable) {
-    state.body.push(
-      statement(unit._unitConfig.type, unit._unitConfig.variableName, "=", value)
-    )
+    state.body.push(assignment(unit._unitConfig.variableName, value))
   }
 
   /*

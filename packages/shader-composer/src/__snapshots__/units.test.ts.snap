@@ -6,13 +6,14 @@ exports[`Unit supports a 'varying' flag that will automatically make it pass its
 precision highp float;
 
 /*** UNIT: A variable with a varying ***/
+float A_variable_with_a_varying_1;
 varying float v_A_variable_with_a_varying_1;
 
 
 void main()
 {
   /*** UNIT: A variable with a varying ***/
-  float A_variable_with_a_varying_1 = 1.0 + 2.0 + onlyAvailableInVertex.x;
+  A_variable_with_a_varying_1 = 1.0 + 2.0 + onlyAvailableInVertex.x;
   {
     float value = A_variable_with_a_varying_1;
     value += 3.0;
@@ -30,13 +31,14 @@ exports[`Unit supports a 'varying' flag that will automatically make it pass its
 precision highp float;
 
 /*** UNIT: A variable with a varying ***/
+float A_variable_with_a_varying_1;
 varying float v_A_variable_with_a_varying_1;
 
 
 void main()
 {
   /*** UNIT: A variable with a varying ***/
-  float A_variable_with_a_varying_1 = v_A_variable_with_a_varying_1;
+  A_variable_with_a_varying_1 = v_A_variable_with_a_varying_1;
   
   
 }"
