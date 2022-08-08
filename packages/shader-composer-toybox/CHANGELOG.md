@@ -1,5 +1,13 @@
 # shader-composer-toybox
 
+## 0.0.9
+
+### Patch Changes
+
+- 252fe37: Added `Turbulence3D` and `turbulence3D`, a unit/snippet combo turbulence function that will generate noise turbulence using the newly added PSRDNoise implementation.
+- 252fe37: Alongside the units that wrap them, toybox now also exports the `simplex3DNoise`, `gerstnerWave` and `pnoise` snippets.
+- 78044e1: Added `PSRDNoise2D` and `PSRDNoise3D` units (as well as `psrdnoise2` and `psrdnoise3` snippets.)
+
 ## 0.0.8
 
 ### Patch Changes
