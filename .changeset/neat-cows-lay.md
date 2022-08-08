@@ -2,4 +2,4 @@
 "shader-composer": patch
 ---
 
-**Added:** `CustomShaderMaterialMaster` now supports `emissiveColor`.
+`CustomShaderMaterialMaster` now supports `emissiveColor`.
