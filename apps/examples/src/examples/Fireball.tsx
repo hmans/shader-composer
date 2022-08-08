@@ -28,32 +28,33 @@ export default function Fireball() {
 
 		const sampler2D = Uniform("sampler2D", texture)
 
-		const noise = pipe(
-			time,
-			(v) => vec3(v, 0, 0),
-			(v) => Add(VertexPosition, v),
+		const displacement = pipe(
+			VertexPosition,
+			(v) => Add(v, Mul(time, 0.3)),
 			(v) => Simplex3DNoise(v),
-			(v) => NormalizePlusMinusOne(v)
+			(v) => Mul(v, 0.1)
 		)
 
-		const displacement = Mul(noise, 0.3)
-
-		const noise2 = pipe(
+		const color = pipe(
 			time,
-			(v) => vec3(Mul(v, 0.6), Mul(v, 0.8), 0),
+			(v) => vec3(Mul(v, 0.1), Mul(v, 0.3), Mul(v, 0.5)),
 			(v) => Add(VertexPosition, v),
 			(v) => Mul(v, 0.25),
 			(v) => Turbulence3D(v),
 			(v) => NormalizePlusMinusOne(v),
-			(v) => Pow(v, 0.5)
+			(v) => Pow(v, 0.5),
+			(v) => Texture2D(sampler2D, vec2(0, v)),
+			(v) => v.color
 		)
 
-		const tex2d = Texture2D(sampler2D, vec2(0, noise2))
-
 		return CustomShaderMaterialMaster({
-			position: Add(VertexPosition, Mul(VertexNormal, displacement)),
-			diffuseColor: tex2d.color,
-			emissiveColor: Mul(tex2d.color, 1.5)
+			position: pipe(
+				displacement,
+				(v) => Mul(VertexNormal, v),
+				(v) => Add(VertexPosition, v)
+			),
+			diffuseColor: color,
+			emissiveColor: Mul(color, 1.5)
 		})
 	})
 
