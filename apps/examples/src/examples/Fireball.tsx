@@ -23,11 +23,13 @@ import textureUrl from "./textures/explosion.png"
 export default function Fireball() {
 	/* Expose some controls via Leva. */
 	const controls = useControls("Fireball", {
-		turbulenceScale: { value: 0.25, min: 0, max: 2 }
+		turbulenceScale: { value: 0.25, min: 0, max: 2 },
+		turbulenceOctaves: { value: 5, min: 1, max: 10, step: 1 }
 	})
 
 	/* Create some uniforms. */
 	const turbulenceScale = useUniform("float", controls.turbulenceScale)
+	const turbulenceOctaves = useUniform("float", controls.turbulenceOctaves)
 	const sampler2D = useUniform("sampler2D", useTexture(textureUrl))
 
 	/* Create our shader. */
@@ -55,7 +57,7 @@ export default function Fireball() {
 			(v) => Mul(v, turbulenceScale),
 
 			/* Calculate the turbulence. */
-			(v) => Turbulence3D(v),
+			(v) => Turbulence3D(v, turbulenceOctaves),
 			(v) => NormalizePlusMinusOne(v),
 			(v) => Pow(v, 0.5),
 
