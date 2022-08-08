@@ -1,17 +1,11 @@
 import { useTexture } from "@react-three/drei"
 import {
-	$,
-	Abs,
 	Add,
 	CustomShaderMaterialMaster,
-	Div,
-	Float,
-	Input,
 	Mul,
 	NormalizePlusMinusOne,
 	pipe,
 	Pow,
-	Snippet,
 	Texture2D,
 	Time,
 	Uniform,
@@ -21,32 +15,10 @@ import {
 	VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { Simplex3DNoise, simplex3Dnoise } from "shader-composer-toybox"
+import { Simplex3DNoise, Turbulence3D } from "shader-composer-toybox"
 import { MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import textureUrl from "./textures/explosion.png"
-
-const turbulence = (noiseFun: Snippet) =>
-	Snippet(
-		(turbulence) => $`
-			float ${turbulence}(vec3 p, float octaves) {
-				float t = -0.5;
-					
-				for (float f = 1.0 ; f <= octaves; f++) {
-					float power = pow(2.0, f);
-					t += abs(${noiseFun}(vec3(power * p)) / power);
-				}
-
-				return t;
-			}
-		`
-	)
-
-const Turbulence = (
-	p: Input<"vec3">,
-	octaves: Input<"float"> = 10,
-	noiseFun: Snippet = simplex3Dnoise
-) => Float($`${turbulence(noiseFun)}(${p}, ${octaves})`, { name: `Turbulence` })
 
 export default function Fireball() {
 	const texture = useTexture(textureUrl)
@@ -71,7 +43,7 @@ export default function Fireball() {
 			(v) => vec3(Mul(v, 0.6), Mul(v, 0.8), 0),
 			(v) => Add(VertexPosition, v),
 			(v) => Mul(v, 0.25),
-			(v) => Turbulence(v),
+			(v) => Turbulence3D(v),
 			(v) => NormalizePlusMinusOne(v),
 			(v) => Pow(v, 0.5)
 		)
