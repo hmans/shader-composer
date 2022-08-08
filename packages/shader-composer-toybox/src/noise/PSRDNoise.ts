@@ -9,7 +9,7 @@ Original license notices are included with the functions.
 
 */
 
-import { $, Float, glsl, Input, Snippet, vec3 } from "shader-composer"
+import { $, Float, glsl, Input, Snippet, Time, vec3 } from "shader-composer"
 
 export const psrdnoise2 = Snippet(
   (psrdnoise2) => glsl`
@@ -232,7 +232,7 @@ export const psrdnoise3 = Snippet(
     // Enable faster gradient rotations?
     // Enabling this saves about 10% on execution time,
     // but the function will not run faster for alpha = 0.
-    //#define FASTROTATION
+    #define FASTROTATION
 
 
     // Permutation polynomial for the hash value
