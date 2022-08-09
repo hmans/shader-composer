@@ -12,13 +12,21 @@ import {
   ScreenUV,
   Smoothstep,
   Sub,
+  Texture2D,
+  TilingUV,
+  Time,
+  UV,
+  vec2,
   VertexPosition
 } from "shader-composer"
 import { useShader, useUniform } from "shader-composer-r3f"
 import { Color, DoubleSide, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
+import { useRepeatingTexture } from "./helpers"
 
 export default function ForceField() {
+  const texture = useRepeatingTexture("/textures/hexgrid.jpg")
+
   const controls = useControls("Force Field", {
     color: "cyan",
     intensity: { value: 3, min: 0, max: 10 },
@@ -28,9 +36,15 @@ export default function ForceField() {
   const color = useUniform("vec3", new Color(controls.color))
   const intensity = useUniform("float", controls.intensity)
   const strength = useUniform("float", controls.strength)
+  const sampler2D = useUniform("sampler2D", texture)
 
   const shader = useShader(() => {
+    const time = Time()
     const sceneDepth = SceneDepth(ScreenUV)
+
+    const offset = vec2(Mul(time, 0.05), 0)
+
+    const tex2d = Texture2D(sampler2D, TilingUV(UV, vec2(4, 2), offset))
 
     const distance = pipe(
       VertexPosition,
@@ -47,7 +61,7 @@ export default function ForceField() {
         distance,
         (v) => OneMinus(v),
         (v) => Mul(v, strength),
-        (v) => Add(v, 0.005),
+        (v) => Add(v, Mul(tex2d.x, 0.01)),
         (v) => Saturate(v)
       )
     })
