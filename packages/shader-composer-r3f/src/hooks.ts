@@ -7,7 +7,8 @@ import {
   Uniform,
   Unit,
   UnitConfig,
-  updateCameraUniforms
+  updateCameraUniforms,
+  updateResolutionUniform
 } from "shader-composer"
 
 export const useShader = (ctor: () => Unit, deps?: any) => {
@@ -15,6 +16,7 @@ export const useShader = (ctor: () => Unit, deps?: any) => {
 
   useFrame(({ gl, scene, camera }, dt) => {
     updateCameraUniforms(camera)
+    updateResolutionUniform(window.innerWidth, window.innerHeight)
     update(dt)
   })
 

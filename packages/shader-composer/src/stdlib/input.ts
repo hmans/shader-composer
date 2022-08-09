@@ -59,3 +59,7 @@ export const updateCameraUniforms = (camera: Camera) => {
     CameraFar.value = camera.far
   }
 }
+
+export const updateResolutionUniform = (width: number, height: number) => {
+  ;(Resolution.value as Vector2).set(width, height)
+}
