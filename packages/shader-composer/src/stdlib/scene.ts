@@ -32,44 +32,39 @@ export const SceneDepth = (
   xy: Input<"vec2">,
   state: { gl: WebGLRenderer; scene: Scene; camera: Camera }
 ) => {
-  const renderTarget = new WebGLRenderTarget(128, 128, {
-    depthTexture: new DepthTexture(128, 128)
-  })
+  const width = window.innerWidth
+  const height = window.innerWidth
 
-  const depthTexture = Uniform("sampler2D", { value: renderTarget.depthTexture })
+  const renderTargets = [
+    new WebGLRenderTarget(width, height, {
+      depthTexture: new DepthTexture(width, height)
+    }),
+    new WebGLRenderTarget(width, height, {
+      depthTexture: new DepthTexture(width, height)
+    })
+  ]
 
-  const tmpVec2 = new Vector2()
+  let index = 0
 
-  function renderDepthTexture() {
-    /* Adjust render texture resolution to match the current resolution. */
-    tmpVec2.copy(Resolution.value)
-
-    if (tmpVec2.x !== renderTarget.width || tmpVec2.y !== renderTarget.height) {
-      console.log("Resizing render target...", tmpVec2)
-      renderTarget.setSize(tmpVec2.x, tmpVec2.y)
-      renderTarget.depthTexture.dispose()
-      renderTarget.depthTexture = new DepthTexture(tmpVec2.x, tmpVec2.y)
-      depthTexture.value = renderTarget.depthTexture
-    }
-
-    /* Render depth texture */
-    state.gl.setRenderTarget(renderTarget)
-    state.gl.clear()
-    state.gl.render(state.scene, state.camera)
-    state.gl.setRenderTarget(null)
-  }
-
-  /* Initialize the depth texture. */
-  renderDepthTexture()
+  const uniform = Uniform("sampler2D", { value: renderTargets[0].depthTexture })
 
   return Float(
-    ReadDepth(xy, depthTexture, CameraNear, CameraFar),
+    ReadDepth(xy, uniform, CameraNear, CameraFar),
 
     {
       name: "Scene Depth",
 
-      /* Render the depth texture on every frame. */
-      update: () => renderDepthTexture()
+      update: () => {
+        /* Render depth texture */
+        state.gl.setRenderTarget(renderTargets[index])
+        state.gl.clear()
+        state.gl.render(state.scene, state.camera)
+        state.gl.setRenderTarget(null)
+
+        /* Cycle depth textures */
+        uniform.value = renderTargets[index].depthTexture
+        index = (index + 1) % 2
+      }
     }
   )
 }
