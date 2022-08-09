@@ -71,7 +71,7 @@ export default function ForceField() {
 
   return (
     <group>
-      <mesh position={[0, -0.5, -0.5]}>
+      <mesh>
         <icosahedronGeometry args={[1.3, 8]} />
 
         <CustomShaderMaterial
@@ -90,15 +90,15 @@ export default function ForceField() {
 }
 
 const Floor = () => (
-  <mesh position={[0, -1.5, 0]}>
-    <boxGeometry args={[4, 1, 4]} />
+  <mesh position={[0, -1, 1]}>
+    <boxGeometry args={[5, 1, 5]} />
     <meshStandardMaterial color="#222" metalness={0.5} roughness={0.5} />
   </mesh>
 )
 
 const Wall = () => (
-  <mesh position={[0, 0, -1.5]}>
-    <boxGeometry args={[4, 4, 1]} />
+  <mesh position={[0, 1, -1]}>
+    <boxGeometry args={[5, 5, 1]} />
     <meshStandardMaterial color="#222" metalness={0.5} roughness={0.5} />
   </mesh>
 )
