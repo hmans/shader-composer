@@ -1,9 +1,19 @@
 import { Camera, IUniform, PerspectiveCamera, Vector2 } from "three"
+import { $ } from "../expressions"
 import { GLSLType, JSTypes, Unit, UnitConfig } from "../units"
+import { Vec2 } from "./values"
+
+/**
+ * Returns the current fragment's on-screen coordinate.
+ */
+export const FragmentCoordinate = Vec2($`gl_FragCoord.xy`, {
+  name: "Fragment Coordinate",
+  only: "fragment"
+})
 
 export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
   type: T,
-  uniform: IUniform,
+  uniform: IUniform<U>,
   extras?: Partial<UnitConfig<T>>
 ) => {
   /* Create the actual unit that represents the uniform. */
@@ -39,9 +49,9 @@ export const Time = (initial: number = 0) => {
 
 export const Resolution = Uniform("vec2", { value: new Vector2(0, 0) })
 
-export const CameraNear = Uniform("float", { value: 0 })
+export const CameraNear = Uniform("float", { value: 0 as number })
 
-export const CameraFar = Uniform("float", { value: 0 })
+export const CameraFar = Uniform("float", { value: 0 as number })
 
 /**
  * Updates the `CameraNear` and `CameraFar` uniforms with the information from
