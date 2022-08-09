@@ -39,6 +39,7 @@ export const SceneDepth = (
     new WebGLRenderTarget(width, height, {
       depthTexture: new DepthTexture(width, height)
     }),
+
     new WebGLRenderTarget(width, height, {
       depthTexture: new DepthTexture(width, height)
     })
@@ -61,7 +62,7 @@ export const SceneDepth = (
         state.gl.render(state.scene, state.camera)
         state.gl.setRenderTarget(null)
 
-        /* Cycle depth textures */
+        /* Cycle render targets */
         uniform.value = renderTargets[index].depthTexture
         index = (index + 1) % 2
       }
