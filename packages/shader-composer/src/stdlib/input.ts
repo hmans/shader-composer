@@ -1,6 +1,7 @@
 import { Camera, IUniform, PerspectiveCamera, Vector2 } from "three"
 import { $ } from "../expressions"
 import { GLSLType, JSTypes, Unit, UnitConfig } from "../units"
+import { Div } from "./math"
 import { Vec2 } from "./values"
 
 /**
@@ -67,3 +68,5 @@ export const updateCameraUniforms = (camera: Camera) => {
 export const updateResolutionUniform = (width: number, height: number) => {
   ;(Resolution.value as Vector2).set(width, height)
 }
+
+export const ScreenUV = Div(FragmentCoordinate, Resolution)

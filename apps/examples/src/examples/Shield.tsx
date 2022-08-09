@@ -1,14 +1,28 @@
-import { CustomShaderMaterialMaster } from "shader-composer"
+import { useThree } from "@react-three/fiber"
+import {
+  CustomShaderMaterialMaster,
+  SceneDepth,
+  ScreenUV,
+  SplitVector2,
+  UV,
+  vec3
+} from "shader-composer"
 import { useShader } from "shader-composer-r3f"
 import { MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function Shield() {
+  const { camera, gl, scene } = useThree()
+
   const shader = useShader(() => {
+    const [x, y] = SplitVector2(ScreenUV)
+
     return CustomShaderMaterialMaster({
-      alpha: 0.1
+      fragColor: vec3(x, y, 0.0)
     })
   })
+
+  console.log(shader.fragmentShader)
 
   return (
     <group>
