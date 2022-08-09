@@ -6,11 +6,11 @@
 
 ## Summary
 
-Write GLSL shaders, but with JavaScript.
+Write Three.js shaders, but with JavaScript! ✨
 
 > **Warning**
 >
-> This library is very extremely new. I'd love for you to give it a go and maybe provide some feedback, but I would currently recommend **strongly** against using it in any sort of production project, unless you're ready and willing to keep up with the changes every release. **Use at your own risk.**
+> This library is still relatively new. I'd love for you to give it a go and maybe provide some feedback, but I would currently recommend **strongly** against using it in any sort of production project, unless you're ready and willing to keep up with the changes every release. **Use at your own risk.**
 
 ## Projects using Shader Composer
 
@@ -26,9 +26,9 @@ Write GLSL shaders, but with JavaScript.
 
 I want to wait for things to stabilize some more before sitting down to write documentation. For the time being, please take a look at the [examples provided within this repository](https://github.com/hmans/shader-composer/tree/main/apps/examples/src/examples). (Or open them in a [CodeSandbox](https://codesandbox.io/p/github/hmans/shader-composer)!)
 
-#### Does this reimplement Three's built-in materials?
+#### Does this reimplement Three.js's built-in materials?
 
-No, but you can inject your custom shader trees into Three's build-in materials through `CustomShaderMaterialMaster` and [three-custom-shader-material].
+No, but you can inject your custom shaders created with this library into Three.js's built-in materials through the provided `CustomShaderMaterialMaster` and [three-custom-shader-material]. And of course you can also just use it with `THREE.ShaderMaterial` like you would with any other custom shader.
 
 #### Does this work with WebGPU, WebGL, ...?
 
@@ -36,7 +36,7 @@ Currently, only WebGL (GLSL) is supported, but adding support for WebGPU and WGS
 
 #### Where is the node editor? I was expecting a node editor!
 
-Shader Composer is a code-first library, and there is no intention for it to provide a graphical node-based editor. It is definitely possible to build one on top of it, though. Any takers? :D
+Shader Composer is a code-first library, and there is no intention for it to provide a graphical node-based editor (although it is certainly possible to do so, and maybe someone will eventually build one. Any takers? :D)
 
 #### Why are the graphs constructed from "units" and not "nodes"?
 
