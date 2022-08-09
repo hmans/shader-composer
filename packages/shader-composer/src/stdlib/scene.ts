@@ -1,15 +1,8 @@
-import {
-  Camera,
-  DepthTexture,
-  Scene,
-  Vector2,
-  WebGLRenderer,
-  WebGLRenderTarget
-} from "three"
+import { DepthTexture, WebGLRenderTarget } from "three"
 import { $ } from "../expressions"
 import { pipe } from "../pipes"
 import { Input, Unit } from "../units"
-import { CameraFar, CameraNear, Resolution, Uniform } from "./input"
+import { CameraFar, CameraNear, Uniform } from "./input"
 import { Texture2D } from "./textures"
 import { Float } from "./values"
 
