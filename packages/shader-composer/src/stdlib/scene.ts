@@ -35,7 +35,7 @@ export const SceneDepth = (xy: Input<"vec2">) => {
     })
   ]
 
-  let index = 0
+  let cursor = 0
 
   const uniform = Uniform("sampler2D", { value: renderTargets[0].depthTexture })
 
@@ -46,7 +46,7 @@ export const SceneDepth = (xy: Input<"vec2">) => {
       name: "Scene Depth",
 
       update: (dt, camera, scene, gl) => {
-        const renderTarget = renderTargets[index]
+        const renderTarget = renderTargets[cursor]
 
         /* Update rendertarget size if necessary */
         const width = gl.domElement.width
@@ -63,8 +63,8 @@ export const SceneDepth = (xy: Input<"vec2">) => {
         gl.setRenderTarget(null)
 
         /* Cycle render targets */
-        uniform.value = renderTargets[index].depthTexture
-        index = (index + 1) % 2
+        uniform.value = renderTargets[cursor].depthTexture
+        cursor = (cursor + 1) % 2
       }
     }
   )
