@@ -6,12 +6,18 @@ import {
   JSTypes,
   Uniform,
   Unit,
-  UnitConfig
+  UnitConfig,
+  updateCameraUniforms
 } from "shader-composer"
 
 export const useShader = (ctor: () => Unit, deps?: any) => {
   const [shader, { update }] = useMemo(() => compileShader(ctor()), deps)
-  useFrame((_, dt) => update(dt))
+
+  useFrame(({ gl, scene, camera }, dt) => {
+    updateCameraUniforms(camera)
+    update(dt)
+  })
+
   return shader
 }
 
