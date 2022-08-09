@@ -1,4 +1,4 @@
-import { Camera, PerspectiveCamera, Vector2 } from "three"
+import { Camera, IUniform, PerspectiveCamera, Vector2 } from "three"
 import { GLSLType, JSTypes, Unit, UnitConfig } from "../units"
 import { Float } from "./values"
 
@@ -7,16 +7,9 @@ export const uniformName = (unit: Unit) =>
 
 export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
   type: T,
-  initialValue: U,
+  uniform: IUniform,
   extras?: Partial<UnitConfig<T>>
 ) => {
-  /*
-	Create a uniform object. One of the reasons we need to wrap the value here
-	is that there is a good chance that we will need to mutate it, and we can only
-	reliably do this for scalar values if they are wrapped.
-	*/
-  const uniform = { value: initialValue }
-
   /* Create the actual unit that represents the uniform. */
   const unit = Unit<T>(type, undefined, {
     name: `Uniform (${type})`,
@@ -43,22 +36,19 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
 }
 
 export const Time = (initial: number = 0) => {
-  const uniform = Uniform("float", initial, { name: "Time Uniform" })
+  const uniform = { value: initial }
 
-  return {
-    ...Float(uniform, {
-      name: "Time",
-      update: (dt) => (uniform.value += dt)
-    }),
-    uniform
-  }
+  return Uniform("float", uniform, {
+    name: "Time Uniform",
+    update: (dt) => (uniform.value += dt)
+  })
 }
 
-export const Resolution = Uniform("vec2", new Vector2(0, 0))
+export const Resolution = Uniform("vec2", { value: new Vector2(0, 0) })
 
-export const CameraNear = Uniform("float", 0 as number)
+export const CameraNear = Uniform("float", { value: 0 })
 
-export const CameraFar = Uniform("float", 1000 as number)
+export const CameraFar = Uniform("float", { value: 0 })
 
 /**
  * Updates the `CameraNear` and `CameraFar` uniforms with the information from
