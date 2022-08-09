@@ -19,8 +19,6 @@ import { Color, DoubleSide, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function ForceField() {
-  const { camera, gl, scene } = useThree()
-
   const controls = useControls("Force Field", {
     color: "cyan",
     intensity: { value: 3, min: 0, max: 10 },

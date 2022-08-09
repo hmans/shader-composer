@@ -34,11 +34,11 @@ export const SceneDepth = (xy: Input<"vec2">) => {
 
   const renderTargets = [
     new WebGLRenderTarget(width, height, {
-      depthTexture: new DepthTexture(width, height)
+      depthTexture: new DepthTexture(128, 128)
     }),
 
     new WebGLRenderTarget(width, height, {
-      depthTexture: new DepthTexture(width, height)
+      depthTexture: new DepthTexture(128, 128)
     })
   ]
 
@@ -53,8 +53,18 @@ export const SceneDepth = (xy: Input<"vec2">) => {
       name: "Scene Depth",
 
       update: (dt, camera, scene, gl) => {
+        const renderTarget = renderTargets[index]
+
+        /* Update rendertarget size if necessary */
+        const width = gl.domElement.width
+        const height = gl.domElement.height
+
+        if (renderTarget.width !== width || renderTarget.height !== height) {
+          renderTarget.setSize(width, height)
+        }
+
         /* Render depth texture */
-        gl.setRenderTarget(renderTargets[index])
+        gl.setRenderTarget(renderTarget)
         gl.clear()
         gl.render(scene, camera)
         gl.setRenderTarget(null)
