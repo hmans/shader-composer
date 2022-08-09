@@ -2,54 +2,54 @@ import { $ } from "../expressions"
 import { GLSLType, Input, Unit, UnitConfig } from "../units"
 
 const makeUnit = <T extends GLSLType, A extends {} = {}>(
-	type: T,
-	apiFun: (unit: Unit<T>) => A = () => ({} as A)
+  type: T,
+  apiFun: (unit: Unit<T>) => A = () => ({} as A)
 ) => (v: Input<T>, extras?: Partial<UnitConfig<T>>) => {
-	const unit = Unit(type, v, extras) as Unit<T>
-	return { ...unit, ...apiFun(unit) } as Unit<T> & A
+  const unit = Unit(type, v, extras) as Unit<T>
+  return { ...unit, ...apiFun(unit) } as Unit<T> & A
 }
 
 export const Float = makeUnit("float")
 export const Int = makeUnit("int")
 export const Bool = makeUnit("bool")
 export const Vec2 = makeUnit("vec2", (unit) => ({
-	x: Float($`${unit}.x`),
-	y: Float($`${unit}.y`)
+  x: Float($`${unit}.x`),
+  y: Float($`${unit}.y`)
 }))
 export const Vec3 = makeUnit("vec3", (unit) => ({
-	x: Float($`${unit}.x`),
-	y: Float($`${unit}.y`),
-	z: Float($`${unit}.z`)
+  x: Float($`${unit}.x`),
+  y: Float($`${unit}.y`),
+  z: Float($`${unit}.z`)
 }))
 export const Vec4 = makeUnit("vec4", (unit) => ({
-	x: Float($`${unit}.x`),
-	y: Float($`${unit}.y`),
-	z: Float($`${unit}.z`),
-	w: Float($`${unit}.w`)
+  x: Float($`${unit}.x`),
+  y: Float($`${unit}.y`),
+  z: Float($`${unit}.z`),
+  w: Float($`${unit}.w`)
 }))
 
 export const Mat3 = makeUnit("mat3")
 export const Mat4 = makeUnit("mat4")
 
 export const vec2 = (
-	x: Input<"float">,
-	y: Input<"float">,
-	extras?: Partial<UnitConfig<"vec2">>
+  x: Input<"float"> = 0,
+  y: Input<"float"> = 0,
+  extras?: Partial<UnitConfig<"vec2">>
 ) => Vec2($`vec2(${x}, ${y})`, extras)
 
 export const vec3 = (
-	x: Input<"float">,
-	y: Input<"float">,
-	z: Input<"float">,
-	extras?: Partial<UnitConfig<"vec3">>
+  x: Input<"float"> = 0,
+  y: Input<"float"> = 0,
+  z: Input<"float"> = 0,
+  extras?: Partial<UnitConfig<"vec3">>
 ) => Vec3($`vec3(${x}, ${y}, ${z})`, extras)
 
 export const vec4 = (
-	x: Input<"float">,
-	y: Input<"float">,
-	z: Input<"float">,
-	w: Input<"float">,
-	extras?: Partial<UnitConfig<"vec4">>
+  x: Input<"float"> = 0,
+  y: Input<"float"> = 0,
+  z: Input<"float"> = 0,
+  w: Input<"float"> = 0,
+  extras?: Partial<UnitConfig<"vec4">>
 ) => Vec4($`vec4(${x}, ${y}, ${z}, ${w})`, extras)
 
 /** Cast the given value to a mat3. */
