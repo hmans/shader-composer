@@ -26,11 +26,13 @@ export default function Shield() {
 
   const controls = useControls("Force Field", {
     color: "cyan",
-    intensity: { value: 3, min: 0, max: 10 }
+    intensity: { value: 3, min: 0, max: 10 },
+    strength: { value: 0.5, min: 0, max: 1 }
   })
 
   const color = useUniform("vec3", new Color(controls.color))
   const intensity = useUniform("float", controls.intensity)
+  const strength = useUniform("float", controls.strength)
 
   const shader = useShader(() => {
     const sceneDepth = SceneDepth(ScreenUV, { camera, gl, scene })
@@ -45,11 +47,16 @@ export default function Shield() {
 
     return CustomShaderMaterialMaster({
       emissiveColor: Mul(color, intensity),
-      alpha: Add(0.005, Mul(OneMinus(distance), 0.3))
+
+      alpha: pipe(
+        distance,
+        (v) => OneMinus(v),
+        (v) => Mul(v, strength),
+        (v) => Add(v, 0.005),
+        (v) => Saturate(v)
+      )
     })
   }, [])
-
-  console.log(shader.fragmentShader)
 
   return (
     <group>
