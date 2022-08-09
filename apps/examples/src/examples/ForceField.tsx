@@ -4,6 +4,7 @@ import {
   Add,
   ConvertToViewSpace,
   CustomShaderMaterialMaster,
+  Fresnel,
   Mul,
   OneMinus,
   pipe,
@@ -42,9 +43,9 @@ export default function ForceField() {
     const time = Time()
     const sceneDepth = SceneDepth(ScreenUV)
 
-    const offset = vec2(Mul(time, 0.05), 0)
+    const offset = vec2(Mul(time, 0.05), Mul(time, 0.03))
 
-    const tex2d = Texture2D(sampler2D, TilingUV(UV, vec2(4, 2), offset))
+    const tex2d = Texture2D(sampler2D, TilingUV(UV, vec2(2, 1), offset))
 
     const distance = pipe(
       VertexPosition,
@@ -62,6 +63,7 @@ export default function ForceField() {
         (v) => OneMinus(v),
         (v) => Mul(v, strength),
         (v) => Add(v, Mul(tex2d.x, 0.01)),
+        (v) => Add(v, Fresnel({ power: 3 })),
         (v) => Saturate(v)
       )
     })
@@ -76,7 +78,7 @@ export default function ForceField() {
           baseMaterial={MeshStandardMaterial}
           transparent
           depthWrite={false}
-          side={DoubleSide}
+          // side={DoubleSide}
           {...shader}
         />
       </mesh>
