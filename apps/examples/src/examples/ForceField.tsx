@@ -1,7 +1,7 @@
 import { useControls } from "leva"
 import {
   Add,
-  ConvertToViewSpace,
+  ToViewSpace,
   CustomShaderMaterialMaster,
   Fresnel,
   Mul,
@@ -25,26 +25,32 @@ import CustomShaderMaterial from "three-custom-shader-material"
 import { useRepeatingTexture } from "./helpers"
 
 export default function ForceField() {
+  /* Use Leva for some user input */
   const controls = useControls("Force Field", {
     color: "cyan",
     intensity: { value: 3, min: 0, max: 10 },
     strength: { value: 0.5, min: 0, max: 1 }
   })
 
+  /* Create a bunch of uniforms */
   const color = useUniform("vec3", new Color(controls.color))
   const intensity = useUniform("float", controls.intensity)
   const strength = useUniform("float", controls.strength)
   const sampler2D = useUniform("sampler2D", useRepeatingTexture("/textures/hexgrid.jpg"))
 
+  /* Define our shader */
   const shader = useShader(() => {
+    /* Define a time-based texture offset, and sample the force field texture. */
     const time = Time()
-    const sceneDepth = SceneDepth(ScreenUV)
     const textureOffset = vec2(Mul(time, 0.05), Mul(time, 0.03))
     const texture = Texture2D(sampler2D, TilingUV(UV, vec2(2, 1), textureOffset))
 
+    /* Get the depth of the current fragment. */
+    const sceneDepth = SceneDepth(ScreenUV)
+
     const distance = pipe(
       VertexPosition,
-      (v) => ConvertToViewSpace(v).z,
+      (v) => ToViewSpace(v).z,
       (v) => Add(v, 0.5),
       (v) => Sub(v, sceneDepth),
       (v) => Smoothstep(0, 1, v)
@@ -73,7 +79,6 @@ export default function ForceField() {
           baseMaterial={MeshStandardMaterial}
           transparent
           depthWrite={false}
-          // side={DoubleSide}
           {...shader}
         />
       </mesh>
