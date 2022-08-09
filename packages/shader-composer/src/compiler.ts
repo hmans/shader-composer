@@ -2,7 +2,7 @@ import { Camera, IUniform, Scene, WebGLRenderer } from "three"
 import { Expression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, renameSnippet, Snippet } from "./snippets"
-import { Item, walkTree } from "./tree"
+import { collectFromTree, Item, walkTree } from "./tree"
 import {
   isUnit,
   isUnitInProgram,
@@ -217,6 +217,10 @@ export const compileShader = (root: Unit) => {
     updates.forEach((u) => u(dt, camera, scene, gl))
   }
 
+  /* Build a dispose function */
+  const allUnits: Unit[] = collectFromTree(root, "any", isUnit)
+  const dispose = () => allUnits.forEach((u) => u._unitConfig.dispose?.())
+
   /*
 	DONE! Let's return everything and go on a lengthy vacation somewhere nice.
 	*/
@@ -227,7 +231,8 @@ export const compileShader = (root: Unit) => {
   }
 
   const meta = {
-    update
+    update,
+    dispose
   }
 
   return [shader, meta] as const

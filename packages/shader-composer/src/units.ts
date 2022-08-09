@@ -111,6 +111,11 @@ export type UnitConfig<T extends GLSLType> = {
    */
   update?: UpdateCallback
 
+  /**
+   * A callback that will be executed when the shader is being disposed.
+   */
+  dispose?: () => void
+
   /* Chunks */
   vertex?: {
     header?: Expression

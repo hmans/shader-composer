@@ -65,6 +65,11 @@ export const SceneDepth = (xy: Input<"vec2">) => {
         /* Cycle render targets */
         uniform.value = renderTargets[cursor].depthTexture
         cursor = (cursor + 1) % 2
+      },
+
+      dispose: () => {
+        renderTargets[0].dispose()
+        renderTargets[1].dispose()
       }
     }
   )
