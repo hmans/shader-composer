@@ -21,7 +21,7 @@ import { useShader, useUniform } from "shader-composer-r3f"
 import { Color, DoubleSide, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
-export default function Shield() {
+export default function ForceField() {
   const { camera, gl, scene } = useThree()
 
   const controls = useControls("Force Field", {

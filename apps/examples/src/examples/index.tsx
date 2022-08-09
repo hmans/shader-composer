@@ -7,7 +7,7 @@ export default {
   Dissolve: lazy(() => import("./Dissolve")),
   Fireball: lazy(() => import("./Fireball")),
   Textures: lazy(() => import("./Textures")),
-  Shield: lazy(() => import("./Shield")),
+  ForceField: lazy(() => import("./ForceField")),
   Planet: lazy(() => import("./Planet")),
   DiscoCube: lazy(() => import("./DiscoCube")),
   Water: lazy(() => import("./Water"))
