@@ -16,7 +16,7 @@ import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { useRepeatingTexture } from "./helpers"
 
-export default function Playground() {
+export default function Textures() {
   const texture = useRepeatingTexture("/textures/hexgrid.jpg")
 
   const shader = useShader(() => {
