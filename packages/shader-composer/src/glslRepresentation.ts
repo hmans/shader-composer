@@ -8,9 +8,12 @@ export const glslRepresentation = (
   typeHint?: GLSLType
 ): string => {
   if (value === undefined) return ""
+
   if (isUnit(value))
     return value._unitConfig.uniform ? uniformName(value) : value._unitConfig.variableName
+
   if (isExpression(value)) return value.render()
+
   if (isSnippet(value)) return value.name
 
   if (typeof value === "string") return value
