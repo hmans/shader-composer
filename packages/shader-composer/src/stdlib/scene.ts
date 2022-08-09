@@ -27,11 +27,11 @@ export const SceneDepth = (xy: Input<"vec2">) => {
 
   const renderTargets = [
     new WebGLRenderTarget(width, height, {
-      depthTexture: new DepthTexture(128, 128)
+      depthTexture: new DepthTexture(256, 256)
     }),
 
     new WebGLRenderTarget(width, height, {
-      depthTexture: new DepthTexture(128, 128)
+      depthTexture: new DepthTexture(256, 256)
     })
   ]
 
