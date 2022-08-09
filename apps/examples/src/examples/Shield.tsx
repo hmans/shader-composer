@@ -13,7 +13,8 @@ export default function Shield() {
   return (
     <group>
       <mesh position={[0, -0.5, -0.5]}>
-        <icosahedronGeometry args={[1.3, 3]} />
+        <icosahedronGeometry args={[1.3, 8]} />
+
         <CustomShaderMaterial
           baseMaterial={MeshStandardMaterial}
           {...shader}
