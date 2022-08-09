@@ -5,7 +5,9 @@ import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function Shield() {
   const shader = useShader(() => {
-    return CustomShaderMaterialMaster({})
+    return CustomShaderMaterialMaster({
+      alpha: 0.1
+    })
   })
 
   return (
