@@ -55,7 +55,9 @@ export const Time = (initial: number = 0) => {
 }
 
 export const Resolution = Uniform("vec2", new Vector2(0, 0))
+
 export const CameraNear = Uniform("float", 0 as number)
+
 export const CameraFar = Uniform("float", 1000 as number)
 
 /**
