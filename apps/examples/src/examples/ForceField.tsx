@@ -4,8 +4,6 @@ import {
   Add,
   ConvertToViewSpace,
   CustomShaderMaterialMaster,
-  Div,
-  Fresnel,
   Mul,
   OneMinus,
   pipe,
@@ -13,7 +11,6 @@ import {
   SceneDepth,
   ScreenUV,
   Smoothstep,
-  SplitVector2,
   Sub,
   VertexPosition
 } from "shader-composer"
