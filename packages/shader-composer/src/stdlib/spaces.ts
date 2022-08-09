@@ -9,12 +9,10 @@ import { Vec4 } from "./values"
 export const ConvertToViewSpace = (position: Input<"vec3">) =>
   Vec4(
     $`
-    viewMatrix
-      #ifdef USE_INSTANCING
-        * instanceMatrix
-      #endif
-      * modelMatrix
-      * vec4(${position}, 1.0)
+    #ifdef USE_INSTANCING
+    instanceMatrix *
+    #endif
+    modelViewMatrix * vec4(${position}, 1.0)
     `,
     {
       varying: true
