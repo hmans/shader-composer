@@ -1,4 +1,4 @@
-import { IUniform } from "three"
+import { Camera, IUniform, Scene, WebGLRenderer } from "three"
 import { Expression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, renameSnippet, Snippet } from "./snippets"
@@ -9,8 +9,7 @@ import {
   Program,
   uniformName,
   Unit,
-  UpdateCallback,
-  UpdateContext
+  UpdateCallback
 } from "./units"
 import {
   assignment,
@@ -214,8 +213,8 @@ export const compileShader = (root: Unit) => {
   /*
 	STEP 6: Build per-frame update function.
 	*/
-  const update = (dt: number, context: UpdateContext) => {
-    updates.forEach((u) => u(dt, context))
+  const update = (dt: number, camera: Camera, scene: Scene, gl: WebGLRenderer) => {
+    updates.forEach((u) => u(dt, camera, scene, gl))
   }
 
   /*

@@ -14,13 +14,13 @@ import {
 export const useShader = (ctor: () => Unit, deps?: any) => {
   const [shader, { update }] = useMemo(() => compileShader(ctor()), deps)
 
-  useFrame(({ gl, scene, camera }, dt) => {
+  useFrame(({ camera, scene, gl }, dt) => {
     /* TODO: use gl's dom element dimensions */
     updateResolutionUniform(gl.domElement.clientWidth, gl.domElement.clientHeight)
     updateCameraUniforms(camera)
 
     /* Invoke the shader tree's update functions. */
-    update(dt, { gl, scene, camera })
+    update(dt, camera, scene, gl)
   })
 
   return shader

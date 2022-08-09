@@ -52,7 +52,7 @@ export const SceneDepth = (xy: Input<"vec2">) => {
     {
       name: "Scene Depth",
 
-      update: (dt, { gl, scene, camera }) => {
+      update: (dt, camera, scene, gl) => {
         /* Render depth texture */
         gl.setRenderTarget(renderTargets[index])
         gl.clear()

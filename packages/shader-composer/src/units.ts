@@ -51,9 +51,12 @@ TODO: Remove `Value` type!
 */
 export type Value<T extends GLSLType> = Input<T>
 
-export type UpdateContext = { gl: WebGLRenderer; camera: Camera; scene: Scene }
-
-export type UpdateCallback = (dt: number, context: UpdateContext) => void
+export type UpdateCallback = (
+  dt: number,
+  camera: Camera,
+  scene: Scene,
+  gl: WebGLRenderer
+) => void
 
 export type UnitConfig<T extends GLSLType> = {
   /**
