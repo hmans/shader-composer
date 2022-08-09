@@ -32,16 +32,35 @@ export const SceneDepth = (
   xy: Input<"vec2">,
   state: { gl: WebGLRenderer; scene: Scene; camera: Camera }
 ) => {
-  const width = Resolution.value.x
-  const height = Resolution.value.y
-
-  const renderTarget = new WebGLRenderTarget(width, height, {
-    depthTexture: new DepthTexture(width, height)
+  const renderTarget = new WebGLRenderTarget(128, 128, {
+    depthTexture: new DepthTexture(128, 128)
   })
 
   const depthTexture = Uniform("sampler2D", { value: renderTarget.depthTexture })
 
   const tmpVec2 = new Vector2()
+
+  function renderDepthTexture() {
+    /* Adjust render texture resolution to match the current resolution. */
+    tmpVec2.copy(Resolution.value)
+
+    if (tmpVec2.x !== renderTarget.width || tmpVec2.y !== renderTarget.height) {
+      console.log("Resizing render target...", tmpVec2)
+      renderTarget.setSize(tmpVec2.x, tmpVec2.y)
+      renderTarget.depthTexture.dispose()
+      renderTarget.depthTexture = new DepthTexture(tmpVec2.x, tmpVec2.y)
+      depthTexture.value = renderTarget.depthTexture
+    }
+
+    /* Render depth texture */
+    state.gl.setRenderTarget(renderTarget)
+    state.gl.clear()
+    state.gl.render(state.scene, state.camera)
+    state.gl.setRenderTarget(null)
+  }
+
+  /* Initialize the depth texture. */
+  renderDepthTexture()
 
   return Float(
     ReadDepth(xy, depthTexture, CameraNear, CameraFar),
@@ -49,23 +68,8 @@ export const SceneDepth = (
     {
       name: "Scene Depth",
 
-      update: () => {
-        /* Adjust render texture resolution to match the current resolution. */
-        tmpVec2.copy(Resolution.value)
-        if (tmpVec2.x !== renderTarget.width || tmpVec2.y !== renderTarget.height) {
-          console.log("Resizing render target...", tmpVec2)
-          renderTarget.setSize(tmpVec2.x, tmpVec2.y)
-          renderTarget.depthTexture.dispose()
-          renderTarget.depthTexture = new DepthTexture(tmpVec2.x, tmpVec2.y)
-          depthTexture.value = renderTarget.depthTexture
-        }
-
-        /* Render depth texture */
-        state.gl.setRenderTarget(renderTarget)
-        state.gl.clear()
-        state.gl.render(state.scene, state.camera)
-        state.gl.setRenderTarget(null)
-      }
+      /* Render the depth texture on every frame. */
+      update: () => renderDepthTexture()
     }
   )
 }
