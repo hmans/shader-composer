@@ -19,6 +19,7 @@ export default function Shield() {
   const { camera, gl, scene } = useThree()
 
   const shader = useShader(() => {
+    /* Read existing depth from depth texture */
     const sceneDepth = SceneDepth(ScreenUV, { camera, gl, scene })
 
     const distance = pipe(

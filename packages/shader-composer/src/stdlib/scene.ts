@@ -44,7 +44,7 @@ export const SceneDepth = (
   const tmpVec2 = new Vector2()
 
   return Float(
-    ReadDepth(xy, depthTexture),
+    ReadDepth(xy, depthTexture, CameraNear, CameraFar),
 
     {
       name: "Scene Depth",
