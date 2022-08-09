@@ -7,7 +7,6 @@ import {
   Uniform,
   Unit,
   UnitConfig,
-  updateCameraUniforms,
   updateResolutionUniform
 } from "shader-composer"
 
@@ -17,7 +16,6 @@ export const useShader = (ctor: () => Unit, deps?: any) => {
   useFrame(({ camera, scene, gl }, dt) => {
     /* TODO: use gl's dom element dimensions */
     updateResolutionUniform(gl.domElement.clientWidth, gl.domElement.clientHeight)
-    updateCameraUniforms(camera)
 
     /* Invoke the shader tree's update functions. */
     update(dt, camera, scene, gl)

@@ -50,20 +50,25 @@ export const Time = (initial: number = 0) => {
 
 export const Resolution = Uniform("vec2", { value: new Vector2(0, 0) })
 
-export const CameraNear = Uniform("float", { value: 0 as number })
-
-export const CameraFar = Uniform("float", { value: 0 as number })
-
-/**
- * Updates the `CameraNear` and `CameraFar` uniforms with the information from
- * the given camera instance.
- */
-export const updateCameraUniforms = (camera: Camera) => {
-  if (camera instanceof PerspectiveCamera) {
-    CameraNear.value = camera.near
-    CameraFar.value = camera.far
+const CameraNearUniform = { value: 0 as number }
+export const CameraNear = Uniform("float", CameraNearUniform, {
+  name: "Camera Near Plane",
+  update: (_, camera) => {
+    if (camera instanceof PerspectiveCamera) {
+      CameraNearUniform.value = camera.near
+    }
   }
-}
+})
+
+const CameraFarUniform = { value: 0 as number }
+export const CameraFar = Uniform("float", CameraFarUniform, {
+  name: "Camera Far Plane",
+  update: (_, camera) => {
+    if (camera instanceof PerspectiveCamera) {
+      CameraFarUniform.value = camera.far
+    }
+  }
+})
 
 export const updateResolutionUniform = (width: number, height: number) => {
   ;(Resolution.value as Vector2).set(width, height)
