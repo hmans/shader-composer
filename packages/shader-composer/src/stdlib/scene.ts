@@ -28,10 +28,7 @@ export const ReadDepth = (
     { name: "Read Depth from Depth Texture" }
   )
 
-export const SceneDepth = (
-  xy: Input<"vec2">,
-  state: { gl: WebGLRenderer; scene: Scene; camera: Camera }
-) => {
+export const SceneDepth = (xy: Input<"vec2">) => {
   const width = window.innerWidth
   const height = window.innerWidth
 
@@ -55,12 +52,12 @@ export const SceneDepth = (
     {
       name: "Scene Depth",
 
-      update: () => {
+      update: (dt, { gl, scene, camera }) => {
         /* Render depth texture */
-        state.gl.setRenderTarget(renderTargets[index])
-        state.gl.clear()
-        state.gl.render(state.scene, state.camera)
-        state.gl.setRenderTarget(null)
+        gl.setRenderTarget(renderTargets[index])
+        gl.clear()
+        gl.render(scene, camera)
+        gl.setRenderTarget(null)
 
         /* Cycle render targets */
         uniform.value = renderTargets[index].depthTexture

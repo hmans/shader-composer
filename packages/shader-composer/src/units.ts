@@ -1,4 +1,15 @@
-import { Color, Matrix3, Matrix4, Texture, Vector2, Vector3, Vector4 } from "three"
+import {
+  Camera,
+  Color,
+  Matrix3,
+  Matrix4,
+  Scene,
+  Texture,
+  Vector2,
+  Vector3,
+  Vector4,
+  WebGLRenderer
+} from "three"
 import { Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
@@ -40,7 +51,9 @@ TODO: Remove `Value` type!
 */
 export type Value<T extends GLSLType> = Input<T>
 
-export type UpdateCallback = (dt: number) => void
+export type UpdateContext = { gl: WebGLRenderer; camera: Camera; scene: Scene }
+
+export type UpdateCallback = (dt: number, context: UpdateContext) => void
 
 export type UnitConfig<T extends GLSLType> = {
   /**

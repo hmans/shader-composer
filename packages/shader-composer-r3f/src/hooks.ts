@@ -20,7 +20,7 @@ export const useShader = (ctor: () => Unit, deps?: any) => {
     updateCameraUniforms(camera)
 
     /* Invoke the shader tree's update functions. */
-    update(dt)
+    update(dt, { gl, scene, camera })
   })
 
   return shader

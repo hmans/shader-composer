@@ -9,7 +9,8 @@ import {
   Program,
   uniformName,
   Unit,
-  UpdateCallback
+  UpdateCallback,
+  UpdateContext
 } from "./units"
 import {
   assignment,
@@ -213,8 +214,8 @@ export const compileShader = (root: Unit) => {
   /*
 	STEP 6: Build per-frame update function.
 	*/
-  const update = (dt: number) => {
-    updates.forEach((u) => u(dt))
+  const update = (dt: number, context: UpdateContext) => {
+    updates.forEach((u) => u(dt, context))
   }
 
   /*
