@@ -1,7 +1,6 @@
-import { Camera, IUniform, PerspectiveCamera, Vector2 } from "three"
+import { IUniform, PerspectiveCamera, Vector2 } from "three"
 import { $ } from "../expressions"
 import { GLSLType, JSTypes, Unit, UnitConfig } from "../units"
-import { Div } from "./math"
 import { Vec2 } from "./values"
 
 /**
