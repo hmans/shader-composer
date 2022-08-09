@@ -6,17 +6,13 @@ import {
   JSTypes,
   Uniform,
   Unit,
-  UnitConfig,
-  updateResolutionUniform
+  UnitConfig
 } from "shader-composer"
 
 export const useShader = (ctor: () => Unit, deps?: any) => {
   const [shader, { update }] = useMemo(() => compileShader(ctor()), deps)
 
   useFrame(({ camera, scene, gl }, dt) => {
-    /* TODO: use gl's dom element dimensions */
-    updateResolutionUniform(gl.domElement.clientWidth, gl.domElement.clientHeight)
-
     /* Invoke the shader tree's update functions. */
     update(dt, camera, scene, gl)
   })

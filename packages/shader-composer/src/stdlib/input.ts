@@ -48,7 +48,14 @@ export const Time = (initial: number = 0) => {
   })
 }
 
-export const Resolution = Uniform("vec2", { value: new Vector2(0, 0) })
+const ResolutionUniform = { value: new Vector2(0, 0) }
+export const Resolution = Uniform("vec2", ResolutionUniform, {
+  name: "Current Render Resolution",
+  update: (dt, camera, scene, gl) => {
+    ResolutionUniform.value.x = gl.domElement.width
+    ResolutionUniform.value.y = gl.domElement.height
+  }
+})
 
 const CameraNearUniform = { value: 0 as number }
 export const CameraNear = Uniform("float", CameraNearUniform, {
@@ -69,10 +76,6 @@ export const CameraFar = Uniform("float", CameraFarUniform, {
     }
   }
 })
-
-export const updateResolutionUniform = (width: number, height: number) => {
-  ;(Resolution.value as Vector2).set(width, height)
-}
 
 export const ScreenUV = Vec2($`${FragmentCoordinate} / ${Resolution}`, {
   name: "Screen UV"
