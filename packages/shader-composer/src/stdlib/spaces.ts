@@ -1,6 +1,5 @@
 import { $ } from "../expressions"
 import { Input } from "../units"
-import { ViewMatrix, InstanceMatrix, ModelMatrix } from "./geometry"
 import { Vec4 } from "./values"
 
 /**
@@ -8,6 +7,16 @@ import { Vec4 } from "./values"
  * to view space.
  */
 export const ConvertToViewSpace = (position: Input<"vec3">) =>
-  Vec4($`${ViewMatrix} * ${InstanceMatrix} * ${ModelMatrix} * vec4(${position}, 1.0)`, {
-    varying: true
-  })
+  Vec4(
+    $`
+    viewMatrix
+      #ifdef USE_INSTANCING
+        * instanceMatrix
+      #endif
+      * modelMatrix
+      * vec4(${position}, 1.0)
+    `,
+    {
+      varying: true
+    }
+  )

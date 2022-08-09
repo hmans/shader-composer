@@ -1,24 +1,40 @@
 import { useThree } from "@react-three/fiber"
 import {
+  ConvertToViewSpace,
   CustomShaderMaterialMaster,
+  Mul,
+  pipe,
+  Saturate,
   SceneDepth,
   ScreenUV,
   SplitVector2,
-  UV,
-  vec3
+  Sub,
+  VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { MeshStandardMaterial } from "three"
+import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function Shield() {
   const { camera, gl, scene } = useThree()
 
   const shader = useShader(() => {
-    const [x, y] = SplitVector2(ScreenUV)
+    const sceneDepth = SceneDepth(ScreenUV, { camera, gl, scene })
+
+    const distance = pipe(
+      VertexPosition,
+      /* Convert position to view space and grab depth */
+      (v) => ConvertToViewSpace(v).z,
+      /* Subtract from the existing scene depth at the fragment coordinate */
+      (v) => Sub(v, sceneDepth),
+      /* Divide by softness factor */
+      // (v) => Div(v, softness),
+      /* Clamp between 0 and 1 */
+      (v) => Saturate(v)
+    )
 
     return CustomShaderMaterialMaster({
-      fragColor: vec3(x, y, 0.0)
+      fragColor: Mul(new Color("white"), distance)
     })
   })
 
@@ -31,8 +47,9 @@ export default function Shield() {
 
         <CustomShaderMaterial
           baseMaterial={MeshStandardMaterial}
-          {...shader}
           transparent
+          depthWrite={false}
+          {...shader}
         />
       </mesh>
 

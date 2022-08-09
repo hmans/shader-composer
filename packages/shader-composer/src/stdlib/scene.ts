@@ -62,6 +62,7 @@ export const SceneDepth = (
 
         /* Render depth texture */
         state.gl.setRenderTarget(renderTarget)
+        state.gl.clear()
         state.gl.render(state.scene, state.camera)
         state.gl.setRenderTarget(null)
       }

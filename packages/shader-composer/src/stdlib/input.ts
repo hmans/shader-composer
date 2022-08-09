@@ -69,4 +69,6 @@ export const updateResolutionUniform = (width: number, height: number) => {
   ;(Resolution.value as Vector2).set(width, height)
 }
 
-export const ScreenUV = Div(FragmentCoordinate, Resolution)
+export const ScreenUV = Vec2($`${FragmentCoordinate} / ${Resolution}`, {
+  name: "Screen UV"
+})
