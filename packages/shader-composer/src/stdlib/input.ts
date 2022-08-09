@@ -1,9 +1,6 @@
 import { Camera, IUniform, PerspectiveCamera, Vector2 } from "three"
 import { GLSLType, JSTypes, Unit, UnitConfig } from "../units"
 
-export const uniformName = (unit: Unit) =>
-  unit._unitConfig.uniformName ?? `u_${unit._unitConfig.variableName}`
-
 export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
   type: T,
   uniform: IUniform,
@@ -13,15 +10,12 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
   const unit = Unit(type, undefined, {
     name: `Uniform (${type})`,
     ...extras,
-    uniform,
-    variable: false
+    uniform
   })
 
   /* Return the unit with some API bits mixed in. */
   return {
     ...unit,
-
-    toString: () => uniformName(unit),
 
     /** The uniform's value. */
     set value(v: U) {

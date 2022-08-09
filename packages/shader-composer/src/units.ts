@@ -76,15 +76,6 @@ export type UnitConfig<T extends GLSLType> = {
   only?: Program
 
   /**
-   * When set to true, the value of this unit will be represented
-   * as a "global" variable (within the program's `main` function.)
-   * Defaults to true, since most units will want to use this.
-   * When you set this to false, you need to override the unit's
-   * `toString` function to allow other units to reference it.
-   */
-  variable: boolean
-
-  /**
    * When set to true, this variable will automatically declare a varying,
    * calculate/source its value in the vertex program only, and pass the
    * result to the fragment program through that varying. Default: false.
@@ -119,7 +110,6 @@ export type UnitConfig<T extends GLSLType> = {
 export type Unit<T extends GLSLType = any> = {
   _: "Unit"
   _unitConfig: UnitConfig<T>
-  toString: () => string
 }
 
 export const Unit = <T extends GLSLType>(
@@ -131,7 +121,6 @@ export const Unit = <T extends GLSLType>(
     name: "Anonymous",
     type,
     value,
-    variable: true,
     varying: false,
     variableName: identifier("var", Math.floor(Math.random() * 1000000)),
     ..._config
@@ -139,7 +128,6 @@ export const Unit = <T extends GLSLType>(
 
   const unit: Unit<T> = {
     _: "Unit",
-    toString: () => config.variableName,
     _unitConfig: config
   }
 
@@ -152,3 +140,6 @@ export function isUnit(value: any): value is Unit {
 
 export const isUnitInProgram = (unit: Unit, program: Program) =>
   [undefined, program].includes(unit._unitConfig.only)
+
+export const uniformName = (unit: Unit) =>
+  unit._unitConfig.uniformName ?? `u_${unit._unitConfig.variableName}`

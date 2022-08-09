@@ -2,9 +2,15 @@ import { IUniform } from "three"
 import { Expression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, renameSnippet, Snippet } from "./snippets"
-import { uniformName } from "./stdlib"
 import { Item, walkTree } from "./tree"
-import { isUnit, isUnitInProgram, Program, Unit, UpdateCallback } from "./units"
+import {
+  isUnit,
+  isUnitInProgram,
+  Program,
+  uniformName,
+  Unit,
+  UpdateCallback
+} from "./units"
 import {
   assignment,
   block,
@@ -90,7 +96,7 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
   /*
 	Declare the unit's global variable, and assign the specified value to it.
 	*/
-  if (unit._unitConfig.variable) {
+  if (!unit._unitConfig.uniform) {
     state.body.push(
       statement(unit._unitConfig.type, unit._unitConfig.variableName, "=", value)
     )
@@ -104,21 +110,21 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
     state.body.push(
       block(
         /* Declare local value variable */
-        unit._unitConfig.variable &&
+        !unit._unitConfig.uniform &&
           statement(unit._unitConfig.type, "value", "=", unit._unitConfig.variableName),
 
         /* Include body chunk */
         unit._unitConfig[program]?.body,
 
         /* Re-assign local value variable to global variable */
-        unit._unitConfig.variable && assignment(unit._unitConfig.variableName, "value")
+        !unit._unitConfig.uniform && assignment(unit._unitConfig.variableName, "value")
       )
     )
 
   /*
 	If we're in varying mode and vertex, write value to the varying, too.
 	*/
-  if (unit._unitConfig.variable && unit._unitConfig.varying && program === "vertex") {
+  if (!unit._unitConfig.uniform && unit._unitConfig.varying && program === "vertex") {
     state.body.push(
       assignment(`v_${unit._unitConfig.variableName}`, unit._unitConfig.variableName)
     )
