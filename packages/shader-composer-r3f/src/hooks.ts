@@ -16,6 +16,8 @@ export const useShader = (ctor: () => Unit, deps?: any) => {
 
   useFrame(({ gl, scene, camera }, dt) => {
     updateCameraUniforms(camera)
+
+    /* TODO: use gl's dom element dimensions */
     updateResolutionUniform(window.innerWidth, window.innerHeight)
     update(dt)
   })
