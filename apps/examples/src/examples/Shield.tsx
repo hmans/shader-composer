@@ -1,43 +1,53 @@
 import { useThree } from "@react-three/fiber"
+import { useControls } from "leva"
 import {
+  Add,
   ConvertToViewSpace,
   CustomShaderMaterialMaster,
+  Div,
+  Fresnel,
   Mul,
+  OneMinus,
   pipe,
   Saturate,
   SceneDepth,
   ScreenUV,
+  Smoothstep,
   SplitVector2,
   Sub,
   VertexPosition
 } from "shader-composer"
-import { useShader } from "shader-composer-r3f"
-import { Color, MeshStandardMaterial } from "three"
+import { useShader, useUniform } from "shader-composer-r3f"
+import { Color, DoubleSide, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function Shield() {
   const { camera, gl, scene } = useThree()
 
+  const controls = useControls("Force Field", {
+    color: "cyan",
+    intensity: { value: 3, min: 0, max: 10 }
+  })
+
+  const color = useUniform("vec3", new Color(controls.color))
+  const intensity = useUniform("float", controls.intensity)
+
   const shader = useShader(() => {
-    /* Read existing depth from depth texture */
     const sceneDepth = SceneDepth(ScreenUV, { camera, gl, scene })
 
     const distance = pipe(
       VertexPosition,
-      /* Convert position to view space and grab depth */
       (v) => ConvertToViewSpace(v).z,
-      /* Subtract from the existing scene depth at the fragment coordinate */
+      (v) => Add(v, 0.5),
       (v) => Sub(v, sceneDepth),
-      /* Divide by softness factor */
-      // (v) => Div(v, softness),
-      /* Clamp between 0 and 1 */
-      (v) => Saturate(v)
+      (v) => Smoothstep(0, 1, v)
     )
 
     return CustomShaderMaterialMaster({
-      fragColor: Mul(new Color("white"), distance)
+      emissiveColor: Mul(color, intensity),
+      alpha: Add(0.005, Mul(OneMinus(distance), 0.3))
     })
-  })
+  }, [])
 
   console.log(shader.fragmentShader)
 
@@ -50,6 +60,7 @@ export default function Shield() {
           baseMaterial={MeshStandardMaterial}
           transparent
           depthWrite={false}
+          side={DoubleSide}
           {...shader}
         />
       </mesh>
