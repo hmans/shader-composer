@@ -35,7 +35,7 @@ export default function ForceField() {
   const strength = useUniform("float", controls.strength)
 
   const shader = useShader(() => {
-    const sceneDepth = SceneDepth(ScreenUV, { camera, gl, scene })
+    const sceneDepth = SceneDepth(ScreenUV)
 
     const distance = pipe(
       VertexPosition,
