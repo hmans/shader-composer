@@ -9,92 +9,93 @@ import { PostProcessing } from "./PostProcessing"
 import Stage from "./Stage"
 
 function Navigation({ examples }: { examples: Examples }) {
-	return (
-		<div style={{ position: "fixed", top: 10, left: 10, zIndex: 1 }}>
-			{Object.entries(examples).map(([name, _]) => (
-				<Link to={`/examples/${name}`} key={name}>
-					{name}
-				</Link>
-			))}
-		</div>
-	)
+  return (
+    <div style={{ position: "fixed", top: 10, left: 10, zIndex: 1 }}>
+      {Object.entries(examples).map(([name, _]) => (
+        <Link to={`/examples/${name}`} key={name}>
+          {name}
+        </Link>
+      ))}
+    </div>
+  )
 }
 
 function Example({ examples }: { examples: Examples }) {
-	const [match, params] = useRoute("/examples/:name")
-	const name = match ? params.name : "HelloWorld"
-	const Component = examples[name as keyof typeof examples]
+  const [match, params] = useRoute("/examples/:name")
+  const name = match ? params.name : "HelloWorld"
+  const Component = examples[name as keyof typeof examples]
 
-	return <Component />
+  return <Component />
 }
 
 export type Examples = Record<string, any>
 
 const Spinner = () => {
-	const mesh = useRef<Mesh>(null!)
+  const mesh = useRef<Mesh>(null!)
 
-	useFrame(({ clock }, dt) => {
-		const a = Math.pow((Math.sin(clock.elapsedTime * 7) + 2) * 0.5, 3)
-		mesh.current.rotation.y += (1 + a) * dt
-	})
+  useFrame(({ clock }, dt) => {
+    const a = Math.pow((Math.sin(clock.elapsedTime * 7) + 2) * 0.5, 3)
+    mesh.current.rotation.y += (1 + a) * dt
+  })
 
-	return (
-		<mesh ref={mesh} scale={0.2}>
-			<dodecahedronGeometry />
-			<meshStandardMaterial color="#666" />
-		</mesh>
-	)
+  return (
+    <mesh ref={mesh} scale={0.2}>
+      <dodecahedronGeometry />
+      <meshStandardMaterial color="#666" />
+    </mesh>
+  )
 }
 
 export const Venue: FC<{
-	children?: ReactNode
-	examples?: Examples
-	performance?: boolean
+  children?: ReactNode
+  examples?: Examples
+  performance?: boolean
 }> = ({ children, examples, performance = true }) => {
-	const opts = useControls("Rendering", {
-		dpr: { value: 1, min: 0.125, max: 2 },
-		postProcessing: true
-	})
+  const opts = useControls("Rendering", {
+    dpr: { value: 1, min: 0.125, max: 2 },
+    postProcessing: true
+  })
 
-	return (
-		<>
-			{examples && <Navigation examples={examples} />}
-			<Canvas
-				dpr={opts.dpr}
-				flat
-				gl={{
-					powerPreference: "high-performance",
-					alpha: false,
-					depth: true,
-					stencil: false,
-					antialias: false
-				}}
-			>
-				<Suspense>
-					<Environment preset="sunset" />
-					<fogExp2 args={["#000", 0.03]} attach="fog" />
-					<PerspectiveCamera position={[0, 0, 5]} makeDefault />
-					{opts.postProcessing && <PostProcessing />}
+  return (
+    <>
+      {examples && <Navigation examples={examples} />}
+      <Canvas
+        shadows
+        dpr={opts.dpr}
+        flat
+        gl={{
+          powerPreference: "high-performance",
+          alpha: false,
+          depth: true,
+          stencil: false,
+          antialias: false
+        }}
+      >
+        <Suspense>
+          <Environment preset="sunset" />
+          <fogExp2 args={["#000", 0.03]} attach="fog" />
+          <PerspectiveCamera position={[0, 0, 5]} makeDefault />
+          {opts.postProcessing && <PostProcessing />}
 
-					<OrbitControls
-						makeDefault
-						maxDistance={10}
-						minDistance={3}
-						minPolarAngle={Math.PI * 0.25}
-						maxPolarAngle={Math.PI * 0.75}
-					/>
+          <OrbitControls
+            makeDefault
+            maxDistance={10}
+            minDistance={3}
+            minPolarAngle={Math.PI * 0.25}
+            maxPolarAngle={Math.PI * 0.75}
+          />
 
-					{performance && <Perf position="bottom-right" />}
+          {performance && <Perf position="bottom-right" />}
 
-					<Stage />
+          <Stage />
 
-					<Suspense fallback={<Spinner />}>
-						{examples && <Example examples={examples} />}
-					</Suspense>
+          <Suspense fallback={<Spinner />}>
+            {examples && <Example examples={examples} />}
+          </Suspense>
 
-					{children}
-				</Suspense>
-			</Canvas>
-		</>
-	)
+          {children}
+        </Suspense>
+      </Canvas>
+    </>
+  )
 }

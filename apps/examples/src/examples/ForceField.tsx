@@ -1,3 +1,4 @@
+import { Float } from "@react-three/drei"
 import { MeshProps } from "@react-three/fiber"
 import { useControls } from "leva"
 import {
@@ -73,27 +74,31 @@ export default function ForceField() {
 
   return (
     <group>
-      <mesh>
-        <icosahedronGeometry args={[1.3, 8]} />
+      <Float floatIntensity={1} speed={2}>
+        <mesh>
+          <icosahedronGeometry args={[1.3, 8]} />
 
-        <CustomShaderMaterial
-          baseMaterial={MeshStandardMaterial}
-          transparent
-          depthWrite={false}
-          {...shader}
+          <CustomShaderMaterial
+            baseMaterial={MeshStandardMaterial}
+            transparent
+            depthWrite={false}
+            {...shader}
+          />
+        </mesh>
+
+        <pointLight
+          intensity={8}
+          decay={2}
+          distance={3.5}
+          color="cyan"
+          castShadow
+          shadow-mapSize-height={512}
+          shadow-mapSize-width={512}
         />
-      </mesh>
+      </Float>
 
       <Floor />
       <Player position-y={-0.125} />
-
-      <pointLight
-        position={[0, 1, 0]}
-        intensity={8}
-        decay={2}
-        distance={3.5}
-        color="cyan"
-      />
 
       <Obstacle position={[1.25, -0.75, -0.5]} />
       <Obstacle position={[-0.75, -0.75, 1]} scale={[1, 0.75, 0.75]} />
@@ -107,14 +112,14 @@ export default function ForceField() {
 }
 
 const Floor = () => (
-  <mesh position={[0, -1, 0]}>
+  <mesh receiveShadow position={[0, -1, 0]}>
     <boxGeometry args={[5, 1, 5]} />
-    <meshStandardMaterial color="#555" metalness={0} roughness={0.5} />
+    <meshStandardMaterial color="#555" metalness={0} roughness={0.8} />
   </mesh>
 )
 
 const Obstacle = (props: MeshProps) => (
-  <mesh {...props}>
+  <mesh castShadow {...props}>
     <icosahedronGeometry />
     <meshStandardMaterial color="#333" metalness={0} roughness={0.8} />
   </mesh>
