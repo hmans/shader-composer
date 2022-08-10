@@ -6,7 +6,7 @@ import { CameraFar, CameraNear, Uniform } from "./input"
 import { Texture2D } from "./textures"
 import { Float } from "./values"
 
-export const ReadDepth = (
+export const ReadPerspectiveDepth = (
   xy: Input<"vec2">,
   depthTexture: Unit<"sampler2D">,
   cameraNear: Input<"float"> = CameraNear,
@@ -40,7 +40,7 @@ export const SceneDepth = (xy: Input<"vec2">) => {
   const uniform = Uniform("sampler2D", renderTargets[0].depthTexture)
 
   return Float(
-    ReadDepth(xy, uniform, CameraNear, CameraFar),
+    ReadPerspectiveDepth(xy, uniform, CameraNear, CameraFar),
 
     {
       name: "Scene Depth",
