@@ -26,6 +26,11 @@ import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { useRepeatingTexture } from "./helpers"
 
+const Layers = {
+  Default: 1,
+  TransparentFX: 2
+}
+
 export default function ForceField() {
   /* Use Leva for some user input */
   const controls = useControls("Force Field", {
@@ -48,7 +53,7 @@ export default function ForceField() {
     const texture = Texture2D(sampler2D, TilingUV(UV, vec2(4, 2), textureOffset))
 
     /* Get the depth of the current fragment. */
-    const sceneDepth = SceneDepth(ScreenUV)
+    const sceneDepth = SceneDepth(ScreenUV, { layer: Layers.TransparentFX })
 
     const distance = pipe(
       VertexPosition,
@@ -75,7 +80,7 @@ export default function ForceField() {
   return (
     <group>
       <Float floatIntensity={1} speed={2}>
-        <mesh>
+        <mesh layers-mask={Layers.Default + Layers.TransparentFX}>
           <icosahedronGeometry args={[1.3, 8]} />
 
           <CustomShaderMaterial

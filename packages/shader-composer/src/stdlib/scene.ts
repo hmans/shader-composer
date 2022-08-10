@@ -21,7 +21,15 @@ export const ReadPerspectiveDepth = (
     { name: "Read Depth from Depth Texture" }
   )
 
-export const SceneDepth = (xy: Input<"vec2">, resolution = 0.5) => {
+export type SceneDepthOptions = {
+  resolution?: number
+  layer?: number
+}
+
+export const SceneDepth = (
+  xy: Input<"vec2">,
+  { resolution = 0.5, layer }: SceneDepthOptions = {}
+) => {
   const width = 256
   const height = 256
 
@@ -56,11 +64,17 @@ export const SceneDepth = (xy: Input<"vec2">, resolution = 0.5) => {
           renderTarget.setSize(width, height)
         }
 
+        /* If a layer was given, disable it for rendering */
+        if (layer !== undefined) camera.layers.disable(layer)
+
         /* Render depth texture */
         gl.setRenderTarget(renderTarget)
         gl.clear()
         gl.render(scene, camera)
         gl.setRenderTarget(null)
+
+        /* If a layer was given, re-enable it again */
+        if (layer !== undefined) camera.layers.enable(layer)
 
         /* Cycle render targets */
         uniform.value = renderTargets[cursor].depthTexture
