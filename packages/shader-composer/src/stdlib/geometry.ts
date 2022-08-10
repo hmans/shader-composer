@@ -13,10 +13,24 @@ export const ModelMatrix = Mat4($`modelMatrix`, {
   varying: true
 })
 
-export const InstanceMatrix = Mat4($`instanceMatrix`, {
-  name: "Instance Matrix",
+export const ModelViewMatrix = Mat4($`modelViewMatrix`, {
+  name: "ModelView Matrix",
   varying: true
 })
+
+export const InstanceMatrix = Mat4(
+  $`
+    #ifdef USE_INSTANCING
+      instanceMatrix
+    #else
+      mat4(1.0)
+    #endif
+`,
+  {
+    name: "Instance Matrix",
+    varying: true
+  }
+)
 
 export const UV = Vec2($`uv`, {
   name: "UV",

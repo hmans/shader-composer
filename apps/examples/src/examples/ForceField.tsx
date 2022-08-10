@@ -3,6 +3,7 @@ import {
   Add,
   CustomShaderMaterialMaster,
   Fresnel,
+  LocalToViewSpace,
   Mul,
   OneMinus,
   pipe,
@@ -14,7 +15,6 @@ import {
   Texture2D,
   TilingUV,
   Time,
-  LocalToViewSpace,
   UV,
   vec2,
   VertexPosition
