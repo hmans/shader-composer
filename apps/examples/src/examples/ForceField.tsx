@@ -11,7 +11,6 @@ import {
   PerspectiveDepth,
   pipe,
   Saturate,
-  SceneDepthTexture,
   ScreenUV,
   Smoothstep,
   Sub,
@@ -23,6 +22,7 @@ import {
   VertexPosition
 } from "shader-composer"
 import { useShader, useUniform } from "shader-composer-r3f"
+import { SceneDepthTexture } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { useRepeatingTexture } from "./helpers"
