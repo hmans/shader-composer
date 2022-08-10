@@ -21,7 +21,7 @@ import {
   vec2,
   VertexPosition
 } from "shader-composer"
-import { useShader, useUniform } from "shader-composer-r3f"
+import { useShader, useUniformUnit } from "shader-composer-r3f"
 import { SceneDepthTexture } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
@@ -41,10 +41,13 @@ export default function ForceField() {
   })
 
   /* Create a bunch of uniforms */
-  const color = useUniform("vec3", new Color(controls.color))
-  const intensity = useUniform("float", controls.intensity)
-  const strength = useUniform("float", controls.strength)
-  const sampler2D = useUniform("sampler2D", useRepeatingTexture("/textures/hexgrid.jpg"))
+  const color = useUniformUnit("vec3", new Color(controls.color))
+  const intensity = useUniformUnit("float", controls.intensity)
+  const strength = useUniformUnit("float", controls.strength)
+  const sampler2D = useUniformUnit(
+    "sampler2D",
+    useRepeatingTexture("/textures/hexgrid.jpg")
+  )
 
   /* Define our shader */
   const shader = useShader(() => {
