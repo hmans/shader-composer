@@ -14,7 +14,7 @@ import {
   VertexNormal,
   VertexPosition
 } from "shader-composer"
-import { useShader, useUniform } from "shader-composer-r3f"
+import { useShader, useUniformUnit } from "shader-composer-r3f"
 import { PSRDNoise3D, Turbulence3D } from "shader-composer-toybox"
 import { MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
@@ -28,9 +28,9 @@ export default function Fireball() {
   })
 
   /* Create some uniforms. */
-  const turbulenceScale = useUniform("float", controls.turbulenceScale)
-  const turbulenceOctaves = useUniform("float", controls.turbulenceOctaves)
-  const sampler2D = useUniform("sampler2D", useTexture(textureUrl))
+  const turbulenceScale = useUniformUnit("float", controls.turbulenceScale)
+  const turbulenceOctaves = useUniformUnit("float", controls.turbulenceOctaves)
+  const sampler2D = useUniformUnit("sampler2D", useTexture(textureUrl))
 
   /* Create our shader. */
   const shader = useShader(() => {

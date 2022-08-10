@@ -23,7 +23,7 @@ export const useShader = (ctor: () => Unit, deps?: any) => {
   return shader
 }
 
-export const useUniform = <T extends GLSLType>(
+export const useUniformUnit = <T extends GLSLType>(
   type: T,
   value: JSTypes[T],
   config?: UnitConfig<T>
