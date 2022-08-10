@@ -11,7 +11,7 @@ import {
   PerspectiveDepth,
   pipe,
   Saturate,
-  SceneDepth,
+  SceneDepthTexture,
   ScreenUV,
   Smoothstep,
   Sub,
@@ -54,7 +54,7 @@ export default function ForceField() {
     const texture = Texture2D(sampler2D, TilingUV(UV, vec2(4, 2), textureOffset))
 
     /* Get the depth of the current fragment. */
-    const sceneDepthTexture = SceneDepth({ layer: Layers.TransparentFX })
+    const sceneDepthTexture = SceneDepthTexture({ layer: Layers.TransparentFX })
     const sceneDepth = PerspectiveDepth(ScreenUV, sceneDepthTexture)
 
     const distance = pipe(

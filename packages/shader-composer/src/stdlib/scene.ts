@@ -40,12 +40,15 @@ export const PerspectiveDepth = (
     { name: "Read Depth from Depth Texture (Eye Space)" }
   )
 
-export type SceneDepthOptions = {
+export type SceneDepthTextureOptions = {
   resolution?: number
   layer?: number
 }
 
-export const SceneDepth = ({ resolution = 0.5, layer }: SceneDepthOptions = {}) => {
+export const SceneDepthTexture = ({
+  resolution = 0.5,
+  layer
+}: SceneDepthTextureOptions = {}) => {
   const width = 256
   const height = 256
 
