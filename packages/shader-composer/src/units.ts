@@ -1,4 +1,15 @@
-import { Color, Matrix3, Matrix4, Texture, Vector2, Vector3, Vector4 } from "three"
+import {
+  Camera,
+  Color,
+  Matrix3,
+  Matrix4,
+  Scene,
+  Texture,
+  Vector2,
+  Vector3,
+  Vector4,
+  WebGLRenderer
+} from "three"
 import { Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
@@ -22,7 +33,7 @@ export type JSTypes = {
   bool: boolean
   float: number
   int: number
-  vec2: Vector2 | [number, number]
+  vec2: Vector2
   vec3: Vector3 | Color
   vec4: Vector4
   mat3: Matrix3
@@ -40,7 +51,12 @@ TODO: Remove `Value` type!
 */
 export type Value<T extends GLSLType> = Input<T>
 
-export type UpdateCallback = (dt: number) => void
+export type UpdateCallback = (
+  dt: number,
+  camera: Camera,
+  scene: Scene,
+  gl: WebGLRenderer
+) => void
 
 export type UnitConfig<T extends GLSLType> = {
   /**
@@ -76,15 +92,6 @@ export type UnitConfig<T extends GLSLType> = {
   only?: Program
 
   /**
-   * When set to true, the value of this unit will be represented
-   * as a "global" variable (within the program's `main` function.)
-   * Defaults to true, since most units will want to use this.
-   * When you set this to false, you need to override the unit's
-   * `toString` function to allow other units to reference it.
-   */
-  variable: boolean
-
-  /**
    * When set to true, this variable will automatically declare a varying,
    * calculate/source its value in the vertex program only, and pass the
    * result to the fragment program through that varying. Default: false.
@@ -104,6 +111,11 @@ export type UnitConfig<T extends GLSLType> = {
    */
   update?: UpdateCallback
 
+  /**
+   * A callback that will be executed when the shader is being disposed.
+   */
+  dispose?: () => void
+
   /* Chunks */
   vertex?: {
     header?: Expression
@@ -119,7 +131,6 @@ export type UnitConfig<T extends GLSLType> = {
 export type Unit<T extends GLSLType = any> = {
   _: "Unit"
   _unitConfig: UnitConfig<T>
-  toString: () => string
 }
 
 export const Unit = <T extends GLSLType>(
@@ -131,7 +142,6 @@ export const Unit = <T extends GLSLType>(
     name: "Anonymous",
     type,
     value,
-    variable: true,
     varying: false,
     variableName: identifier("var", Math.floor(Math.random() * 1000000)),
     ..._config
@@ -139,7 +149,6 @@ export const Unit = <T extends GLSLType>(
 
   const unit: Unit<T> = {
     _: "Unit",
-    toString: () => config.variableName,
     _unitConfig: config
   }
 
@@ -152,3 +161,6 @@ export function isUnit(value: any): value is Unit {
 
 export const isUnitInProgram = (unit: Unit, program: Program) =>
   [undefined, program].includes(unit._unitConfig.only)
+
+export const uniformName = (unit: Unit) =>
+  unit._unitConfig.uniformName ?? `u_${unit._unitConfig.variableName}`

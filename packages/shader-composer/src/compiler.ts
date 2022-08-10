@@ -1,10 +1,9 @@
-import { IUniform } from "three"
+import { Camera, IUniform, Scene, WebGLRenderer } from "three"
 import { Expression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, renameSnippet, Snippet } from "./snippets"
-import { uniformName } from "./stdlib"
-import { Item, walkTree } from "./tree"
-import { isUnit, isUnitInProgram, Program, Unit, UpdateCallback } from "./units"
+import { collectFromTree, Item, walkTree } from "./tree"
+import { isUnit, isUnitInProgram, Program, uniformName, Unit } from "./units"
 import {
   assignment,
   block,
@@ -47,11 +46,6 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
     )
   }
 
-  /* Register update callback, if given */
-  if (unit._unitConfig.update) {
-    state.updates.add(unit._unitConfig.update)
-  }
-
   /* HEADER */
   const header = new Array<Part>()
 
@@ -90,7 +84,7 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
   /*
 	Declare the unit's global variable, and assign the specified value to it.
 	*/
-  if (unit._unitConfig.variable) {
+  if (!unit._unitConfig.uniform) {
     state.body.push(
       statement(unit._unitConfig.type, unit._unitConfig.variableName, "=", value)
     )
@@ -104,21 +98,21 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
     state.body.push(
       block(
         /* Declare local value variable */
-        unit._unitConfig.variable &&
+        !unit._unitConfig.uniform &&
           statement(unit._unitConfig.type, "value", "=", unit._unitConfig.variableName),
 
         /* Include body chunk */
         unit._unitConfig[program]?.body,
 
         /* Re-assign local value variable to global variable */
-        unit._unitConfig.variable && assignment(unit._unitConfig.variableName, "value")
+        !unit._unitConfig.uniform && assignment(unit._unitConfig.variableName, "value")
       )
     )
 
   /*
 	If we're in varying mode and vertex, write value to the varying, too.
 	*/
-  if (unit._unitConfig.variable && unit._unitConfig.varying && program === "vertex") {
+  if (!unit._unitConfig.uniform && unit._unitConfig.varying && program === "vertex") {
     state.body.push(
       assignment(`v_${unit._unitConfig.variableName}`, unit._unitConfig.variableName)
     )
@@ -199,17 +193,24 @@ export const compileShader = (root: Unit) => {
   /*
 	STEP 5: Collect update callbacks.
 	*/
-  const updates = new Set<UpdateCallback>([
-    ...vertexState.updates,
-    ...fragmentState.updates
-  ])
+  const unitsWithUpdates = collectFromTree(
+    root,
+    "any",
+    (item) => isUnit(item) && !!item._unitConfig.update
+  )
 
   /*
 	STEP 6: Build per-frame update function.
 	*/
-  const update = (dt: number) => {
-    updates.forEach((u) => u(dt))
+  const update = (dt: number, camera: Camera, scene: Scene, gl: WebGLRenderer) => {
+    for (const unit of unitsWithUpdates) {
+      unit._unitConfig.update(dt, camera, scene, gl)
+    }
   }
+
+  /* Build a dispose function */
+  const allUnits: Unit[] = collectFromTree(root, "any", isUnit)
+  const dispose = () => allUnits.forEach((u) => u._unitConfig.dispose?.())
 
   /*
 	DONE! Let's return everything and go on a lengthy vacation somewhere nice.
@@ -221,7 +222,8 @@ export const compileShader = (root: Unit) => {
   }
 
   const meta = {
-    update
+    update,
+    dispose
   }
 
   return [shader, meta] as const
@@ -234,6 +236,5 @@ const CompilerState = () => ({
   body: new Array<Part>(),
   nextid: idGenerator(),
   seen: new Set<Item>(),
-  uniforms: new Map<string, IUniform>(),
-  updates: new Set<UpdateCallback>()
+  uniforms: new Map<string, IUniform>()
 })

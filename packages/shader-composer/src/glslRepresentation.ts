@@ -1,15 +1,19 @@
 import { Color, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "three"
 import { isExpression } from "./expressions"
 import { isSnippet } from "./snippets"
-import { GLSLType, isUnit, Input } from "./units"
+import { GLSLType, isUnit, Input, uniformName } from "./units"
 
 export const glslRepresentation = (
   value: Input | undefined,
   typeHint?: GLSLType
 ): string => {
   if (value === undefined) return ""
-  if (isUnit(value)) return value.toString()
+
+  if (isUnit(value))
+    return value._unitConfig.uniform ? uniformName(value) : value._unitConfig.variableName
+
   if (isExpression(value)) return value.render()
+
   if (isSnippet(value)) return value.name
 
   if (typeof value === "string") return value
