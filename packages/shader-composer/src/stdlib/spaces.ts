@@ -1,15 +1,14 @@
 import { $ } from "../expressions"
-import { type } from "../glslType"
 import { Input } from "../units"
 import { InstanceMatrix, ModelMatrix, ModelViewMatrix } from "./geometry"
-import { Vec3, Vec4 } from "./values"
+import { Vec3 } from "./values"
 
 export const localToViewSpace = (v: Input<"vec3">) => $`
-  vec3(${InstanceMatrix} * ${ModelViewMatrix} * vec4(${v}, 1.0))
+  vec3(${ModelViewMatrix} * ${InstanceMatrix} * vec4(${v}, 1.0))
 `
 
 export const localToWorldSpace = (v: Input<"vec3">) => $`
-  vec3(${InstanceMatrix} * ${ModelMatrix} * vec4(${v}, 1.0))
+  vec3(${ModelMatrix} * ${InstanceMatrix} * vec4(${v}, 1.0))
 `
 
 /**
