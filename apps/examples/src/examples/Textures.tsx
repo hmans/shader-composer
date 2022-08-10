@@ -23,7 +23,7 @@ export default function Textures() {
     const offset = vec2(Mul(Time(), 0.05), 0)
 
     /* Create a texture sampler */
-    const sampler2D = Uniform("sampler2D", { value: texture })
+    const sampler2D = Uniform("sampler2D", texture)
 
     /* Get the texture information for the current fragment */
     const tex2d = Texture2D(sampler2D, TilingUV(UV, vec2(2, 1), offset))

@@ -29,7 +29,7 @@ export const useUniform = <T extends GLSLType>(
   config?: UnitConfig<T>
 ) => {
   const uniform = useMemo(() => {
-    return Uniform(type, { value }, config)
+    return Uniform(type, value, config)
   }, [])
 
   useLayoutEffect(() => {

@@ -37,7 +37,7 @@ export const SceneDepth = (xy: Input<"vec2">) => {
 
   let cursor = 0
 
-  const uniform = Uniform("sampler2D", { value: renderTargets[0].depthTexture })
+  const uniform = Uniform("sampler2D", renderTargets[0].depthTexture)
 
   return Float(
     ReadDepth(xy, uniform, CameraNear, CameraFar),
