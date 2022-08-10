@@ -1,6 +1,6 @@
 import { PerspectiveCamera, Vector2 } from "three"
 import { $ } from "../expressions"
-import { GLSLType, JSTypes, Unit, UnitConfig } from "../units"
+import { GLSLType, JSTypes, Unit, UnitConfig, UpdateCallback } from "../units"
 import { Vec2 } from "./values"
 
 /**
@@ -11,11 +11,15 @@ export const FragmentCoordinate = Vec2($`gl_FragCoord.xy`, {
   only: "fragment"
 })
 
-export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
+export type Uniform<T extends GLSLType, J extends JSTypes[T] = JSTypes[T]> = Unit<T> & {
+  value: J
+}
+
+export const Uniform = <T extends GLSLType, J extends JSTypes[T]>(
   type: T,
-  initialValue: U,
+  initialValue: J,
   extras?: Partial<UnitConfig<T>>
-) => {
+): Uniform<T, J> => {
   const uniform = { value: initialValue }
 
   /* Create the actual unit that represents the uniform. */
@@ -30,54 +34,53 @@ export const Uniform = <T extends GLSLType, U extends JSTypes[T]>(
     ...unit,
 
     /** The uniform's value. */
-    set value(v: U) {
+    set value(v: J) {
       uniform.value = v
     },
 
-    get value(): U {
+    get value(): J {
       return uniform.value
     }
   }
 }
 
 export const Time = (initial: number = 0) => {
-  const uniform = Uniform("float", initial, {
-    name: "Time Uniform"
+  const uniform: Uniform<"float"> = Uniform("float", initial, {
+    name: "Time Uniform",
+    update: (dt) => (uniform.value += dt)
   })
-
-  uniform._unitConfig.update = (dt) => (uniform.value += dt)
 
   return uniform
 }
 
 export const Resolution = Uniform("vec2", new Vector2(0, 0), {
-  name: "Current Render Resolution"
-})
+  name: "Current Render Resolution",
 
-Resolution._unitConfig.update = (dt, camera, scene, gl) => {
-  Resolution.value.x = gl.domElement.width
-  Resolution.value.y = gl.domElement.height
-}
+  update: (dt, camera, scene, gl) => {
+    Resolution.value.x = gl.domElement.width
+    Resolution.value.y = gl.domElement.height
+  }
+})
 
 export const CameraNear = Uniform("float", 0 as number, {
-  name: "Camera Near Plane"
-})
+  name: "Camera Near Plane",
 
-CameraNear._unitConfig.update = (_, camera) => {
-  if (camera instanceof PerspectiveCamera) {
-    CameraNear.value = camera.near
+  update: (_, camera) => {
+    if (camera instanceof PerspectiveCamera) {
+      CameraNear.value = camera.near
+    }
   }
-}
+})
 
 export const CameraFar = Uniform("float", 0 as number, {
-  name: "Camera Far Plane"
-})
+  name: "Camera Far Plane",
 
-CameraFar._unitConfig.update = (_, camera) => {
-  if (camera instanceof PerspectiveCamera) {
-    CameraFar.value = camera.far
+  update: (_, camera) => {
+    if (camera instanceof PerspectiveCamera) {
+      CameraFar.value = camera.far
+    }
   }
-}
+})
 
 export const ScreenUV = Vec2($`${FragmentCoordinate} / ${Resolution}`, {
   name: "Screen UV"
