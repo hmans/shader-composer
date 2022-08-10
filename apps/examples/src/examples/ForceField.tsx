@@ -52,7 +52,7 @@ export default function ForceField() {
     const distance = pipe(
       VertexPosition,
       (v) => LocalToViewSpace(v).z,
-      (v) => Add(v, 0.5),
+      (v) => Add(v, 0.4),
       (v) => Sub(v, sceneDepth),
       (v) => Smoothstep(0, 1, v)
     )
@@ -65,7 +65,7 @@ export default function ForceField() {
         (v) => OneMinus(v),
         (v) => Mul(v, strength),
         (v) => Add(v, Mul(texture.x, 0.01)),
-        (v) => Add(v, Fresnel({ power: 3 })),
+        (v) => Add(v, Fresnel({ power: 2 })),
         (v) => Saturate(v)
       )
     })
