@@ -19,6 +19,14 @@ export const ModelViewMatrix = Mat4($`modelViewMatrix`, {
   varying: true
 })
 
+export const UsingInstancing = Bool($`
+  #ifdef USE_INSTANCING
+    true
+  #else
+    false
+  #endif
+`)
+
 export const InstanceMatrix = Mat4(
   $`
     #ifdef USE_INSTANCING
