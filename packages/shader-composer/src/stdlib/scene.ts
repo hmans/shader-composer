@@ -6,7 +6,7 @@ import { CameraFar, CameraNear, Uniform } from "./input"
 import { Texture2D } from "./textures"
 import { Float } from "./values"
 
-export const ReadPerspectiveDepth = (
+export const PerspectiveDepth = (
   xy: Input<"vec2">,
   depthTexture: Unit<"sampler2D">,
   cameraNear: Input<"float"> = CameraNear,
@@ -26,10 +26,7 @@ export type SceneDepthOptions = {
   layer?: number
 }
 
-export const SceneDepth = (
-  xy: Input<"vec2">,
-  { resolution = 0.5, layer }: SceneDepthOptions = {}
-) => {
+export const SceneDepth = ({ resolution = 0.5, layer }: SceneDepthOptions = {}) => {
   const width = 256
   const height = 256
 
@@ -45,46 +42,42 @@ export const SceneDepth = (
 
   let cursor = 0
 
-  const uniform = Uniform("sampler2D", renderTargets[0].depthTexture)
+  const uniform = Uniform("sampler2D", renderTargets[0].depthTexture, {
+    name: "Scene Depth Texture",
 
-  return Float(
-    ReadPerspectiveDepth(xy, uniform, CameraNear, CameraFar),
+    update: (dt, camera, scene, gl) => {
+      const renderTarget = renderTargets[cursor]
 
-    {
-      name: "Scene Depth",
+      /* Update rendertarget size if necessary */
+      const width = gl.domElement.width * gl.getPixelRatio() * resolution
+      const height = gl.domElement.height * gl.getPixelRatio() * resolution
 
-      update: (dt, camera, scene, gl) => {
-        const renderTarget = renderTargets[cursor]
-
-        /* Update rendertarget size if necessary */
-        const width = gl.domElement.width * gl.getPixelRatio() * resolution
-        const height = gl.domElement.height * gl.getPixelRatio() * resolution
-
-        if (renderTarget.width !== width || renderTarget.height !== height) {
-          renderTarget.setSize(width, height)
-        }
-
-        /* If a layer was given, disable it for rendering */
-        if (layer !== undefined) camera.layers.disable(layer)
-
-        /* Render depth texture */
-        gl.setRenderTarget(renderTarget)
-        gl.clear()
-        gl.render(scene, camera)
-        gl.setRenderTarget(null)
-
-        /* If a layer was given, re-enable it again */
-        if (layer !== undefined) camera.layers.enable(layer)
-
-        /* Cycle render targets */
-        uniform.value = renderTargets[cursor].depthTexture
-        cursor = (cursor + 1) % 2
-      },
-
-      dispose: () => {
-        renderTargets[0].dispose()
-        renderTargets[1].dispose()
+      if (renderTarget.width !== width || renderTarget.height !== height) {
+        renderTarget.setSize(width, height)
       }
+
+      /* If a layer was given, disable it for rendering */
+      if (layer !== undefined) camera.layers.disable(layer)
+
+      /* Render depth texture */
+      gl.setRenderTarget(renderTarget)
+      gl.clear()
+      gl.render(scene, camera)
+      gl.setRenderTarget(null)
+
+      /* If a layer was given, re-enable it again */
+      if (layer !== undefined) camera.layers.enable(layer)
+
+      /* Cycle render targets */
+      uniform.value = renderTargets[cursor].depthTexture
+      cursor = (cursor + 1) % 2
+    },
+
+    dispose: () => {
+      renderTargets[0].dispose()
+      renderTargets[1].dispose()
     }
-  )
+  })
+
+  return uniform
 }
