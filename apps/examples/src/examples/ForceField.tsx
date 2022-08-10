@@ -88,7 +88,11 @@ export default function ForceField() {
       <Player position-y={-0.125} />
       <Obstacle position={[1.25, -0.75, -0.5]} />
       <Obstacle position={[-0.75, -0.75, 1]} scale={[1, 0.75, 0.75]} />
-      <Obstacle position={[-1.25, -0.75, -1]} scale={[1, 1, 1.5]} />
+      <Obstacle
+        position={[-1.25, -0.75, -1]}
+        scale={[1, 1, 1.0]}
+        rotation-y={[Math.PI / 4]}
+      />
     </group>
   )
 }
