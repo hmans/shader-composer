@@ -21,17 +21,17 @@ export const ReadPerspectiveDepth = (
     { name: "Read Depth from Depth Texture" }
   )
 
-export const SceneDepth = (xy: Input<"vec2">) => {
-  const width = window.innerWidth
-  const height = window.innerWidth
+export const SceneDepth = (xy: Input<"vec2">, resolution = 0.5) => {
+  const width = 256
+  const height = 256
 
   const renderTargets = [
     new WebGLRenderTarget(width, height, {
-      depthTexture: new DepthTexture(256, 256)
+      depthTexture: new DepthTexture(width, height)
     }),
 
     new WebGLRenderTarget(width, height, {
-      depthTexture: new DepthTexture(256, 256)
+      depthTexture: new DepthTexture(width, height)
     })
   ]
 
@@ -49,8 +49,8 @@ export const SceneDepth = (xy: Input<"vec2">) => {
         const renderTarget = renderTargets[cursor]
 
         /* Update rendertarget size if necessary */
-        const width = gl.domElement.width
-        const height = gl.domElement.height
+        const width = gl.domElement.width * gl.getPixelRatio() * resolution
+        const height = gl.domElement.height * gl.getPixelRatio() * resolution
 
         if (renderTarget.width !== width || renderTarget.height !== height) {
           renderTarget.setSize(width, height)
