@@ -4,6 +4,7 @@
 
 export * from "./artistic"
 export * from "./geometry"
+export * from "./globals"
 export * from "./logic"
 export * from "./masters"
 export * from "./math"

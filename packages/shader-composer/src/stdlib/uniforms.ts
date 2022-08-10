@@ -1,15 +1,8 @@
 import { PerspectiveCamera, Vector2 } from "three"
 import { $ } from "../expressions"
-import { GLSLType, JSTypes, Unit, UnitConfig, UpdateCallback } from "../units"
+import { GLSLType, JSTypes, Unit, UnitConfig } from "../units"
+import { FragmentCoordinate } from "./globals"
 import { Vec2 } from "./values"
-
-/**
- * Returns the current fragment's on-screen coordinate.
- */
-export const FragmentCoordinate = Vec2($`gl_FragCoord.xy`, {
-  name: "Fragment Coordinate",
-  only: "fragment"
-})
 
 export type UniformUnit<T extends GLSLType, J extends JSTypes[T] = JSTypes[T]> = Unit<
   T
