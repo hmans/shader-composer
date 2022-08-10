@@ -25,12 +25,8 @@ import { useShader, useUniformUnit } from "shader-composer-r3f"
 import { SceneDepthTexture } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
+import { Layers } from "../r3f-venue/Layers"
 import { useRepeatingTexture } from "./helpers"
-
-const Layers = {
-  Default: 1,
-  TransparentFX: 2
-}
 
 export default function ForceField() {
   /* Use Leva for some user input */
@@ -85,7 +81,7 @@ export default function ForceField() {
   return (
     <group>
       <Float floatIntensity={1} speed={2}>
-        <mesh layers-mask={Layers.Default + Layers.TransparentFX}>
+        <mesh layers-mask={Layers.TransparentFX}>
           <icosahedronGeometry args={[1.3, 8]} />
 
           <CustomShaderMaterial

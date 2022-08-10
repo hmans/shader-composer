@@ -5,6 +5,7 @@ import { Perf } from "r3f-perf"
 import { FC, ReactNode, Suspense, useRef } from "react"
 import { Mesh } from "three"
 import { Link, useRoute } from "wouter"
+import { Layers } from "./Layers"
 import { PostProcessing } from "./PostProcessing"
 import Stage from "./Stage"
 
@@ -74,7 +75,11 @@ export const Venue: FC<{
         <Suspense>
           <Environment preset="sunset" />
           <fogExp2 args={["#000", 0.03]} attach="fog" />
-          <PerspectiveCamera position={[0, 0, 5]} makeDefault />
+          <PerspectiveCamera
+            position={[0, 0, 5]}
+            layers-mask={Layers.Default + Layers.TransparentFX}
+            makeDefault
+          />
           {opts.postProcessing && <PostProcessing />}
 
           <OrbitControls
