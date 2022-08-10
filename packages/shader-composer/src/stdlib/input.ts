@@ -11,15 +11,17 @@ export const FragmentCoordinate = Vec2($`gl_FragCoord.xy`, {
   only: "fragment"
 })
 
-export type Uniform<T extends GLSLType, J extends JSTypes[T] = JSTypes[T]> = Unit<T> & {
+export type UniformUnit<T extends GLSLType, J extends JSTypes[T] = JSTypes[T]> = Unit<
+  T
+> & {
   value: J
 }
 
-export const Uniform = <T extends GLSLType, J extends JSTypes[T]>(
+export const UniformUnit = <T extends GLSLType, J extends JSTypes[T]>(
   type: T,
   initialValue: J,
   extras?: Partial<UnitConfig<T>>
-): Uniform<T, J> => {
+): UniformUnit<T, J> => {
   const uniform = { value: initialValue }
 
   /* Create the actual unit that represents the uniform. */
@@ -45,7 +47,7 @@ export const Uniform = <T extends GLSLType, J extends JSTypes[T]>(
 }
 
 export const Time = (initial: number = 0) => {
-  const uniform = Uniform("float", initial, {
+  const uniform = UniformUnit("float", initial, {
     name: "Time Uniform",
 
     update: (dt) => {
@@ -56,7 +58,7 @@ export const Time = (initial: number = 0) => {
   return uniform
 }
 
-export const Resolution = Uniform("vec2", new Vector2(0, 0), {
+export const Resolution = UniformUnit("vec2", new Vector2(0, 0), {
   name: "Current Render Resolution",
 
   update: (dt, camera, scene, gl) => {
@@ -65,7 +67,7 @@ export const Resolution = Uniform("vec2", new Vector2(0, 0), {
   }
 })
 
-export const CameraNear = Uniform("float", 0 as number, {
+export const CameraNear = UniformUnit("float", 0 as number, {
   name: "Camera Near Plane",
 
   update: (_, camera) => {
@@ -75,7 +77,7 @@ export const CameraNear = Uniform("float", 0 as number, {
   }
 })
 
-export const CameraFar = Uniform("float", 0 as number, {
+export const CameraFar = UniformUnit("float", 0 as number, {
   name: "Camera Far Plane",
 
   update: (_, camera) => {

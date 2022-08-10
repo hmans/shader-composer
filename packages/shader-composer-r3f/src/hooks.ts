@@ -4,7 +4,7 @@ import {
   compileShader,
   GLSLType,
   JSTypes,
-  Uniform,
+  UniformUnit,
   Unit,
   UnitConfig
 } from "shader-composer"
@@ -29,7 +29,7 @@ export const useUniform = <T extends GLSLType>(
   config?: UnitConfig<T>
 ) => {
   const uniform = useMemo(() => {
-    return Uniform(type, value, config)
+    return UniformUnit(type, value, config)
   }, [])
 
   useLayoutEffect(() => {

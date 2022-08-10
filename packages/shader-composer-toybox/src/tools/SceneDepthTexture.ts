@@ -1,5 +1,5 @@
-import { Uniform } from "shader-composer"
-import { WebGLRenderTarget, DepthTexture } from "three"
+import { UniformUnit } from "shader-composer"
+import { DepthTexture, WebGLRenderTarget } from "three"
 
 export type SceneDepthTextureOptions = {
   resolution?: number
@@ -29,7 +29,7 @@ export const SceneDepthTexture = ({
 
   let cursor = 0
 
-  const uniform = Uniform("sampler2D", renderTargets[0].depthTexture, {
+  const uniform = UniformUnit("sampler2D", renderTargets[0].depthTexture, {
     name: "Scene Depth Texture",
 
     update: (dt, camera, scene, gl) => {
