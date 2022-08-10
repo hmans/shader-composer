@@ -1,5 +1,5 @@
 import { glslRepresentation } from "../glslRepresentation"
-import { UniformUnit } from "./input"
+import { UniformUnit } from "./uniforms"
 
 describe("Uniform", () => {
   it("uses its uniform name as its string representation", () => {
