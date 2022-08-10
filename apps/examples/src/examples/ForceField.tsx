@@ -57,8 +57,7 @@ export default function ForceField() {
     const sceneDepth = PerspectiveDepth(ScreenUV, sceneDepthTexture)
 
     const distance = pipe(
-      VertexPosition,
-      (v) => LocalToViewSpace(v).z,
+      VertexPosition.view.z,
       (v) => Add(v, 0.4),
       (v) => Sub(v, sceneDepth),
       (v) => Smoothstep(0, 1, v)

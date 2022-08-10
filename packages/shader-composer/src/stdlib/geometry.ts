@@ -6,17 +6,17 @@ import { Bool, Mat4, Vec2, Vec3 } from "./values"
 
 export const ViewMatrix = Mat4($`viewMatrix`, {
   name: "View Matrix",
-  varying: true
+  only: "vertex"
 })
 
 export const ModelMatrix = Mat4($`modelMatrix`, {
   name: "Model Matrix",
-  varying: true
+  only: "vertex"
 })
 
 export const ModelViewMatrix = Mat4($`modelViewMatrix`, {
   name: "ModelView Matrix",
-  varying: true
+  only: "vertex"
 })
 
 export const UsingInstancing = Bool($`
@@ -37,7 +37,7 @@ export const InstanceMatrix = Mat4(
 `,
   {
     name: "Instance Matrix",
-    varying: true
+    only: "vertex"
   }
 )
 
