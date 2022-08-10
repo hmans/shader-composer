@@ -3,14 +3,7 @@ import { Expression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, renameSnippet, Snippet } from "./snippets"
 import { collectFromTree, Item, walkTree } from "./tree"
-import {
-  isUnit,
-  isUnitInProgram,
-  Program,
-  uniformName,
-  Unit,
-  UpdateCallback
-} from "./units"
+import { isUnit, isUnitInProgram, Program, uniformName, Unit } from "./units"
 import {
   assignment,
   block,
@@ -51,11 +44,6 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
     throw new Error(
       `Encountered a unit "${unit._unitConfig.name}" that is not allowed in the "${program}" program.`
     )
-  }
-
-  /* Register update callback, if given */
-  if (unit._unitConfig.update) {
-    state.updates.add(unit._unitConfig.update)
   }
 
   /* HEADER */
@@ -205,16 +193,19 @@ export const compileShader = (root: Unit) => {
   /*
 	STEP 5: Collect update callbacks.
 	*/
-  const updates = new Set<UpdateCallback>([
-    ...vertexState.updates,
-    ...fragmentState.updates
-  ])
+  const unitsWithUpdates = collectFromTree(
+    root,
+    "any",
+    (item) => isUnit(item) && !!item._unitConfig.update
+  )
 
   /*
 	STEP 6: Build per-frame update function.
 	*/
   const update = (dt: number, camera: Camera, scene: Scene, gl: WebGLRenderer) => {
-    updates.forEach((u) => u(dt, camera, scene, gl))
+    for (const unit of unitsWithUpdates) {
+      unit._unitConfig.update(dt, camera, scene, gl)
+    }
   }
 
   /* Build a dispose function */
@@ -245,6 +236,5 @@ const CompilerState = () => ({
   body: new Array<Part>(),
   nextid: idGenerator(),
   seen: new Set<Item>(),
-  uniforms: new Map<string, IUniform>(),
-  updates: new Set<UpdateCallback>()
+  uniforms: new Map<string, IUniform>()
 })
