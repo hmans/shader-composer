@@ -98,7 +98,10 @@ export default function ForceField() {
       </Float>
 
       <Floor />
-      <Player position-y={-0.125} />
+
+      <Float floatingRange={[0, 0.05]} speed={8} rotationIntensity={0}>
+        <Player position-y={-0.125} />
+      </Float>
 
       <Obstacle position={[1.25, -0.75, -0.5]} />
       <Obstacle position={[-0.75, -0.75, 1]} scale={[1, 0.75, 0.75]} />
