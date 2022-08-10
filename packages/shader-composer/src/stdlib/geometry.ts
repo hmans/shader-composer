@@ -1,6 +1,7 @@
 import { Vector2 } from "three"
 import { $ } from "../expressions"
 import { GLSLType, Input, Unit } from "../units"
+import { localToViewSpace, localToWorldSpace } from "./spaces"
 import { Bool, Mat4, Vec2, Vec3 } from "./values"
 
 export const ViewMatrix = Mat4($`viewMatrix`, {
@@ -40,12 +41,12 @@ export const UV = Vec2($`uv`, {
 const Vec3WithSpaceConversions = (input: Input<"vec3">, name: string) => ({
   ...Vec3(input, { name, varying: true }),
 
-  world: Vec3($`mat3(modelMatrix) * ${input}`, {
+  world: Vec3(localToWorldSpace(input), {
     varying: true,
     name: `${name} (World Space)`
   }),
 
-  view: Vec3($`mat3(modelViewMatrix) * ${input}`, {
+  view: Vec3(localToViewSpace(input), {
     varying: true,
     name: `${name} (View Space)`
   })
