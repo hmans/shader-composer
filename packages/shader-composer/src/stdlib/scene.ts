@@ -1,7 +1,7 @@
 import { $ } from "../expressions"
 import { pipe } from "../pipes"
 import { Input, Unit } from "../units"
-import { CameraFar, CameraNear } from "./input"
+import { CameraFar, CameraNear } from "./uniforms"
 import { Texture2D } from "./textures"
 import { Float } from "./values"
 
