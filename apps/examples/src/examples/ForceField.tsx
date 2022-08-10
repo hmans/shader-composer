@@ -1,3 +1,4 @@
+import { MeshProps } from "@react-three/fiber"
 import { useControls } from "leva"
 import {
   Add,
@@ -84,21 +85,31 @@ export default function ForceField() {
       </mesh>
 
       <Floor />
-      <Wall />
+      <Player position-y={-0.125} />
+      <Obstacle position={[1.25, -0.75, -0.5]} />
+      <Obstacle position={[-0.75, -0.75, 1]} scale={[1, 0.75, 0.75]} />
+      <Obstacle position={[-1.25, -0.75, -1]} scale={[1, 1, 1.5]} />
     </group>
   )
 }
 
 const Floor = () => (
-  <mesh position={[0, -1, 1]}>
+  <mesh position={[0, -1, 0]}>
     <boxGeometry args={[5, 1, 5]} />
-    <meshStandardMaterial color="#222" metalness={0.5} roughness={0.5} />
+    <meshStandardMaterial color="#555" metalness={0} roughness={0.5} />
   </mesh>
 )
 
-const Wall = () => (
-  <mesh position={[0, 1, -1]}>
-    <boxGeometry args={[5, 5, 1]} />
-    <meshStandardMaterial color="#222" metalness={0.5} roughness={0.5} />
+const Obstacle = (props: MeshProps) => (
+  <mesh {...props}>
+    <icosahedronGeometry />
+    <meshStandardMaterial color="#000" metalness={0.3} roughness={0.2} />
+  </mesh>
+)
+
+const Player = (props: MeshProps) => (
+  <mesh {...props} scale={0.25}>
+    <capsuleGeometry args={[1, 1, 10, 20]} />
+    <meshStandardMaterial color="hotpink" metalness={0} roughness={1} />
   </mesh>
 )
