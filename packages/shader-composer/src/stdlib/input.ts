@@ -45,9 +45,12 @@ export const Uniform = <T extends GLSLType, J extends JSTypes[T]>(
 }
 
 export const Time = (initial: number = 0) => {
-  const uniform: Uniform<"float"> = Uniform("float", initial, {
+  const uniform = Uniform("float", initial, {
     name: "Time Uniform",
-    update: (dt) => (uniform.value += dt)
+
+    update: (dt) => {
+      uniform.value += dt
+    }
   })
 
   return uniform

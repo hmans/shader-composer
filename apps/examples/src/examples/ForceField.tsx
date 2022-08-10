@@ -8,9 +8,9 @@ import {
   LocalToViewSpace,
   Mul,
   OneMinus,
+  PerspectiveDepth,
   pipe,
   Saturate,
-  SceneDepth,
   ScreenUV,
   Smoothstep,
   Sub,
@@ -22,9 +22,15 @@ import {
   VertexPosition
 } from "shader-composer"
 import { useShader, useUniform } from "shader-composer-r3f"
+import { SceneDepthTexture } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { useRepeatingTexture } from "./helpers"
+
+const Layers = {
+  Default: 1,
+  TransparentFX: 2
+}
 
 export default function ForceField() {
   /* Use Leva for some user input */
@@ -48,7 +54,8 @@ export default function ForceField() {
     const texture = Texture2D(sampler2D, TilingUV(UV, vec2(4, 2), textureOffset))
 
     /* Get the depth of the current fragment. */
-    const sceneDepth = SceneDepth(ScreenUV)
+    const sceneDepthTexture = SceneDepthTexture({ layer: Layers.TransparentFX })
+    const sceneDepth = PerspectiveDepth(ScreenUV, sceneDepthTexture)
 
     const distance = pipe(
       VertexPosition,
@@ -75,7 +82,7 @@ export default function ForceField() {
   return (
     <group>
       <Float floatIntensity={1} speed={2}>
-        <mesh>
+        <mesh layers-mask={Layers.Default + Layers.TransparentFX}>
           <icosahedronGeometry args={[1.3, 8]} />
 
           <CustomShaderMaterial
