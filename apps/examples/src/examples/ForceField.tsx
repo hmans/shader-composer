@@ -86,6 +86,15 @@ export default function ForceField() {
 
       <Floor />
       <Player position-y={-0.125} />
+
+      <pointLight
+        position={[0, 1, 0]}
+        intensity={8}
+        decay={2}
+        distance={3.5}
+        color="cyan"
+      />
+
       <Obstacle position={[1.25, -0.75, -0.5]} />
       <Obstacle position={[-0.75, -0.75, 1]} scale={[1, 0.75, 0.75]} />
       <Obstacle
@@ -107,7 +116,7 @@ const Floor = () => (
 const Obstacle = (props: MeshProps) => (
   <mesh {...props}>
     <icosahedronGeometry />
-    <meshStandardMaterial color="#000" metalness={0.3} roughness={0.2} />
+    <meshStandardMaterial color="#333" metalness={0} roughness={0.8} />
   </mesh>
 )
 
