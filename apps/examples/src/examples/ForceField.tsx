@@ -45,7 +45,7 @@ export default function ForceField() {
     /* Define a time-based texture offset, and sample the force field texture. */
     const time = Time()
     const textureOffset = vec2(Mul(time, 0.05), Mul(time, 0.03))
-    const texture = Texture2D(sampler2D, TilingUV(UV, vec2(2, 1), textureOffset))
+    const texture = Texture2D(sampler2D, TilingUV(UV, vec2(4, 2), textureOffset))
 
     /* Get the depth of the current fragment. */
     const sceneDepth = SceneDepth(ScreenUV)
