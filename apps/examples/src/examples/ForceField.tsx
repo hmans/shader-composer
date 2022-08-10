@@ -14,7 +14,7 @@ import {
   Texture2D,
   TilingUV,
   Time,
-  ToViewSpace,
+  LocalToViewSpace,
   UV,
   vec2,
   VertexPosition
@@ -50,7 +50,7 @@ export default function ForceField() {
 
     const distance = pipe(
       VertexPosition,
-      (v) => ToViewSpace(v).z,
+      (v) => LocalToViewSpace(v).z,
       (v) => Add(v, 0.5),
       (v) => Sub(v, sceneDepth),
       (v) => Smoothstep(0, 1, v)

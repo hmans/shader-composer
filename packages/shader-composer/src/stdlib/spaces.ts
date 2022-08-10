@@ -10,7 +10,7 @@ const castToVec4 = (v: Input<"vec3" | "vec4">) =>
  * Converts the given position vector (which is assumed to be in local space)
  * to view space.
  */
-export const ToViewSpace = (position: Input<"vec3" | "vec4">) =>
+export const LocalToViewSpace = (position: Input<"vec3" | "vec4">) =>
   Vec4(
     $`
       #ifdef USE_INSTANCING
@@ -18,5 +18,20 @@ export const ToViewSpace = (position: Input<"vec3" | "vec4">) =>
       #endif
       modelViewMatrix * ${castToVec4(position)}
     `,
+    { varying: true }
+  )
+
+/**
+ * Converts the given position vector (which is assumed to be in local space)
+ * to world space.
+ */
+export const LocalToWorldSpace = (position: Input<"vec3" | "vec4">) =>
+  Vec4(
+    $`
+     #ifdef USE_INSTANCING
+     instanceMatrix *
+     #endif
+     modelMatrix * ${castToVec4(position)}
+   `,
     { varying: true }
   )
