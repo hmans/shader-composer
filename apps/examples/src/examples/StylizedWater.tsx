@@ -2,7 +2,6 @@ import { Float } from "@react-three/drei"
 import { MeshProps } from "@react-three/fiber"
 import { useControls } from "leva"
 import {
-  $,
   Add,
   Clamp,
   CustomShaderMaterialMaster,
@@ -19,7 +18,7 @@ import {
   Step,
   Sub,
   Time,
-  Vec2,
+  vec2,
   VertexNormal,
   VertexPosition
 } from "shader-composer"
@@ -72,7 +71,7 @@ const Water = (props: MeshProps) => {
     /* Calculate some overlapping noise. We're going to use this
     to change the geometry original normals and scene color UVs to
     create the water surface effect. */
-    const positionXY = Vec2($`${VertexPosition}.xy`)
+    const positionXY = vec2(VertexPosition.x, VertexPosition.y)
     const waveNoise = Add(
       PSRDNoise2D(Add(positionXY, time)),
       PSRDNoise2D(Sub(positionXY, time))

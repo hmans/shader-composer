@@ -55,19 +55,25 @@ export const UV = Vec2($`uv`, {
   varying: true
 })
 
-const Vec3WithSpaceConversions = (input: Input<"vec3">, name: string) => ({
-  ...Vec3(input, { name, varying: true }),
+const Vec3WithSpaceConversions = (input: Input<"vec3">, name: string) => {
+  const unit = Vec3(input, { name, varying: true })
 
-  world: Vec3(localToWorldSpace(input), {
-    varying: true,
-    name: `${name} (World Space)`
-  }),
+  const api = {
+    world: Vec3(localToWorldSpace(input), {
+      varying: true,
+      name: `${name} (World Space)`
+    }),
 
-  view: Vec3(localToViewSpace(input), {
-    varying: true,
-    name: `${name} (View Space)`
-  })
-})
+    view: Vec3(localToViewSpace(input), {
+      varying: true,
+      name: `${name} (View Space)`
+    })
+  }
+
+  Object.assign(unit, api)
+
+  return unit as typeof unit & typeof api
+}
 
 export const VertexPosition = Vec3WithSpaceConversions($`position`, "Vertex Position")
 export const VertexNormal = Vec3WithSpaceConversions($`normal`, "Vertex Normal")
