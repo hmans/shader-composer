@@ -1,32 +1,47 @@
 import { $ } from "../expressions"
-import { GLSLType, Input, Unit, UnitConfig } from "../units"
+import { API, APIFactory, GLSLType, injectAPI, Input, Unit, UnitConfig } from "../units"
 
-const makeUnit = <T extends GLSLType, A extends {} = {}>(
+const makeUnit = <T extends GLSLType, A extends API>(
   type: T,
-  apiFun: (unit: Unit<T>) => A = () => ({} as A)
-) => (v: Input<T>, extras?: Partial<UnitConfig<T>>) => {
-  const unit = Unit(type, v, extras) as Unit<T>
-  Object.assign(unit, apiFun(unit))
-  return unit as Unit<T> & A
-}
+  apiFun: APIFactory<Unit<T>, A> = () => ({} as A)
+) => (v: Input<T>, extras?: Partial<UnitConfig<T>>) =>
+  injectAPI(Unit(type, v, extras) as Unit<T>, apiFun)
 
 export const Float = makeUnit("float")
 export const Int = makeUnit("int")
 export const Bool = makeUnit("bool")
 export const Vec2 = makeUnit("vec2", (unit) => ({
-  x: Float($`${unit}.x`),
-  y: Float($`${unit}.y`)
+  get x() {
+    return Float($`${unit}.x`)
+  },
+  get y() {
+    return Float($`${unit}.y`)
+  }
 }))
 export const Vec3 = makeUnit("vec3", (unit) => ({
-  x: Float($`${unit}.x`),
-  y: Float($`${unit}.y`),
-  z: Float($`${unit}.z`)
+  get x() {
+    return Float($`${unit}.x`)
+  },
+  get y() {
+    return Float($`${unit}.y`)
+  },
+  get z() {
+    return Float($`${unit}.z`)
+  }
 }))
 export const Vec4 = makeUnit("vec4", (unit) => ({
-  x: Float($`${unit}.x`),
-  y: Float($`${unit}.y`),
-  z: Float($`${unit}.z`),
-  w: Float($`${unit}.w`)
+  get x() {
+    return Float($`${unit}.x`)
+  },
+  get y() {
+    return Float($`${unit}.y`)
+  },
+  get z() {
+    return Float($`${unit}.z`)
+  },
+  get w() {
+    return Float($`${unit}.w`)
+  }
 }))
 
 export const Mat3 = makeUnit("mat3")
