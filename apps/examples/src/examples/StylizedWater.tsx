@@ -92,7 +92,7 @@ const Water = (props: MeshProps) => {
       (v) => Clamp(0, 0.8, v)
     )
 
-    const waveDistortion = pipe(
+    const surfaceDistortion = pipe(
       calmness,
       (v) => OneMinus(v),
       (v) => Mul(waveNoise, v),
@@ -109,7 +109,7 @@ const Water = (props: MeshProps) => {
 
       roughness: foamFactor,
 
-      normal: pipe(VertexNormal, (v) => Add(v, waveDistortion))
+      normal: pipe(VertexNormal, (v) => Add(v, surfaceDistortion))
     })
   }, [])
 
