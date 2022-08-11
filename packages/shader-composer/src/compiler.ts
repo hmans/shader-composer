@@ -42,7 +42,9 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 	the requested program. */
   if (!isUnitInProgram(unit, program)) {
     throw new Error(
-      `Encountered a unit "${unit._unitConfig.name}" that is not allowed in the "${program}" program.`
+      program === "vertex"
+        ? `Encountered a unit "${unit._unitConfig.name}" that is only allowed in the fragment shader, but was encountered when compiling the vertex shader. Please check your unit connections.`
+        : `Encountered a unit "${unit._unitConfig.name}" that is only allowed in the vertex shader, but was encountered when compiling the fragment shader. Consider wrapping the value, or the derived value you're interested in, in a Unit that has a varying.`
     )
   }
 
