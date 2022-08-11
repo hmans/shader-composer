@@ -164,3 +164,8 @@ export const isUnitInProgram = (unit: Unit, program: Program) =>
 
 export const uniformName = (unit: Unit) =>
   unit._unitConfig.uniformName ?? `u_${unit._unitConfig.variableName}`
+
+export const addAPI = <U extends Unit, A extends {}>(unit: U, api: A) => {
+  Object.assign(unit, api)
+  return unit as U & A
+}

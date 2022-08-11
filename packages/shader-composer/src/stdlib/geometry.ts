@@ -1,6 +1,6 @@
 import { Vector2 } from "three"
-import { $ } from "../expressions"
-import { GLSLType, Input, Unit } from "../units"
+import { $, Expression } from "../expressions"
+import { addAPI, GLSLType, Input, Unit } from "../units"
 import { localToViewSpace, localToWorldSpace } from "./spaces"
 import { Bool, Mat4, Vec2, Vec3 } from "./values"
 
@@ -55,24 +55,20 @@ export const UV = Vec2($`uv`, {
   varying: true
 })
 
-const Vec3WithSpaceConversions = (input: Input<"vec3">, name: string) => {
-  const unit = Vec3(input, { name, varying: true })
+const Vec3WithSpaceConversions = (expr: Expression, name: string) => {
+  const unit = Vec3(expr, { name, varying: true })
 
-  const api = {
-    world: Vec3(localToWorldSpace(input), {
+  return addAPI(unit, {
+    world: Vec3(localToWorldSpace(unit), {
       varying: true,
       name: `${name} (World Space)`
     }),
 
-    view: Vec3(localToViewSpace(input), {
+    view: Vec3(localToViewSpace(unit), {
       varying: true,
       name: `${name} (View Space)`
     })
-  }
-
-  Object.assign(unit, api)
-
-  return unit as typeof unit & typeof api
+  })
 }
 
 export const VertexPosition = Vec3WithSpaceConversions($`position`, "Vertex Position")
