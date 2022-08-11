@@ -4,6 +4,7 @@ import { useControls } from "leva"
 import {
   Abs,
   Add,
+  Clamp,
   CustomShaderMaterialMaster,
   Div,
   Mix,
@@ -16,6 +17,7 @@ import {
   SceneColor,
   ScreenUV,
   Smoothstep,
+  Step,
   Sub,
   Time,
   Vec3,
@@ -75,13 +77,15 @@ const Water = (props: MeshProps) => {
     const depth = Sub(VertexPosition.view.z, sceneDepth)
 
     const deepAmount = Smoothstep(3, 8, depth)
-    const foamAmount = Add(Smoothstep(0.7, 0.6, depth), 0.01)
+    const foamAmount = Smoothstep(2, 0, depth)
 
     const foamNoise = pipe(
       VertexPosition,
       (v) => Add(v, Mul(time, 0.2)),
       (v) => PSRDNoise3D(v),
-      (v) => Smoothstep(0.8, 0.7, v)
+      (v) => NormalizePlusMinusOne(v),
+      (v) => Step(OneMinus(foamAmount), v),
+      (v) => Clamp(0, 0.8, v)
     )
 
     return CustomShaderMaterialMaster({
@@ -89,7 +93,7 @@ const Water = (props: MeshProps) => {
         colors.shallow,
         (v) => Mix(v, SceneColor(refractedUV, scene.texture).color, 0.6),
         (v) => Mix(v, colors.deep, deepAmount),
-        (v) => Mix(v, colors.foam, Mul(foamNoise, foamAmount))
+        (v) => Mix(v, colors.foam, foamNoise)
       ),
 
       roughness: foamAmount,
