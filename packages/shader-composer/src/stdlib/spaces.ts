@@ -1,10 +1,12 @@
 import { $ } from "../expressions"
 import { Input } from "../units"
-import { InstanceMatrix, ModelMatrix, ModelViewMatrix } from "./geometry"
+import { InstanceMatrix, ModelMatrix, ModelViewMatrix, ViewMatrix } from "./geometry"
 import { Vec3 } from "./values"
 
+// "Note that modelViewMatrix is not set when rendering an instanced model"
+// https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram
 export const localToViewSpace = (v: Input<"vec3">) => $`
-  vec3(${ModelViewMatrix} * ${InstanceMatrix} * vec4(${v}, 1.0))
+  vec3(${ViewMatrix} * ${ModelMatrix} * ${InstanceMatrix} * vec4(${v}, 1.0))
 `
 
 export const localToWorldSpace = (v: Input<"vec3">) => $`
