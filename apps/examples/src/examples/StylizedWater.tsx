@@ -12,6 +12,7 @@ import {
   PerspectiveDepth,
   pipe,
   Saturate,
+  SceneColor,
   ScreenUV,
   Smoothstep,
   Sub,
@@ -20,7 +21,7 @@ import {
   VertexNormal,
   VertexPosition
 } from "shader-composer"
-import { useShader, useUniformUnit } from "shader-composer-r3f"
+import { useRenderPass, useShader, useUniformUnit } from "shader-composer-r3f"
 import { PSRDNoise3D, SceneDepthTexture } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
@@ -42,11 +43,13 @@ export default function StylizedWater() {
 }
 
 const Water = (props: MeshProps) => {
+  const scene = useRenderPass({ layer: Layers.TransparentFX })
+
   const controls = useControls("Water", {
     calmness: { value: 0.5, min: 0, max: 1 },
     shallow: "#00877d",
     deep: "#06192e",
-    foam: "#eef"
+    foam: "white"
   })
 
   const calmness = useUniformUnit("float", controls.calmness)
@@ -59,24 +62,29 @@ const Water = (props: MeshProps) => {
 
   const shader = useShader(() => {
     const time = Time()
-    const sceneDepthTexture = SceneDepthTexture({ layer: Layers.TransparentFX })
-    const sceneDepth = PerspectiveDepth(ScreenUV, sceneDepthTexture)
 
     const waveNoise = Add(
       PSRDNoise3D(Add(VertexPosition, time)),
       PSRDNoise3D(Sub(VertexPosition, time))
     )
+    const refractedUV = Add(ScreenUV, Mul(waveNoise, 0.01))
+
+    const sceneDepth = PerspectiveDepth(refractedUV, scene.depthTexture)
 
     const depth = Sub(VertexPosition.view.z, sceneDepth)
+
+    const deepAmount = Smoothstep(3, 8, depth)
+    const foamAmount = Smoothstep(1, 0.5, depth)
 
     return CustomShaderMaterialMaster({
       diffuseColor: pipe(
         colors.shallow,
-        (v) => Mix(v, colors.deep, Smoothstep(3, 8, depth)),
-        (v) => Mix(colors.foam, v, Smoothstep(0.5, 1, depth))
+        (v) => Mix(v, SceneColor(refractedUV, scene.texture).color, 0.6),
+        (v) => Mix(v, colors.deep, deepAmount),
+        (v) => Mix(v, colors.foam, foamAmount)
       ),
 
-      alpha: 0.9,
+      roughness: foamAmount,
 
       normal: pipe(VertexNormal, (v) =>
         Add(
@@ -98,7 +106,6 @@ const Water = (props: MeshProps) => {
       <CustomShaderMaterial
         baseMaterial={MeshStandardMaterial}
         {...shader}
-        transparent
         metalness={0.5}
         roughness={0.1}
       />
