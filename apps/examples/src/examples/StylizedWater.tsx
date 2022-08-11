@@ -30,7 +30,7 @@ import { Layers } from "../r3f-venue/Layers"
 export default function StylizedWater() {
   return (
     <group position-y={-2}>
-      <Water layers={Layers.TransparentFX} />
+      <Water />
       <Rock position={[-10, 0, -10]} scale={5} />
       <Rock position={[-10, -10, -10]} scale={10} />
       <Rock position={[-5, -10, -5]} scale={6} />
@@ -61,7 +61,7 @@ const Water = (props: MeshProps) => {
 
   /* Let's run a pre-pass that will render the scene, minus our
   water, to render & depth textures that we will source later. */
-  const scene = useRenderPass({ layer: Layers.TransparentFX })
+  const scene = useRenderPass({ excludeLayer: Layers.TransparentFX })
 
   const shader = useShader(() => {
     /* Get a time uniform, always useful for time-based effects! */
@@ -154,13 +154,13 @@ const Water = (props: MeshProps) => {
   }, [])
 
   return (
-    <mesh {...props} rotation-x={-Math.PI / 2}>
+    <mesh {...props} layers={Layers.TransparentFX} rotation-x={-Math.PI / 2}>
       <planeGeometry args={[32, 32, 50, 50]} />
       <CustomShaderMaterial
         baseMaterial={MeshStandardMaterial}
-        {...shader}
         metalness={0.5}
         roughness={0.1}
+        {...shader}
       />
     </mesh>
   )

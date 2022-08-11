@@ -34,7 +34,7 @@ export default function ForceField() {
     strength: { value: 0.5, min: 0, max: 1 }
   })
 
-  const scene = useRenderPass({ layer: Layers.TransparentFX })
+  const scene = useRenderPass({ excludeLayer: Layers.TransparentFX })
 
   /* Create a bunch of uniforms */
   const color = useUniformUnit("vec3", new Color(controls.color))

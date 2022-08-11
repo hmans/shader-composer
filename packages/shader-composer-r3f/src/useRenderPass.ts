@@ -5,10 +5,13 @@ import { useUniformUnit } from "./hooks"
 
 export type RenderPassOptions = {
   resolution?: number
-  layer?: number
+  excludeLayer?: number
 }
 
-export const useRenderPass = ({ resolution = 0.5, layer }: RenderPassOptions = {}) => {
+export const useRenderPass = ({
+  resolution = 0.5,
+  excludeLayer
+}: RenderPassOptions = {}) => {
   const gl = useThree((s) => s.gl)
   const camera = useThree((s) => s.camera)
   const scene = useThree((s) => s.scene)
@@ -45,7 +48,7 @@ export const useRenderPass = ({ resolution = 0.5, layer }: RenderPassOptions = {
     const renderTarget = renderTargets[cursor.current]
 
     /* If a layer was given, disable it for rendering */
-    if (layer !== undefined) camera.layers.disable(layer)
+    if (excludeLayer !== undefined) camera.layers.disable(excludeLayer)
 
     /* Render depth texture */
     gl.setRenderTarget(renderTarget)
@@ -54,7 +57,7 @@ export const useRenderPass = ({ resolution = 0.5, layer }: RenderPassOptions = {
     gl.setRenderTarget(null)
 
     /* If a layer was given, re-enable it again */
-    if (layer !== undefined) camera.layers.enable(layer)
+    if (excludeLayer !== undefined) camera.layers.enable(excludeLayer)
 
     /* Assign uniforms */
     texture.value = renderTarget.texture
