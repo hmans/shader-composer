@@ -1,9 +1,9 @@
 import { $ } from "../expressions"
 import { pipe } from "../pipes"
 import { Input, Unit } from "../units"
-import { CameraFar, CameraNear } from "./uniforms"
 import { Texture2D } from "./textures"
-import { Float, Vec3 } from "./values"
+import { CameraFar, CameraNear } from "./uniforms"
+import { Float } from "./values"
 
 export const SceneColor = (uv: Input<"vec2">, texture: Unit<"sampler2D">) =>
   Texture2D(texture, uv)
