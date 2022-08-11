@@ -17,20 +17,14 @@ export const useRenderPass = ({ resolution = 0.5, layer }: RenderPassOptions = {
 
   const renderTargets = useMemo(
     () => [
-      new WebGLRenderTarget(256, 256, {
-        depthTexture: new DepthTexture(256, 256)
-      }),
-
-      new WebGLRenderTarget(256, 256, {
-        depthTexture: new DepthTexture(256, 256)
-      })
+      new WebGLRenderTarget(256, 256, { depthTexture: new DepthTexture(256, 256) }),
+      new WebGLRenderTarget(256, 256, { depthTexture: new DepthTexture(256, 256) })
     ],
     []
   )
 
   const texture = useUniformUnit("sampler2D", renderTargets[0].texture)
   const depthTexture = useUniformUnit("sampler2D", renderTargets[0].depthTexture)
-
   const cursor = useRef(0)
 
   useLayoutEffect(() => {
@@ -38,7 +32,7 @@ export const useRenderPass = ({ resolution = 0.5, layer }: RenderPassOptions = {
       renderTargets[0].dispose()
       renderTargets[1].dispose()
     }
-  })
+  }, [])
 
   useLayoutEffect(() => {
     const width = size.width * dpr * resolution
@@ -47,7 +41,7 @@ export const useRenderPass = ({ resolution = 0.5, layer }: RenderPassOptions = {
     renderTargets[1].setSize(width, height)
   }, [resolution, renderTargets, size, dpr])
 
-  useFrame((_, dt) => {
+  useFrame(() => {
     const renderTarget = renderTargets[cursor.current]
 
     /* If a layer was given, disable it for rendering */
@@ -61,6 +55,10 @@ export const useRenderPass = ({ resolution = 0.5, layer }: RenderPassOptions = {
 
     /* If a layer was given, re-enable it again */
     if (layer !== undefined) camera.layers.enable(layer)
+
+    /* Assign uniforms */
+    texture.value = renderTarget.texture
+    depthTexture.value = renderTarget.depthTexture
 
     /* Cycle render targets */
     cursor.current = (cursor.current + 1) % 2
