@@ -1,5 +1,5 @@
 import { useFrame, useThree } from "@react-three/fiber"
-import { CopyPass, EffectComposer, NormalPass, TextureEffect } from "postprocessing"
+import { EffectComposer } from "postprocessing"
 import { useLayoutEffect, useMemo } from "react"
 import { HalfFloatType } from "three"
 import { LayerRenderPass } from "./LayerRenderPass"
