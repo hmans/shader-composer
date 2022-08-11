@@ -77,6 +77,8 @@ export default function ForceField() {
     })
   }, [])
 
+  console.log(shader.fragmentShader)
+
   return (
     <group>
       <Float floatIntensity={1} speed={2}>

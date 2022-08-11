@@ -4,19 +4,28 @@ import { GLSLType, Input, Unit } from "../units"
 import { localToViewSpace, localToWorldSpace } from "./spaces"
 import { Bool, Mat4, Vec2, Vec3 } from "./values"
 
+export const CameraPosition = Vec3($`cameraPosition`, {
+  name: "Camera Position"
+})
+
 export const ViewMatrix = Mat4($`viewMatrix`, {
-  name: "View Matrix",
-  only: "vertex"
+  name: "View Matrix"
 })
 
 export const ModelMatrix = Mat4($`modelMatrix`, {
-  name: "Model Matrix",
-  only: "vertex"
+  name: "Model Matrix"
 })
 
 export const ModelViewMatrix = Mat4($`modelViewMatrix`, {
-  name: "ModelView Matrix",
-  only: "vertex"
+  name: "ModelView Matrix"
+})
+
+export const NormalMatrix = Mat4($`normalMatrix`, {
+  name: "Normal Matrix"
+})
+
+export const ProjectionMatrix = Mat4($`projectionMatrix`, {
+  name: "Projection Matrix"
 })
 
 export const UsingInstancing = Bool($`
