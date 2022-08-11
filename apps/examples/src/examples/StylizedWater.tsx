@@ -8,6 +8,7 @@ import {
   Div,
   Mix,
   Mul,
+  NormalizePlusMinusOne,
   OneMinus,
   PerspectiveDepth,
   pipe,
@@ -74,14 +75,21 @@ const Water = (props: MeshProps) => {
     const depth = Sub(VertexPosition.view.z, sceneDepth)
 
     const deepAmount = Smoothstep(3, 8, depth)
-    const foamAmount = Smoothstep(1, 0.5, depth)
+    const foamAmount = Add(Smoothstep(0.7, 0.6, depth), 0.01)
+
+    const foamNoise = pipe(
+      VertexPosition,
+      (v) => Add(v, Mul(time, 0.2)),
+      (v) => PSRDNoise3D(v),
+      (v) => Smoothstep(0.8, 0.7, v)
+    )
 
     return CustomShaderMaterialMaster({
       diffuseColor: pipe(
         colors.shallow,
         (v) => Mix(v, SceneColor(refractedUV, scene.texture).color, 0.6),
         (v) => Mix(v, colors.deep, deepAmount),
-        (v) => Mix(v, colors.foam, foamAmount)
+        (v) => Mix(v, colors.foam, Mul(foamNoise, foamAmount))
       ),
 
       roughness: foamAmount,
