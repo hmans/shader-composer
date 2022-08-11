@@ -43,6 +43,7 @@ export default function StylizedWater() {
 }
 
 const Water = (props: MeshProps) => {
+  /* We'll let the user control some values through Leva. */
   const controls = useControls("Water", {
     calmness: { value: 0.5, min: 0, max: 1 },
     shallow: "#00877d",
@@ -50,8 +51,8 @@ const Water = (props: MeshProps) => {
     foam: "white"
   })
 
+  /* Create uniforms for these values. */
   const calmness = useUniformUnit("float", controls.calmness)
-
   const colors = {
     shallow: useUniformUnit("vec3", new Color(controls.shallow)),
     deep: useUniformUnit("vec3", new Color(controls.deep)),
@@ -109,37 +110,46 @@ const Water = (props: MeshProps) => {
 
     /* Calculate the extent to which we will be "distorting" the water
     by changing its normals later */
-    const surfaceDistortion = pipe(
-      calmness,
-      (v) => OneMinus(v),
-      (v) => Mul(waveNoise, v),
-      (v) => Mul(v, 0.2)
-    )
+    const surfaceDistortion = pipe(waveNoise, (v) => Mul(v, 0.2))
 
-    const Waves = (xyz: Input<"vec3">, normal: Input<"vec3">, time: Input<"float">) => {
+    /* Tired of all those pipes and variables? You can also just write
+    functions! Like this one here, which takes a position, normal, and time,
+    and changes the position so we'll end up with a "waves" animation. */
+    const Waves = (
+      position: Input<"vec3">,
+      normal: Input<"vec3">,
+      time: Input<"float">
+    ) => {
       const scaledTime = Mul(time, 0.2)
-      const scaledPosition = Mul(xyz, 0.1)
+      const scaledPosition = Mul(position, 0.1)
       const noise = PSRDNoise3D(Add(scaledPosition, scaledTime))
       const scaledNoise = Mul(noise, 0.2)
 
-      return Add(xyz, Mul(normal, scaledNoise))
+      return Add(position, Mul(normal, scaledNoise))
     }
 
     return CustomShaderMaterialMaster({
-      position: pipe(VertexPosition, (v) =>
-        Mix(Waves(v, VertexNormal, time), v, calmness)
-      ),
+      /* Lerp between the new and the original position based on
+      the value in the calmness variable. */
+      position: Mix(Waves(VertexPosition, VertexNormal, time), VertexPosition, calmness),
 
       diffuseColor: pipe(
+        /* Start with the "shallow water" color. */
         colors.shallow,
+        /* Mix in the original scene color! */
         (v) => Mix(v, originalColor, 0.5),
+        /* Add the "deep" color. */
         (v) => Mix(v, colors.deep, deepFactor),
+        /* Add the "foam" color. */
         (v) => Mix(v, colors.foam, foam)
       ),
 
+      /* We can also set per-fragment roughness, so let's dial it
+      down for fragments that render foam. */
       roughness: foamFactor,
 
-      normal: pipe(VertexNormal, (v) => Add(v, surfaceDistortion))
+      /* Distort the normal based on calmness. */
+      normal: Mix(Add(VertexNormal, surfaceDistortion), VertexNormal, calmness)
     })
   }, [])
 
