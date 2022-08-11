@@ -70,45 +70,46 @@ const Water = (props: MeshProps) => {
       PSRDNoise3D(Add(VertexPosition, time)),
       PSRDNoise3D(Sub(VertexPosition, time))
     )
-    const refractedUV = Add(ScreenUV, Mul(waveNoise, 0.01))
+
+    const refractedUV = pipe(
+      waveNoise,
+      (v) => Mul(v, 0.01),
+      (v) => Add(ScreenUV, v)
+    )
 
     const sceneDepth = PerspectiveDepth(refractedUV, scene.depthTexture)
-
     const depth = Sub(VertexPosition.view.z, sceneDepth)
 
-    const deepAmount = Smoothstep(3, 8, depth)
-    const foamAmount = Smoothstep(2, 0, depth)
+    const deepFactor = Smoothstep(3, 8, depth)
+    const foamFactor = Smoothstep(2, 0, depth)
 
     const foamNoise = pipe(
       VertexPosition,
       (v) => Add(v, Mul(time, 0.2)),
       (v) => PSRDNoise3D(v),
       (v) => NormalizePlusMinusOne(v),
-      (v) => Step(OneMinus(foamAmount), v),
+      (v) => Step(OneMinus(foamFactor), v),
       (v) => Clamp(0, 0.8, v)
+    )
+
+    const waveDistortion = pipe(
+      calmness,
+      (v) => OneMinus(v),
+      (v) => Mul(waveNoise, v),
+      (v) => Mul(v, 0.2)
     )
 
     return CustomShaderMaterialMaster({
       diffuseColor: pipe(
         colors.shallow,
         (v) => Mix(v, SceneColor(refractedUV, scene.texture).color, 0.6),
-        (v) => Mix(v, colors.deep, deepAmount),
+        (v) => Mix(v, colors.deep, deepFactor),
         (v) => Mix(v, colors.foam, foamNoise)
       ),
 
-      roughness: foamAmount,
+      roughness: foamFactor,
 
-      normal: pipe(VertexNormal, (v) =>
-        Add(
-          v,
-          pipe(
-            calmness,
-            (v) => OneMinus(v),
-            (v) => Mul(waveNoise, v),
-            (v) => Mul(v, 0.2)
-          )
-        )
-      )
+      normal: pipe(VertexNormal, (v) => Add(v, waveDistortion))
     })
   }, [])
 
