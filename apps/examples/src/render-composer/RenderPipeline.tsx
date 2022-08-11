@@ -20,7 +20,9 @@ export const RenderPipeline = () => {
 
     /* Now render only transparent FX. */
     const transparentFXPass = new LayerRenderPass(scene, camera, undefined, 2)
+    transparentFXPass.needsDepthTexture = true
     transparentFXPass.clear = false
+    transparentFXPass.renderToScreen = true
     composer.addPass(transparentFXPass)
 
     return () => composer.removeAllPasses()
