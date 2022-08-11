@@ -2,11 +2,9 @@ import { Float } from "@react-three/drei"
 import { MeshProps } from "@react-three/fiber"
 import { useControls } from "leva"
 import {
-  Abs,
   Add,
   Clamp,
   CustomShaderMaterialMaster,
-  Div,
   Input,
   Mix,
   Mul,
@@ -14,7 +12,6 @@ import {
   OneMinus,
   PerspectiveDepth,
   pipe,
-  Saturate,
   SceneColor,
   ScreenUV,
   Smoothstep,
@@ -22,12 +19,11 @@ import {
   Sub,
   Time,
   vec3,
-  Vec3,
   VertexNormal,
   VertexPosition
 } from "shader-composer"
 import { useRenderPass, useShader, useUniformUnit } from "shader-composer-r3f"
-import { PSRDNoise3D, SceneDepthTexture } from "shader-composer-toybox"
+import { PSRDNoise3D } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { Layers } from "../r3f-venue/Layers"

@@ -5,7 +5,6 @@ import {
   Add,
   CustomShaderMaterialMaster,
   Fresnel,
-  LocalToViewSpace,
   Mul,
   OneMinus,
   PerspectiveDepth,
@@ -21,8 +20,7 @@ import {
   vec2,
   VertexPosition
 } from "shader-composer"
-import { useShader, useUniformUnit } from "shader-composer-r3f"
-import { SceneDepthTexture } from "shader-composer-toybox"
+import { useRenderPass, useShader, useUniformUnit } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { Layers } from "../r3f-venue/Layers"
@@ -35,6 +33,8 @@ export default function ForceField() {
     intensity: { value: 3, min: 0, max: 10 },
     strength: { value: 0.5, min: 0, max: 1 }
   })
+
+  const scene = useRenderPass({ layer: Layers.TransparentFX })
 
   /* Create a bunch of uniforms */
   const color = useUniformUnit("vec3", new Color(controls.color))
@@ -53,8 +53,7 @@ export default function ForceField() {
     const texture = Texture2D(sampler2D, TilingUV(UV, vec2(4, 2), textureOffset))
 
     /* Get the depth of the current fragment. */
-    const sceneDepthTexture = SceneDepthTexture({ layer: Layers.TransparentFX })
-    const sceneDepth = PerspectiveDepth(ScreenUV, sceneDepthTexture)
+    const sceneDepth = PerspectiveDepth(ScreenUV, scene.depthTexture)
 
     const distance = pipe(
       VertexPosition.view.z,
