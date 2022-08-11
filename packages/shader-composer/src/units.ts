@@ -165,7 +165,13 @@ export const isUnitInProgram = (unit: Unit, program: Program) =>
 export const uniformName = (unit: Unit) =>
   unit._unitConfig.uniformName ?? `u_${unit._unitConfig.variableName}`
 
-export const addAPI = <U extends Unit, A extends {}>(unit: U, api: A) => {
-  Object.assign(unit, api)
+export type API = Record<string, any>
+export type APIFactory<U extends Unit, A extends API> = (unit: U) => A
+
+export const injectAPI = <U extends Unit, A extends API>(
+  unit: U,
+  factory: APIFactory<U, A>
+) => {
+  Object.assign(unit, factory(unit))
   return unit as U & A
 }

@@ -1,6 +1,6 @@
 import { Vector2 } from "three"
 import { $, Expression } from "../expressions"
-import { addAPI, GLSLType, Input, Unit } from "../units"
+import { injectAPI, GLSLType, Input, Unit } from "../units"
 import { localToViewSpace, localToWorldSpace } from "./spaces"
 import { Bool, Mat4, Vec2, Vec3 } from "./values"
 
@@ -55,21 +55,22 @@ export const UV = Vec2($`uv`, {
   varying: true
 })
 
-const Vec3WithSpaceConversions = (expr: Expression, name: string) => {
-  const unit = Vec3(expr, { name, varying: true })
+const Vec3WithSpaceConversions = (expr: Expression, name: string) =>
+  injectAPI(Vec3(expr, { name, varying: true }), (unit) => ({
+    get world() {
+      return Vec3(localToWorldSpace(unit), {
+        varying: true,
+        name: `${name} (World Space)`
+      })
+    },
 
-  return addAPI(unit, {
-    world: Vec3(localToWorldSpace(unit), {
-      varying: true,
-      name: `${name} (World Space)`
-    }),
-
-    view: Vec3(localToViewSpace(unit), {
-      varying: true,
-      name: `${name} (View Space)`
-    })
-  })
-}
+    get view() {
+      return Vec3(localToViewSpace(unit), {
+        varying: true,
+        name: `${name} (View Space)`
+      })
+    }
+  }))
 
 export const VertexPosition = Vec3WithSpaceConversions($`position`, "Vertex Position")
 export const VertexNormal = Vec3WithSpaceConversions($`normal`, "Vertex Normal")
