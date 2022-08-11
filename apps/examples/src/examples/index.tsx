@@ -10,5 +10,6 @@ export default {
   ForceField: lazy(() => import("./ForceField")),
   Planet: lazy(() => import("./Planet")),
   DiscoCube: lazy(() => import("./DiscoCube")),
+  StylizedWater: lazy(() => import("./StylizedWater")),
   Water: lazy(() => import("./Water"))
 }
