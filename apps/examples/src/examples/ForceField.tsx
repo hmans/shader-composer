@@ -20,11 +20,12 @@ import {
   vec2,
   VertexPosition
 } from "shader-composer"
-import { useRenderPass, useShader, useUniformUnit } from "shader-composer-r3f"
+import { useShader, useUniformUnit } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { Layers } from "../r3f-venue/Layers"
 import { useRepeatingTexture } from "./helpers"
+import { useRenderPass } from "./useRenderPass"
 
 export default function ForceField() {
   /* Use Leva for some user input */

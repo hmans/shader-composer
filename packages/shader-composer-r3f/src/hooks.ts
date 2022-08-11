@@ -9,8 +9,6 @@ import {
   UnitConfig
 } from "shader-composer"
 
-export * from "./useRenderPass"
-
 export const useShader = (ctor: () => Unit, deps?: any) => {
   const [shader, { update, dispose }] = useMemo(() => compileShader(ctor()), deps)
 
