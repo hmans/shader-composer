@@ -6,6 +6,7 @@ import {
   CustomShaderMaterialMaster,
   Div,
   Mix,
+  Mul,
   OneMinus,
   PerspectiveDepth,
   pipe,
@@ -15,10 +16,11 @@ import {
   Sub,
   Time,
   Vec3,
+  VertexNormal,
   VertexPosition
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { SceneDepthTexture } from "shader-composer-toybox"
+import { PSRDNoise3D, SceneDepthTexture } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { Layers } from "../r3f-venue/Layers"
@@ -52,6 +54,11 @@ const Water = (props: MeshProps) => {
       foam: Vec3(new Color("#eef"))
     }
 
+    const noise = Add(
+      PSRDNoise3D(Add(VertexPosition, time)),
+      PSRDNoise3D(Sub(VertexPosition, time))
+    )
+
     const depth = Sub(VertexPosition.view.z, sceneDepth)
 
     return CustomShaderMaterialMaster({
@@ -61,7 +68,9 @@ const Water = (props: MeshProps) => {
         (v) => Mix(colors.foam, v, Smoothstep(0.5, 0.51, depth))
       ),
 
-      alpha: 0.9
+      alpha: 0.9,
+
+      normal: Add(VertexNormal, Mul(noise, 0.2))
     })
   }, [])
 
