@@ -99,21 +99,30 @@ const Water = (props: MeshProps) => {
       (v) => Mul(v, 0.2)
     )
 
-    const Waves = (xyz: Input<"vec3">, time: Input<"float">) => {
+    const Waves = (
+      xyz: Input<"vec3">,
+      normal: Input<"vec3">,
+      time: Input<"float">,
+      amount: Input<"float">
+    ) => {
       const scaledTime = Mul(time, 0.2)
       const scaledPosition = Mul(xyz, 0.1)
       const noise = PSRDNoise3D(Add(scaledPosition, scaledTime))
       const scaledNoise = Mul(noise, 0.2)
 
-      return Add(xyz, vec3(0, 0, scaledNoise))
+      return Add(xyz, Mul(normal, Mul(scaledNoise, amount)))
     }
 
+    const originalColor = SceneColor(refractedUV, scene.texture).color
+
     return CustomShaderMaterialMaster({
-      position: pipe(VertexPosition, (v) => Waves(v, time)),
+      position: pipe(VertexPosition, (v) =>
+        Waves(v, VertexNormal, time, OneMinus(calmness))
+      ),
 
       diffuseColor: pipe(
         colors.shallow,
-        (v) => Mix(v, SceneColor(refractedUV, scene.texture).color, 0.6),
+        (v) => Mix(v, originalColor, 0.5),
         (v) => Mix(v, colors.deep, deepFactor),
         (v) => Mix(v, colors.foam, foam),
         (v) => Mix(v, Mul(colors.foam, 2), whiteFoam)
