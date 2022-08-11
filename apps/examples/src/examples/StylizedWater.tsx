@@ -85,7 +85,7 @@ const Water = (props: MeshProps) => {
     const deepFactor = Smoothstep(3, 8, depth)
     const foamFactor = Smoothstep(2, 0, depth)
 
-    const foamNoise = pipe(
+    const foam = pipe(
       VertexPosition,
       (v) => Add(v, Mul(time, 0.2)),
       (v) => PSRDNoise3D(v),
@@ -93,6 +93,8 @@ const Water = (props: MeshProps) => {
       (v) => Step(OneMinus(foamFactor), v),
       (v) => Clamp(0, 0.8, v)
     )
+
+    const whiteFoam = Mul(foam, OneMinus(Step(0.3, depth)))
 
     const surfaceDistortion = pipe(
       calmness,
@@ -117,7 +119,8 @@ const Water = (props: MeshProps) => {
         colors.shallow,
         (v) => Mix(v, SceneColor(refractedUV, scene.texture).color, 0.6),
         (v) => Mix(v, colors.deep, deepFactor),
-        (v) => Mix(v, colors.foam, foamNoise)
+        (v) => Mix(v, colors.foam, foam),
+        (v) => Mix(v, Mul(colors.foam, 2), whiteFoam)
       ),
 
       roughness: foamFactor,
