@@ -5,8 +5,8 @@ import { Perf } from "r3f-perf"
 import { FC, ReactNode, Suspense, useRef } from "react"
 import { Mesh } from "three"
 import { Link, useRoute } from "wouter"
+import { RenderPipeline } from "../render-composer/RenderPipeline"
 import { Layers } from "./Layers"
-import { PostProcessing } from "./PostProcessing"
 import Stage from "./Stage"
 
 function Navigation({ examples }: { examples: Examples }) {
@@ -80,7 +80,7 @@ export const Venue: FC<{
             layers-mask={Layers.Default + Layers.TransparentFX}
             makeDefault
           />
-          {opts.postProcessing && <PostProcessing />}
+          {opts.postProcessing && <RenderPipeline />}
 
           <OrbitControls
             makeDefault
