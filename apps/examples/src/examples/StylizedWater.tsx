@@ -103,9 +103,9 @@ const Water = (props: MeshProps) => {
 
     /* Now let's create a foam texture based on noise. */
     const foam = pipe(
-      VertexPosition,
+      positionXY,
       (v) => Add(v, Mul(time, 0.2)),
-      (v) => PSRDNoise3D(v),
+      (v) => PSRDNoise2D(v),
       (v) => NormalizePlusMinusOne(v),
       (v) => Step(OneMinus(foamFactor), v),
       (v) => Clamp(0, 0.8, v)
