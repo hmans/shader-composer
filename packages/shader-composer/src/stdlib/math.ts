@@ -140,7 +140,7 @@ export const OneMinus = (v: Input<"float">) => Float(Sub(1, v), { name: "OneMinu
 export const Mix = <T extends GLSLType>(
   a: Input<T>,
   b: Input<T>,
-  ratio: Input<"float">
+  ratio: Input<T | "float">
 ) => Unit(type(a), $`mix(${a}, ${b}, ${ratio})`, { name: "Mix" })
 
 export const Lerp = Mix
