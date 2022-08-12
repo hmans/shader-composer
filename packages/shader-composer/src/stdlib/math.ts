@@ -146,7 +146,7 @@ export const Mix = <T extends GLSLType>(
 export const Lerp = Mix
 
 export const InverseLerp = <T extends GLSLType>(a: Input<T>, b: Input<T>, c: Input<T>) =>
-  Float($`(${c} - ${a}) / (${b} - ${a})`, { name: "Inverse Lerp" })
+  Unit(type(a), $`(${c} - ${a}) / (${b} - ${a})`, { name: "Inverse Lerp" })
 
 export const Step = (edge: Input<"float">, v: Input<"float">) =>
   Float($`step(${edge}, ${v})`, { name: "Step" })
