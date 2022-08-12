@@ -137,11 +137,25 @@ export const Saturate = Clamp01
 
 export const OneMinus = (v: Input<"float">) => Float(Sub(1, v), { name: "OneMinus" })
 
-export const Mix = <T extends GLSLType>(
+export const lerp = <T extends GLSLType>(
   a: Input<T>,
   b: Input<T>,
-  ratio: Input<"float">
-) => Unit(type(a), $`mix(${a}, ${b}, ${ratio})`, { name: "Mix" })
+  ratio: Input<T | "float">
+) => $`mix(${a}, ${b}, ${ratio})`
+
+export const Lerp = <T extends GLSLType>(
+  a: Input<T>,
+  b: Input<T>,
+  ratio: Input<T | "float">
+) => Unit(type(a), lerp(a, b, ratio), { name: "Mix" })
+
+export const inverseLerp = <T extends GLSLType>(a: Input<T>, b: Input<T>, c: Input<T>) =>
+  $`(${c} - ${a}) / (${b} - ${a})`
+
+export const InverseLerp = <T extends GLSLType>(a: Input<T>, b: Input<T>, c: Input<T>) =>
+  Unit(type(a), inverseLerp(a, b, c), { name: "Inverse Lerp" })
+
+export const Mix = Lerp
 
 export const Step = (edge: Input<"float">, v: Input<"float">) =>
   Float($`step(${edge}, ${v})`, { name: "Step" })
@@ -149,32 +163,21 @@ export const Step = (edge: Input<"float">, v: Input<"float">) =>
 export const Smoothstep = (min: Input<"float">, max: Input<"float">, v: Input<"float">) =>
   Float($`smoothstep(${min}, ${max}, ${v})`, { name: "Smoothstep" })
 
-const remap = Snippet(
-  (name) => $`
-    float ${name}(float value, float inMin, float inMax, float outMin, float outMax) {
-      return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
-    }
-
-    vec2 ${name}(vec2 value, vec2 inMin, vec2 inMax, vec2 outMin, vec2 outMax) {
-      return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
-    }
-
-    vec3 ${name}(vec3 value, vec3 inMin, vec3 inMax, vec3 outMin, vec3 outMax) {
-      return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
-    }
-
-    vec4 ${name}(vec4 value, vec4 inMin, vec4 inMax, vec4 outMin, vec4 outMax) {
-      return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
-    }`
-)
-
-export const Remap = <T extends "float" | "vec2" | "vec3" | "vec4">(
-  v: Input<T>,
+export const remap = <T extends "float" | "vec2" | "vec3" | "vec4">(
+  value: Input<T>,
   inMin: Input<T>,
   inMax: Input<T>,
   outMin: Input<T>,
   outMax: Input<T>
-) => Unit(type(v), $`${remap}(${v}, ${inMin}, ${inMax}, ${outMin}, ${outMax})`)
+) => $`mix(${outMin}, ${outMax}, ${inverseLerp(inMin, inMax, value)})`
+
+export const Remap = <T extends "float" | "vec2" | "vec3" | "vec4">(
+  value: Input<T>,
+  inMin: Input<T>,
+  inMax: Input<T>,
+  outMin: Input<T>,
+  outMax: Input<T>
+) => Unit(type(value), remap(value, inMin, inMax, outMin, outMax))
 
 export const NormalizePlusMinusOne = (f: Input<"float">) => Remap(f, -1, 1, 0, 1)
 
