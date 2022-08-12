@@ -21,7 +21,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "dev": "preconstruct watch",
-    "docs": "typedoc --plugin typedoc-plugin-markdown --excludeInternal --name 'Shader Composer' src/stdlib/ && cp docs/modules.md ./REFERENCE.md",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --excludeInternal --name 'Shader Composer' src/index.ts",
     "build": "preconstruct build",
     "release": "yarn ci && yarn publish",
     "test": "jest --passWithNoTests",
