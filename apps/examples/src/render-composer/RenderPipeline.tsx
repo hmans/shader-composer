@@ -26,9 +26,7 @@ export const Layers = {
   TransparentFX: 1
 }
 
-const RenderPipelineContext = createContext<ReturnType<typeof useRenderPipelineSetup>>(
-  null!
-)
+const RenderPipelineContext = createContext<{ depthTexture: THREE.DepthTexture }>(null!)
 
 export const useRenderPipeline = () => useContext(RenderPipelineContext)
 
