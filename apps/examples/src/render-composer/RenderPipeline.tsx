@@ -2,12 +2,12 @@ import { useFrame, useThree } from "@react-three/fiber"
 import {
   BlendFunction,
   DepthCopyPass,
+  Effect,
   EffectComposer,
   EffectPass,
   RenderPass,
   SelectiveBloomEffect,
   SMAAEffect,
-  TextureEffect,
   VignetteEffect
 } from "postprocessing"
 import { createContext, FC, ReactNode, useContext, useLayoutEffect, useMemo } from "react"
@@ -39,28 +39,35 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
 }) => {
   const { gl, scene, camera, size } = useThree()
 
-  const composer = useMemo(
-    () => new EffectComposer(gl, { frameBufferType: THREE.HalfFloatType }),
-    []
-  )
+  const composer = useMemo(() => {
+    return new EffectComposer(gl, { frameBufferType: THREE.HalfFloatType })
+  }, [])
 
-  const preRenderPass = useMemo(
-    () =>
-      new LayerRenderPass(
-        scene,
-        camera,
-        undefined,
-        camera.layers.mask & ~(1 << Layers.TransparentFX)
-      ),
-    [scene, camera]
-  )
-  const copyDepthPass = useMemo(
-    () => new DepthCopyPass({ depthPacking: BasicDepthPacking }),
-    []
-  )
-  const fullScenePass = useMemo(() => new RenderPass(scene, camera), [camera, scene])
-  const vignetteEffect = useMemo(() => new VignetteEffect(), [])
-  const smaaEffect = useMemo(() => new SMAAEffect(), [])
+  const preRenderPass = useMemo(() => {
+    return new LayerRenderPass(
+      scene,
+      camera,
+      undefined,
+      camera.layers.mask & ~(1 << Layers.TransparentFX)
+    )
+  }, [scene, camera])
+
+  const copyDepthPass = useMemo(() => {
+    return new DepthCopyPass({ depthPacking: BasicDepthPacking })
+  }, [])
+
+  const fullScenePass = useMemo(() => {
+    return new RenderPass(scene, camera)
+  }, [camera, scene])
+
+  const vignetteEffect = useMemo(() => {
+    return new VignetteEffect()
+  }, [])
+
+  const smaaEffect = useMemo(() => {
+    return new SMAAEffect()
+  }, [])
+
   const selectiveBloomEffect = useMemo(() => {
     const bloomEffect = new SelectiveBloomEffect(scene, camera, {
       blendFunction: BlendFunction.ADD,
@@ -69,7 +76,9 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
       luminanceSmoothing: 0.5,
       intensity: 4
     } as any)
+
     bloomEffect.inverted = true
+
     return bloomEffect
   }, [])
 
@@ -82,17 +91,32 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
     const fullPass = new RenderPass(scene, camera)
     composer.addPass(fullPass)
 
-    const t = new TextureEffect({ texture: copyDepthPass.texture })
+    // const t = new TextureEffect({ texture: copyDepthPass.texture })
     // composer.addPass(new EffectPass(camera, t))
 
-    return () => composer.removeAllPasses()
-  }, [composer, scene, camera])
+    const effects = [selectiveBloomEffect, vignetteEffect, smaaEffect].filter(
+      (e) => e
+    ) as Effect[]
 
-  useLayoutEffect(() => {
-    const pass = new EffectPass(camera, selectiveBloomEffect, vignetteEffect, smaaEffect)
+    const pass = new EffectPass(camera, ...effects)
+
     composer.addPass(pass)
-    return () => composer.removePass(pass)
-  }, [camera, bloom, vignette, antiAliasing])
+
+    return () => composer.removeAllPasses()
+  }, [
+    composer,
+    scene,
+    camera,
+    preRenderPass,
+    copyDepthPass,
+    fullScenePass,
+    selectiveBloomEffect,
+    vignetteEffect,
+    smaaEffect,
+    bloom,
+    vignette,
+    antiAliasing
+  ])
 
   useLayoutEffect(() => {
     composer.setSize(size.width, size.height)

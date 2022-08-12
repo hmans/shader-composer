@@ -61,7 +61,11 @@ export const Venue: FC<{
     <>
       {examples && <Navigation examples={examples} />}
       <RenderComposer dpr={opts.dpr}>
-        <RenderPipeline />
+        <RenderPipeline
+          bloom={opts.postProcessing}
+          antiAliasing={opts.postProcessing}
+          vignette={opts.postProcessing}
+        />
 
         <Suspense>
           <Environment preset="sunset" />
