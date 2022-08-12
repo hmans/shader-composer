@@ -1,5 +1,12 @@
 import { useFrame, useThree } from "@react-three/fiber"
-import { DepthCopyPass, EffectComposer, RenderPass } from "postprocessing"
+import {
+  BlendFunction,
+  DepthCopyPass,
+  EffectComposer,
+  EffectPass,
+  RenderPass,
+  SelectiveBloomEffect
+} from "postprocessing"
 import {
   createContext,
   FC,
@@ -59,7 +66,17 @@ const useRenderPipelineSetup = () => {
     const fullPass = new RenderPass(scene, camera)
     composer.addPass(fullPass)
 
-    /* TODO: add postprocessing effects */
+    /* Add the good bloom! */
+    const bloomEffect = new SelectiveBloomEffect(scene, camera, {
+      blendFunction: BlendFunction.ADD,
+      mipmapBlur: true,
+      luminanceThreshold: 0.9,
+      luminanceSmoothing: 0.5,
+      intensity: 4
+    } as any)
+    bloomEffect.inverted = true
+
+    composer.addPass(new EffectPass(camera, bloomEffect))
 
     return () => composer.removeAllPasses()
   }, [composer, scene, camera])

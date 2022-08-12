@@ -66,6 +66,7 @@ export const Venue: FC<{
         <Suspense>
           <Environment preset="sunset" />
           <fogExp2 args={["#000", 0.03]} attach="fog" />
+          <ambientLight intensity={0.5} />
           <PerspectiveCamera
             position={[0, 0, 5]}
             layers-mask={Layers.Default + Layers.TransparentFX}
