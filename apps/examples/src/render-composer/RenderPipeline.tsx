@@ -85,9 +85,9 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
     const bloomEffect = new SelectiveBloomEffect(scene, camera, {
       blendFunction: BlendFunction.ADD,
       mipmapBlur: true,
-      luminanceThreshold: 1,
-      luminanceSmoothing: 0.5,
-      intensity: 4
+      luminanceThreshold: 0.9,
+      luminanceSmoothing: 0.2,
+      intensity: 3
     } as any)
 
     bloomEffect.inverted = true
