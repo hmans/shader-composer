@@ -1,3 +1,7 @@
+/** @packageDocumentation
+ * Geometryyyy
+ */
+
 import { Vector2 } from "three"
 import { $, Expression } from "../expressions"
 import { injectAPI, GLSLType, Input, Unit } from "../units"
@@ -28,6 +32,9 @@ export const ProjectionMatrix = Mat4($`projectionMatrix`, {
   name: "Projection Matrix"
 })
 
+/**
+ * Returns true if instanced rendering is enabled, false if it is not.
+ */
 export const UsingInstancing = Bool($`
   #ifdef USE_INSTANCING
     true
@@ -36,6 +43,10 @@ export const UsingInstancing = Bool($`
   #endif
 `)
 
+/**
+ * When instanced rendering is enabled, returns the instance matrix,
+ * otherwise `mat4(1.0)`.
+ */
 export const InstanceMatrix = Mat4(
   $`
     #ifdef USE_INSTANCING

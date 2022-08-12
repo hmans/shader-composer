@@ -11,6 +11,7 @@ import {
   WebGLRenderer
 } from "three"
 import { Expression } from "./expressions"
+import { Float } from "./stdlib"
 import { identifier } from "./util/concatenator3000"
 
 export type Program = "vertex" | "fragment"
