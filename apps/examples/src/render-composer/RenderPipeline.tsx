@@ -18,8 +18,8 @@ import {
   useMemo,
   useState
 } from "react"
-import { LayerRenderPass } from "./LayerRenderPass"
 import * as THREE from "three"
+import { LayerRenderPass } from "./LayerRenderPass"
 
 export const Layers = {
   Default: 0,
@@ -33,14 +33,6 @@ const RenderPipelineContext = createContext<ReturnType<typeof useRenderPipelineS
 export const useRenderPipeline = () => useContext(RenderPipelineContext)
 
 export const RenderPipeline: FC<{ children?: ReactNode }> = ({ children }) => {
-  const rp = useRenderPipelineSetup()
-
-  return (
-    <RenderPipelineContext.Provider value={rp}>{children}</RenderPipelineContext.Provider>
-  )
-}
-
-const useRenderPipelineSetup = () => {
   const { gl, scene, camera, size } = useThree()
   const [depthTexture] = useState(() => new THREE.DepthTexture(128, 128))
 
@@ -95,5 +87,9 @@ const useRenderPipelineSetup = () => {
     composer.render()
   }, 1)
 
-  return { depthTexture }
+  return (
+    <RenderPipelineContext.Provider value={{ depthTexture }}>
+      {children}
+    </RenderPipelineContext.Provider>
+  )
 }
