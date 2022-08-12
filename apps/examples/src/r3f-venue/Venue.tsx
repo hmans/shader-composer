@@ -60,13 +60,12 @@ export const Venue: FC<{
   return (
     <>
       {examples && <Navigation examples={examples} />}
-      <RenderComposer dpr={opts.dpr}>
-        <RenderPipeline
-          bloom={opts.postProcessing}
-          antiAliasing={opts.postProcessing}
-          vignette={opts.postProcessing}
-        />
-
+      <RenderComposer
+        dpr={opts.dpr}
+        bloom={opts.postProcessing}
+        vignette={opts.postProcessing}
+        antiAliasing={opts.postProcessing}
+      >
         <Suspense>
           <Environment preset="sunset" />
           <fogExp2 args={["#000", 0.03]} attach="fog" />

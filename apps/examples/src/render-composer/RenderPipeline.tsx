@@ -94,9 +94,11 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
     // const t = new TextureEffect({ texture: copyDepthPass.texture })
     // composer.addPass(new EffectPass(camera, t))
 
-    const effects = [selectiveBloomEffect, vignetteEffect, smaaEffect].filter(
-      (e) => e
-    ) as Effect[]
+    const effects = [
+      bloom && selectiveBloomEffect,
+      vignette && vignetteEffect,
+      antiAliasing && smaaEffect
+    ].filter((e) => e) as Effect[]
 
     const pass = new EffectPass(camera, ...effects)
 
