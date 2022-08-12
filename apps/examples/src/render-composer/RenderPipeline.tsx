@@ -5,7 +5,9 @@ import {
   EffectComposer,
   EffectPass,
   RenderPass,
-  SelectiveBloomEffect
+  SelectiveBloomEffect,
+  SMAAEffect,
+  VignetteEffect
 } from "postprocessing"
 import {
   createContext,
@@ -70,13 +72,17 @@ const useRenderPipelineSetup = () => {
     const bloomEffect = new SelectiveBloomEffect(scene, camera, {
       blendFunction: BlendFunction.ADD,
       mipmapBlur: true,
-      luminanceThreshold: 0.9,
+      luminanceThreshold: 1,
       luminanceSmoothing: 0.5,
       intensity: 4
     } as any)
     bloomEffect.inverted = true
 
-    composer.addPass(new EffectPass(camera, bloomEffect))
+    const vignetteEffect = new VignetteEffect()
+
+    const smaaEffect = new SMAAEffect()
+
+    composer.addPass(new EffectPass(camera, bloomEffect, vignetteEffect, smaaEffect))
 
     return () => composer.removeAllPasses()
   }, [composer, scene, camera])
