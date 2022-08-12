@@ -24,6 +24,7 @@ import { useShader, useUniformUnit } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { Layers } from "../r3f-venue/Layers"
+import { useRenderPipeline } from "../render-composer"
 import { useRepeatingTexture } from "./helpers"
 import { useRenderPass } from "./useRenderPass"
 
@@ -45,6 +46,10 @@ export default function ForceField() {
     "sampler2D",
     useRepeatingTexture("/textures/hexgrid.jpg")
   )
+
+  const rp = useRenderPipeline()
+
+  console.log(rp.depthTexture)
 
   /* Define our shader */
   const shader = useShader(() => {

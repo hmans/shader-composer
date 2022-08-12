@@ -1,6 +1,7 @@
 import { Canvas, Props } from "@react-three/fiber"
+import { RenderPipeline } from "./RenderPipeline"
 
-export const RenderComposer = (props: Props) => (
+export const RenderComposer = ({ children, ...props }: Props) => (
   <Canvas
     shadows
     linear
@@ -13,5 +14,7 @@ export const RenderComposer = (props: Props) => (
       antialias: false
     }}
     {...props}
-  />
+  >
+    <RenderPipeline>{children}</RenderPipeline>
+  </Canvas>
 )
