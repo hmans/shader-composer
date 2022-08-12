@@ -106,9 +106,8 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
       vignette && vignetteEffect,
       antiAliasing && smaaEffect
       // new DepthOfFieldEffect(camera, {
-      //   worldFocusDistance: 10,
-      //   worldFocusRange: 8,
-      //   focalLength: 0.1,
+      //   worldFocusDistance: 13,
+      //   worldFocusRange: 5,
       //   bokehScale: 10
       // })
     ].filter((e) => e) as Effect[]
