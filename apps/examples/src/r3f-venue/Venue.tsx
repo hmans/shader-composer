@@ -63,6 +63,7 @@ export const Venue: FC<{
       <Canvas
         shadows
         dpr={opts.dpr}
+        linear
         flat
         gl={{
           powerPreference: "high-performance",
