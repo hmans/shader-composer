@@ -137,8 +137,11 @@ export const Saturate = Clamp01
 
 export const OneMinus = (v: Input<"float">) => Float(Sub(1, v), { name: "OneMinus" })
 
-export const Mix = <T extends GLSLType>(a: Input<T>, b: Input<T>, f: Input<"float">) =>
-  Unit(type(a), $`mix(${a}, ${b}, ${f})`, { name: "Mix" })
+export const Mix = <T extends GLSLType>(
+  a: Input<T>,
+  b: Input<T>,
+  ratio: Input<"float">
+) => Unit(type(a), $`mix(${a}, ${b}, ${ratio})`, { name: "Mix" })
 
 export const Step = (edge: Input<"float">, v: Input<"float">) =>
   Float($`step(${edge}, ${v})`, { name: "Step" })
