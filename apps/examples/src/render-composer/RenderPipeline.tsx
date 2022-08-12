@@ -1,19 +1,14 @@
 import { useFrame, useThree } from "@react-three/fiber"
-import { compose } from "fp-ts/lib/Refinement"
 import {
-  AdaptiveLuminancePass,
   BlendFunction,
   CopyPass,
   DepthCopyPass,
-  DepthOfFieldEffect,
   Effect,
   EffectComposer,
   EffectPass,
-  LuminancePass,
   RenderPass,
   SelectiveBloomEffect,
   SMAAEffect,
-  TextureEffect,
   VignetteEffect
 } from "postprocessing"
 import { createContext, FC, ReactNode, useContext, useLayoutEffect, useMemo } from "react"
