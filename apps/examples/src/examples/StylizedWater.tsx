@@ -28,7 +28,6 @@ import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { Layers } from "../r3f-venue/Layers"
 import { useRenderPipeline } from "../render-composer"
-import { useRenderPass } from "./useRenderPass"
 
 export default function StylizedWater() {
   return (
