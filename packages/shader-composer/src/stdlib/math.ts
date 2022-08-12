@@ -143,6 +143,8 @@ export const Mix = <T extends GLSLType>(
   ratio: Input<"float">
 ) => Unit(type(a), $`mix(${a}, ${b}, ${ratio})`, { name: "Mix" })
 
+export const Lerp = Mix
+
 export const Step = (edge: Input<"float">, v: Input<"float">) =>
   Float($`step(${edge}, ${v})`, { name: "Step" })
 
