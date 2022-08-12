@@ -1,10 +1,14 @@
 import { useFrame, useThree } from "@react-three/fiber"
+import { compose } from "fp-ts/lib/Refinement"
 import {
+  AdaptiveLuminancePass,
   BlendFunction,
   DepthCopyPass,
+  DepthOfFieldEffect,
   Effect,
   EffectComposer,
   EffectPass,
+  LuminancePass,
   RenderPass,
   SelectiveBloomEffect,
   SMAAEffect,
@@ -98,11 +102,15 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
       bloom && selectiveBloomEffect,
       vignette && vignetteEffect,
       antiAliasing && smaaEffect
+      // new DepthOfFieldEffect(camera, {
+      //   worldFocusDistance: 10,
+      //   worldFocusRange: 8,
+      //   focalLength: 0.1,
+      //   bokehScale: 10
+      // })
     ].filter((e) => e) as Effect[]
 
-    const pass = new EffectPass(camera, ...effects)
-
-    composer.addPass(pass)
+    composer.addPass(new EffectPass(camera, ...effects))
 
     return () => composer.removeAllPasses()
   }, [
