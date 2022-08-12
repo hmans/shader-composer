@@ -27,6 +27,7 @@ import { PSRDNoise2D, PSRDNoise3D } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { Layers } from "../r3f-venue/Layers"
+import { useRenderPipeline } from "../render-composer"
 import { useRenderPass } from "./useRenderPass"
 
 export default function StylizedWater() {
@@ -45,6 +46,10 @@ export default function StylizedWater() {
 }
 
 const Water = (props: MeshProps) => {
+  const rp = useRenderPipeline()
+
+  const depthSampler = useUniformUnit("sampler2D", rp.depthTexture)
+
   /* We'll let the user control some values through Leva. */
   const controls = useControls("Water", {
     calmness: { value: 0.5, min: 0, max: 1 },
@@ -88,7 +93,7 @@ const Water = (props: MeshProps) => {
     /* Calculate the depth by comparing the current fragment's
     depth in view space to the depth of the scene. */
     const depth = pipe(
-      scene.depthTexture,
+      depthSampler,
       (v) => PerspectiveDepth(refractedUV, v),
       (v) => Sub(VertexPosition.view.z, v)
     )
