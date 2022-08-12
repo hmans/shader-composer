@@ -8,26 +8,26 @@ import { Float, vec3 } from "./values"
  * @internal
  */
 export const Operator = (name: string, operator: "+" | "-" | "*" | "/") => <
-	A extends GLSLType,
-	B extends GLSLType
+  A extends GLSLType,
+  B extends GLSLType
 >(
-	a: Input<A>,
-	b: Input<B>
+  a: Input<A>,
+  b: Input<B>
 ) =>
-	Unit(type(a), $`${a} ${operator} ${b}`, {
-		name: `${name} (${type(a)})`
-	})
+  Unit(type(a), $`${a} ${operator} ${b}`, {
+    name: `${name} (${type(a)})`
+  })
 
 /**
  * @internal
  */
 export const SingleArgumentFunction = <
-	TA extends GLSLType = "float" | "vec2" | "vec3" | "vec4"
+  TA extends GLSLType = "float" | "vec2" | "vec3" | "vec4"
 >(
-	name: string,
-	functionName: string
+  name: string,
+  functionName: string
 ) => <A extends TA>(a: Input<A>) =>
-	Unit(type(a), $`${functionName}(${a})`, { name: `${name} (${type(a)})` })
+  Unit(type(a), $`${functionName}(${a})`, { name: `${name} (${type(a)})` })
 
 /**
  * A Shader Unit that adds two values and returns the result.
@@ -66,8 +66,8 @@ export const Asin = SingleArgumentFunction("Asin", "asin")
 export const Acos = SingleArgumentFunction("Acos", "acos")
 
 export const Pow = <T extends "float" | "vec2" | "vec3" | "vec4">(
-	a: Input<T>,
-	e: Input<T>
+  a: Input<T>,
+  e: Input<T>
 ) => Unit(type(a), $`pow(${a}, ${e})`, { name: `Pow (${type(a)})` })
 
 export const Exp = SingleArgumentFunction("Exp", "exp")
@@ -121,15 +121,15 @@ export const Radians = SingleArgumentFunction("Radians", "radians")
 export const Degrees = SingleArgumentFunction("Degrees", "degrees")
 
 export const Modulo = <
-	A extends "float" | "vec2" | "vec3" | "vec4",
-	B extends "float" | A
+  A extends "float" | "vec2" | "vec3" | "vec4",
+  B extends "float" | A
 >(
-	a: Input<A>,
-	b: Input<B>
+  a: Input<A>,
+  b: Input<B>
 ) => Unit(type(a), $`mod(${a}, ${b})`)
 
 export const Clamp = <T extends GLSLType>(x: Input<T>, min: Input<T>, max: Input<T>) =>
-	Unit(type(x), $`clamp(${x}, ${min}, ${max})`, { name: "Clamp" })
+  Unit(type(x), $`clamp(${x}, ${min}, ${max})`, { name: "Clamp" })
 
 export const Clamp01 = (x: Input<"float">) => Clamp(x, 0, 1)
 
@@ -138,16 +138,16 @@ export const Saturate = Clamp01
 export const OneMinus = (v: Input<"float">) => Float(Sub(1, v), { name: "OneMinus" })
 
 export const Mix = <T extends GLSLType>(a: Input<T>, b: Input<T>, f: Input<"float">) =>
-	Unit(type(a), $`mix(${a}, ${b}, ${f})`, { name: "Mix" })
+  Unit(type(a), $`mix(${a}, ${b}, ${f})`, { name: "Mix" })
 
 export const Step = (edge: Input<"float">, v: Input<"float">) =>
-	Float($`step(${edge}, ${v})`, { name: "Step" })
+  Float($`step(${edge}, ${v})`, { name: "Step" })
 
 export const Smoothstep = (min: Input<"float">, max: Input<"float">, v: Input<"float">) =>
-	Float($`smoothstep(${min}, ${max}, ${v})`, { name: "Smoothstep" })
+  Float($`smoothstep(${min}, ${max}, ${v})`, { name: "Smoothstep" })
 
 const remap = Snippet(
-	(name) => $`
+  (name) => $`
     float ${name}(float value, float inMin, float inMax, float outMin, float outMax) {
       return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
     }
@@ -166,21 +166,21 @@ const remap = Snippet(
 )
 
 export const Remap = <T extends "float" | "vec2" | "vec3" | "vec4">(
-	v: Input<T>,
-	inMin: Input<T>,
-	inMax: Input<T>,
-	outMin: Input<T>,
-	outMax: Input<T>
+  v: Input<T>,
+  inMin: Input<T>,
+  inMax: Input<T>,
+  outMin: Input<T>,
+  outMax: Input<T>
 ) => Unit(type(v), $`${remap}(${v}, ${inMin}, ${inMax}, ${outMin}, ${outMax})`)
 
 export const NormalizePlusMinusOne = (f: Input<"float">) => Remap(f, -1, 1, 0, 1)
 
 export const Min = <T extends "float" | "vec2" | "vec3" | "vec4">(
-	a: Input<T>,
-	b: Input<T>
+  a: Input<T>,
+  b: Input<T>
 ) => Unit(type(a), $`min(${a}, ${b})`)
 
 export const Max = <T extends "float" | "vec2" | "vec3" | "vec4">(
-	a: Input<T>,
-	b: Input<T>
+  a: Input<T>,
+  b: Input<T>
 ) => Unit(type(a), $`max(${a}, ${b})`)
