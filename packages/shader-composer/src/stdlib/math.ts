@@ -137,19 +137,25 @@ export const Saturate = Clamp01
 
 export const OneMinus = (v: Input<"float">) => Float(Sub(1, v), { name: "OneMinus" })
 
-export const Mix = <T extends GLSLType>(
+export const lerp = <T extends GLSLType>(
   a: Input<T>,
   b: Input<T>,
   ratio: Input<T | "float">
-) => Unit(type(a), $`mix(${a}, ${b}, ${ratio})`, { name: "Mix" })
+) => $`mix(${a}, ${b}, ${ratio})`
 
-export const Lerp = Mix
+export const Lerp = <T extends GLSLType>(
+  a: Input<T>,
+  b: Input<T>,
+  ratio: Input<T | "float">
+) => Unit(type(a), lerp(a, b, ratio), { name: "Mix" })
 
 export const inverseLerp = <T extends GLSLType>(a: Input<T>, b: Input<T>, c: Input<T>) =>
   $`(${c} - ${a}) / (${b} - ${a})`
 
 export const InverseLerp = <T extends GLSLType>(a: Input<T>, b: Input<T>, c: Input<T>) =>
   Unit(type(a), inverseLerp(a, b, c), { name: "Inverse Lerp" })
+
+export const Mix = Lerp
 
 export const Step = (edge: Input<"float">, v: Input<"float">) =>
   Float($`step(${edge}, ${v})`, { name: "Step" })
