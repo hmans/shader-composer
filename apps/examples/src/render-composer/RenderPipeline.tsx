@@ -7,18 +7,12 @@ import {
   RenderPass,
   SelectiveBloomEffect,
   SMAAEffect,
+  TextureEffect,
   VignetteEffect
 } from "postprocessing"
-import {
-  createContext,
-  FC,
-  ReactNode,
-  useContext,
-  useLayoutEffect,
-  useMemo,
-  useState
-} from "react"
+import { createContext, FC, ReactNode, useContext, useLayoutEffect, useMemo } from "react"
 import * as THREE from "three"
+import { BasicDepthPacking } from "three"
 import { LayerRenderPass } from "./LayerRenderPass"
 
 export const Layers = {
@@ -58,9 +52,12 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
         undefined,
         camera.layers.mask & ~(1 << Layers.TransparentFX)
       ),
+    [scene, camera]
+  )
+  const copyDepthPass = useMemo(
+    () => new DepthCopyPass({ depthPacking: BasicDepthPacking }),
     []
   )
-  const copyDepthPass = useMemo(() => new DepthCopyPass(), [])
   const fullScenePass = useMemo(() => new RenderPass(scene, camera), [camera, scene])
   const vignetteEffect = useMemo(() => new VignetteEffect(), [])
   const smaaEffect = useMemo(() => new SMAAEffect(), [])
@@ -84,6 +81,9 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
     /* Now render the full scene. */
     const fullPass = new RenderPass(scene, camera)
     composer.addPass(fullPass)
+
+    const t = new TextureEffect({ texture: copyDepthPass.texture })
+    // composer.addPass(new EffectPass(camera, t))
 
     return () => composer.removeAllPasses()
   }, [composer, scene, camera])
