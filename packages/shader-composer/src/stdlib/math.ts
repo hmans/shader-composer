@@ -145,8 +145,11 @@ export const Mix = <T extends GLSLType>(
 
 export const Lerp = Mix
 
+export const inverseLerp = <T extends GLSLType>(a: Input<T>, b: Input<T>, c: Input<T>) =>
+  $`(${c} - ${a}) / (${b} - ${a})`
+
 export const InverseLerp = <T extends GLSLType>(a: Input<T>, b: Input<T>, c: Input<T>) =>
-  Unit(type(a), $`(${c} - ${a}) / (${b} - ${a})`, { name: "Inverse Lerp" })
+  Unit(type(a), inverseLerp(a, b, c), { name: "Inverse Lerp" })
 
 export const Step = (edge: Input<"float">, v: Input<"float">) =>
   Float($`step(${edge}, ${v})`, { name: "Step" })
@@ -160,8 +163,7 @@ export const remap = <T extends "float" | "vec2" | "vec3" | "vec4">(
   inMax: Input<T>,
   outMin: Input<T>,
   outMax: Input<T>
-) =>
-  $`(${outMin} + (${outMax} - ${outMin}) * (${value} - ${inMin}) / (${inMax} - ${inMin}))`
+) => $`mix(${outMin}, ${outMax}, ${inverseLerp(inMin, inMax, value)})`
 
 export const Remap = <T extends "float" | "vec2" | "vec3" | "vec4">(
   value: Input<T>,
