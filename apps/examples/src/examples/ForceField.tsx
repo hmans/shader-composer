@@ -51,6 +51,8 @@ export default function ForceField() {
 
   console.log(rp.depthTexture)
 
+  const depthFoo = useUniformUnit("sampler2D", rp.depthTexture)
+
   /* Define our shader */
   const shader = useShader(() => {
     /* Define a time-based texture offset, and sample the force field texture. */
@@ -59,7 +61,7 @@ export default function ForceField() {
     const texture = Texture2D(sampler2D, TilingUV(UV, vec2(4, 2), textureOffset))
 
     /* Get the depth of the current fragment. */
-    const sceneDepth = PerspectiveDepth(ScreenUV, scene.depthTexture)
+    const sceneDepth = PerspectiveDepth(ScreenUV, depthFoo)
 
     const distance = pipe(
       VertexPosition.view.z,

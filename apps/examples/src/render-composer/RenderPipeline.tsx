@@ -30,35 +30,41 @@ const RenderPipelineContext = createContext<{ depthTexture: THREE.DepthTexture }
 
 export const useRenderPipeline = () => useContext(RenderPipelineContext)
 
-export const RenderPipeline: FC<{ children?: ReactNode }> = ({ children }) => {
+export type RenderPipelineProps = {
+  children?: ReactNode
+  bloom?: boolean
+  vignette?: boolean
+  antiAliasing?: boolean
+}
+
+export const RenderPipeline: FC<RenderPipelineProps> = ({
+  children,
+  bloom,
+  vignette,
+  antiAliasing
+}) => {
   const { gl, scene, camera, size } = useThree()
-  const [depthTexture] = useState(() => new THREE.DepthTexture(128, 128))
 
   const composer = useMemo(
     () => new EffectComposer(gl, { frameBufferType: THREE.HalfFloatType }),
     []
   )
 
-  useLayoutEffect(() => {
-    /* Render all layers except transparent FX. */
-    const preRenderPass = new LayerRenderPass(
-      scene,
-      camera,
-      undefined,
-      camera.layers.mask & ~(1 << Layers.TransparentFX)
-    )
-    composer.addPass(preRenderPass)
-
-    /* Extract the depth texture */
-    const copyDepthPass = new DepthCopyPass()
-    composer.addPass(copyDepthPass)
-    copyDepthPass.setDepthTexture(depthTexture)
-
-    /* Now render the full scene. */
-    const fullPass = new RenderPass(scene, camera)
-    composer.addPass(fullPass)
-
-    /* Add the good bloom! */
+  const preRenderPass = useMemo(
+    () =>
+      new LayerRenderPass(
+        scene,
+        camera,
+        undefined,
+        camera.layers.mask & ~(1 << Layers.TransparentFX)
+      ),
+    []
+  )
+  const copyDepthPass = useMemo(() => new DepthCopyPass(), [])
+  const fullScenePass = useMemo(() => new RenderPass(scene, camera), [camera, scene])
+  const vignetteEffect = useMemo(() => new VignetteEffect(), [])
+  const smaaEffect = useMemo(() => new SMAAEffect(), [])
+  const selectiveBloomEffect = useMemo(() => {
     const bloomEffect = new SelectiveBloomEffect(scene, camera, {
       blendFunction: BlendFunction.ADD,
       mipmapBlur: true,
@@ -67,15 +73,26 @@ export const RenderPipeline: FC<{ children?: ReactNode }> = ({ children }) => {
       intensity: 4
     } as any)
     bloomEffect.inverted = true
+    return bloomEffect
+  }, [])
 
-    const vignetteEffect = new VignetteEffect()
+  useLayoutEffect(() => {
+    composer.addPass(preRenderPass)
+    composer.addPass(copyDepthPass)
+    composer.addPass(fullScenePass)
 
-    const smaaEffect = new SMAAEffect()
-
-    composer.addPass(new EffectPass(camera, bloomEffect, vignetteEffect, smaaEffect))
+    /* Now render the full scene. */
+    const fullPass = new RenderPass(scene, camera)
+    composer.addPass(fullPass)
 
     return () => composer.removeAllPasses()
   }, [composer, scene, camera])
+
+  useLayoutEffect(() => {
+    const pass = new EffectPass(camera, selectiveBloomEffect, vignetteEffect, smaaEffect)
+    composer.addPass(pass)
+    return () => composer.removePass(pass)
+  }, [camera, bloom, vignette, antiAliasing])
 
   useLayoutEffect(() => {
     composer.setSize(size.width, size.height)
@@ -86,7 +103,9 @@ export const RenderPipeline: FC<{ children?: ReactNode }> = ({ children }) => {
   }, 1)
 
   return (
-    <RenderPipelineContext.Provider value={{ depthTexture }}>
+    <RenderPipelineContext.Provider
+      value={{ depthTexture: copyDepthPass.texture as THREE.DepthTexture }}
+    >
       {children}
     </RenderPipelineContext.Provider>
   )
