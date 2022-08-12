@@ -61,6 +61,8 @@ export const Venue: FC<{
     <>
       {examples && <Navigation examples={examples} />}
       <RenderComposer dpr={opts.dpr}>
+        <RenderPipeline />
+
         <Suspense>
           <Environment preset="sunset" />
           <fogExp2 args={["#000", 0.03]} attach="fog" />
@@ -69,7 +71,6 @@ export const Venue: FC<{
             layers-mask={Layers.Default + Layers.TransparentFX}
             makeDefault
           />
-          {opts.postProcessing && <RenderPipeline />}
 
           <OrbitControls
             makeDefault
