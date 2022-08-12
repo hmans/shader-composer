@@ -26,7 +26,6 @@ import CustomShaderMaterial from "three-custom-shader-material"
 import { Layers } from "../r3f-venue/Layers"
 import { useRenderPipeline } from "../render-composer"
 import { useRepeatingTexture } from "./helpers"
-import { useRenderPass } from "./useRenderPass"
 
 export default function ForceField() {
   /* Use Leva for some user input */
@@ -35,8 +34,6 @@ export default function ForceField() {
     intensity: { value: 3, min: 0, max: 10 },
     strength: { value: 0.5, min: 0, max: 1 }
   })
-
-  const scene = useRenderPass({ excludeLayer: Layers.TransparentFX })
 
   /* Create a bunch of uniforms */
   const color = useUniformUnit("vec3", new Color(controls.color))
@@ -47,11 +44,8 @@ export default function ForceField() {
     useRepeatingTexture("/textures/hexgrid.jpg")
   )
 
-  const rp = useRenderPipeline()
-
-  console.log(rp.depthTexture)
-
-  const depthFoo = useUniformUnit("sampler2D", rp.depthTexture)
+  const { depthTexture } = useRenderPipeline()
+  const depthSampler = useUniformUnit("sampler2D", depthTexture)
 
   /* Define our shader */
   const shader = useShader(() => {
@@ -61,7 +55,7 @@ export default function ForceField() {
     const texture = Texture2D(sampler2D, TilingUV(UV, vec2(4, 2), textureOffset))
 
     /* Get the depth of the current fragment. */
-    const sceneDepth = PerspectiveDepth(ScreenUV, depthFoo)
+    const sceneDepth = PerspectiveDepth(ScreenUV, depthSampler)
 
     const distance = pipe(
       VertexPosition.view.z,
