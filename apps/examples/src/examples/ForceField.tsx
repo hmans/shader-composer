@@ -44,7 +44,7 @@ export default function ForceField() {
     useRepeatingTexture("/textures/hexgrid.jpg")
   )
 
-  const { depthTexture } = useRenderPipeline()
+  const { depth: depthTexture } = useRenderPipeline()
   const depthSampler = useUniformUnit("sampler2D", depthTexture)
 
   /* Define our shader */

@@ -3,6 +3,7 @@ import { compose } from "fp-ts/lib/Refinement"
 import {
   AdaptiveLuminancePass,
   BlendFunction,
+  CopyPass,
   DepthCopyPass,
   DepthOfFieldEffect,
   Effect,
@@ -12,6 +13,7 @@ import {
   RenderPass,
   SelectiveBloomEffect,
   SMAAEffect,
+  TextureEffect,
   VignetteEffect
 } from "postprocessing"
 import { createContext, FC, ReactNode, useContext, useLayoutEffect, useMemo } from "react"
@@ -24,7 +26,10 @@ export const Layers = {
   TransparentFX: 1
 }
 
-const RenderPipelineContext = createContext<{ depthTexture: THREE.DepthTexture }>(null!)
+const RenderPipelineContext = createContext<{
+  depth: THREE.Texture
+  scene: THREE.Texture
+}>(null!)
 
 export const useRenderPipeline = () => useContext(RenderPipelineContext)
 
@@ -55,6 +60,10 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
       camera.layers.mask & ~(1 << Layers.TransparentFX)
     )
   }, [scene, camera])
+
+  const copyPass = useMemo(() => {
+    return new CopyPass()
+  }, [])
 
   const copyDepthPass = useMemo(() => {
     return new DepthCopyPass({ depthPacking: BasicDepthPacking })
@@ -89,14 +98,8 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
   useLayoutEffect(() => {
     composer.addPass(preRenderPass)
     composer.addPass(copyDepthPass)
+    composer.addPass(copyPass)
     composer.addPass(fullScenePass)
-
-    /* Now render the full scene. */
-    const fullPass = new RenderPass(scene, camera)
-    composer.addPass(fullPass)
-
-    // const t = new TextureEffect({ texture: copyDepthPass.texture })
-    // composer.addPass(new EffectPass(camera, t))
 
     const effects = [
       bloom && selectiveBloomEffect,
@@ -109,8 +112,10 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
       //   bokehScale: 10
       // })
     ].filter((e) => e) as Effect[]
-
     composer.addPass(new EffectPass(camera, ...effects))
+
+    // const t = new TextureEffect({ texture: copyPass.texture })
+    // composer.addPass(new EffectPass(camera, t))
 
     return () => composer.removeAllPasses()
   }, [
@@ -138,7 +143,10 @@ export const RenderPipeline: FC<RenderPipelineProps> = ({
 
   return (
     <RenderPipelineContext.Provider
-      value={{ depthTexture: copyDepthPass.texture as THREE.DepthTexture }}
+      value={{
+        depth: copyDepthPass.texture,
+        scene: copyPass.texture
+      }}
     >
       {children}
     </RenderPipelineContext.Provider>
