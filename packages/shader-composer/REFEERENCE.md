@@ -74,8 +74,10 @@
 - [GreaterOrEqual](modules.md#greaterorequal)
 - [If](modules.md#if)
 - [Int](modules.md#int)
+- [InverseLerp](modules.md#inverselerp)
 - [InverseSqrt](modules.md#inversesqrt)
 - [Length](modules.md#length)
+- [Lerp](modules.md#lerp)
 - [LocalToViewSpace](modules.md#localtoviewspace)
 - [LocalToWorldSpace](modules.md#localtoworldspace)
 - [Log](modules.md#log)
@@ -140,6 +142,7 @@
 - [glsl](modules.md#glsl)
 - [glslType](modules.md#glsltype-1)
 - [injectAPI](modules.md#injectapi)
+- [inverseLerp](modules.md#inverselerp-1)
 - [isExpression](modules.md#isexpression)
 - [isSnippet](modules.md#issnippet)
 - [isUnit](modules.md#isunit)
@@ -152,6 +155,7 @@
 - [mul](modules.md#mul-1)
 - [orthogonal](modules.md#orthogonal)
 - [pipe](modules.md#pipe)
+- [remap](modules.md#remap-1)
 - [renameSnippet](modules.md#renamesnippet)
 - [sub](modules.md#sub-1)
 - [type](modules.md#type)
@@ -161,6 +165,10 @@
 - [vec4](modules.md#vec4-1)
 - [walkTree](modules.md#walktree)
 
+### Math
+
+- [lerp](modules.md#lerp-1)
+
 ## Type Aliases
 
 ### API
@@ -169,7 +177,7 @@
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:168](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L168)
+[packages/shader-composer/src/units.ts:168](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L168)
 
 ___
 
@@ -200,7 +208,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:169](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L169)
+[packages/shader-composer/src/units.ts:169](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L169)
 
 ___
 
@@ -223,7 +231,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/masters.ts:34](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/masters.ts#L34)
+[packages/shader-composer/src/stdlib/masters.ts:34](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/masters.ts#L34)
 
 ___
 
@@ -242,7 +250,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/expressions.ts:5](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/expressions.ts#L5)
+[packages/shader-composer/src/expressions.ts:5](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/expressions.ts#L5)
 
 ___
 
@@ -263,7 +271,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/artistic.ts:8](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/artistic.ts#L8)
+[packages/shader-composer/src/stdlib/artistic.ts:8](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/artistic.ts#L8)
 
 ___
 
@@ -275,7 +283,7 @@ Currently supported GLSLTypes. Probably incomplete!
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:21](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L21)
+[packages/shader-composer/src/units.ts:21](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L21)
 
 ___
 
@@ -291,7 +299,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:44](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L44)
+[packages/shader-composer/src/units.ts:44](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L44)
 
 ___
 
@@ -301,7 +309,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/tree.ts:5](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/tree.ts#L5)
+[packages/shader-composer/src/tree.ts:5](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/tree.ts#L5)
 
 ___
 
@@ -325,7 +333,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:32](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L32)
+[packages/shader-composer/src/units.ts:32](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L32)
 
 ___
 
@@ -335,7 +343,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:16](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L16)
+[packages/shader-composer/src/units.ts:16](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L16)
 
 ___
 
@@ -353,7 +361,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/masters.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/masters.ts#L7)
+[packages/shader-composer/src/stdlib/masters.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/masters.ts#L7)
 
 ___
 
@@ -372,9 +380,9 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/snippets.ts:3](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/snippets.ts#L3)
+[packages/shader-composer/src/snippets.ts:3](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/snippets.ts#L3)
 
-[packages/shader-composer/src/snippets.ts:10](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/snippets.ts#L10)
+[packages/shader-composer/src/snippets.ts:10](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/snippets.ts#L10)
 
 ___
 
@@ -391,9 +399,9 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/uniforms.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/uniforms.ts#L7)
+[packages/shader-composer/src/stdlib/uniforms.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/uniforms.ts#L7)
 
-[packages/shader-composer/src/stdlib/uniforms.ts:13](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/uniforms.ts#L13)
+[packages/shader-composer/src/stdlib/uniforms.ts:13](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/uniforms.ts#L13)
 
 ___
 
@@ -416,9 +424,9 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:131](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L131)
+[packages/shader-composer/src/units.ts:131](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L131)
 
-[packages/shader-composer/src/units.ts:136](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L136)
+[packages/shader-composer/src/units.ts:136](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L136)
 
 ___
 
@@ -456,7 +464,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:61](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L61)
+[packages/shader-composer/src/units.ts:61](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L61)
 
 ___
 
@@ -483,7 +491,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:54](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L54)
+[packages/shader-composer/src/units.ts:54](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L54)
 
 ___
 
@@ -499,7 +507,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:52](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L52)
+[packages/shader-composer/src/units.ts:52](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L52)
 
 ## Variables
 
@@ -509,7 +517,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/uniforms.ts:73](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/uniforms.ts#L73)
+[packages/shader-composer/src/stdlib/uniforms.ts:73](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/uniforms.ts#L73)
 
 ___
 
@@ -519,7 +527,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/uniforms.ts:63](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/uniforms.ts#L63)
+[packages/shader-composer/src/stdlib/uniforms.ts:63](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/uniforms.ts#L63)
 
 ___
 
@@ -529,7 +537,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L7)
+[packages/shader-composer/src/stdlib/geometry.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L7)
 
 ___
 
@@ -541,7 +549,7 @@ Returns the current fragment's on-screen coordinate.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/globals.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/globals.ts#L7)
+[packages/shader-composer/src/stdlib/globals.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/globals.ts#L7)
 
 ___
 
@@ -551,7 +559,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:39](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L39)
+[packages/shader-composer/src/stdlib/geometry.ts:39](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L39)
 
 ___
 
@@ -561,7 +569,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:83](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L83)
+[packages/shader-composer/src/stdlib/geometry.ts:83](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L83)
 
 ___
 
@@ -571,7 +579,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:15](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L15)
+[packages/shader-composer/src/stdlib/geometry.ts:15](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L15)
 
 ___
 
@@ -581,7 +589,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:19](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L19)
+[packages/shader-composer/src/stdlib/geometry.ts:19](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L19)
 
 ___
 
@@ -591,7 +599,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:23](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L23)
+[packages/shader-composer/src/stdlib/geometry.ts:23](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L23)
 
 ___
 
@@ -601,7 +609,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:27](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L27)
+[packages/shader-composer/src/stdlib/geometry.ts:27](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L27)
 
 ___
 
@@ -611,7 +619,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/uniforms.ts:54](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/uniforms.ts#L54)
+[packages/shader-composer/src/stdlib/uniforms.ts:54](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/uniforms.ts#L54)
 
 ___
 
@@ -621,7 +629,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/uniforms.ts:83](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/uniforms.ts#L83)
+[packages/shader-composer/src/stdlib/uniforms.ts:83](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/uniforms.ts#L83)
 
 ___
 
@@ -631,7 +639,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:53](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L53)
+[packages/shader-composer/src/stdlib/geometry.ts:53](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L53)
 
 ___
 
@@ -641,7 +649,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:31](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L31)
+[packages/shader-composer/src/stdlib/geometry.ts:31](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L31)
 
 ___
 
@@ -651,7 +659,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:76](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L76)
+[packages/shader-composer/src/stdlib/geometry.ts:76](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L76)
 
 ___
 
@@ -661,7 +669,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:75](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L75)
+[packages/shader-composer/src/stdlib/geometry.ts:75](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L75)
 
 ___
 
@@ -671,7 +679,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:78](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L78)
+[packages/shader-composer/src/stdlib/geometry.ts:78](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L78)
 
 ___
 
@@ -681,7 +689,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:11](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L11)
+[packages/shader-composer/src/stdlib/geometry.ts:11](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L11)
 
 ## Functions
 
@@ -704,7 +712,7 @@ A shortcut for the `glsl` tagged template literal helper.
 
 #### Defined in
 
-[packages/shader-composer/src/expressions.ts:12](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/expressions.ts#L12)
+[packages/shader-composer/src/expressions.ts:12](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/expressions.ts#L12)
 
 ___
 
@@ -730,7 +738,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -756,7 +764,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -786,7 +794,7 @@ A Shader Unit that adds two values and returns the result.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:10](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L10)
+[packages/shader-composer/src/stdlib/math.ts:10](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L10)
 
 ___
 
@@ -812,7 +820,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -839,7 +847,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:96](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L96)
+[packages/shader-composer/src/stdlib/geometry.ts:96](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L96)
 
 ___
 
@@ -860,7 +868,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:38](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L38)
+[packages/shader-composer/src/stdlib/vectors.ts:38](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L38)
 
 ___
 
@@ -881,7 +889,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L7)
+[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L7)
 
 ___
 
@@ -907,7 +915,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -935,7 +943,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:131](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L131)
+[packages/shader-composer/src/stdlib/math.ts:131](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L131)
 
 ___
 
@@ -955,7 +963,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:134](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L134)
+[packages/shader-composer/src/stdlib/math.ts:134](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L134)
 
 ___
 
@@ -983,7 +991,7 @@ Calculates the cosine value of the input value.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -1004,7 +1012,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:30](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L30)
+[packages/shader-composer/src/stdlib/vectors.ts:30](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L30)
 
 ___
 
@@ -1024,7 +1032,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/masters.ts:45](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/masters.ts#L45)
+[packages/shader-composer/src/stdlib/masters.ts:45](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/masters.ts#L45)
 
 ___
 
@@ -1052,7 +1060,7 @@ Converts the given value from radians to degrees.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -1079,7 +1087,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:41](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L41)
+[packages/shader-composer/src/stdlib/vectors.ts:41](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L41)
 
 ___
 
@@ -1109,7 +1117,7 @@ A Shader Unit that divides two values and returns the result.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:10](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L10)
+[packages/shader-composer/src/stdlib/math.ts:10](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L10)
 
 ___
 
@@ -1136,7 +1144,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:33](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L33)
+[packages/shader-composer/src/stdlib/vectors.ts:33](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L33)
 
 ___
 
@@ -1162,7 +1170,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -1188,7 +1196,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -1209,7 +1217,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L7)
+[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L7)
 
 ___
 
@@ -1235,7 +1243,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -1261,7 +1269,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -1281,7 +1289,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/artistic.ts:17](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/artistic.ts#L17)
+[packages/shader-composer/src/stdlib/artistic.ts:17](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/artistic.ts#L17)
 
 ___
 
@@ -1308,7 +1316,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/logic.ts:12](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/logic.ts#L12)
+[packages/shader-composer/src/stdlib/logic.ts:12](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/logic.ts#L12)
 
 ___
 
@@ -1336,7 +1344,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/logic.ts:6](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/logic.ts#L6)
+[packages/shader-composer/src/stdlib/logic.ts:6](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/logic.ts#L6)
 
 ___
 
@@ -1357,7 +1365,35 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L7)
+[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L7)
+
+___
+
+### InverseLerp
+
+▸ **InverseLerp**<`T`\>(`a`, `b`, `c`): [`Unit`](modules.md#unit-1)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`GLSLType`](modules.md#glsltype) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Input`](modules.md#input)<`T`\> |
+| `b` | [`Input`](modules.md#input)<`T`\> |
+| `c` | [`Input`](modules.md#input)<`T`\> |
+
+#### Returns
+
+[`Unit`](modules.md#unit-1)<`T`\>
+
+#### Defined in
+
+[packages/shader-composer/src/stdlib/math.ts:164](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L164)
 
 ___
 
@@ -1383,7 +1419,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -1409,7 +1445,35 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:46](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L46)
+[packages/shader-composer/src/stdlib/vectors.ts:46](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L46)
+
+___
+
+### Lerp
+
+▸ **Lerp**<`T`\>(`a`, `b`, `ratio`): [`Unit`](modules.md#unit-1)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`GLSLType`](modules.md#glsltype) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Input`](modules.md#input)<`T`\> |
+| `b` | [`Input`](modules.md#input)<`T`\> |
+| `ratio` | [`Input`](modules.md#input)<``"float"`` \| `T`\> |
+
+#### Returns
+
+[`Unit`](modules.md#unit-1)<`T`\>
+
+#### Defined in
+
+[packages/shader-composer/src/stdlib/math.ts:155](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L155)
 
 ___
 
@@ -1432,7 +1496,7 @@ to view space.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/spaces.ts:20](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/spaces.ts#L20)
+[packages/shader-composer/src/stdlib/spaces.ts:20](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/spaces.ts#L20)
 
 ___
 
@@ -1455,7 +1519,7 @@ to world space.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/spaces.ts:27](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/spaces.ts#L27)
+[packages/shader-composer/src/stdlib/spaces.ts:27](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/spaces.ts#L27)
 
 ___
 
@@ -1481,7 +1545,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -1507,7 +1571,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -1527,7 +1591,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:77](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L77)
+[packages/shader-composer/src/stdlib/values.ts:77](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L77)
 
 ___
 
@@ -1548,7 +1612,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L7)
+[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L7)
 
 ___
 
@@ -1569,7 +1633,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L7)
+[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L7)
 
 ___
 
@@ -1596,7 +1660,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:186](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L186)
+[packages/shader-composer/src/stdlib/math.ts:198](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L198)
 
 ___
 
@@ -1623,7 +1687,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:181](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L181)
+[packages/shader-composer/src/stdlib/math.ts:193](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L193)
 
 ___
 
@@ -1643,7 +1707,7 @@ ___
 | :------ | :------ |
 | `a` | [`Input`](modules.md#input)<`T`\> |
 | `b` | [`Input`](modules.md#input)<`T`\> |
-| `ratio` | [`Input`](modules.md#input)<``"float"``\> |
+| `ratio` | [`Input`](modules.md#input)<``"float"`` \| `T`\> |
 
 #### Returns
 
@@ -1651,7 +1715,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:140](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L140)
+[packages/shader-composer/src/stdlib/math.ts:155](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L155)
 
 ___
 
@@ -1679,7 +1743,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:123](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L123)
+[packages/shader-composer/src/stdlib/math.ts:123](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L123)
 
 ___
 
@@ -1709,7 +1773,7 @@ A Shader Unit that multiplies two values and returns the result.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:10](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L10)
+[packages/shader-composer/src/stdlib/math.ts:10](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L10)
 
 ___
 
@@ -1735,7 +1799,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:27](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L27)
+[packages/shader-composer/src/stdlib/vectors.ts:27](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L27)
 
 ___
 
@@ -1755,7 +1819,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:179](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L179)
+[packages/shader-composer/src/stdlib/math.ts:191](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L191)
 
 ___
 
@@ -1775,7 +1839,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:138](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L138)
+[packages/shader-composer/src/stdlib/math.ts:138](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L138)
 
 ___
 
@@ -1802,7 +1866,7 @@ Float unit containing the depth in eye space units
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/scene.ts:30](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/scene.ts#L30)
+[packages/shader-composer/src/stdlib/scene.ts:30](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/scene.ts#L30)
 
 ___
 
@@ -1829,7 +1893,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:68](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L68)
+[packages/shader-composer/src/stdlib/math.ts:68](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L68)
 
 ___
 
@@ -1857,7 +1921,7 @@ Converts the given value from degrees to radians.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -1882,7 +1946,7 @@ Float unit containing the depth as stored in the texture
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/scene.ts:18](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/scene.ts#L18)
+[packages/shader-composer/src/stdlib/scene.ts:18](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/scene.ts#L18)
 
 ___
 
@@ -1909,7 +1973,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:49](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L49)
+[packages/shader-composer/src/stdlib/vectors.ts:49](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L49)
 
 ___
 
@@ -1937,13 +2001,13 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:57](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L57)
+[packages/shader-composer/src/stdlib/vectors.ts:57](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L57)
 
 ___
 
 ### Remap
 
-▸ **Remap**<`T`\>(`v`, `inMin`, `inMax`, `outMin`, `outMax`): [`Unit`](modules.md#unit-1)<`T`\>
+▸ **Remap**<`T`\>(`value`, `inMin`, `inMax`, `outMin`, `outMax`): [`Unit`](modules.md#unit-1)<`T`\>
 
 #### Type parameters
 
@@ -1955,7 +2019,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `v` | [`Input`](modules.md#input)<`T`\> |
+| `value` | [`Input`](modules.md#input)<`T`\> |
 | `inMin` | [`Input`](modules.md#input)<`T`\> |
 | `inMax` | [`Input`](modules.md#input)<`T`\> |
 | `outMin` | [`Input`](modules.md#input)<`T`\> |
@@ -1967,7 +2031,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:171](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L171)
+[packages/shader-composer/src/stdlib/math.ts:183](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L183)
 
 ___
 
@@ -1993,7 +2057,7 @@ A `vec3` Shader Unit containing the rotated vector.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/rotation.ts:33](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/rotation.ts#L33)
+[packages/shader-composer/src/stdlib/rotation.ts:33](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/rotation.ts#L33)
 
 ___
 
@@ -2014,7 +2078,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/rotation.ts:39](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/rotation.ts#L39)
+[packages/shader-composer/src/stdlib/rotation.ts:39](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/rotation.ts#L39)
 
 ___
 
@@ -2035,7 +2099,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/rotation.ts:42](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/rotation.ts#L42)
+[packages/shader-composer/src/stdlib/rotation.ts:42](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/rotation.ts#L42)
 
 ___
 
@@ -2056,7 +2120,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/rotation.ts:45](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/rotation.ts#L45)
+[packages/shader-composer/src/stdlib/rotation.ts:45](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/rotation.ts#L45)
 
 ___
 
@@ -2083,7 +2147,7 @@ A Shader Unit of type `mat4` representing the rotation matrix.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/rotation.ts:16](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/rotation.ts#L16)
+[packages/shader-composer/src/stdlib/rotation.ts:16](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/rotation.ts#L16)
 
 ___
 
@@ -2103,7 +2167,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/rotation.ts:19](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/rotation.ts#L19)
+[packages/shader-composer/src/stdlib/rotation.ts:19](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/rotation.ts#L19)
 
 ___
 
@@ -2123,7 +2187,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/rotation.ts:21](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/rotation.ts#L21)
+[packages/shader-composer/src/stdlib/rotation.ts:21](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/rotation.ts#L21)
 
 ___
 
@@ -2143,7 +2207,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/rotation.ts:23](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/rotation.ts#L23)
+[packages/shader-composer/src/stdlib/rotation.ts:23](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/rotation.ts#L23)
 
 ___
 
@@ -2174,7 +2238,7 @@ The rounded value of `a`.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -2194,7 +2258,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:134](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L134)
+[packages/shader-composer/src/stdlib/math.ts:134](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L134)
 
 ___
 
@@ -2226,7 +2290,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/scene.ts:8](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/scene.ts#L8)
+[packages/shader-composer/src/stdlib/scene.ts:8](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/scene.ts#L8)
 
 ___
 
@@ -2246,7 +2310,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/masters.ts:13](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/masters.ts#L13)
+[packages/shader-composer/src/stdlib/masters.ts:13](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/masters.ts#L13)
 
 ___
 
@@ -2272,7 +2336,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -2300,7 +2364,7 @@ Calculates the sine value of the input value.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -2322,7 +2386,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:149](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L149)
+[packages/shader-composer/src/stdlib/math.ts:172](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L172)
 
 ___
 
@@ -2342,7 +2406,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/snippets.ts:10](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/snippets.ts#L10)
+[packages/shader-composer/src/snippets.ts:10](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/snippets.ts#L10)
 
 ___
 
@@ -2362,7 +2426,7 @@ readonly [[`Unit`](modules.md#unit-1)<``"float"``\> & [`API`](modules.md#api), [
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:6](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L6)
+[packages/shader-composer/src/stdlib/vectors.ts:6](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L6)
 
 ___
 
@@ -2382,7 +2446,7 @@ readonly [[`Unit`](modules.md#unit-1)<``"float"``\> & [`API`](modules.md#api), [
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:9](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L9)
+[packages/shader-composer/src/stdlib/vectors.ts:9](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L9)
 
 ___
 
@@ -2402,7 +2466,7 @@ readonly [[`Unit`](modules.md#unit-1)<``"float"``\> & [`API`](modules.md#api), [
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:12](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L12)
+[packages/shader-composer/src/stdlib/vectors.ts:12](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L12)
 
 ___
 
@@ -2428,7 +2492,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -2449,7 +2513,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:146](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L146)
+[packages/shader-composer/src/stdlib/math.ts:169](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L169)
 
 ___
 
@@ -2479,7 +2543,7 @@ A Shader Unit that subtracts two values and returns the result.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:10](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L10)
+[packages/shader-composer/src/stdlib/math.ts:10](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L10)
 
 ___
 
@@ -2505,7 +2569,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -2525,7 +2589,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:36](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L36)
+[packages/shader-composer/src/stdlib/vectors.ts:36](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L36)
 
 ___
 
@@ -2557,7 +2621,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/textures.ts:5](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/textures.ts#L5)
+[packages/shader-composer/src/stdlib/textures.ts:5](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/textures.ts#L5)
 
 ___
 
@@ -2579,7 +2643,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/geometry.ts:85](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/geometry.ts#L85)
+[packages/shader-composer/src/stdlib/geometry.ts:85](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/geometry.ts#L85)
 
 ___
 
@@ -2599,7 +2663,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/uniforms.ts:42](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/uniforms.ts#L42)
+[packages/shader-composer/src/stdlib/uniforms.ts:42](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/uniforms.ts#L42)
 
 ___
 
@@ -2630,7 +2694,7 @@ The truncated value of `a`.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/math.ts#L29)
+[packages/shader-composer/src/stdlib/math.ts:29](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L29)
 
 ___
 
@@ -2659,7 +2723,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/uniforms.ts:13](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/uniforms.ts#L13)
+[packages/shader-composer/src/stdlib/uniforms.ts:13](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/uniforms.ts#L13)
 
 ___
 
@@ -2687,7 +2751,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:136](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L136)
+[packages/shader-composer/src/units.ts:136](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L136)
 
 ___
 
@@ -2708,7 +2772,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L7)
+[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L7)
 
 ___
 
@@ -2729,7 +2793,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L7)
+[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L7)
 
 ___
 
@@ -2750,7 +2814,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L7)
+[packages/shader-composer/src/stdlib/values.ts:7](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L7)
 
 ___
 
@@ -2794,7 +2858,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/pipes/index.ts:8](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/pipes/index.ts#L8)
+[packages/shader-composer/src/pipes/index.ts:8](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/pipes/index.ts#L8)
 
 ___
 
@@ -2819,7 +2883,7 @@ returns true.
 
 #### Defined in
 
-[packages/shader-composer/src/tree.ts:38](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/tree.ts#L38)
+[packages/shader-composer/src/tree.ts:38](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/tree.ts#L38)
 
 ___
 
@@ -2839,7 +2903,7 @@ readonly [{ `fragmentShader`: `string` ; `uniforms`: { `[k: string]`: `T`;  } ; 
 
 #### Defined in
 
-[packages/shader-composer/src/compiler.ts:158](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/compiler.ts#L158)
+[packages/shader-composer/src/compiler.ts:158](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/compiler.ts#L158)
 
 ___
 
@@ -2883,7 +2947,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/pipes/index.ts:20](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/pipes/index.ts#L20)
+[packages/shader-composer/src/pipes/index.ts:20](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/pipes/index.ts#L20)
 
 ___
 
@@ -3318,7 +3382,7 @@ Given a unit, expression o snippet, returns that item's dependencies.
 
 #### Defined in
 
-[packages/shader-composer/src/tree.ts:60](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/tree.ts#L60)
+[packages/shader-composer/src/tree.ts:60](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/tree.ts#L60)
 
 ___
 
@@ -3339,7 +3403,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/expressions.ts:12](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/expressions.ts#L12)
+[packages/shader-composer/src/expressions.ts:12](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/expressions.ts#L12)
 
 ___
 
@@ -3365,7 +3429,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/glslType.ts:4](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/glslType.ts#L4)
+[packages/shader-composer/src/glslType.ts:4](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/glslType.ts#L4)
 
 ___
 
@@ -3397,7 +3461,35 @@ object references.)
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:176](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L176)
+[packages/shader-composer/src/units.ts:176](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L176)
+
+___
+
+### inverseLerp
+
+▸ **inverseLerp**<`T`\>(`a`, `b`, `c`): [`Expression`](modules.md#expression)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`GLSLType`](modules.md#glsltype) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Input`](modules.md#input)<`T`\> |
+| `b` | [`Input`](modules.md#input)<`T`\> |
+| `c` | [`Input`](modules.md#input)<`T`\> |
+
+#### Returns
+
+[`Expression`](modules.md#expression)
+
+#### Defined in
+
+[packages/shader-composer/src/stdlib/math.ts:161](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L161)
 
 ___
 
@@ -3417,7 +3509,7 @@ v is Expression
 
 #### Defined in
 
-[packages/shader-composer/src/expressions.ts:32](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/expressions.ts#L32)
+[packages/shader-composer/src/expressions.ts:32](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/expressions.ts#L32)
 
 ___
 
@@ -3437,7 +3529,7 @@ x is Snippet
 
 #### Defined in
 
-[packages/shader-composer/src/snippets.ts:27](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/snippets.ts#L27)
+[packages/shader-composer/src/snippets.ts:27](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/snippets.ts#L27)
 
 ___
 
@@ -3457,7 +3549,7 @@ value is Unit<any\>
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:158](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L158)
+[packages/shader-composer/src/units.ts:158](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L158)
 
 ___
 
@@ -3478,7 +3570,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:162](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L162)
+[packages/shader-composer/src/units.ts:162](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L162)
 
 ___
 
@@ -3498,7 +3590,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/spaces.ts:8](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/spaces.ts#L8)
+[packages/shader-composer/src/stdlib/spaces.ts:8](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/spaces.ts#L8)
 
 ___
 
@@ -3518,7 +3610,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/spaces.ts:12](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/spaces.ts#L12)
+[packages/shader-composer/src/stdlib/spaces.ts:12](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/spaces.ts#L12)
 
 ___
 
@@ -3540,7 +3632,7 @@ Cast the given value to a mat3.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:72](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L72)
+[packages/shader-composer/src/stdlib/values.ts:72](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L72)
 
 ___
 
@@ -3562,7 +3654,7 @@ Cast the given value to a mat4.
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:75](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L75)
+[packages/shader-composer/src/stdlib/values.ts:75](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L75)
 
 ___
 
@@ -3581,7 +3673,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `b` | [`Input`](modules.md#input)<`T`\> |
-| `f` | [`Input`](modules.md#input)<``"float"``\> |
+| `f` | [`Input`](modules.md#input)<``"float"`` \| `T`\> |
 
 #### Returns
 
@@ -3601,7 +3693,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/pipes/index.ts:4](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/pipes/index.ts#L4)
+[packages/shader-composer/src/pipes/index.ts:4](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/pipes/index.ts#L4)
 
 ___
 
@@ -3645,7 +3737,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/pipes/index.ts:16](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/pipes/index.ts#L16)
+[packages/shader-composer/src/pipes/index.ts:16](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/pipes/index.ts#L16)
 
 ___
 
@@ -3665,7 +3757,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/vectors.ts:20](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/vectors.ts#L20)
+[packages/shader-composer/src/stdlib/vectors.ts:20](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/vectors.ts#L20)
 
 ___
 
@@ -4516,6 +4608,36 @@ node_modules/fp-ts/lib/function.d.ts:484
 
 ___
 
+### remap
+
+▸ **remap**<`T`\>(`value`, `inMin`, `inMax`, `outMin`, `outMax`): [`Expression`](modules.md#expression)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends ``"float"`` \| ``"vec2"`` \| ``"vec3"`` \| ``"vec4"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | [`Input`](modules.md#input)<`T`\> |
+| `inMin` | [`Input`](modules.md#input)<`T`\> |
+| `inMax` | [`Input`](modules.md#input)<`T`\> |
+| `outMin` | [`Input`](modules.md#input)<`T`\> |
+| `outMax` | [`Input`](modules.md#input)<`T`\> |
+
+#### Returns
+
+[`Expression`](modules.md#expression)
+
+#### Defined in
+
+[packages/shader-composer/src/stdlib/math.ts:175](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L175)
+
+___
+
 ### renameSnippet
 
 ▸ **renameSnippet**(`snippet`, `name`): `void`
@@ -4533,7 +4655,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/snippets.ts:22](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/snippets.ts#L22)
+[packages/shader-composer/src/snippets.ts:22](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/snippets.ts#L22)
 
 ___
 
@@ -4577,7 +4699,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/pipes/index.ts:12](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/pipes/index.ts#L12)
+[packages/shader-composer/src/pipes/index.ts:12](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/pipes/index.ts#L12)
 
 ___
 
@@ -4603,7 +4725,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/glslType.ts:4](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/glslType.ts#L4)
+[packages/shader-composer/src/glslType.ts:4](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/glslType.ts#L4)
 
 ___
 
@@ -4623,7 +4745,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/units.ts:165](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/units.ts#L165)
+[packages/shader-composer/src/units.ts:165](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/units.ts#L165)
 
 ___
 
@@ -4645,7 +4767,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:50](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L50)
+[packages/shader-composer/src/stdlib/values.ts:50](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L50)
 
 ___
 
@@ -4668,7 +4790,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:56](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L56)
+[packages/shader-composer/src/stdlib/values.ts:56](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L56)
 
 ___
 
@@ -4692,7 +4814,7 @@ ___
 
 #### Defined in
 
-[packages/shader-composer/src/stdlib/values.ts:63](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/stdlib/values.ts#L63)
+[packages/shader-composer/src/stdlib/values.ts:63](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/values.ts#L63)
 
 ___
 
@@ -4719,4 +4841,34 @@ values.
 
 #### Defined in
 
-[packages/shader-composer/src/tree.ts:15](https://github.com/hmans/shader-composer/blob/7acecbb/packages/shader-composer/src/tree.ts#L15)
+[packages/shader-composer/src/tree.ts:15](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/tree.ts#L15)
+
+## Math
+
+### lerp
+
+▸ **lerp**<`T`\>(`a`, `b`, `ratio`): [`Expression`](modules.md#expression)
+
+Lerpy fun!
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`GLSLType`](modules.md#glsltype) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`Input`](modules.md#input)<`T`\> |
+| `b` | [`Input`](modules.md#input)<`T`\> |
+| `ratio` | [`Input`](modules.md#input)<``"float"`` \| `T`\> |
+
+#### Returns
+
+[`Expression`](modules.md#expression)
+
+#### Defined in
+
+[packages/shader-composer/src/stdlib/math.ts:149](https://github.com/hmans/shader-composer/blob/7343f16/packages/shader-composer/src/stdlib/math.ts#L149)

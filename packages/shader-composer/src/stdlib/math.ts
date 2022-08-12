@@ -137,6 +137,15 @@ export const Saturate = Clamp01
 
 export const OneMinus = (v: Input<"float">) => Float(Sub(1, v), { name: "OneMinus" })
 
+/**
+ * Lerpy fun!
+ *
+ * @group Math
+ * @param a
+ * @param b
+ * @param ratio
+ * @returns
+ */
 export const lerp = <T extends GLSLType>(
   a: Input<T>,
   b: Input<T>,
