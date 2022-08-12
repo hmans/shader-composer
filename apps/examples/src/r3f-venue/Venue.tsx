@@ -67,9 +67,21 @@ export const Venue: FC<{
         antiAliasing={opts.postProcessing}
       >
         <Suspense>
-          <Environment preset="sunset" />
+          <Environment preset="city" />
           <fogExp2 args={["#000", 0.03]} attach="fog" />
-          <ambientLight intensity={0.5} />
+          <ambientLight intensity={0.2} />
+          <directionalLight
+            color="white"
+            intensity={0.7}
+            position={[10, 10, 10]}
+            castShadow
+          />
+          <directionalLight
+            color="white"
+            intensity={0.2}
+            position={[-10, 5, 10]}
+            castShadow
+          />
           <PerspectiveCamera
             position={[0, 0, 5]}
             layers-mask={Layers.Default + Layers.TransparentFX}
