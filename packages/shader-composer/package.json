@@ -1,66 +1,67 @@
 {
-	"name": "shader-composer",
-	"private": false,
-	"author": {
-		"name": "Hendrik Mans",
-		"email": "hendrik@mans.de",
-		"url": "https://hmans.co"
-	},
-	"description": "Node-based Shader Composition!",
-	"version": "0.2.1",
-	"main": "dist/shader-composer.cjs.js",
-	"module": "dist/shader-composer.esm.js",
-	"types": "dist/shader-composer.cjs.d.ts",
-	"files": [
-		"dist/**",
-		"LICENSE",
-		"README.md"
-	],
-	"license": "MIT",
-	"sideEffects": false,
-	"scripts": {
-		"clean": "rimraf dist",
-		"dev": "preconstruct watch",
-		"docs": "typedoc --excludeInternal --entryPointStrategy resolve --name 'Shader Composer' ./src/index.ts ./src/stdlib/*.ts --exclude **/*.test.ts",
-		"build": "preconstruct build",
-		"release": "yarn ci && yarn publish",
-		"test": "jest --passWithNoTests",
-		"ci": "yarn clean && yarn build && yarn test"
-	},
-	"devDependencies": {
-		"@babel/core": "^7.18.10",
-		"@babel/preset-env": "^7.18.10",
-		"@babel/preset-react": "^7.18.6",
-		"@babel/preset-typescript": "^7.17.12",
-		"@testing-library/jest-dom": "^5.16.5",
-		"@types/crypto-js": "^4.1.1",
-		"@types/jest": "^28.1.1",
-		"@types/three": "^0.143.0",
-		"jest": "^28.1.1",
-		"jest-environment-jsdom": "^28.1.1",
-		"rimraf": "^3.0.2",
-		"three": "^0.143.0",
-		"ts-jest": "^28.0.4",
-		"tslib": "^2.4.0",
-		"typescript": "^4.7.3"
-	},
-	"peerDependencies": {
-		"three": ">=0.141.0"
-	},
-	"babel": {
-		"presets": [
-			"@babel/preset-env",
-			"@babel/preset-react",
-			[
-				"@babel/preset-typescript",
-				{
-					"isTSX": true,
-					"allExtensions": true
-				}
-			]
-		]
-	},
-	"dependencies": {
-		"fp-ts": "^2.12.1"
-	}
+  "name": "shader-composer",
+  "private": false,
+  "author": {
+    "name": "Hendrik Mans",
+    "email": "hendrik@mans.de",
+    "url": "https://hmans.co"
+  },
+  "description": "Node-based Shader Composition!",
+  "version": "0.2.1",
+  "main": "dist/shader-composer.cjs.js",
+  "module": "dist/shader-composer.esm.js",
+  "types": "dist/shader-composer.cjs.d.ts",
+  "files": [
+    "dist/**",
+    "LICENSE",
+    "README.md"
+  ],
+  "license": "MIT",
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rimraf dist",
+    "dev": "preconstruct watch",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --excludeInternal --entryPointStrategy resolve --name 'Shader Composer' ./src/index.ts --exclude **/*.test.ts && cp docs/modules.md ./REFEERENCE.md",
+    "build": "preconstruct build",
+    "release": "yarn ci && yarn publish",
+    "test": "jest --passWithNoTests",
+    "ci": "yarn clean && yarn build && yarn test"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.17.12",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@types/crypto-js": "^4.1.1",
+    "@types/jest": "^28.1.1",
+    "@types/three": "^0.143.0",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
+    "rimraf": "^3.0.2",
+    "three": "^0.143.0",
+    "ts-jest": "^28.0.4",
+    "tslib": "^2.4.0",
+    "typedoc-plugin-markdown": "^3.13.4",
+    "typescript": "^4.7.3"
+  },
+  "peerDependencies": {
+    "three": ">=0.141.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react",
+      [
+        "@babel/preset-typescript",
+        {
+          "isTSX": true,
+          "allExtensions": true
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "fp-ts": "^2.12.1"
+  }
 }
