@@ -8,7 +8,7 @@ export const Canvas = (props: Props) => (
     gl={{
       powerPreference: "high-performance",
       alpha: false,
-      depth: false,
+      depth: true,
       stencil: false,
       antialias: false
     }}
