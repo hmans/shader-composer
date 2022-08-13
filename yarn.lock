@@ -5938,15 +5938,19 @@ r3f-perf@^6.4.2:
     "@stitches/react" "^1.2.6"
     zustand "^3.7.1"
 
-r3f-stage@^0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/r3f-stage/-/r3f-stage-0.2.5.tgz#ff4961dfa3473eda266b6ffe483ecf02e410f307"
-  integrity sha512-9Ms8qLTUzUsS5/rbo4T1avfd7pI7iGEzoTKii37bCk7lOFHqLmOGmvs6tp/uLF04lnsbwkIwB/17zQhxGm4mfw==
+r3f-stage@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/r3f-stage/-/r3f-stage-0.2.6.tgz#9d6f2d6bbac3259f70f52e542b0258df0afa33e6"
+  integrity sha512-zw0iziQV2ZVbej+mlhRhT25cydU+C5lGiNGUEhUYFOGQtNng2qcn32LhRIgnzMlVAL9t0kLRJ1cUXD36yCPXXQ==
   dependencies:
     "@react-three/drei" "^9.21.0"
+    "@react-three/fiber" "^8.3.1"
     leva "^0.9.30"
     postprocessing "^6.28.5"
     r3f-perf "^6.4.2"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    three ">=0.143.0"
     wouter "^2.8.0-alpha.2"
 
 rc@1.2.8, rc@^1.2.8:
@@ -6765,7 +6769,7 @@ three-stdlib@^2.13.0:
     potpack "^1.0.1"
     zstddec "^0.0.2"
 
-three@^0.143.0:
+three@>=0.143.0, three@^0.143.0:
   version "0.143.0"
   resolved "https://registry.yarnpkg.com/three/-/three-0.143.0.tgz#1455bca132cc2b20beb7f41d313e10c29e5ed9df"
   integrity sha512-oKcAGYHhJ46TGEuHjodo2n6TY2R6lbvrkp+feKZxqsUL/WkH7GKKaeu6RHeyb2Xjfk2dPLRKLsOP0KM2VgT8Zg==
