@@ -23,7 +23,7 @@ import {
 } from "shader-composer"
 import { useShader, useUniformUnit } from "shader-composer-r3f"
 import { PSRDNoise2D } from "shader-composer-toybox"
-import { Color, MeshStandardMaterial } from "three"
+import { Color, MeshStandardMaterial, Vector2 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function FloatingIsleExample() {
@@ -38,11 +38,11 @@ export default function FloatingIsleExample() {
 
 const FloatingIsle = () => {
   const controls = useControls("Floating Isle", {
-    offset: { value: 0, min: -10, max: 10 }
+    offset: { value: [0, 0], joystick: true, step: 0.1 }
   })
 
   const uniforms = {
-    offset: useUniformUnit("float", controls.offset)
+    offset: useUniformUnit("vec2", new Vector2(...controls.offset))
   }
 
   /* Let's create the shader itself! */
