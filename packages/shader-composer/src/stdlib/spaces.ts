@@ -6,11 +6,24 @@ import { Vec3 } from "./values"
 // "Note that modelViewMatrix is not set when rendering an instanced model"
 // https://threejs.org/docs/#api/en/renderers/webgl/WebGLProgram
 export const localToViewSpace = (v: Input<"vec3">) => $`
-  vec3(${ViewMatrix} * ${ModelMatrix} * ${InstanceMatrix} * vec4(${v}, 1.0))
+  vec3(
+    ${ViewMatrix} *
+    ${ModelMatrix} *
+    #ifdef USE_INSTANCING
+    instanceMatrix *
+    #endif
+    vec4(${v}, 1.0)
+  )
 `
 
 export const localToWorldSpace = (v: Input<"vec3">) => $`
-  vec3(${ModelMatrix} * ${InstanceMatrix} * vec4(${v}, 1.0))
+  vec3(
+    ${ModelMatrix} *
+    #ifdef USE_INSTANCING
+    instanceMatrix *
+    #endif
+    vec4(${v}, 1.0)
+  )
 `
 
 /**

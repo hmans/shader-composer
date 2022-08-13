@@ -44,22 +44,13 @@ export const UsingInstancing = Bool($`
 `)
 
 /**
- * When instanced rendering is enabled, returns the instance matrix,
- * otherwise `mat4(1.0)`.
+ * Returns the instance matrix. Please note that this is only available when
+ * instanced rendering is enabled.
  */
-export const InstanceMatrix = Mat4(
-  $`
-    #ifdef USE_INSTANCING
-      instanceMatrix
-    #else
-      mat4(1.0)
-    #endif
-`,
-  {
-    name: "Instance Matrix",
-    only: "vertex"
-  }
-)
+export const InstanceMatrix = Mat4($`instanceMatrix`, {
+  name: "Instance Matrix",
+  only: "vertex"
+})
 
 export const UV = Vec2($`uv`, {
   name: "UV",
