@@ -1,6 +1,7 @@
 import { Float } from "@react-three/drei"
 import { MeshProps } from "@react-three/fiber"
 import { useControls } from "leva"
+import { Layers, useRenderPipeline } from "r3f-stage"
 import {
   Add,
   CustomShaderMaterialMaster,
@@ -23,8 +24,6 @@ import {
 import { useShader, useUniformUnit } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
-import { Layers } from "../r3f-venue/Layers"
-import { useRenderPipeline } from "../render-composer"
 import { useRepeatingTexture } from "./helpers"
 
 export default function ForceField() {

@@ -1,9 +1,9 @@
 import examples from "./examples"
-import "./r3f-venue/styles.css"
-import { Venue } from "./r3f-venue/Venue"
+import { Application } from "r3f-stage"
+import "r3f-stage/styles.css"
 
 function App() {
-	return <Venue examples={examples} />
+  return <Application examples={examples} />
 }
 
 export default App

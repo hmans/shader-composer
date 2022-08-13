@@ -1,6 +1,7 @@
 import { Float } from "@react-three/drei"
 import { MeshProps } from "@react-three/fiber"
 import { useControls } from "leva"
+import { Layers, useRenderPipeline } from "r3f-stage"
 import {
   Add,
   Clamp,
@@ -26,8 +27,6 @@ import { useShader, useUniformUnit } from "shader-composer-r3f"
 import { PSRDNoise2D, PSRDNoise3D } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
-import { Layers } from "../r3f-venue/Layers"
-import { useRenderPipeline } from "../render-composer"
 
 export default function StylizedWater() {
   return (
