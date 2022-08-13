@@ -121,7 +121,7 @@ export default function ForceField() {
 
 const Floor = () => (
   <mesh receiveShadow position={[0, -1, 0]}>
-    <boxGeometry args={[5, 1, 5]} />
+    <boxGeometry args={[300, 1, 300]} />
     <meshStandardMaterial color="#555" metalness={0} roughness={0.8} />
   </mesh>
 )
