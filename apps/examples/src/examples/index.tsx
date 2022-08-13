@@ -30,7 +30,24 @@ const examples: Examples = {
   },
 
   Dissolve: { Example: lazy(() => import("./Dissolve")) },
-  Fireball: { Example: lazy(() => import("./Fireball")) },
+
+  Fireball: {
+    Description: () => (
+      <>
+        <p>
+          Holy crap, it's a freakin' <strong>ball of fire</strong>!
+        </p>
+        <p>
+          This example applies two separate PSRD noise functions &ndash; one for the
+          wobbly <strong>vertex displacement</strong>, the other for{" "}
+          <strong>picking a color from a tiny palette texture</strong> to visualize
+          heat/fiery doom.
+        </p>
+      </>
+    ),
+    Example: lazy(() => import("./Fireball"))
+  },
+
   Textures: { Example: lazy(() => import("./Textures")) },
   ForceField: { Example: lazy(() => import("./ForceField")) },
   Planet: { Example: lazy(() => import("./Planet")) },
