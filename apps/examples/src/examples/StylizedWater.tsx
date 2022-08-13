@@ -1,4 +1,4 @@
-import { Float } from "@react-three/drei"
+import { Environment, Float } from "@react-three/drei"
 import { MeshProps } from "@react-three/fiber"
 import { useControls } from "leva"
 import { Layers, useRenderPipeline } from "r3f-stage"
@@ -31,6 +31,8 @@ import CustomShaderMaterial from "three-custom-shader-material"
 export default function StylizedWater() {
   return (
     <group position-y={-2}>
+      <Environment preset="sunset" />
+
       <Water />
       <Rock position={[-10, 0, -10]} scale={5} />
       <Rock position={[-10, -10, -10]} scale={10} />

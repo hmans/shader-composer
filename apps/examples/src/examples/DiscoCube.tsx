@@ -1,3 +1,4 @@
+import { Environment } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useRef } from "react"
 import {
@@ -52,13 +53,16 @@ export default function DiscoCube() {
   })
 
   return (
-    <mesh ref={mesh}>
-      <boxGeometry args={[1.5, 1.5, 1.5]} />
-      <CustomShaderMaterial
-        baseMaterial={MeshPhysicalMaterial}
-        clearcoat={0.2}
-        {...shader}
-      />
-    </mesh>
+    <>
+      <Environment preset="city" />
+      <mesh ref={mesh}>
+        <boxGeometry args={[1.5, 1.5, 1.5]} />
+        <CustomShaderMaterial
+          baseMaterial={MeshPhysicalMaterial}
+          clearcoat={0.2}
+          {...shader}
+        />
+      </mesh>
+    </>
   )
 }
