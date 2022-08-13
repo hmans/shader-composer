@@ -4,6 +4,7 @@ import {
   Abs,
   Add,
   CustomShaderMaterialMaster,
+  Float,
   GreaterOrEqual,
   If,
   Input,
@@ -16,6 +17,7 @@ import {
   Pow,
   Smoothstep,
   SplitVector3,
+  Sub,
   Unit,
   vec2,
   vec3,
@@ -47,6 +49,19 @@ const FloatingIsle = () => {
 
   /* Let's create the shader itself! */
   const shader = useShader(() => {
+    const Noise = (
+      v: Input<"vec2">,
+      scale: Input<"float"> = 1,
+      height: Input<"float"> = 1,
+      pow: Input<"float"> = 1
+    ) =>
+      pipe(
+        PSRDNoise2D(Mul(Add(v, uniforms.offset), scale)),
+        (v) => NormalizePlusMinusOne(v),
+        (v) => Pow(v, pow),
+        (v) => Mul(v, height)
+      )
+
     const DisplaceUpper = (v: Unit<"vec3">) => {
       // TODO: enable the following line. Needs to extend Unit type.
       // const { x, y, z } = v
@@ -56,11 +71,11 @@ const FloatingIsle = () => {
       const xz = vec2(x, z)
 
       const height = pipe(
-        PSRDNoise2D(Add(xz, uniforms.offset)),
-        (v) => NormalizePlusMinusOne(v),
-        (v) => Pow(v, 2),
-        (v) => Mul(v, 3),
-        (v) => Mul(v, Smoothstep(2, 0, Length(xz)))
+        Float(0.2),
+        (v) => Sub(v, Noise(xz, 0.5, 0.2)),
+        (v) => Add(v, Noise(xz, 0.2, 1)),
+        (v) => Add(v, Noise(xz, 1, 2, 3)),
+        (v) => Mul(v, Smoothstep(2, 0.5, Length(xz)))
       )
 
       return vec3(x, height, z)
@@ -83,7 +98,7 @@ const FloatingIsle = () => {
 
   return (
     <mesh>
-      <dodecahedronGeometry args={[2, 5]} />
+      <dodecahedronGeometry args={[2, 7]} />
       <CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} flatShading />
     </mesh>
   )
