@@ -95,7 +95,7 @@ export default function ForceField() {
           intensity={8}
           decay={2}
           distance={3.5}
-          color="cyan"
+          color={controls.color}
           castShadow
           shadow-mapSize-height={512}
           shadow-mapSize-width={512}
