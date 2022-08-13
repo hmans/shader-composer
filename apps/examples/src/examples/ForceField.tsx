@@ -24,8 +24,8 @@ import { useShader, useUniformUnit } from "shader-composer-r3f"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { Layers } from "../r3f-venue/Layers"
+import { useRenderPipeline } from "../render-composer"
 import { useRepeatingTexture } from "./helpers"
-import { useRenderPass } from "./useRenderPass"
 
 export default function ForceField() {
   /* Use Leva for some user input */
@@ -34,8 +34,6 @@ export default function ForceField() {
     intensity: { value: 3, min: 0, max: 10 },
     strength: { value: 0.5, min: 0, max: 1 }
   })
-
-  const scene = useRenderPass({ excludeLayer: Layers.TransparentFX })
 
   /* Create a bunch of uniforms */
   const color = useUniformUnit("vec3", new Color(controls.color))
@@ -46,6 +44,9 @@ export default function ForceField() {
     useRepeatingTexture("/textures/hexgrid.jpg")
   )
 
+  const { depth: depthTexture } = useRenderPipeline()
+  const depthSampler = useUniformUnit("sampler2D", depthTexture)
+
   /* Define our shader */
   const shader = useShader(() => {
     /* Define a time-based texture offset, and sample the force field texture. */
@@ -54,7 +55,7 @@ export default function ForceField() {
     const texture = Texture2D(sampler2D, TilingUV(UV, vec2(4, 2), textureOffset))
 
     /* Get the depth of the current fragment. */
-    const sceneDepth = PerspectiveDepth(ScreenUV, scene.depthTexture)
+    const sceneDepth = PerspectiveDepth(ScreenUV, depthSampler)
 
     const distance = pipe(
       VertexPosition.view.z,

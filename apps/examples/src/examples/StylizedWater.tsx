@@ -27,7 +27,7 @@ import { PSRDNoise2D, PSRDNoise3D } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 import { Layers } from "../r3f-venue/Layers"
-import { useRenderPass } from "./useRenderPass"
+import { useRenderPipeline } from "../render-composer"
 
 export default function StylizedWater() {
   return (
@@ -45,6 +45,11 @@ export default function StylizedWater() {
 }
 
 const Water = (props: MeshProps) => {
+  const rp = useRenderPipeline()
+
+  const depthSampler = useUniformUnit("sampler2D", rp.depth)
+  const sceneSampler = useUniformUnit("sampler2D", rp.scene)
+
   /* We'll let the user control some values through Leva. */
   const controls = useControls("Water", {
     calmness: { value: 0.5, min: 0, max: 1 },
@@ -61,9 +66,7 @@ const Water = (props: MeshProps) => {
     foam: useUniformUnit("vec3", new Color(controls.foam))
   }
 
-  /* Let's run a pre-pass that will render the scene, minus our
-  water, to render & depth textures that we will source later. */
-  const scene = useRenderPass({ excludeLayer: Layers.TransparentFX })
+  // const scene = useRenderPass({ excludeLayer: Layers.TransparentFX })
 
   const shader = useShader(() => {
     /* Get a time uniform, always useful for time-based effects! */
@@ -88,13 +91,13 @@ const Water = (props: MeshProps) => {
     /* Calculate the depth by comparing the current fragment's
     depth in view space to the depth of the scene. */
     const depth = pipe(
-      scene.depthTexture,
+      depthSampler,
       (v) => PerspectiveDepth(refractedUV, v),
       (v) => Sub(VertexPosition.view.z, v)
     )
 
     /* Grab the original color from the pre-pass' render texture. */
-    const originalColor = SceneColor(refractedUV, scene.texture).color
+    const originalColor = SceneColor(refractedUV, sceneSampler).color
 
     /* Let's decide on some factors for specific "parts" of the water
     surface by smooth-stepping the depth. */
@@ -157,7 +160,7 @@ const Water = (props: MeshProps) => {
   }, [])
 
   return (
-    <mesh {...props} layers={Layers.TransparentFX} rotation-x={-Math.PI / 2}>
+    <mesh {...props} layers-mask={Layers.TransparentFX} rotation-x={-Math.PI / 2}>
       <planeGeometry args={[32, 32, 100, 100]} />
       <CustomShaderMaterial
         baseMaterial={MeshStandardMaterial}

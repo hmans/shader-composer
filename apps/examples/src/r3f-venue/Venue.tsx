@@ -1,12 +1,12 @@
 import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei"
-import { Canvas, useFrame } from "@react-three/fiber"
+import { useFrame } from "@react-three/fiber"
 import { useControls } from "leva"
 import { Perf } from "r3f-perf"
 import { FC, ReactNode, Suspense, useRef } from "react"
 import { Mesh } from "three"
 import { Link, useRoute } from "wouter"
+import { RenderComposer } from "../render-composer"
 import { Layers } from "./Layers"
-import { PostProcessing } from "./PostProcessing"
 import Stage from "./Stage"
 
 function Navigation({ examples }: { examples: Examples }) {
@@ -60,27 +60,33 @@ export const Venue: FC<{
   return (
     <>
       {examples && <Navigation examples={examples} />}
-      <Canvas
-        shadows
+      <RenderComposer
         dpr={opts.dpr}
-        flat
-        gl={{
-          powerPreference: "high-performance",
-          alpha: false,
-          depth: true,
-          stencil: false,
-          antialias: false
-        }}
+        bloom={opts.postProcessing}
+        vignette={opts.postProcessing}
+        antiAliasing={opts.postProcessing}
       >
         <Suspense>
-          <Environment preset="sunset" />
+          <Environment preset="city" />
           <fogExp2 args={["#000", 0.03]} attach="fog" />
+          <ambientLight intensity={0.2} />
+          <directionalLight
+            color="white"
+            intensity={0.7}
+            position={[10, 10, 10]}
+            castShadow
+          />
+          <directionalLight
+            color="white"
+            intensity={0.2}
+            position={[-10, 5, 10]}
+            castShadow
+          />
           <PerspectiveCamera
             position={[0, 0, 5]}
             layers-mask={Layers.Default + Layers.TransparentFX}
             makeDefault
           />
-          {opts.postProcessing && <PostProcessing />}
 
           <OrbitControls
             makeDefault
@@ -100,7 +106,7 @@ export const Venue: FC<{
 
           {children}
         </Suspense>
-      </Canvas>
+      </RenderComposer>
     </>
   )
 }
