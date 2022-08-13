@@ -52,7 +52,7 @@ const examples: Examples = {
   ForceField: { Example: lazy(() => import("./ForceField")) },
   Planet: { Example: lazy(() => import("./Planet")) },
   DiscoCube: { Example: lazy(() => import("./DiscoCube")) },
-  FloatingIsle: { Example: lazy(() => import("./FloatingIsle")) },
+  FloatingIsland: { Example: lazy(() => import("./FloatingIsland")) },
   StylizedWater: { Example: lazy(() => import("./StylizedWater")) },
   Water: { Example: lazy(() => import("./Water")) }
 }

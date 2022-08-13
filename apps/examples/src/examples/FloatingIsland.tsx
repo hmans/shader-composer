@@ -33,17 +33,17 @@ import { ModifyVertex, PSRDNoise2D } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial, Vector2 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
-export default function FloatingIsleExample() {
+export default function FloatingIslandExample() {
   return (
     <group>
       <Floating rotationIntensity={0}>
-        <FloatingIsle />
+        <FloatingIsland />
       </Floating>
     </group>
   )
 }
 
-const FloatingIsle = () => {
+const FloatingIsland = () => {
   const controls = useControls("Floating Isle", {
     offset: { value: [0, 0], joystick: true, step: 0.1 }
   })
