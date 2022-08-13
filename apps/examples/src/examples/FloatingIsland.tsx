@@ -1,7 +1,6 @@
-import { Float as Floating } from "@react-three/drei"
+import { Environment, Float as Floating, Sky } from "@react-three/drei"
 import { useControls } from "leva"
 import {
-  Abs,
   Add,
   CustomShaderMaterialMaster,
   Float,
@@ -9,19 +8,15 @@ import {
   If,
   Input,
   Length,
-  Lerp,
   Mix,
   Mul,
-  Normalize,
   NormalizePlusMinusOne,
-  OneMinus,
   pipe,
   Pow,
   Smoothstep,
   SplitVector3,
   Step,
   Sub,
-  Unit,
   vec2,
   Vec3,
   vec3,
@@ -36,6 +31,7 @@ import CustomShaderMaterial from "three-custom-shader-material"
 export default function FloatingIslandExample() {
   return (
     <group>
+      <Environment preset="sunset" />
       <Floating rotationIntensity={0}>
         <FloatingIsland />
       </Floating>
