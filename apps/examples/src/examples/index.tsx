@@ -1,15 +1,15 @@
 import { lazy } from "react"
 
 export default {
-  HelloWorld: lazy(() => import("./HelloWorld")),
-  Rotation: lazy(() => import("./Rotation")),
-  Flag: lazy(() => import("./Flag")),
-  Dissolve: lazy(() => import("./Dissolve")),
-  Fireball: lazy(() => import("./Fireball")),
-  Textures: lazy(() => import("./Textures")),
-  ForceField: lazy(() => import("./ForceField")),
-  Planet: lazy(() => import("./Planet")),
-  DiscoCube: lazy(() => import("./DiscoCube")),
-  StylizedWater: lazy(() => import("./StylizedWater")),
-  Water: lazy(() => import("./Water"))
+  HelloWorld: { Example: lazy(() => import("./HelloWorld")) },
+  Rotation: { Example: lazy(() => import("./Rotation")) },
+  Flag: { Example: lazy(() => import("./Flag")) },
+  Dissolve: { Example: lazy(() => import("./Dissolve")) },
+  Fireball: { Example: lazy(() => import("./Fireball")) },
+  Textures: { Example: lazy(() => import("./Textures")) },
+  ForceField: { Example: lazy(() => import("./ForceField")) },
+  Planet: { Example: lazy(() => import("./Planet")) },
+  DiscoCube: { Example: lazy(() => import("./DiscoCube")) },
+  StylizedWater: { Example: lazy(() => import("./StylizedWater")) },
+  Water: { Example: lazy(() => import("./Water")) }
 }
