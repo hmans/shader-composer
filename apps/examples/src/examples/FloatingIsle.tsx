@@ -9,6 +9,8 @@ import {
   If,
   Input,
   Length,
+  Lerp,
+  Mix,
   Mul,
   Normalize,
   NormalizePlusMinusOne,
@@ -17,21 +19,24 @@ import {
   Pow,
   Smoothstep,
   SplitVector3,
+  Step,
   Sub,
   Unit,
   vec2,
+  Vec3,
   vec3,
+  VertexNormal,
   VertexPosition
 } from "shader-composer"
 import { useShader, useUniformUnit } from "shader-composer-r3f"
-import { PSRDNoise2D } from "shader-composer-toybox"
+import { ModifyVertex, PSRDNoise2D } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial, Vector2 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function FloatingIsleExample() {
   return (
     <group>
-      <Floating>
+      <Floating rotationIntensity={0}>
         <FloatingIsle />
       </Floating>
     </group>
@@ -62,21 +67,20 @@ const FloatingIsle = () => {
         (v) => Mul(v, height)
       )
 
-    const DisplaceUpper = (v: Unit<"vec3">) => {
+    const xz = vec2(VertexPosition.x, VertexPosition.z)
+
+    const height = pipe(
+      Float(0.2),
+      (v) => Sub(v, Noise(xz, 0.5, 0.2)),
+      (v) => Add(v, Noise(xz, 0.2, 1)),
+      (v) => Add(v, Noise(xz, 1, 2, 3)),
+      (v) => Mul(v, Smoothstep(2, 0.5, Length(xz)))
+    )
+
+    const DisplaceUpper = (v: Input<"vec3">) => {
       // TODO: enable the following line. Needs to extend Unit type.
       // const { x, y, z } = v
-
-      const [x, y, z] = SplitVector3(v)
-
-      const xz = vec2(x, z)
-
-      const height = pipe(
-        Float(0.2),
-        (v) => Sub(v, Noise(xz, 0.5, 0.2)),
-        (v) => Add(v, Noise(xz, 0.2, 1)),
-        (v) => Add(v, Noise(xz, 1, 2, 3)),
-        (v) => Mul(v, Smoothstep(2, 0.5, Length(xz)))
-      )
+      const [x, y, z] = SplitVector3(VertexPosition)
 
       return vec3(x, height, z)
     }
@@ -86,19 +90,36 @@ const FloatingIsle = () => {
       return vec3(x, Mul(y, 0.7), z)
     }
 
-    const position = pipe(VertexPosition, (v) =>
-      If(GreaterOrEqual(VertexPosition.y, 0), DisplaceUpper(v), DisplaceLower(v))
+    const UpperHalf = GreaterOrEqual(VertexPosition.y, 0)
+
+    const { position, normal } = ModifyVertex(VertexPosition, VertexNormal, (v) =>
+      If(UpperHalf, DisplaceUpper(v), DisplaceLower(v))
     )
 
     return CustomShaderMaterialMaster({
       position,
-      diffuseColor: new Color("#888")
+      normal,
+
+      diffuseColor: pipe(Vec3(new Color("#1982c4")), (v) =>
+        If(
+          UpperHalf,
+          pipe(
+            v,
+            (v) => Mix(v, new Color("#adc178"), Step(0.02, height)),
+            (v) => Mix(v, new Color("#3a5a40"), Step(0.3, height)),
+            (v) => Mix(v, new Color("#4a4e69"), Step(0.5, height)),
+            (v) => Mix(v, new Color("#fff"), Step(1.2, height))
+          ),
+
+          pipe(v, (v) => Mix(new Color("#252422"), v, Step(-0.2, VertexPosition.y)))
+        )
+      )
     })
   }, [])
 
   return (
     <mesh>
-      <dodecahedronGeometry args={[2, 7]} />
+      <dodecahedronGeometry args={[2, 5]} />
       <CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} flatShading />
     </mesh>
   )
