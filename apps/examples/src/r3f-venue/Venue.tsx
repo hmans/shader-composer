@@ -5,7 +5,7 @@ import { Perf } from "r3f-perf"
 import { FC, ReactNode, Suspense, useRef } from "react"
 import { Mesh } from "three"
 import { Link, useRoute } from "wouter"
-import { RenderPipeline, RenderComposer } from "../render-composer"
+import { RenderComposer } from "../render-composer"
 import { Layers } from "./Layers"
 import Stage from "./Stage"
 
