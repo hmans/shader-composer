@@ -9,7 +9,6 @@ import {
   ShaderMaterialMaster,
   Sin,
   Time,
-  Vec3,
   VertexPosition
 } from "shader-composer"
 import { useShader, useUniformUnit } from "shader-composer-r3f"
