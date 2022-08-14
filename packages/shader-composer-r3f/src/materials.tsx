@@ -1,14 +1,21 @@
+import { Node } from "@react-three/fiber"
 import React, { forwardRef, useState } from "react"
-import CustomShaderMaterial, { iCSMProps } from "three-custom-shader-material"
-import CustomShaderMaterialImpl from "three-custom-shader-material/vanilla"
 import {
-  Material,
+  IUniform,
   MeshBasicMaterial,
   MeshDepthMaterial,
+  MeshDistanceMaterial,
+  MeshLambertMaterial,
+  MeshMatcapMaterial,
+  MeshNormalMaterial,
+  MeshPhongMaterial,
+  MeshPhysicalMaterial,
   MeshStandardMaterial,
+  MeshToonMaterial,
   RGBADepthPacking
 } from "three"
-import { Node, NodeProps } from "@react-three/fiber"
+import CustomShaderMaterial, { iCSMProps } from "three-custom-shader-material"
+import CustomShaderMaterialImpl from "three-custom-shader-material/vanilla"
 
 export type CustomDepthMaterialProps = Omit<iCSMProps, "ref" | "baseMaterial">
 
@@ -30,18 +37,42 @@ export const CustomDepthMaterial = forwardRef<
   )
 })
 
-const makeMaterialComponent = <T extends THREE.Material>(ctor: {
-  new (...args: any[]): T
-}) =>
-  forwardRef<CustomShaderMaterialImpl, Node<T, typeof ctor>>((props, ref) => {
+export type MaterialConstructor<T extends THREE.Material> = { new (...args: any[]): T }
+
+export type MaterialProps<T extends THREE.Material> = Node<T, MaterialConstructor<T>> & {
+  vertexShader?: string
+  fragmentShader?: string
+  uniforms?: Record<string, IUniform>
+}
+
+const makeMaterialComponent = <T extends THREE.Material>(
+  ctor: MaterialConstructor<T>,
+  defaultProps?: MaterialProps<T>
+) =>
+  forwardRef<CustomShaderMaterialImpl, MaterialProps<T>>((props, ref) => {
     /* We still need to ts-ignore the next line, because something between
     R3F's and CSM's props typings appears to be deeply incompatible. */
 
-    // @ts-ignore
-    return <CustomShaderMaterial baseMaterial={ctor} {...props} ref={ref} />
+    return (
+      // @ts-ignore
+      <CustomShaderMaterial baseMaterial={ctor} {...defaultProps} {...props} ref={ref} />
+    )
   })
 
 export const Custom = {
+  MeshBasicMaterial: makeMaterialComponent(MeshBasicMaterial),
+  MeshDepthMaterial: makeMaterialComponent(MeshDepthMaterial, {
+    attach: "customDepthMaterial",
+    depthPacking: RGBADepthPacking
+  }),
+  MeshDistanceMaterial: makeMaterialComponent(MeshDistanceMaterial, {
+    attach: "customDistanceMaterial"
+  }),
+  MeshLambertMaterial: makeMaterialComponent(MeshLambertMaterial),
+  MeshMatapMaterial: makeMaterialComponent(MeshMatcapMaterial),
+  MeshNormalMaterial: makeMaterialComponent(MeshNormalMaterial),
+  MeshPhongMaterial: makeMaterialComponent(MeshPhongMaterial),
+  MeshPhysicalMaterial: makeMaterialComponent(MeshPhysicalMaterial),
   MeshStandardMaterial: makeMaterialComponent(MeshStandardMaterial),
-  MeshBasicMaterial: makeMaterialComponent(MeshBasicMaterial)
+  MeshToonMaterial: makeMaterialComponent(MeshToonMaterial)
 }
