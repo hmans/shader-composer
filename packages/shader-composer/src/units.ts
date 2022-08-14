@@ -148,10 +148,6 @@ export type UnitAPI<T extends GLSLType> = T extends "vec2"
     }
   : API
 
-function isUnitOfType<T extends GLSLType>(unit: IUnit<any>, type: T): unit is IUnit<T> {
-  return unit._unitConfig.type === type
-}
-
 const unitAPI = <T extends GLSLType>(unit: IUnit<T>): UnitAPI<T> => {
   if (isUnitOfType(unit, "vec2")) {
     return {
@@ -229,6 +225,10 @@ export const Unit = <T extends GLSLType>(
 
 export function isUnit(value: any): value is Unit {
   return value && value._ === "Unit"
+}
+
+function isUnitOfType<T extends GLSLType>(value: any, type: T): value is Unit<T> {
+  return isUnit(value) && value._unitConfig.type === type
 }
 
 export const isUnitInProgram = (unit: Unit, program: Program) =>
