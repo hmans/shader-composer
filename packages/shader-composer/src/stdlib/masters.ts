@@ -10,6 +10,11 @@ export type ShaderMaterialMasterProps = {
   position?: Input<"vec3">
 }
 
+/**
+ * @group Masters
+ * @param param0
+ * @returns
+ */
 export const ShaderMaterialMaster = ({
   color = new Color("red"),
   alpha = 1,
@@ -42,6 +47,14 @@ export type CustomShaderMaterialMasterProps = {
   metalness?: Input<"float">
 }
 
+/**
+ * A master node designed to be used with
+ * [CustomShaderMaterial](https://github.com/FarazzShaikh/THREE-CustomShaderMaterial).
+ *
+ * @group Masters
+ * @param param0
+ * @returns
+ */
 export const CustomShaderMaterialMaster = ({
   position,
   normal,
