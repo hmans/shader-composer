@@ -78,10 +78,7 @@ const FloatingIsland = () => {
     )
 
     const DisplaceUpper = (v: Input<"vec3">) => {
-      // TODO: enable the following line. Needs to extend Unit type.
-      // const { x, y, z } = v
-      const [x, y, z] = SplitVector3(VertexPosition)
-
+      const { x, y, z } = Vec3(v)
       return vec3(x, height, z)
     }
 
@@ -105,10 +102,10 @@ const FloatingIsland = () => {
           UpperHalf,
           pipe(
             v,
-            (v) => Mix(v, new Color("#adc178"), Step(0.02, $`${position}.y`)),
-            (v) => Mix(v, new Color("#3a5a40"), Step(0.3, $`${position}.y`)),
-            (v) => Mix(v, new Color("#4a4e69"), Step(0.5, $`${position}.y`)),
-            (v) => Mix(v, new Color("#fff"), Step(1.2, $`${position}.y`))
+            (v) => Mix(v, new Color("#adc178"), Step(0.02, position.y)),
+            (v) => Mix(v, new Color("#3a5a40"), Step(0.3, position.y)),
+            (v) => Mix(v, new Color("#4a4e69"), Step(0.5, position.y)),
+            (v) => Mix(v, new Color("#fff"), Step(1.2, position.y))
           ),
 
           pipe(v, (v) => Mix(new Color("#252422"), v, Step(-0.2, VertexPosition.y)))
