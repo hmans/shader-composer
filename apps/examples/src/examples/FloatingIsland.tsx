@@ -2,6 +2,7 @@ import { Environment, Float as Floating, Sky } from "@react-three/drei"
 import { useControls } from "leva"
 import { FlatStage } from "r3f-stage"
 import {
+  $,
   Add,
   CustomShaderMaterialMaster,
   Float,
@@ -104,10 +105,10 @@ const FloatingIsland = () => {
           UpperHalf,
           pipe(
             v,
-            (v) => Mix(v, new Color("#adc178"), Step(0.02, height)),
-            (v) => Mix(v, new Color("#3a5a40"), Step(0.3, height)),
-            (v) => Mix(v, new Color("#4a4e69"), Step(0.5, height)),
-            (v) => Mix(v, new Color("#fff"), Step(1.2, height))
+            (v) => Mix(v, new Color("#adc178"), Step(0.02, $`${position}.y`)),
+            (v) => Mix(v, new Color("#3a5a40"), Step(0.3, $`${position}.y`)),
+            (v) => Mix(v, new Color("#4a4e69"), Step(0.5, $`${position}.y`)),
+            (v) => Mix(v, new Color("#fff"), Step(1.2, $`${position}.y`))
           ),
 
           pipe(v, (v) => Mix(new Color("#252422"), v, Step(-0.2, VertexPosition.y)))
