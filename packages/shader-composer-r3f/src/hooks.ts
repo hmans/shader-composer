@@ -26,7 +26,7 @@ export const useShader = (ctor: () => Unit, deps?: any) => {
 export const useUniformUnit = <T extends GLSLType>(
   type: T,
   value: JSTypes[T],
-  config?: UnitConfig<T>
+  config?: Partial<UnitConfig<T>>
 ) => {
   const uniform = useMemo(() => {
     return UniformUnit(type, value, config)
