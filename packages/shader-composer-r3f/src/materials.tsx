@@ -1,5 +1,5 @@
 import { Node } from "@react-three/fiber"
-import React, { forwardRef, useState } from "react"
+import React, { forwardRef } from "react"
 import {
   IUniform,
   MeshBasicMaterial,
@@ -14,28 +14,8 @@ import {
   MeshToonMaterial,
   RGBADepthPacking
 } from "three"
-import CustomShaderMaterial, { iCSMProps } from "three-custom-shader-material"
+import CustomShaderMaterial from "three-custom-shader-material"
 import CustomShaderMaterialImpl from "three-custom-shader-material/vanilla"
-
-export type CustomDepthMaterialProps = Omit<iCSMProps, "ref" | "baseMaterial">
-
-export const CustomDepthMaterial = forwardRef<
-  CustomShaderMaterialImpl,
-  CustomDepthMaterialProps
->((props, ref) => {
-  const [material] = useState(
-    () => new MeshDepthMaterial({ depthPacking: RGBADepthPacking })
-  )
-
-  return (
-    <CustomShaderMaterial
-      ref={ref}
-      attach="customDepthMaterial"
-      baseMaterial={material}
-      {...props}
-    />
-  )
-})
 
 export type MaterialConstructor<T extends THREE.Material> = { new (...args: any[]): T }
 

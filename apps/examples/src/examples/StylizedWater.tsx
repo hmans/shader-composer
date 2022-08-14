@@ -23,10 +23,9 @@ import {
   VertexNormal,
   VertexPosition
 } from "shader-composer"
-import { useShader, useUniformUnit } from "shader-composer-r3f"
+import { Custom, useShader, useUniformUnit } from "shader-composer-r3f"
 import { PSRDNoise2D, PSRDNoise3D } from "shader-composer-toybox"
-import { Color, MeshStandardMaterial } from "three"
-import CustomShaderMaterial from "three-custom-shader-material"
+import { Color } from "three"
 
 export default function StylizedWater() {
   return (
@@ -163,12 +162,7 @@ const Water = (props: MeshProps) => {
   return (
     <mesh {...props} layers-mask={Layers.TransparentFX} rotation-x={-Math.PI / 2}>
       <planeGeometry args={[100, 100, 137, 137]} />
-      <CustomShaderMaterial
-        baseMaterial={MeshStandardMaterial}
-        metalness={0.5}
-        roughness={0.1}
-        {...shader}
-      />
+      <Custom.MeshStandardMaterial metalness={0.5} roughness={0.1} {...shader} />
     </mesh>
   )
 }

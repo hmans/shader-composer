@@ -6,9 +6,8 @@ import {
   VertexNormal,
   VertexPosition
 } from "shader-composer"
-import { useShader } from "shader-composer-r3f"
-import { MeshStandardMaterial, Vector3 } from "three"
-import CustomShaderMaterial from "three-custom-shader-material"
+import { Custom, useShader } from "shader-composer-r3f"
+import { Vector3 } from "three"
 
 export default function MatrixTransformations() {
   const shader = useShader(() => {
@@ -27,11 +26,7 @@ export default function MatrixTransformations() {
   return (
     <mesh>
       <boxGeometry />
-      <CustomShaderMaterial
-        baseMaterial={MeshStandardMaterial}
-        color="orange"
-        {...shader}
-      />
+      <Custom.MeshStandardMaterial color="orange" {...shader} />
     </mesh>
   )
 }

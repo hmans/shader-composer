@@ -24,15 +24,9 @@ import {
   Vec3,
   vec3
 } from "shader-composer"
-import {
-  Custom,
-  CustomDepthMaterial,
-  useShader,
-  useUniformUnit
-} from "shader-composer-r3f"
+import { Custom, useShader, useUniformUnit } from "shader-composer-r3f"
 import { Displacement, PSRDNoise2D } from "shader-composer-toybox"
-import { Color, MeshStandardMaterial, Vector2 } from "three"
-import CustomShaderMaterial from "three-custom-shader-material"
+import { Color, Vector2 } from "three"
 
 export default function FloatingIslandExample() {
   return (

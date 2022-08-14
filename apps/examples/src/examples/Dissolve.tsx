@@ -1,9 +1,8 @@
 import { useControls } from "leva"
 import { CustomShaderMaterialMaster, Mix, pipe } from "shader-composer"
-import { useShader, useUniformUnit } from "shader-composer-r3f"
+import { Custom, useShader, useUniformUnit } from "shader-composer-r3f"
 import { Dissolve } from "shader-composer-toybox"
-import { Color, DoubleSide, MeshPhysicalMaterial } from "three"
-import CustomShaderMaterial from "three-custom-shader-material"
+import { Color, DoubleSide } from "three"
 
 export default function DissolveExample() {
   /* Leva */
@@ -40,8 +39,7 @@ export default function DissolveExample() {
   return (
     <mesh>
       <icosahedronGeometry args={[1, 10]} />
-      <CustomShaderMaterial
-        baseMaterial={MeshPhysicalMaterial}
+      <Custom.MeshPhysicalMaterial
         {...shader}
         transparent
         side={DoubleSide}
