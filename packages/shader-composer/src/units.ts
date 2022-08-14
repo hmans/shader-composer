@@ -10,8 +10,7 @@ import {
   Vector4,
   WebGLRenderer
 } from "three"
-import { Expression } from "./expressions"
-import { Float } from "./stdlib"
+import { $, Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
 export type Program = "vertex" | "fragment"
@@ -43,14 +42,6 @@ export type JSTypes = {
 }
 
 export type Input<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
-
-/*
-`Input` used to be named `Value`. We will export an alias here for backwards compatibility
-and remove it in a future release.
-
-TODO: Remove `Value` type!
-*/
-export type Value<T extends GLSLType> = Input<T>
 
 export type UpdateCallback = (
   dt: number,
@@ -129,16 +120,84 @@ export type UnitConfig<T extends GLSLType> = {
   }
 }
 
-export type Unit<T extends GLSLType = any> = {
+export type UnitAPI<T extends GLSLType> = T extends "vec2"
+  ? {
+      readonly x: Unit<"float">
+      readonly y: Unit<"float">
+    }
+  : T extends "vec3"
+  ? {
+      readonly x: Unit<"float">
+      readonly y: Unit<"float">
+      readonly z: Unit<"float">
+    }
+  : T extends "vec4"
+  ? {
+      readonly x: Unit<"float">
+      readonly y: Unit<"float">
+      readonly z: Unit<"float">
+      readonly w: Unit<"float">
+    }
+  : API
+
+const unitAPI = <T extends GLSLType>(unit: IUnit<T>): UnitAPI<T> => {
+  if (isUnitOfType(unit, "vec2")) {
+    return {
+      get x() {
+        return Unit("float", $`${unit}.x`)
+      },
+      get y() {
+        return Unit("float", $`${unit}.y`)
+      }
+    } as UnitAPI<T>
+  }
+
+  if (isUnitOfType(unit, "vec3")) {
+    return {
+      get x() {
+        return Unit("float", $`${unit}.x`)
+      },
+      get y() {
+        return Unit("float", $`${unit}.y`)
+      },
+      get z() {
+        return Unit("float", $`${unit}.z`)
+      }
+    } as UnitAPI<T>
+  }
+
+  if (isUnitOfType(unit, "vec4")) {
+    return {
+      get x() {
+        return Unit("float", $`${unit}.x`)
+      },
+      get y() {
+        return Unit("float", $`${unit}.y`)
+      },
+      get z() {
+        return Unit("float", $`${unit}.z`)
+      },
+      get w() {
+        return Unit("float", $`${unit}.w`)
+      }
+    } as UnitAPI<T>
+  }
+
+  return {} as UnitAPI<T>
+}
+
+export interface IUnit<T extends GLSLType = GLSLType> {
   _: "Unit"
   _unitConfig: UnitConfig<T>
 }
+
+export type Unit<T extends GLSLType = GLSLType> = IUnit<T> & UnitAPI<T>
 
 export const Unit = <T extends GLSLType>(
   type: T,
   value: Input<T> | undefined,
   _config?: Partial<UnitConfig<T>>
-) => {
+): Unit<T> => {
   const config: UnitConfig<T> = {
     name: "Anonymous",
     type,
@@ -148,16 +207,20 @@ export const Unit = <T extends GLSLType>(
     ..._config
   }
 
-  const unit: Unit<T> = {
+  const unit: IUnit<T> = {
     _: "Unit",
     _unitConfig: config
   }
 
-  return unit
+  return injectAPI(unit, unitAPI)
 }
 
 export function isUnit(value: any): value is Unit {
   return value && value._ === "Unit"
+}
+
+function isUnitOfType<T extends GLSLType>(value: any, type: T): value is Unit<T> {
+  return isUnit(value) && value._unitConfig.type === type
 }
 
 export const isUnitInProgram = (unit: Unit, program: Program) =>
@@ -167,14 +230,17 @@ export const uniformName = (unit: Unit) =>
   unit._unitConfig.uniformName ?? `u_${unit._unitConfig.variableName}`
 
 export type API = Record<string, any>
-export type APIFactory<U extends Unit, A extends API> = (unit: U) => A
+export type APIFactory<U extends IUnit, A extends API> = (unit: U) => A
 
 /**
  * Given a unit and an API factory function, pass the unit to the factory
  * function and inject its return value into the unit (as to not break
  * object references.)
  */
-export const injectAPI = <U extends Unit, A extends API>(
+export const injectAPI = <U extends IUnit, A extends API>(
   unit: U,
   factory: APIFactory<U, A>
-) => Object.assign(unit, factory(unit))
+) => {
+  const api = factory(unit)
+  return Object.defineProperties(unit, Object.getOwnPropertyDescriptors(api)) as U & A
+}

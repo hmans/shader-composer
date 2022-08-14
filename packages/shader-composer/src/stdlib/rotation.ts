@@ -1,8 +1,9 @@
 import { $ } from "../expressions"
 import { Input } from "../units"
 import { rotation3d, rotation3dX, rotation3dY, rotation3dZ } from "../vendor/glsl-rotate"
+import { mat3 } from "./casts"
 import { Mul } from "./math"
-import { mat3, Mat3, Mat4 } from "./values"
+import { Mat3, Mat4 } from "./values"
 
 /**
  * Generates a Shader Unit of type `mat4` representing a rotation around a specified
@@ -14,7 +15,7 @@ import { mat3, Mat3, Mat4 } from "./values"
  * @returns A Shader Unit of type `mat4` representing the rotation matrix.
  */
 export const Rotation3D = (axis: Input<"vec3">, angle: Input<"float">) =>
-	Mat4($`${rotation3d}(${axis}, ${angle})`)
+  Mat4($`${rotation3d}(${axis}, ${angle})`)
 
 export const Rotation3DX = (angle: Input<"float">) => Mat3($`${rotation3dX}(${angle})`)
 
@@ -31,16 +32,16 @@ export const Rotation3DZ = (angle: Input<"float">) => Mat3($`${rotation3dZ}(${an
  * @returns A `vec3` Shader Unit containing the rotated vector.
  */
 export const Rotate3D = (
-	position: Input<"vec3">,
-	axis: Input<"vec3">,
-	angle: Input<"float">
+  position: Input<"vec3">,
+  axis: Input<"vec3">,
+  angle: Input<"float">
 ) => Mul(position, mat3(Rotation3D(axis, angle)))
 
 export const RotateX = (position: Input<"vec3">, angle: Input<"float">) =>
-	Mul(position, Rotation3DX(angle))
+  Mul(position, Rotation3DX(angle))
 
 export const RotateY = (position: Input<"vec3">, angle: Input<"float">) =>
-	Mul(position, Rotation3DY(angle))
+  Mul(position, Rotation3DY(angle))
 
 export const RotateZ = (position: Input<"vec3">, angle: Input<"float">) =>
-	Mul(position, Rotation3DZ(angle))
+  Mul(position, Rotation3DZ(angle))

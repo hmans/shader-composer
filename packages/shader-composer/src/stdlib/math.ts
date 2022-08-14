@@ -1,8 +1,7 @@
 import { $ } from "../expressions"
 import { type } from "../glslType"
-import { Snippet } from "../snippets"
 import { GLSLType, Input, Unit } from "../units"
-import { Float, vec3 } from "./values"
+import { Float } from "./values"
 
 /**
  * @internal
@@ -149,13 +148,13 @@ export const OneMinus = (v: Input<"float">) => Float(Sub(1, v), { name: "OneMinu
 export const lerp = <T extends GLSLType>(
   a: Input<T>,
   b: Input<T>,
-  ratio: Input<T | "float">
+  ratio: Input<"float">
 ) => $`mix(${a}, ${b}, ${ratio})`
 
 export const Lerp = <T extends GLSLType>(
   a: Input<T>,
   b: Input<T>,
-  ratio: Input<T | "float">
+  ratio: Input<"float">
 ) => Unit(type(a), lerp(a, b, ratio), { name: "Mix" })
 
 export const inverseLerp = <T extends GLSLType>(a: Input<T>, b: Input<T>, c: Input<T>) =>

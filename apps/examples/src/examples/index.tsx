@@ -52,6 +52,20 @@ const examples: Examples = {
   ForceField: { Example: lazy(() => import("./ForceField")) },
   Planet: { Example: lazy(() => import("./Planet")) },
   DiscoCube: { Example: lazy(() => import("./DiscoCube")) },
+
+  FloatingIsland: {
+    Description: () => (
+      <p>
+        This example demonstrates <strong>vertex displacement</strong> and{" "}
+        <strong>applying colors based on displaced vertex positions</strong>. It also
+        shows you how to customize the mesh's
+        <strong>depth material</strong> (which is needed for proper shadows), and how to{" "}
+        <strong>reuse parts of the shader graph</strong> in multiple shaders.
+      </p>
+    ),
+    Example: lazy(() => import("./FloatingIsland"))
+  },
+
   StylizedWater: { Example: lazy(() => import("./StylizedWater")) },
   Water: { Example: lazy(() => import("./Water")) }
 }

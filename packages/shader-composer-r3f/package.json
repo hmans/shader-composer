@@ -26,6 +26,19 @@
     "test": "jest --passWithNoTests",
     "ci": "yarn clean && yarn build && yarn test"
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react",
+      [
+        "@babel/preset-typescript",
+        {
+          "isTSX": true,
+          "allExtensions": true
+        }
+      ]
+    ]
+  },
   "devDependencies": {
     "@babel/core": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
@@ -42,7 +55,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2",
-    "shader-composer": "^0.2.0",
     "three": "^0.143.0",
     "ts-jest": "^28.0.4",
     "tslib": "^2.4.0",
@@ -52,19 +64,10 @@
     "@react-three/fiber": "^8.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "shader-composer": ">=0.2.0"
+    "three": ">=0.143.0"
   },
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react",
-      [
-        "@babel/preset-typescript",
-        {
-          "isTSX": true,
-          "allExtensions": true
-        }
-      ]
-    ]
+  "dependencies": {
+    "shader-composer": "^0.2.0",
+    "three-custom-shader-material": "^4.0.0"
   }
 }

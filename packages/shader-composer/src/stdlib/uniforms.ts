@@ -1,6 +1,6 @@
 import { PerspectiveCamera, Vector2 } from "three"
 import { $ } from "../expressions"
-import { GLSLType, JSTypes, Unit, UnitConfig } from "../units"
+import { GLSLType, injectAPI, JSTypes, uniformName, Unit, UnitConfig } from "../units"
 import { FragmentCoordinate } from "./globals"
 import { Vec2 } from "./values"
 
@@ -25,10 +25,7 @@ export const UniformUnit = <T extends GLSLType, J extends JSTypes[T]>(
   })
 
   /* Return the unit with some API bits mixed in. */
-  return {
-    ...unit,
-
-    /** The uniform's value. */
+  return injectAPI(unit, () => ({
     set value(v: J) {
       uniform.value = v
     },
@@ -36,7 +33,7 @@ export const UniformUnit = <T extends GLSLType, J extends JSTypes[T]>(
     get value(): J {
       return uniform.value
     }
-  }
+  }))
 }
 
 export const Time = (initial: number = 0) => {

@@ -1,4 +1,4 @@
-import { Camera, IUniform, Scene, WebGLRenderer } from "three"
+import { Camera, Scene, WebGLRenderer } from "three"
 import { Expression } from "./expressions"
 import { glslRepresentation } from "./glslRepresentation"
 import { isSnippet, renameSnippet, Snippet } from "./snippets"
@@ -58,9 +58,6 @@ const compileUnit = (unit: Unit, program: Program, state: CompilerState) => {
 
   /* Declare uniform, if one is configured. */
   if (unit._unitConfig.uniform) {
-    /* Register uniform with compiler state */
-    state.uniforms.set(uniformName(unit), unit._unitConfig.uniform)
-
     /* Declare uniforms in header */
     header.push(statement("uniform", unit._unitConfig.type, uniformName(unit)))
   }
@@ -181,16 +178,21 @@ export const compileShader = (root: Unit) => {
     }
   })
 
-  /* Explicitly add all uniforms we've seen so far */
-  vertexState.uniforms = fragmentState.uniforms
-
   /* Compile! */
   const vertexShader = compileProgram(root, "vertex", vertexState)
 
   /*
 	STEP 4: Collect uniforms.
 	*/
-  const uniforms = Object.fromEntries(vertexState.uniforms)
+  const unitsWithUniforms = collectFromTree(
+    root,
+    "any",
+    (item) => isUnit(item) && !!item._unitConfig.uniform
+  )
+
+  const uniforms = unitsWithUniforms.reduce((acc, unit) => {
+    return { ...acc, [uniformName(unit)]: unit._unitConfig.uniform }
+  }, {})
 
   /*
 	STEP 5: Collect update callbacks.
@@ -237,6 +239,5 @@ const CompilerState = () => ({
   header: new Array<Part>(),
   body: new Array<Part>(),
   nextid: idGenerator(),
-  seen: new Set<Item>(),
-  uniforms: new Map<string, IUniform>()
+  seen: new Set<Item>()
 })

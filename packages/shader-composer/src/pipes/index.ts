@@ -1,7 +1,7 @@
 import { Add, Div, Mix, Mul, Sub } from "../stdlib"
 import { GLSLType, Input } from "../units"
 
-export const mix = <T extends GLSLType>(b: Input<T>, f: Input<T | "float">) => (
+export const mix = <T extends GLSLType>(b: Input<T>, f: Input<"float">) => (
   a: Input<T>
 ) => Mix(a, b, f)
 
