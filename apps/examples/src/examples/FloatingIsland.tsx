@@ -1,5 +1,6 @@
 import { Environment, Float as Floating, Sky } from "@react-three/drei"
 import { useControls } from "leva"
+import { FlatStage } from "r3f-stage"
 import {
   Add,
   CustomShaderMaterialMaster,
@@ -32,6 +33,7 @@ export default function FloatingIslandExample() {
   return (
     <group>
       <Environment preset="sunset" />
+      <FlatStage position-y={-2.5} />
       <Floating rotationIntensity={0}>
         <FloatingIsland />
       </Floating>
@@ -50,6 +52,7 @@ const FloatingIsland = () => {
 
   /* Let's create the shader itself! */
   const shader = useShader(() => {
+    /* A helper function that will generate some powered and scaled noise for us. */
     const Noise = (
       v: Input<"vec2">,
       scale: Input<"float"> = 1,
@@ -114,7 +117,7 @@ const FloatingIsland = () => {
   }, [])
 
   return (
-    <mesh>
+    <mesh castShadow receiveShadow>
       <dodecahedronGeometry args={[2, 5]} />
       <CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} flatShading />
     </mesh>
