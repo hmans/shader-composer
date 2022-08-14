@@ -240,4 +240,7 @@ export type APIFactory<U extends IUnit, A extends API> = (unit: U) => A
 export const injectAPI = <U extends IUnit, A extends API>(
   unit: U,
   factory: APIFactory<U, A>
-) => Object.assign(unit, factory(unit))
+) => {
+  const api = factory(unit)
+  return Object.defineProperties(unit, Object.getOwnPropertyDescriptors(api)) as U & A
+}

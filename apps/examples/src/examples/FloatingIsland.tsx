@@ -43,30 +43,37 @@ export default function FloatingIslandExample() {
 
 const FloatingIsland = () => {
   const controls = useControls("Floating Isle", {
-    offset: { value: [0, 0], joystick: true, step: 0.1 }
+    offset: { value: [0, 0], joystick: true, step: 0.1 },
+    scale: { value: 1, min: 0.01, max: 3 }
   })
 
   const uniforms = {
-    offset: useUniformUnit("vec2", new Vector2(...controls.offset))
+    offset: useUniformUnit("vec2", new Vector2(...controls.offset), {
+      name: "Noise Offset"
+    }),
+
+    scale: useUniformUnit("float", controls.scale, {
+      name: "Noise Scale"
+    })
   }
+
+  /* A helper function that will generate some powered and scaled noise for us,
+    taking into account the offset currently configured by the user. */
+  const Noise = (
+    v: Input<"vec2">,
+    scale: Input<"float"> = 1,
+    height: Input<"float"> = 1,
+    pow: Input<"float"> = 1
+  ) =>
+    pipe(
+      PSRDNoise2D(Mul(Add(v, uniforms.offset), Mul(scale, uniforms.scale))),
+      (v) => NormalizePlusMinusOne(v),
+      (v) => Pow(v, pow),
+      (v) => Mul(v, height)
+    )
 
   /* Let's create the shader itself! */
   const shader = useShader(() => {
-    /* A helper function that will generate some powered and scaled noise for us,
-    taking into account the offset currently configured by the user. */
-    const Noise = (
-      v: Input<"vec2">,
-      scale: Input<"float"> = 1,
-      height: Input<"float"> = 1,
-      pow: Input<"float"> = 1
-    ) =>
-      pipe(
-        PSRDNoise2D(Mul(Add(v, uniforms.offset), scale)),
-        (v) => NormalizePlusMinusOne(v),
-        (v) => Pow(v, pow),
-        (v) => Mul(v, height)
-      )
-
     /* Set up a displacement function. It takes the existing position of a vertex and
     modifies it according to our rules. */
     const Displace = (v: Unit<"vec3">) => {
@@ -90,19 +97,18 @@ const FloatingIsland = () => {
       return If(GreaterOrEqual(v.y, 0), DisplaceUpper, DisplaceLower)
     }
 
-    const { position: modifiedPosition, normal } = ModifyVertex(
-      VertexPosition,
-      VertexNormal,
-      Displace
-    )
+    const modified = ModifyVertex(VertexPosition, VertexNormal, Displace)
 
     /* Wrap the position in a varying. If we don't do this, the fragment shader
     will end up recalculating the position for every fragment. */
-    const position = Vec3(modifiedPosition, { varying: true })
+    const position = Vec3(modified.position, {
+      name: "Displaced vertex position",
+      varying: true
+    })
 
     return CustomShaderMaterialMaster({
       position,
-      normal,
+      normal: modified.normal,
 
       diffuseColor: pipe(Vec3(new Color("#1982c4")), (v) =>
         pipe(
