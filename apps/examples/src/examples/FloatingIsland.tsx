@@ -18,6 +18,7 @@ import {
   Step,
   Sub,
   Unit,
+  varying,
   vec2,
   Vec3,
   vec3
@@ -102,10 +103,7 @@ const FloatingIsland = () => {
 
     /* Wrap the position in a varying. If we don't do this, the fragment shader
     will end up recalculating the position for every fragment. */
-    const position = Vec3(modified.position, {
-      name: "Displaced vertex position",
-      varying: true
-    })
+    const position = varying(modified.position)
 
     return CustomShaderMaterialMaster({
       position,
@@ -123,6 +121,8 @@ const FloatingIsland = () => {
       )
     })
   }, [])
+
+  console.log(shader.fragmentShader)
 
   return (
     <mesh castShadow receiveShadow>
