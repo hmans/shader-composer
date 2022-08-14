@@ -31,8 +31,8 @@ import CustomShaderMaterial from "three-custom-shader-material"
 export default function FloatingIslandExample() {
   return (
     <group>
-      <Environment preset="sunset" />
-      <FlatStage position-y={-2.5} />
+      {/* <Environment preset="sunset" />
+      <FlatStage position-y={-2.5} /> */}
       <Floating rotationIntensity={0}>
         <FloatingIsland />
       </Floating>
@@ -99,15 +99,15 @@ const FloatingIsland = () => {
     /* Let's displace some vertices! We're using the `Displacement` helper from
     the toybox package, which will not only displace the vertex position using
     the given function, but also update the normal accordingly, and return both. */
-    const modified = Displacement(Displace)
+    const displaced = Displacement(Displace)
 
     /* Wrap the position in a varying. If we don't do this, the fragment shader
     will end up recalculating the position for every fragment. */
-    const position = varying(modified.position)
+    const position = varying(displaced.position)
 
     return CustomShaderMaterialMaster({
       position,
-      normal: modified.normal,
+      normal: displaced.normal,
 
       diffuseColor: pipe(Vec3(new Color("#1982c4")), (v) =>
         pipe(
@@ -121,8 +121,6 @@ const FloatingIsland = () => {
       )
     })
   }, [])
-
-  console.log(shader.fragmentShader)
 
   return (
     <mesh castShadow receiveShadow>
