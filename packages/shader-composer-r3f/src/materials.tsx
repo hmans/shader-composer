@@ -1,7 +1,14 @@
 import React, { forwardRef, useState } from "react"
 import CustomShaderMaterial, { iCSMProps } from "three-custom-shader-material"
 import CustomShaderMaterialImpl from "three-custom-shader-material/vanilla"
-import { MeshDepthMaterial, RGBADepthPacking } from "three"
+import {
+  Material,
+  MeshBasicMaterial,
+  MeshDepthMaterial,
+  MeshStandardMaterial,
+  RGBADepthPacking
+} from "three"
+import { Node, NodeProps } from "@react-three/fiber"
 
 export type CustomDepthMaterialProps = Omit<iCSMProps, "ref" | "baseMaterial">
 
@@ -22,3 +29,16 @@ export const CustomDepthMaterial = forwardRef<
     />
   )
 })
+
+const makeMaterialComponent = <T extends THREE.Material>(ctor: {
+  new (...args: any[]): T
+}) =>
+  forwardRef<CustomShaderMaterialImpl, Node<T, typeof ctor>>((props, ref) => {
+    // @ts-ignore
+    return <CustomShaderMaterial baseMaterial={ctor} {...props} ref={ref} />
+  })
+
+export const Custom = {
+  MeshStandardMaterial: makeMaterialComponent(MeshStandardMaterial),
+  MeshBasicMaterial: makeMaterialComponent(MeshBasicMaterial)
+}
