@@ -49,11 +49,12 @@ const examples: Examples = {
   },
 
   Textures: { Example: lazy(() => import("./Textures")) },
-  ForceField: { Example: lazy(() => import("./ForceField")) },
+  ForceField: { title: "Force Field", Example: lazy(() => import("./ForceField")) },
   Planet: { Example: lazy(() => import("./Planet")) },
-  DiscoCube: { Example: lazy(() => import("./DiscoCube")) },
+  DiscoCube: { title: "Disco Cube", Example: lazy(() => import("./DiscoCube")) },
 
   FloatingIsland: {
+    title: "Floating Island",
     Description: () => (
       <p>
         This example demonstrates <strong>vertex displacement</strong> and{" "}
@@ -66,7 +67,11 @@ const examples: Examples = {
     Example: lazy(() => import("./FloatingIsland"))
   },
 
-  StylizedWater: { Example: lazy(() => import("./StylizedWater")) },
+  StylizedWater: {
+    title: "Stylized Water",
+    Example: lazy(() => import("./StylizedWater"))
+  },
+
   Water: { Example: lazy(() => import("./Water")) }
 }
 
