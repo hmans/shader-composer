@@ -1,21 +1,21 @@
 import { $ } from "../expressions"
-import { API, GLSLType, Input, Unit, UnitConfig } from "../units"
+import { GLSLType, Input, Unit, UnitConfig } from "../units"
 
-const makeUnit = <T extends GLSLType, A extends API>(type: T) => (
+const makeUnitFactory = <T extends GLSLType>(type: T) => (
   v: Input<T>,
   extras?: Partial<UnitConfig<T>>
 ) => Unit(type, v, extras) as Unit<T>
 
-export const Float = makeUnit("float")
+export const Float = makeUnitFactory("float")
 
-export const Int = makeUnit("int")
-export const Bool = makeUnit("bool")
-export const Vec2 = makeUnit("vec2")
-export const Vec3 = makeUnit("vec3")
-export const Vec4 = makeUnit("vec4")
+export const Int = makeUnitFactory("int")
+export const Bool = makeUnitFactory("bool")
+export const Vec2 = makeUnitFactory("vec2")
+export const Vec3 = makeUnitFactory("vec3")
+export const Vec4 = makeUnitFactory("vec4")
 
-export const Mat3 = makeUnit("mat3")
-export const Mat4 = makeUnit("mat4")
+export const Mat3 = makeUnitFactory("mat3")
+export const Mat4 = makeUnitFactory("mat4")
 
 export const vec2 = (
   x: Input<"float"> = 0,
