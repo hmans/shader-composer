@@ -21,21 +21,11 @@ import {
   varying,
   vec2,
   Vec3,
-  vec3,
-  VertexNormal,
-  VertexPosition
+  vec3
 } from "shader-composer"
-import { useShader, useUniformUnit } from "shader-composer-r3f"
+import { CustomDepthMaterial, useShader, useUniformUnit } from "shader-composer-r3f"
 import { Displacement, PSRDNoise2D } from "shader-composer-toybox"
-import {
-  Color,
-  MeshBasicMaterial,
-  MeshDepthMaterial,
-  MeshPhysicalMaterial,
-  MeshStandardMaterial,
-  RGBADepthPacking,
-  Vector2
-} from "three"
+import { Color, MeshStandardMaterial, Vector2 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
 export default function FloatingIslandExample() {
@@ -67,7 +57,7 @@ const FloatingIsland = () => {
   }
 
   /* A helper function that will generate some powered and scaled noise for us,
-    taking into account the offset currently configured by the user. */
+  taking into account the offset currently configured by the user. */
   const noise = (
     v: Input<"vec2">,
     scale: Input<"float"> = 1,
@@ -82,7 +72,7 @@ const FloatingIsland = () => {
     )
 
   /* Set up a displacement function. It takes the existing position of a vertex and
-    modifies it according to our rules. */
+  modifies it according to our rules. */
   const displace = (v: Unit<"vec3">) => {
     const xz = vec2(v.x, v.z)
 
@@ -135,14 +125,9 @@ const FloatingIsland = () => {
 
   return (
     <mesh castShadow receiveShadow>
-      <CustomShaderMaterial
-        baseMaterial={new MeshDepthMaterial({ depthPacking: RGBADepthPacking })}
-        {...depthShader}
-        attach="customDepthMaterial"
-      />
-
       <dodecahedronGeometry args={[2, 5]} />
       <CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} flatShading />
+      <CustomDepthMaterial {...depthShader} />
     </mesh>
   )
 }
