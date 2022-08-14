@@ -1,6 +1,7 @@
 import { Environment, Float as Floating } from "@react-three/drei"
 import { useControls } from "leva"
 import { FlatStage } from "r3f-stage"
+import { useCallback, useMemo } from "react"
 import {
   Add,
   CustomShaderMaterialMaster,
@@ -32,8 +33,8 @@ export default function FloatingIslandExample() {
   return (
     <group>
       <Environment preset="sunset" />
-      <FlatStage position-y={-2.5} />
-      <Floating rotationIntensity={0}>
+      <FlatStage position-y={-2} />
+      <Floating>
         <FloatingIsland />
       </Floating>
     </group>
@@ -58,22 +59,25 @@ const FloatingIsland = () => {
 
   /* A helper function that will generate some powered and scaled noise for us,
   taking into account the offset currently configured by the user. */
-  const noise = (
-    v: Input<"vec2">,
-    scale: Input<"float"> = 1,
-    height: Input<"float"> = 1,
-    pow: Input<"float"> = 1
-  ) =>
-    pipe(
-      PSRDNoise2D(Mul(Add(v, uniforms.offset), Mul(scale, uniforms.scale))),
-      (v) => NormalizePlusMinusOne(v),
-      (v) => Pow(v, pow),
-      (v) => Mul(v, height)
-    )
+  const noise = useCallback(
+    (
+      v: Input<"vec2">,
+      scale: Input<"float"> = 1,
+      height: Input<"float"> = 1,
+      pow: Input<"float"> = 1
+    ) =>
+      pipe(
+        PSRDNoise2D(Mul(Add(v, uniforms.offset), Mul(scale, uniforms.scale))),
+        (v) => NormalizePlusMinusOne(v),
+        (v) => Pow(v, pow),
+        (v) => Mul(v, height)
+      ),
+    []
+  )
 
   /* Set up a displacement function. It takes the existing position of a vertex and
   modifies it according to our rules. */
-  const displace = (v: Unit<"vec3">) => {
+  const displace = useCallback((v: Unit<"vec3">) => {
     const xz = vec2(v.x, v.z)
 
     const height = pipe(
@@ -92,7 +96,7 @@ const FloatingIsland = () => {
 
     /* Displacement for the entire island. */
     return If(GreaterOrEqual(v.y, 0), displaceUpper, displaceLower)
-  }
+  }, [])
 
   /* Let's create the shader itself! */
   const shader = useShader(() => {
