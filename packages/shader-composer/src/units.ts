@@ -227,9 +227,6 @@ export const Unit = <T extends GLSLType>(
   return Object.assign(unit, unitAPI(unit))
 }
 
-const f = Unit("float", 1)
-const v3 = Unit("vec3", new Vector3())
-
 export function isUnit(value: any): value is Unit {
   return value && value._ === "Unit"
 }
