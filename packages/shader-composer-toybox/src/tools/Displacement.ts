@@ -36,7 +36,10 @@ export const Displacement = (
     Add(originalPosition, Mul(bitangent, offset))
   ].map(displacementFun)
 
+  /* Displace the original position. */
   const position = displacementFun(originalPosition)
+
+  /* Now compare the displaced neighbors to the displaced original position. */
   const displacedTangent = Sub(displacedNeighbors[0], position)
   const displacedBitangent = Sub(displacedNeighbors[1], position)
 
