@@ -2,7 +2,6 @@ import {
   Add,
   Bitangent,
   Cross,
-  Input,
   Mul,
   Normalize,
   Sub,
@@ -11,9 +10,9 @@ import {
 } from "shader-composer"
 
 export const ModifyVertex = (
-  originalPosition: Input<"vec3">,
-  originalNormal: Input<"vec3">,
-  modifier: (v: Input<"vec3">) => Unit<"vec3">,
+  originalPosition: Unit<"vec3">,
+  originalNormal: Unit<"vec3">,
+  modifier: (v: Unit<"vec3">) => Unit<"vec3">,
   offset = 0.001
 ) => {
   const tangent = Tangent(originalNormal)
