@@ -58,8 +58,8 @@ const examples: Examples = {
       <p>
         This example demonstrates <strong>vertex displacement</strong> and{" "}
         <strong>applying colors based on displaced vertex positions</strong>. It also
-        shows you how to customize the mesh's
-        <strong>depth material</strong> (which is needed for proper shadows), and how to{" "}
+        shows you how to customize the mesh's <strong>depth material</strong> (which is
+        needed for proper shadows), and how to{" "}
         <strong>reuse parts of the shader graph</strong> in multiple shaders.
       </p>
     ),
