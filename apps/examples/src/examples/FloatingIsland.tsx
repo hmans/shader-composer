@@ -121,6 +121,8 @@ const FloatingIsland = () => {
     })
   }, [])
 
+  /* Let's create another shader that _only_ performs the vertex displacement.
+  We'll use it in a custom depth material that will help us get correct shadows. */
   const depthShader = useShader(() => {
     return CustomShaderMaterialMaster({
       position: Displacement(displace).position
