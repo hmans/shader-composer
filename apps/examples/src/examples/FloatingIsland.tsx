@@ -19,6 +19,8 @@ import {
   SplitVector3,
   Step,
   Sub,
+  unit,
+  Unit,
   vec2,
   Vec3,
   vec3,
@@ -78,12 +80,12 @@ const FloatingIsland = () => {
     )
 
     const DisplaceUpper = (v: Input<"vec3">) => {
-      const { x, y, z } = Vec3(v)
+      const { x, y, z } = unit(v)
       return vec3(x, height, z)
     }
 
     const DisplaceLower = (v: Input<"vec3">) => {
-      const [x, y, z] = SplitVector3(v)
+      const { x, y, z } = unit(v)
       return vec3(x, Mul(y, 0.7), z)
     }
 

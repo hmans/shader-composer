@@ -1,5 +1,6 @@
 import { $ } from "../expressions"
-import { Input, UnitConfig } from "../units"
+import { type } from "../glslType"
+import { GLSLType, Input, isUnit, Unit, UnitConfig } from "../units"
 import { Mat3, Mat4, Vec2, Vec3, Vec4 } from "./values"
 
 export const vec2 = (
@@ -28,3 +29,6 @@ export const mat3 = (i: Input<"mat3" | "mat4">) => Mat3($`mat3(${i})`)
 
 /** Cast the given value to a mat4. */
 export const mat4 = (i: Input<"mat3" | "mat4">) => Mat4($`mat4(${i})`)
+
+export const unit = <T extends GLSLType>(i: Input<T>) =>
+  isUnit(i) ? i : Unit(type(i), i)
