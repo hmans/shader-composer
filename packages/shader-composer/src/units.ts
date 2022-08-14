@@ -10,8 +10,7 @@ import {
   Vector4,
   WebGLRenderer
 } from "three"
-import { Expression } from "./expressions"
-import { Float } from "./stdlib"
+import { $, Expression } from "./expressions"
 import { identifier } from "./util/concatenator3000"
 
 export type Program = "vertex" | "fragment"
@@ -129,16 +128,88 @@ export type UnitConfig<T extends GLSLType> = {
   }
 }
 
-export type Unit<T extends GLSLType = any> = {
+export type UnitAPI<T extends GLSLType> = T extends "vec2"
+  ? {
+      readonly x: Unit<"float">
+      readonly y: Unit<"float">
+    }
+  : T extends "vec3"
+  ? {
+      readonly x: Unit<"float">
+      readonly y: Unit<"float">
+      readonly z: Unit<"float">
+    }
+  : T extends "vec4"
+  ? {
+      readonly x: Unit<"float">
+      readonly y: Unit<"float">
+      readonly z: Unit<"float">
+      readonly w: Unit<"float">
+    }
+  : Record<string, any>
+
+function isUnitOfType<T extends GLSLType>(unit: IUnit<any>, type: T): unit is IUnit<T> {
+  return unit._unitConfig.type === type
+}
+
+const unitAPI = <T extends GLSLType>(unit: IUnit<T>): UnitAPI<T> => {
+  if (isUnitOfType(unit, "vec2")) {
+    return {
+      get x() {
+        return Unit("float", $`${unit}.x`)
+      },
+      get y() {
+        return Unit("float", $`${unit}.y`)
+      }
+    } as UnitAPI<T>
+  }
+
+  if (isUnitOfType(unit, "vec3")) {
+    return {
+      get x() {
+        return Unit("float", $`${unit}.x`)
+      },
+      get y() {
+        return Unit("float", $`${unit}.y`)
+      },
+      get z() {
+        return Unit("float", $`${unit}.z`)
+      }
+    } as UnitAPI<T>
+  }
+
+  if (isUnitOfType(unit, "vec4")) {
+    return {
+      get x() {
+        return Unit("float", $`${unit}.x`)
+      },
+      get y() {
+        return Unit("float", $`${unit}.y`)
+      },
+      get z() {
+        return Unit("float", $`${unit}.z`)
+      },
+      get w() {
+        return Unit("float", $`${unit}.w`)
+      }
+    } as UnitAPI<T>
+  }
+
+  return {} as UnitAPI<T>
+}
+
+export interface IUnit<T extends GLSLType> {
   _: "Unit"
   _unitConfig: UnitConfig<T>
 }
+
+export type Unit<T extends GLSLType = any> = IUnit<T> & UnitAPI<T>
 
 export const Unit = <T extends GLSLType>(
   type: T,
   value: Input<T> | undefined,
   _config?: Partial<UnitConfig<T>>
-) => {
+): Unit<T> => {
   const config: UnitConfig<T> = {
     name: "Anonymous",
     type,
@@ -148,13 +219,16 @@ export const Unit = <T extends GLSLType>(
     ..._config
   }
 
-  const unit: Unit<T> = {
+  const unit: IUnit<T> = {
     _: "Unit",
     _unitConfig: config
   }
 
-  return unit
+  return Object.assign(unit, unitAPI(unit))
 }
+
+const f = Unit("float", 1)
+const v3 = Unit("vec3", new Vector3())
 
 export function isUnit(value: any): value is Unit {
   return value && value._ === "Unit"

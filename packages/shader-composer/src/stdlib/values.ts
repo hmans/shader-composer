@@ -1,12 +1,6 @@
 import { $ } from "../expressions"
 import { API, APIFactory, GLSLType, injectAPI, Input, Unit, UnitConfig } from "../units"
 
-const makeUnitWithAPI = <T extends GLSLType, A extends API>(
-  type: T,
-  apiFun: APIFactory<Unit<T>, A> = () => ({} as A)
-) => (v: Input<T>, extras?: Partial<UnitConfig<T>>) =>
-  injectAPI(Unit(type, v, extras) as Unit<T>, apiFun)
-
 const makeUnit = <T extends GLSLType, A extends API>(type: T) => (
   v: Input<T>,
   extras?: Partial<UnitConfig<T>>
@@ -16,39 +10,9 @@ export const Float = makeUnit("float")
 
 export const Int = makeUnit("int")
 export const Bool = makeUnit("bool")
-export const Vec2 = makeUnitWithAPI("vec2", (unit) => ({
-  get x() {
-    return Float($`${unit}.x`)
-  },
-  get y() {
-    return Float($`${unit}.y`)
-  }
-}))
-export const Vec3 = makeUnitWithAPI("vec3", (unit) => ({
-  get x() {
-    return Float($`${unit}.x`)
-  },
-  get y() {
-    return Float($`${unit}.y`)
-  },
-  get z() {
-    return Float($`${unit}.z`)
-  }
-}))
-export const Vec4 = makeUnitWithAPI("vec4", (unit) => ({
-  get x() {
-    return Float($`${unit}.x`)
-  },
-  get y() {
-    return Float($`${unit}.y`)
-  },
-  get z() {
-    return Float($`${unit}.z`)
-  },
-  get w() {
-    return Float($`${unit}.w`)
-  }
-}))
+export const Vec2 = makeUnit("vec2")
+export const Vec3 = makeUnit("vec3")
+export const Vec4 = makeUnit("vec4")
 
 export const Mat3 = makeUnit("mat3")
 export const Mat4 = makeUnit("mat4")
