@@ -1,7 +1,7 @@
 import { Environment, Float as Floating } from "@react-three/drei"
 import { useControls } from "leva"
 import { FlatStage } from "r3f-stage"
-import { useCallback, useMemo } from "react"
+import { useCallback } from "react"
 import {
   Add,
   CustomShaderMaterialMaster,
