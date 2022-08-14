@@ -2,18 +2,31 @@ import {
   Add,
   Bitangent,
   Cross,
+  Input,
   Mul,
   Normalize,
   Sub,
   Tangent,
-  Unit
+  Unit,
+  VertexNormal,
+  VertexPosition
 } from "shader-composer"
 
-export const ModifyVertex = (
-  originalPosition: Unit<"vec3">,
-  originalNormal: Unit<"vec3">,
-  modifier: (v: Unit<"vec3">) => Unit<"vec3">,
-  offset = 0.001
+export type DisplacementFunction = (v: Unit<"vec3">) => Unit<"vec3">
+
+export type DisplacementOptions = {
+  position?: Unit<"vec3">
+  normal?: Unit<"vec3">
+  offset?: Input<"float">
+}
+
+export const Displacement = (
+  displacementFun: DisplacementFunction,
+  {
+    position: originalPosition = VertexPosition,
+    normal: originalNormal = VertexNormal,
+    offset = 0.001
+  }: DisplacementOptions = {}
 ) => {
   const tangent = Tangent(originalNormal)
   const bitangent = Bitangent(originalNormal, tangent)
@@ -21,9 +34,9 @@ export const ModifyVertex = (
   const displacedNeighbors = [
     Add(originalPosition, Mul(tangent, offset)),
     Add(originalPosition, Mul(bitangent, offset))
-  ].map(modifier)
+  ].map(displacementFun)
 
-  const position = modifier(originalPosition)
+  const position = displacementFun(originalPosition)
   const displacedTangent = Sub(displacedNeighbors[0], position)
   const displacedBitangent = Sub(displacedNeighbors[1], position)
 

@@ -1,4 +1,4 @@
-import { Backdrop, Environment } from "@react-three/drei"
+import { Environment } from "@react-three/drei"
 import {
   add,
   CustomShaderMaterialMaster,
@@ -9,12 +9,10 @@ import {
   Remap,
   SplitVector3,
   Time,
-  vec2,
-  VertexNormal,
-  VertexPosition
+  vec2
 } from "shader-composer"
 import { useShader } from "shader-composer-r3f"
-import { FBMNoise, GerstnerWave, ModifyVertex } from "shader-composer-toybox"
+import { Displacement, FBMNoise, GerstnerWave } from "shader-composer-toybox"
 import { Color, DoubleSide, MeshPhysicalMaterial } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
@@ -25,7 +23,7 @@ function Water() {
     const diffuseColor = new Color("#acd")
     const time = Time()
 
-    const { position, normal } = ModifyVertex(VertexPosition, VertexNormal, (v) => {
+    const { position, normal } = Displacement((v) => {
       const [x, y, z] = SplitVector3(v)
       const xy = vec2(x, z)
 

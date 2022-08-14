@@ -20,12 +20,10 @@ import {
   Unit,
   vec2,
   Vec3,
-  vec3,
-  VertexNormal,
-  VertexPosition
+  vec3
 } from "shader-composer"
 import { useShader, useUniformUnit } from "shader-composer-r3f"
-import { ModifyVertex, PSRDNoise2D } from "shader-composer-toybox"
+import { Displacement, PSRDNoise2D } from "shader-composer-toybox"
 import { Color, MeshStandardMaterial, Vector2 } from "three"
 import CustomShaderMaterial from "three-custom-shader-material"
 
@@ -97,7 +95,10 @@ const FloatingIsland = () => {
       return If(GreaterOrEqual(v.y, 0), DisplaceUpper, DisplaceLower)
     }
 
-    const modified = ModifyVertex(VertexPosition, VertexNormal, Displace)
+    /* Let's displace some vertices! We're using the `Displacement` helper from
+    the toybox package, which will not only displace the vertex position using
+    the given function, but also update the normal accordingly, and return both. */
+    const modified = Displacement(Displace)
 
     /* Wrap the position in a varying. If we don't do this, the fragment shader
     will end up recalculating the position for every fragment. */
