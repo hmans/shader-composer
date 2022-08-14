@@ -11,10 +11,9 @@ import {
   Time,
   vec2
 } from "shader-composer"
-import { useShader } from "shader-composer-r3f"
+import { Custom, useShader } from "shader-composer-r3f"
 import { Displacement, FBMNoise, GerstnerWave } from "shader-composer-toybox"
-import { Color, DoubleSide, MeshPhysicalMaterial } from "three"
-import CustomShaderMaterial from "three-custom-shader-material"
+import { Color, DoubleSide } from "three"
 
 const NormalizeNoise = (v: Input<"float">) => Remap(v, -1, 1, 0, 1)
 
@@ -66,8 +65,7 @@ function Water() {
   return (
     <mesh position-y={-12}>
       <boxGeometry args={[70, 16, 70, 120, 1, 120]} />
-      <CustomShaderMaterial
-        baseMaterial={MeshPhysicalMaterial}
+      <Custom.MeshPhysicalMaterial
         {...shader}
         roughness={0.1}
         metalness={0.5}

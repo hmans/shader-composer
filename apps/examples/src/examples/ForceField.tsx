@@ -21,9 +21,8 @@ import {
   vec2,
   VertexPosition
 } from "shader-composer"
-import { useShader, useUniformUnit } from "shader-composer-r3f"
-import { Color, MeshStandardMaterial } from "three"
-import CustomShaderMaterial from "three-custom-shader-material"
+import { Custom, useShader, useUniformUnit } from "shader-composer-r3f"
+import { Color } from "three"
 import { useRepeatingTexture } from "./helpers"
 
 export default function ForceField() {
@@ -82,13 +81,7 @@ export default function ForceField() {
       <Float floatIntensity={1} speed={2}>
         <mesh layers-mask={Layers.TransparentFX}>
           <icosahedronGeometry args={[1.3, 8]} />
-
-          <CustomShaderMaterial
-            baseMaterial={MeshStandardMaterial}
-            transparent
-            depthWrite={false}
-            {...shader}
-          />
+          <Custom.MeshStandardMaterial transparent depthWrite={false} {...shader} />
         </mesh>
 
         <pointLight

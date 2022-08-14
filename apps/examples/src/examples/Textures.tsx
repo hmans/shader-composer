@@ -11,9 +11,8 @@ import {
   UV,
   vec2
 } from "shader-composer"
-import { useShader } from "shader-composer-r3f"
-import { Color, MeshStandardMaterial } from "three"
-import CustomShaderMaterial from "three-custom-shader-material"
+import { Custom, useShader } from "shader-composer-r3f"
+import { Color } from "three"
 import { useRepeatingTexture } from "./helpers"
 
 export default function Textures() {
@@ -40,7 +39,7 @@ export default function Textures() {
   return (
     <mesh>
       <icosahedronGeometry args={[1, 3]} />
-      <CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} transparent />
+      <Custom.MeshStandardMaterial {...shader} transparent />
     </mesh>
   )
 }

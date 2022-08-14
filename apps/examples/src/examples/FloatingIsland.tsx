@@ -1,7 +1,6 @@
 import { Environment, Float as Floating } from "@react-three/drei"
 import { useControls } from "leva"
 import { FlatStage } from "r3f-stage"
-import { useCallback } from "react"
 import {
   Add,
   CustomShaderMaterialMaster,
@@ -24,10 +23,9 @@ import {
   Vec3,
   vec3
 } from "shader-composer"
-import { CustomDepthMaterial, useShader, useUniformUnit } from "shader-composer-r3f"
+import { Custom, useShader, useUniformUnit } from "shader-composer-r3f"
 import { Displacement, PSRDNoise2D } from "shader-composer-toybox"
-import { Color, MeshStandardMaterial, Vector2 } from "three"
-import CustomShaderMaterial from "three-custom-shader-material"
+import { Color, Vector2 } from "three"
 
 export default function FloatingIslandExample() {
   return (
@@ -57,10 +55,11 @@ const FloatingIsland = () => {
     })
   }
 
-  /* A helper function that will generate some powered and scaled noise for us,
-  taking into account the offset currently configured by the user. */
-  const noise = useCallback(
-    (
+  /* Let's create the shader itself! */
+  const shader = useShader(() => {
+    /* A helper function that will generate some powered and scaled noise for us,
+    taking into account the offset currently configured by the user. */
+    const noise = (
       v: Input<"vec2">,
       scale: Input<"float"> = 1,
       height: Input<"float"> = 1,
@@ -71,35 +70,31 @@ const FloatingIsland = () => {
         (v) => NormalizePlusMinusOne(v),
         (v) => Pow(v, pow),
         (v) => Mul(v, height)
-      ),
-    []
-  )
+      )
 
-  /* Set up a displacement function. It takes the existing position of a vertex and
-  modifies it according to our rules. */
-  const displace = useCallback((v: Unit<"vec3">) => {
-    const xz = vec2(v.x, v.z)
+    /* Set up a displacement function. It takes the existing position of a vertex and
+    modifies it according to our rules. */
+    const displace = (v: Unit<"vec3">) => {
+      const xz = vec2(v.x, v.z)
 
-    const height = pipe(
-      Float(0.2),
-      (v) => Sub(v, noise(xz, 0.5, 0.2)),
-      (v) => Add(v, noise(xz, 0.2, 1)),
-      (v) => Add(v, noise(xz, 1, 2, 3)),
-      (v) => Mul(v, Smoothstep(2, 0.5, Length(xz)))
-    )
+      const height = pipe(
+        Float(0.2),
+        (v) => Sub(v, noise(xz, 0.5, 0.2)),
+        (v) => Add(v, noise(xz, 0.2, 1)),
+        (v) => Add(v, noise(xz, 1, 2, 3)),
+        (v) => Mul(v, Smoothstep(2, 0.5, Length(xz)))
+      )
 
-    /* Displacement for the upper half of the island. */
-    const displaceUpper = vec3(v.x, height, v.z)
+      /* Displacement for the upper half of the island. */
+      const displaceUpper = vec3(v.x, height, v.z)
 
-    /* Displacement for the lower half of the island. */
-    const displaceLower = vec3(v.x, Mul(v.y, 0.7), v.z)
+      /* Displacement for the lower half of the island. */
+      const displaceLower = vec3(v.x, Mul(v.y, 0.7), v.z)
 
-    /* Displacement for the entire island. */
-    return If(GreaterOrEqual(v.y, 0), displaceUpper, displaceLower)
-  }, [])
+      /* Displacement for the entire island. */
+      return If(GreaterOrEqual(v.y, 0), displaceUpper, displaceLower)
+    }
 
-  /* Let's create the shader itself! */
-  const shader = useShader(() => {
     /* Let's displace some vertices! We'll also wrap the position in a
     varying. If we don't do this, the fragment shader will end up
     recalculating the position for every fragment. */
@@ -121,19 +116,22 @@ const FloatingIsland = () => {
     })
   }, [])
 
-  /* Let's create another shader that _only_ performs the vertex displacement.
-  We'll use it in a custom depth material that will help us get correct shadows. */
-  const depthShader = useShader(() => {
-    return CustomShaderMaterialMaster({
-      position: Displacement(displace).position
-    })
-  }, [])
-
   return (
     <mesh castShadow receiveShadow>
       <dodecahedronGeometry args={[2, 5]} />
-      <CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} flatShading />
-      <CustomDepthMaterial {...depthShader} />
+
+      <Custom.MeshStandardMaterial
+        {...shader}
+        flatShading
+        metalness={0.5}
+        roughness={0.5}
+      />
+
+      {/* We don't need the fragment shader in the depth material. */}
+      <Custom.MeshDepthMaterial
+        vertexShader={shader.vertexShader}
+        uniforms={shader.uniforms}
+      />
     </mesh>
   )
 }

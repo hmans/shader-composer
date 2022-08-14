@@ -14,10 +14,8 @@ import {
   VertexNormal,
   VertexPosition
 } from "shader-composer"
-import { useShader, useUniformUnit } from "shader-composer-r3f"
+import { Custom, useShader, useUniformUnit } from "shader-composer-r3f"
 import { PSRDNoise3D, Turbulence3D } from "shader-composer-toybox"
-import { MeshStandardMaterial } from "three"
-import CustomShaderMaterial from "three-custom-shader-material"
 import textureUrl from "./textures/explosion.png"
 
 export default function Fireball() {
@@ -82,7 +80,7 @@ export default function Fireball() {
   return (
     <mesh>
       <icosahedronGeometry args={[1, 5]} />
-      <CustomShaderMaterial baseMaterial={MeshStandardMaterial} {...shader} />
+      <Custom.MeshStandardMaterial {...shader} />
     </mesh>
   )
 }

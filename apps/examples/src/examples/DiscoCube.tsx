@@ -15,10 +15,9 @@ import {
   Time,
   VertexPosition
 } from "shader-composer"
-import { useShader } from "shader-composer-r3f"
+import { Custom, useShader } from "shader-composer-r3f"
 import { PSRDNoise3D } from "shader-composer-toybox"
-import { Color, Mesh, MeshPhysicalMaterial } from "three"
-import CustomShaderMaterial from "three-custom-shader-material"
+import { Color, Mesh } from "three"
 
 export default function DiscoCube() {
   const mesh = useRef<Mesh>(null!)
@@ -57,11 +56,7 @@ export default function DiscoCube() {
       <Environment preset="city" />
       <mesh ref={mesh}>
         <boxGeometry args={[1.5, 1.5, 1.5]} />
-        <CustomShaderMaterial
-          baseMaterial={MeshPhysicalMaterial}
-          clearcoat={0.2}
-          {...shader}
-        />
+        <Custom.MeshPhysicalMaterial clearcoat={0.2} {...shader} />
       </mesh>
     </>
   )
