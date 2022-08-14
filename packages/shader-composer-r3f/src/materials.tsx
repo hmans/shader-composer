@@ -34,6 +34,9 @@ const makeMaterialComponent = <T extends THREE.Material>(ctor: {
   new (...args: any[]): T
 }) =>
   forwardRef<CustomShaderMaterialImpl, Node<T, typeof ctor>>((props, ref) => {
+    /* We still need to ts-ignore the next line, because something between
+    R3F's and CSM's props typings appears to be deeply incompatible. */
+
     // @ts-ignore
     return <CustomShaderMaterial baseMaterial={ctor} {...props} ref={ref} />
   })
