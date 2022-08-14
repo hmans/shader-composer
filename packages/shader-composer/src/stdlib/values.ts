@@ -1,5 +1,5 @@
 import { $ } from "../expressions"
-import { API, APIFactory, GLSLType, injectAPI, Input, Unit, UnitConfig } from "../units"
+import { API, GLSLType, Input, Unit, UnitConfig } from "../units"
 
 const makeUnit = <T extends GLSLType, A extends API>(type: T) => (
   v: Input<T>,
