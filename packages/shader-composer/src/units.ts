@@ -43,14 +43,6 @@ export type JSTypes = {
 
 export type Input<T extends GLSLType = any> = Expression | JSTypes[T] | Unit<T>
 
-/*
-`Input` used to be named `Value`. We will export an alias here for backwards compatibility
-and remove it in a future release.
-
-TODO: Remove `Value` type!
-*/
-export type Value<T extends GLSLType> = Input<T>
-
 export type UpdateCallback = (
   dt: number,
   camera: Camera,
