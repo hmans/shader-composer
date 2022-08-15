@@ -1964,33 +1964,10 @@
   resolved "https://registry.yarnpkg.com/@react-spring/types/-/types-9.5.2.tgz#cce1b03afbafb23edfb9cd8c517cc7462abffb65"
   integrity sha512-n/wBRSHPqTmEd4BFWY6TeR1o/UY+3ujoqMxLjqy90CcY/ozJzDRuREL3c+pxMeTF2+B7dX33dTPCtFMX51nbxg==
 
-"@react-three/drei@^9.21.0":
-  version "9.21.0"
-  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.21.0.tgz#2b04786db97b07c88c4dc3db64a86e953568907b"
-  integrity sha512-+j0L9+sfIGIwoR0O/UwtBWW0Oo/AWj9nnvKTtRS4e2awHA872lHdOHL+L5e6jKJyV4ZyjOEkQFE8QaJXDPYgBQ==
-  dependencies:
-    "@babel/runtime" "^7.11.2"
-    "@react-spring/three" "^9.3.1"
-    "@use-gesture/react" "^10.2.0"
-    detect-gpu "^4.0.19"
-    glsl-noise "^0.0.0"
-    lodash.omit "^4.5.0"
-    lodash.pick "^4.4.0"
-    meshline "^2.0.4"
-    react-composer "^5.0.3"
-    react-merge-refs "^1.1.0"
-    stats.js "^0.17.0"
-    suspend-react "^0.0.8"
-    three-mesh-bvh "^0.5.10"
-    three-stdlib "^2.13.0"
-    troika-three-text "^0.46.4"
-    utility-types "^3.10.0"
-    zustand "^3.5.13"
-
-"@react-three/drei@^9.22.0":
-  version "9.22.0"
-  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.22.0.tgz#8d94d36e385d6c273aa9cc24f54e702de43eefe4"
-  integrity sha512-xvjnbjl4JqURL3bwZ38p/AyUlowHOSN6tw1i+rqEKbENfWemCylrEFcey+zFzMJiCK8mkTK4yNlgBJoFJU9cPQ==
+"@react-three/drei@^9.21.0", "@react-three/drei@^9.22.1":
+  version "9.22.1"
+  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.22.1.tgz#d61a8483d54a4774f45bdccb4749db749603aaa4"
+  integrity sha512-jZ4tYvUFU/NNeLTKIbU4Z9o0SmGWyqr1FXw2veBYDmVW7mu3J41tErOq+5dAdV4TGDbxgCz2GJviXEDJNsncew==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@react-spring/three" "^9.3.1"
