@@ -5938,13 +5938,13 @@ r3f-perf@^6.4.2:
     "@stitches/react" "^1.2.6"
     zustand "^3.7.1"
 
-r3f-stage@^0.3.0-next.4:
-  version "0.3.0-next.4"
-  resolved "https://registry.yarnpkg.com/r3f-stage/-/r3f-stage-0.3.0-next.4.tgz#b7367260059a366a1de4cff4e2245c474bf42661"
-  integrity sha512-RKbnL7xrJERYlZTZsfMfJjFllBLME1egepUK7RommkE7kqRcrxkv3x595LkGnrXKmC4zXwFXpbEEQ+RfrM2BVw==
+r3f-stage@^0.3.0-next.5:
+  version "0.3.0-next.5"
+  resolved "https://registry.yarnpkg.com/r3f-stage/-/r3f-stage-0.3.0-next.5.tgz#f0fbfe70755de46c0c42e0c66b18721062674a3f"
+  integrity sha512-BIcpG9lLzDgRSKu78DMPujcIAl4dX4GiMnxb2OyUN7kZReJWwWjADJV0a5USXv3lvAVhSBEqsftVdzjZf9JW/g==
   dependencies:
-    statery "^0.5.4"
     wouter "^2.8.0-alpha.2"
+    zustand "^3.6.9"
 
 rc@1.2.8, rc@^1.2.8:
   version "1.2.8"
@@ -6550,11 +6550,6 @@ stack-utils@^2.0.3:
   integrity sha512-xrQcmYhOsn/1kX+Vraq+7j4oE2j/6BFscZ0etmYg81xuM8Gq0022Pxb8+IqgOFUIaxHs0KaSb7T1+OegiNrNFA==
   dependencies:
     escape-string-regexp "^2.0.0"
-
-statery@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/statery/-/statery-0.5.4.tgz#a48fcb68e2e99aa769a65c638094ea8ac774fc44"
-  integrity sha512-AqOOGAVqz7kFBeA+EHzrj9rlv7jW3Sy0fqnxz4BImXqslU5cyv6b8ds8FCumGaUDdTWN5tdxmBLhuX+4jrZMzw==
 
 static-extend@^0.1.1:
   version "0.1.2"
