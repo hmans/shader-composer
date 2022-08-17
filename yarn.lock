@@ -1964,10 +1964,10 @@
   resolved "https://registry.yarnpkg.com/@react-spring/types/-/types-9.5.2.tgz#cce1b03afbafb23edfb9cd8c517cc7462abffb65"
   integrity sha512-n/wBRSHPqTmEd4BFWY6TeR1o/UY+3ujoqMxLjqy90CcY/ozJzDRuREL3c+pxMeTF2+B7dX33dTPCtFMX51nbxg==
 
-"@react-three/drei@^9.22.0":
-  version "9.22.0"
-  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.22.0.tgz#8d94d36e385d6c273aa9cc24f54e702de43eefe4"
-  integrity sha512-xvjnbjl4JqURL3bwZ38p/AyUlowHOSN6tw1i+rqEKbENfWemCylrEFcey+zFzMJiCK8mkTK4yNlgBJoFJU9cPQ==
+"@react-three/drei@^9.22.7":
+  version "9.22.7"
+  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.22.7.tgz#b283116a091286e3ee1dbebd40a93949767930af"
+  integrity sha512-LCjdSo7iaVcZcYuCQcUQxkbGMxO7o4Pnt+5q0sDGui9VYHjCR+33D29ZdAUf7zBsfu7lWMSk7+rPwhzC9cSeAQ==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@react-spring/three" "^9.3.1"
@@ -2353,12 +2353,24 @@
   resolved "https://registry.yarnpkg.com/@use-gesture/core/-/core-10.2.17.tgz#dc78913cd5d105217c3f1d1c16a32ad6426a00ba"
   integrity sha512-62hCybe4x6oGZ1/JA9gSYIdghV1FqxCdvYWt9SqCEAAikwT1OmVl2Q/Uu8CP636L57D+DfXtw6PWM+fdhr4oJQ==
 
-"@use-gesture/react@^10.2.0", "@use-gesture/react@^10.2.5":
+"@use-gesture/core@10.2.18":
+  version "10.2.18"
+  resolved "https://registry.yarnpkg.com/@use-gesture/core/-/core-10.2.18.tgz#fa022a6383ee11d7170953681e50e16cd63b3f81"
+  integrity sha512-O+qxBlKxPtYM/LyRnK/U5MhVA9kKHj4C2yHsUurDxNO0a8D1PHLz9YmMPh2UXGQE4wtSke03GsLqRsHbUvN9nw==
+
+"@use-gesture/react@^10.2.0":
   version "10.2.17"
   resolved "https://registry.yarnpkg.com/@use-gesture/react/-/react-10.2.17.tgz#00bc413da42a358dd3f9173c0631b54522e76614"
   integrity sha512-Vfrp1KgdYn/kOEUAYNXtGBCl2dr38s3G6rru1TOPs+cVUjfNyNxvJK56grUyJ336N3rQLK8F9G7+FfrHuc3g/Q==
   dependencies:
     "@use-gesture/core" "10.2.17"
+
+"@use-gesture/react@^10.2.5":
+  version "10.2.18"
+  resolved "https://registry.yarnpkg.com/@use-gesture/react/-/react-10.2.18.tgz#859e2174e2c20cf0d9f0e9e499b69d662f071ddc"
+  integrity sha512-MJQ5q/huXIER3st3bsmuWA7lxcdwZd28KJoBPFPNxKFenjF47smaiCCf+dLjUBiTV0DiIYAN4pXK19KxwfnUgg==
+  dependencies:
+    "@use-gesture/core" "10.2.18"
 
 "@vitejs/plugin-react@^2.0.1":
   version "2.0.1"
@@ -2980,9 +2992,9 @@ color-name@~1.1.4:
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
 colord@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/colord/-/colord-2.9.2.tgz#25e2bacbbaa65991422c07ea209e2089428effb1"
-  integrity sha512-Uqbg+J445nc1TKn4FoDPS6ZZqAvEDnwrH42yo8B40JSOgSLxMZ/gt3h4nmCtPLQeXhjJJkqBx7SCY35WnIixaQ==
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/colord/-/colord-2.9.3.tgz#4f8ce919de456f1d5c1c368c307fe20f3e59fb43"
+  integrity sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==
 
 combined-stream@^1.0.8:
   version "1.0.8"
@@ -5929,20 +5941,26 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
-r3f-perf@^6.4.2:
-  version "6.4.2"
-  resolved "https://registry.yarnpkg.com/r3f-perf/-/r3f-perf-6.4.2.tgz#bc04d4f0bb6a318bee2fce21382a6ad5f8f1b43b"
-  integrity sha512-DUsNOZhEiqpnyceVD/oCB65nwzS/jN43AAEQWxAt/ijZWKuQLa8Hi/uDHGCdUfZ/mfFVFRmvuPsFJrZZPV6aEg==
+r3f-perf@^6.4.4:
+  version "6.4.4"
+  resolved "https://registry.yarnpkg.com/r3f-perf/-/r3f-perf-6.4.4.tgz#8c76a67717b28306f3040869825e4b404bf653fd"
+  integrity sha512-/z/8pJr3+oUM3+pjybcFJfiNIdFr9yLr0RB3zKVInGDmcJ+yO7jgqOAFlWufJxkZaxUCZK48BbzZ73f+2C+l6w==
   dependencies:
     "@radix-ui/react-icons" "^1.0.3"
     "@stitches/react" "^1.2.6"
     zustand "^3.7.1"
 
-r3f-stage@^0.3.0-next.5:
-  version "0.3.0-next.5"
-  resolved "https://registry.yarnpkg.com/r3f-stage/-/r3f-stage-0.3.0-next.5.tgz#f0fbfe70755de46c0c42e0c66b18721062674a3f"
-  integrity sha512-BIcpG9lLzDgRSKu78DMPujcIAl4dX4GiMnxb2OyUN7kZReJWwWjADJV0a5USXv3lvAVhSBEqsftVdzjZf9JW/g==
+r3f-stage@^0.3.0-next.7:
+  version "0.3.0-next.7"
+  resolved "https://registry.yarnpkg.com/r3f-stage/-/r3f-stage-0.3.0-next.7.tgz#a863ba41d2a1a82cb0a8328cff9b7a2b219c162d"
+  integrity sha512-1XF2CEdV9C7W4IJ7tdRaMs8BGYjV/CPAW1Xv1+kUgksjr8lyY/4oEJhW/fTbdMkL3wiH93wfatzo0s4fWOt3Tw==
   dependencies:
+    "@react-three/drei" "^9.22.7"
+    "@react-three/fiber" "^8.3.1"
+    leva "^0.9.30"
+    postprocessing "^6.28.5"
+    r3f-perf "^6.4.4"
+    three ">=0.143.0"
     wouter "^2.8.0-alpha.2"
     zustand "^3.6.9"
 
@@ -5957,9 +5975,9 @@ rc@1.2.8, rc@^1.2.8:
     strip-json-comments "~2.0.1"
 
 react-colorful@^5.5.1:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/react-colorful/-/react-colorful-5.5.1.tgz#29d9c4e496f2ca784dd2bb5053a3a4340cfaf784"
-  integrity sha512-M1TJH2X3RXEt12sWkpa6hLc/bbYS0H6F4rIqjQZ+RxNBstpY67d9TrFXtqdZwhpmBXcCwEi7stKqFue3ZRkiOg==
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/react-colorful/-/react-colorful-5.6.0.tgz#1394165de401265d36a809a7ac87c910fad36837"
+  integrity sha512-2/sW7msvdPWYc6uKFteTOztlX8ujoKImv6k2TVSlqbGNbR3bsQMfTyHcca+kk8dDUe/bsfVkI3M2WOl1bKL+Lg==
 
 react-composer@^5.0.3:
   version "5.0.3"
@@ -6762,7 +6780,7 @@ three-stdlib@^2.13.0:
     potpack "^1.0.1"
     zstddec "^0.0.2"
 
-three@^0.143.0:
+three@>=0.143.0, three@^0.143.0:
   version "0.143.0"
   resolved "https://registry.yarnpkg.com/three/-/three-0.143.0.tgz#1455bca132cc2b20beb7f41d313e10c29e5ed9df"
   integrity sha512-oKcAGYHhJ46TGEuHjodo2n6TY2R6lbvrkp+feKZxqsUL/WkH7GKKaeu6RHeyb2Xjfk2dPLRKLsOP0KM2VgT8Zg==
