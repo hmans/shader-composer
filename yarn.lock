@@ -5938,10 +5938,10 @@ r3f-perf@^6.4.2:
     "@stitches/react" "^1.2.6"
     zustand "^3.7.1"
 
-r3f-stage@^0.3.0-next.3:
-  version "0.3.0-next.3"
-  resolved "https://registry.yarnpkg.com/r3f-stage/-/r3f-stage-0.3.0-next.3.tgz#4869e8f403c87e535a220a2c8e2103b8bf3f3f25"
-  integrity sha512-FPDawZvyYG6RG577hNGaVasj7tdayum9AQ1S+BEbE6dbO0x++KqvecfS2Lzi7SZOIjkLmZfsAfAB0zn/5SKwsw==
+r3f-stage@^0.3.0-next.4:
+  version "0.3.0-next.4"
+  resolved "https://registry.yarnpkg.com/r3f-stage/-/r3f-stage-0.3.0-next.4.tgz#b7367260059a366a1de4cff4e2245c474bf42661"
+  integrity sha512-RKbnL7xrJERYlZTZsfMfJjFllBLME1egepUK7RommkE7kqRcrxkv3x595LkGnrXKmC4zXwFXpbEEQ+RfrM2BVw==
   dependencies:
     statery "^0.5.4"
     wouter "^2.8.0-alpha.2"

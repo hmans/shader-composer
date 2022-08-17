@@ -15,7 +15,7 @@
     "leva": "^0.9.30",
     "postprocessing": "^6.28.5",
     "r3f-perf": "^6.4.2",
-    "r3f-stage": "^0.3.0-next.3",
+    "r3f-stage": "^0.3.0-next.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "shader-composer": "^0.3.0-next.0",
