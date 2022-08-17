@@ -1,22 +1,17 @@
 import { Application, Description, Example } from "r3f-stage"
 import "r3f-stage/styles.css"
-import { FC, lazy } from "react"
 import DiscoCube from "./examples/DiscoCube"
 import DissolveExample from "./examples/Dissolve"
 import Fireball from "./examples/Fireball"
 import Flag from "./examples/Flag"
 import FloatingIslandExample from "./examples/FloatingIsland"
 import ForceField from "./examples/ForceField"
+import HelloWorld from "./examples/HelloWorld"
 import Planet from "./examples/Planet"
 import Rotation from "./examples/Rotation"
 import StylizedWater from "./examples/StylizedWater"
 import Textures from "./examples/Textures"
 import WaterExample from "./examples/Water"
-
-const Lazy = ({ children }: { children: FC }) => {
-  const Component = children
-  return <Component />
-}
 
 function App() {
   return (
@@ -27,7 +22,7 @@ function App() {
           <strong>vertex displacement</strong>, and using <strong>uniforms</strong>.
         </Description>
 
-        <Lazy>{lazy(() => import("./examples/HelloWorld"))}</Lazy>
+        <HelloWorld />
       </Example>
 
       <Example path="rotation" title="Rotation (Vertex Shader)">
