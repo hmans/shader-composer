@@ -1964,29 +1964,6 @@
   resolved "https://registry.yarnpkg.com/@react-spring/types/-/types-9.5.2.tgz#cce1b03afbafb23edfb9cd8c517cc7462abffb65"
   integrity sha512-n/wBRSHPqTmEd4BFWY6TeR1o/UY+3ujoqMxLjqy90CcY/ozJzDRuREL3c+pxMeTF2+B7dX33dTPCtFMX51nbxg==
 
-"@react-three/drei@^9.21.0":
-  version "9.21.0"
-  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.21.0.tgz#2b04786db97b07c88c4dc3db64a86e953568907b"
-  integrity sha512-+j0L9+sfIGIwoR0O/UwtBWW0Oo/AWj9nnvKTtRS4e2awHA872lHdOHL+L5e6jKJyV4ZyjOEkQFE8QaJXDPYgBQ==
-  dependencies:
-    "@babel/runtime" "^7.11.2"
-    "@react-spring/three" "^9.3.1"
-    "@use-gesture/react" "^10.2.0"
-    detect-gpu "^4.0.19"
-    glsl-noise "^0.0.0"
-    lodash.omit "^4.5.0"
-    lodash.pick "^4.4.0"
-    meshline "^2.0.4"
-    react-composer "^5.0.3"
-    react-merge-refs "^1.1.0"
-    stats.js "^0.17.0"
-    suspend-react "^0.0.8"
-    three-mesh-bvh "^0.5.10"
-    three-stdlib "^2.13.0"
-    troika-three-text "^0.46.4"
-    utility-types "^3.10.0"
-    zustand "^3.5.13"
-
 "@react-three/drei@^9.22.0":
   version "9.22.0"
   resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.22.0.tgz#8d94d36e385d6c273aa9cc24f54e702de43eefe4"
@@ -5961,19 +5938,12 @@ r3f-perf@^6.4.2:
     "@stitches/react" "^1.2.6"
     zustand "^3.7.1"
 
-r3f-stage@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/r3f-stage/-/r3f-stage-0.2.6.tgz#9d6f2d6bbac3259f70f52e542b0258df0afa33e6"
-  integrity sha512-zw0iziQV2ZVbej+mlhRhT25cydU+C5lGiNGUEhUYFOGQtNng2qcn32LhRIgnzMlVAL9t0kLRJ1cUXD36yCPXXQ==
+r3f-stage@^0.3.0-next.3:
+  version "0.3.0-next.3"
+  resolved "https://registry.yarnpkg.com/r3f-stage/-/r3f-stage-0.3.0-next.3.tgz#4869e8f403c87e535a220a2c8e2103b8bf3f3f25"
+  integrity sha512-FPDawZvyYG6RG577hNGaVasj7tdayum9AQ1S+BEbE6dbO0x++KqvecfS2Lzi7SZOIjkLmZfsAfAB0zn/5SKwsw==
   dependencies:
-    "@react-three/drei" "^9.21.0"
-    "@react-three/fiber" "^8.3.1"
-    leva "^0.9.30"
-    postprocessing "^6.28.5"
-    r3f-perf "^6.4.2"
-    react "^18.2.0"
-    react-dom "^18.2.0"
-    three ">=0.143.0"
+    statery "^0.5.4"
     wouter "^2.8.0-alpha.2"
 
 rc@1.2.8, rc@^1.2.8:
@@ -6581,6 +6551,11 @@ stack-utils@^2.0.3:
   dependencies:
     escape-string-regexp "^2.0.0"
 
+statery@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/statery/-/statery-0.5.4.tgz#a48fcb68e2e99aa769a65c638094ea8ac774fc44"
+  integrity sha512-AqOOGAVqz7kFBeA+EHzrj9rlv7jW3Sy0fqnxz4BImXqslU5cyv6b8ds8FCumGaUDdTWN5tdxmBLhuX+4jrZMzw==
+
 static-extend@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/static-extend/-/static-extend-0.1.2.tgz#60809c39cbff55337226fd5e0b520f341f1fb5c6"
@@ -6792,7 +6767,7 @@ three-stdlib@^2.13.0:
     potpack "^1.0.1"
     zstddec "^0.0.2"
 
-three@>=0.143.0, three@^0.143.0:
+three@^0.143.0:
   version "0.143.0"
   resolved "https://registry.yarnpkg.com/three/-/three-0.143.0.tgz#1455bca132cc2b20beb7f41d313e10c29e5ed9df"
   integrity sha512-oKcAGYHhJ46TGEuHjodo2n6TY2R6lbvrkp+feKZxqsUL/WkH7GKKaeu6RHeyb2Xjfk2dPLRKLsOP0KM2VgT8Zg==
