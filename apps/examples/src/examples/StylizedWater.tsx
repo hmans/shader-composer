@@ -1,4 +1,4 @@
-import { Animate } from "@hmans/r3f-animate"
+import { Animate, float, rotate } from "@hmans/r3f-animate"
 import { Environment } from "@react-three/drei"
 import { MeshProps } from "@react-three/fiber"
 import { useControls } from "leva"
@@ -26,7 +26,7 @@ import {
 } from "shader-composer"
 import { Custom, useShader, useUniformUnit } from "shader-composer-r3f"
 import { PSRDNoise2D, PSRDNoise3D } from "shader-composer-toybox"
-import { Color, Object3D } from "three"
+import { Color } from "three"
 
 export default function StylizedWater() {
   return (
@@ -174,20 +174,9 @@ const Rock = (props: MeshProps) => (
   </mesh>
 )
 
-const rotate = (o: Object3D, dt: number) => {
-  o.rotation.x += dt * 0.7
-  o.rotation.y += dt * 0.5
-}
-
 const FloatingOrb = () => (
-  <Animate
-    fun={(o, _, { clock }) => {
-      o.position.x = Math.sin(clock.getElapsedTime() * 0.7) * 3
-      o.position.y = Math.sin(clock.getElapsedTime() * 1.1) * 3
-      o.position.z = Math.cos(clock.getElapsedTime() * 0.5) * 2
-    }}
-  >
-    <Animate fun={rotate}>
+  <Animate fun={float([1.3, 0.7, 0.5], [4, 3, 1])}>
+    <Animate fun={rotate(2, 1.5, 0)}>
       <mesh>
         <icosahedronGeometry />
         <meshStandardMaterial color="#E9C46A" metalness={0.5} roughness={0.5} />
