@@ -1,4 +1,5 @@
-import { Environment, Float } from "@react-three/drei"
+import { Animate } from "@hmans/r3f-animate"
+import { Environment } from "@react-three/drei"
 import { MeshProps } from "@react-three/fiber"
 import { useControls } from "leva"
 import { Layers, useRenderPipeline } from "r3f-stage"
@@ -25,7 +26,7 @@ import {
 } from "shader-composer"
 import { Custom, useShader, useUniformUnit } from "shader-composer-r3f"
 import { PSRDNoise2D, PSRDNoise3D } from "shader-composer-toybox"
-import { Color } from "three"
+import { Color, Object3D } from "three"
 
 export default function StylizedWater() {
   return (
@@ -37,9 +38,8 @@ export default function StylizedWater() {
       <Rock position={[-10, -10, -10]} scale={10} />
       <Rock position={[-5, -10, -5]} scale={6} />
       <Rock position={[-3, -2, -8]} scale={4} rotation-y={2} />
-      <Float>
-        <Rock position={[3, -1, -3]} scale={2} rotation-y={1} />
-      </Float>
+      <Rock position={[3, -1, -5]} scale={2} rotation-y={1} />
+      <FloatingOrb />
     </group>
   )
 }
@@ -172,4 +172,26 @@ const Rock = (props: MeshProps) => (
     <icosahedronGeometry args={[1, 0]} />
     <meshStandardMaterial color="#555" />
   </mesh>
+)
+
+const rotate = (o: Object3D, dt: number) => {
+  o.rotation.x += dt * 0.7
+  o.rotation.y += dt * 0.5
+}
+
+const FloatingOrb = () => (
+  <Animate
+    fun={(o, _, { clock }) => {
+      o.position.x = Math.sin(clock.getElapsedTime() * 0.7) * 3
+      o.position.y = Math.sin(clock.getElapsedTime() * 1.1) * 3
+      o.position.z = Math.cos(clock.getElapsedTime() * 0.5) * 2
+    }}
+  >
+    <Animate fun={rotate}>
+      <mesh>
+        <icosahedronGeometry />
+        <meshStandardMaterial color="#E9C46A" metalness={0.5} roughness={0.5} />
+      </mesh>
+    </Animate>
+  </Animate>
 )

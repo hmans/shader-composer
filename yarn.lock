@@ -1327,6 +1327,18 @@
   resolved "https://registry.yarnpkg.com/@chevrotain/utils/-/utils-10.1.2.tgz#d2fb7b968141139e5c2419553e5295382c265e7d"
   integrity sha512-bbZIpW6fdyf7FMaeDmw3cBbkTqsecxEkwlVKgVfqqXWBPLH6azxhPA2V9F7OhoZSVrsnMYw7QuyK6qutXPjEew==
 
+"@hmans/r3f-animate@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@hmans/r3f-animate/-/r3f-animate-0.0.3.tgz#d3b55d7e56349968d466487b3e6ed2805d7ab081"
+  integrity sha512-N+8IwtmDE8XMCPch+/LS70FWxnxiC1ryVjygzTduFhuwO+X+v5GgTNSjkzEyw6nKyK6E37OzHxfaZGquNZ7cWA==
+  dependencies:
+    "@hmans/r3f-lifecycle" "^0.0.4"
+
+"@hmans/r3f-lifecycle@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@hmans/r3f-lifecycle/-/r3f-lifecycle-0.0.4.tgz#8d02d98dad9d15500a8369c6f9fae97fb42f11b4"
+  integrity sha512-q019sVRtjBrEVJeZaP2Jc0AG/yXae5B06xSHVZ8I2l1ujC7Cv7apbG2cM7hZig8EfObHR+lkkxz293PdgWJnlw==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
