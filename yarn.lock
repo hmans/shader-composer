@@ -1327,10 +1327,10 @@
   resolved "https://registry.yarnpkg.com/@chevrotain/utils/-/utils-10.1.2.tgz#d2fb7b968141139e5c2419553e5295382c265e7d"
   integrity sha512-bbZIpW6fdyf7FMaeDmw3cBbkTqsecxEkwlVKgVfqqXWBPLH6azxhPA2V9F7OhoZSVrsnMYw7QuyK6qutXPjEew==
 
-"@hmans/r3f-animate@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@hmans/r3f-animate/-/r3f-animate-0.0.3.tgz#d3b55d7e56349968d466487b3e6ed2805d7ab081"
-  integrity sha512-N+8IwtmDE8XMCPch+/LS70FWxnxiC1ryVjygzTduFhuwO+X+v5GgTNSjkzEyw6nKyK6E37OzHxfaZGquNZ7cWA==
+"@hmans/r3f-animate@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@hmans/r3f-animate/-/r3f-animate-0.0.4.tgz#7da2171400bf71a9e2ac8d211dc3e103b3cdd3c6"
+  integrity sha512-qD/q31EaohTqH7+kpXORyYBPxV8bopNr5otpDAnKvjpcxobQFMT5lbSJeyzRxAeJgekxkMarGs90GBT4T5wTmw==
   dependencies:
     "@hmans/r3f-lifecycle" "^0.0.4"
 
