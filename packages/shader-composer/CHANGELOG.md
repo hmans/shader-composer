@@ -4,7 +4,7 @@
 
 Woohoo, it's a shiny new release! First of all, if you're reading this, then you're either me, or you're crazy, or possibly both! While 0.3.0 is the first release where I consider Shader Composer to be **feature complete**, things are still in a relative amount of flux, and will remain so for the next few releases. Why are you using this already?! You're brave, and I salute you!
 
-This release contains a plethora of unit implementations, some great new API refinements, and a couple of minor breaking changes (please see the notes below.)
+This release contains a plethora of **new unit implementations**, some great new **API refinements**, but a couple of minor **breaking changes** (please see the notes below.)
 
 The focus for the next release is on cleanup, restructuring (expect breaking changes!), and finally some documentation. I've set up a tracking issue for this, [tag along for the ride](https://github.com/hmans/shader-composer/issues/101)!
 
