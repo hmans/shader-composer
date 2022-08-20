@@ -1,12 +1,15 @@
 # shader-composer-r3f
 
-## 0.2.0-next.0
+## 0.2.0
+
+### Breaking Changes
+
+- 104be03: **Breaking Change:** `Uniform` is now called `UniformUnit`. The r3f package's `useUniform` is now `useUniformUnit`.
 
 ### Minor Changes
 
 - a4739b1: `shader-composer-r3f` now includes `three-custom-shader-material` as a dependency.
 - 7822988: Uses new `update` syntax from Shader Composer 0.3.0.
-- 104be03: **Breaking Change:** `Uniform` is now called `UniformUnit`. The r3f package's `useUniform` is now `useUniformUnit`.
 - 725ab24: Added a `<Custom.* />` component that wraps all the available Three.js materials (making use of the [three-custom-shader-material](https://github.com/FarazzShaikh/THREE-CustomShaderMaterial) library), making it super-easy to create instances of these materials using your custom shaders:
 
   ```jsx
@@ -25,29 +28,6 @@
   ```
 
 - a4739b1: Added `<CustomDepthMaterial>` for easy-as-pie custom depth materials.
-
-### Patch Changes
-
-- Updated dependencies [b945b21]
-- Updated dependencies [847b42f]
-- Updated dependencies [a4739b1]
-- Updated dependencies [847b42f]
-- Updated dependencies [48f1880]
-- Updated dependencies [104be03]
-- Updated dependencies [1155845]
-- Updated dependencies [3563f33]
-- Updated dependencies [a4739b1]
-- Updated dependencies [a4739b1]
-- Updated dependencies [847b42f]
-- Updated dependencies [b945b21]
-- Updated dependencies [847b42f]
-- Updated dependencies [847b42f]
-- Updated dependencies [847b42f]
-- Updated dependencies [847b42f]
-- Updated dependencies [847b42f]
-- Updated dependencies [847b42f]
-- Updated dependencies [b571299]
-  - shader-composer@0.3.0-next.0
 
 ## 0.1.1
 
