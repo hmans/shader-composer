@@ -1,24 +1,19 @@
 # shader-composer
 
-## 0.3.0-next.1
+## 0.3.0
 
-### Patch Changes
+Woohoo, it's a shiny new release! First of all, if you're reading this, then you're either me, or you're crazy, or possibly both! While 0.3.0 is the first release where I consider Shader Composer to be **feature complete**, things are still in a relative amount of flux, and will remain so for the next few releases. Why are you using this already?! You're brave, and I salute you!
 
-- 8ea045c: Added `Gradient`, a unit that samples a value from a gradient defined as a range of stops:
+This release contains a plethora of **new unit implementations**, some great new **API refinements**, but a couple of minor **breaking changes** (please see the notes below.)
 
-  ```jsx
-  const color = Gradient(
-    heat,
-    [new Color("#03071E"), 0],
-    [new Color("#03071E"), 0.3],
-    [new Color("#DC2F02"), 0.5],
-    [new Color("#E85D04"), 0.6],
-    [new Color("#FFBA08").multiplyScalar(2), 0.8],
-    [new Color("white").multiplyScalar(2), 0.9]
-  )
-  ```
+The focus for the next release is on cleanup, restructuring (expect breaking changes!), and finally some documentation. I've set up a tracking issue for this, [tag along for the ride](https://github.com/hmans/shader-composer/issues/101)!
 
-## 0.3.0-next.0
+### Breaking Changes
+
+- 104be03: **Breaking Change:** `Uniform` is now called `UniformUnit`. The r3f package's `useUniform` is now `useUniformUnit`.
+- 847b42f: **Breaking Change:** Removed the `variable` configuration setting for units. You were probably not using it, and it really only existed to give uniform units a chance to not attempt to create `sampler2D foo = u_foo` variables (which is not allowed in GLSL.) The uniform issue being handled differently now, and this feature has been removed, further simplifying the compiler code.
+- b571299: **Breaking Change:** The unit returned by `Time()` has been simplified. You can now access the uniform's value through `Time().value` (before it was `Time().uniform.value`.)
+- a4739b1: **Breaking Change:** The `Input<T>` type started out named `Value<T>`, and we've kept around a type alias for that to not break existing code. This `Value` type has now been removed; please use `Input`.
 
 ### Minor Changes
 
@@ -41,16 +36,13 @@
 
   If you are using `shader-composer-r3f`, this is done automatically for you, using the active scene and the current default camera.
 
-- 104be03: **Breaking Change:** `Uniform` is now called `UniformUnit`. The r3f package's `useUniform` is now `useUniformUnit`.
 - 1155845: Added `UsingInstancing`, a boolean unit that is true when instanced rendering is being used.
-- a4739b1: **Breaking Change:** The `Input<T>` type started out named `Value<T>`, and we've kept around a type alias for that to not break existing code. This `Value` type has now been removed; please use `Input`.
 - b945b21: Simplified the implementation of `Remap`. Also added `remap()` as a function that returns a remapping expression.
 - 847b42f: Added `FragmentCoordinate`, a fragment-program only unit that returns the `vec2` coordinate of the fragment that is currently being shaded. It wraps the `gl_FragCoord` built-in variable.
-- 847b42f: Added `RawDepth` and `PerspectiveDepth`, two units that will read depth values from a provided sampler2D unit containing a depth texture. The user is expected to generate this texture in a pre-render pass. (The examples app contains a `useRenderPass` hook with an example implementation, but you can also use `THREE.EffectComposer` or the `postprocessing` library.)
+- 847b42f: Added `RawDepth` and `PerspectiveDepth`, two units that will read depth values from a provided sampler2D unit containing a depth texture. The user is expected to generate this texture in a pre-render pass.
 
   ![image](https://user-images.githubusercontent.com/1061/183882159-d9aa5403-9993-46ba-9f7a-c86ad2877ee3.png)
 
-- 847b42f: **Breaking Change:** Removed the `variable` configuration setting for units. You were probably not using it, and it really only existed to give uniform units a chance to not attempt to create `sampler2D foo = u_foo` variables (which is not allowed in GLSL.) The uniform issue being handled differently now, and this feature has been removed, further simplifying the compiler code.
 - 847b42f: Added `InstanceMatrix` to wrap the `instanceMatrix` attribute provided by Three.js. Please note that this is only available when instanced rendering is active.
 - 847b42f: Added `ModelViewMatrix` to wrap the `modelViewMatrix` uniform provided by Three.js.
 - 847b42f: Shader Composer's standard library now provides the new and/or improved units `Resolution`, `CameraNear` and `CameraFar`.
@@ -59,15 +51,27 @@
 
   `CameraNear` and `CameraFar` are `float` uniform units that contain the current camera's near and far planes, respectively, and are automatically updated from the `Camera` instance passed into the shader's `update` function.
 
-- b571299: **Breaking Change:** The unit returned by `Time()` has been simplified. You can now access the uniform's value through `Time().value` (before it was `Time().uniform.value`.)
-
 ### Patch Changes
 
-- b945b21: Added `Lerp`, which is equivalent to `Mix`, and `InverseLerp(a, b, c)`, which returns the lerping ratio of `c` within `a` and `b`. Also added equivcalent `lerp` and `inverseLerp` expressions that can be used directly without wrapping the resulting values in Units.
+- b945b21: Added `Lerp`, which is equivalent to `Mix`, and `InverseLerp(a, b, c)`, which returns the lerping ratio of `c` within `a` and `b`. Also added equivalent `lerp` and `inverseLerp` expressions that can be used directly without wrapping the resulting values in Units.
 - a4739b1: Added the `varying(i, config?)` helper that will wrap the given input value in a new unit that is configured to use a varying. It's a neat little shortcut for quickly configuring existing values to be scoped to the vertex program, and made available to the fragment program via a varying.
 - 48f1880: Fixed a bug where using a vector unit's `.x`, `.y` etc. accessors would result in the original unit being included in the shader twice.
 - 3563f33: The `vec2`, `vec3` and `vec4` helpers now use a default value of `0` for each of their components.
 - a4739b1: Added new `unit(i)` cast helper. If `i` is already a unit, it will be returned; if not, it will be wrapped in a unit of the same type.
+- 8ea045c: Added `Gradient`, a unit that samples a value from a gradient defined as a range of stops:
+
+  ```jsx
+  const color = Gradient(
+    heat,
+    [new Color("#03071E"), 0],
+    [new Color("#03071E"), 0.3],
+    [new Color("#DC2F02"), 0.5],
+    [new Color("#E85D04"), 0.6],
+    [new Color("#FFBA08").multiplyScalar(2), 0.8],
+    [new Color("white").multiplyScalar(2), 0.9]
+  )
+  ```
+
 - 847b42f: Added `localToViewSpace` and `localToWorldSpace`, two functions returning expressions that convert the given vec3 or vec4 input to the respective space (by multiplying it with the correct matrices.)
 
   Also added `LocalToViewSpace` and `LocalToWorldSpace`, which are unit implementations wrapping these expressions.
