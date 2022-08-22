@@ -1,5 +1,13 @@
 # shader-composer-toybox
 
+## 0.1.1
+
+### Patch Changes
+
+- 9974555: Added `Billboard`, a unit that applies billboarding to the given vertex position.
+- 822b332: Added `Softness`, a unit that returns a 0-1 value depending on distance of the given position to an existing scene depth. The returned value can be applied to a fragment's alpha to implement soft particles effects and similar.
+- e42a2a7: Added `Random`, a simple unit that returns a pseudo-random float value.
+
 ## 0.1.0
 
 ### Breaking Changes
