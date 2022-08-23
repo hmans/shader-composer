@@ -1,5 +1,12 @@
 # shader-composer
 
+## 0.3.1
+
+### Patch Changes
+
+- 9e693e9: In `CustomShaderMaterialMaster`, only write to `csm_Roughness` and `csm_Metalness` when the shader is used within a MeshStandardMaterial or MeshPhysicalMaterial.
+- 04549bc: Added new `GradientStops<T>` type to clean up the signature of `Gradient` a little bit.
+
 ## 0.3.0
 
 Woohoo, it's a shiny new release! First of all, if you're reading this, then you're either me, or you're crazy, or possibly both! While 0.3.0 is the first release where I consider Shader Composer to be **feature complete**, things are still in a relative amount of flux, and will remain so for the next few releases. Why are you using this already?! You're brave, and I salute you!
