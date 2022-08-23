@@ -82,14 +82,10 @@ export const CustomShaderMaterialMaster = ({
 				${emissiveColor !== undefined ? $`csm_Emissive = ${emissiveColor};` : ""}
 				${fragColor !== undefined ? $`csm_FragColor = vec4(${fragColor}, ${alpha});` : ""}
 
-				/* Mix in the texture. This may be obsolete with a future update to CSM. */
-        #ifdef USE_MAP
-          csm_DiffuseColor *= texture2D(map, vUv);
+        #if defined IS_MESHSTANDARDMATERIAL || defined IS_MESHPHYSICALMATERIAL
+          ${roughness !== undefined ? $`csm_Roughness = ${roughness};` : ""}
+          ${metalness !== undefined ? $`csm_Metalness = ${metalness};` : ""}
         #endif
-
-				${roughness !== undefined ? $`csm_Roughness = ${roughness};` : ""}
-				${metalness !== undefined ? $`csm_Metalness = ${metalness};` : ""}
-
-				`
+			`
     }
   })
