@@ -153,6 +153,7 @@ export const lerp = <T extends GLSLType>(
 
 /**
  * Performs linear interpolation between two values, and returns the result.
+ *
  * Wraps the GLSL `mix` function.
  *
  * @param a The starting value of the interpolation.
@@ -186,6 +187,7 @@ export const Mix = Lerp
 /**
  * Given an `edge` value and an input value `v`, returns 0 if the value is less than the
  * edge, and 1 if the value is greater than or equal to the edge.
+ *
  * Wraps the GLSL `step` function.
  *
  * @param edge The edge value.
@@ -195,6 +197,16 @@ export const Mix = Lerp
 export const Step = (edge: Input<"float">, v: Input<"float">) =>
   Float($`step(${edge}, ${v})`, { name: "Step" })
 
+/**
+ * Performs a Hermite interpolation between two values, and returns the result.
+ *
+ * Wraps the GLSL `smoothstep` function.
+ *
+ * @param min The lower edge of the Hermite einterpolation.
+ * @param max The upper edge of the Hermite interpolation.
+ * @param v The source value for the interpolation.
+ * @returns The result of the Hermite interpolation.
+ */
 export const Smoothstep = (min: Input<"float">, max: Input<"float">, v: Input<"float">) =>
   Float($`smoothstep(${min}, ${max}, ${v})`, { name: "Smoothstep" })
 
