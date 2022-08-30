@@ -151,6 +151,16 @@ export const lerp = <T extends GLSLType>(
   ratio: Input<"float">
 ) => $`mix(${a}, ${b}, ${ratio})`
 
+/**
+ * Performs linear interpolation between two values, and returns the result.
+ *
+ * Wraps the GLSL `mix` function.
+ *
+ * @param a The starting value of the interpolation.
+ * @param b The ending value of the interpolation.
+ * @param ratio The interpolation ratio.
+ * @returns The interpolated value.
+ */
 export const Lerp = <T extends GLSLType>(
   a: Input<T>,
   b: Input<T>,
@@ -160,14 +170,43 @@ export const Lerp = <T extends GLSLType>(
 export const inverseLerp = <T extends GLSLType>(a: Input<T>, b: Input<T>, c: Input<T>) =>
   $`(${c} - ${a}) / (${b} - ${a})`
 
+/**
+ * Performs inverse linear interpolation between two values, and returns the result.
+ * Given three values `a`, `b`, and `c`, the result is the ratio of `c` between `a` and `b`.
+ *
+ * @param a The starting value of the interpolation.
+ * @param b The ending value of the interpolation.
+ * @param c The value to find the interpolation ratio of.
+ * @returns The interpolation ratio of `c` between `a` and `b`.
+ */
 export const InverseLerp = <T extends GLSLType>(a: Input<T>, b: Input<T>, c: Input<T>) =>
   Unit(type(a), inverseLerp(a, b, c), { name: "Inverse Lerp" })
 
 export const Mix = Lerp
 
+/**
+ * Given an `edge` value and an input value `v`, returns 0 if the value is less than the
+ * edge, and 1 if the value is greater than or equal to the edge.
+ *
+ * Wraps the GLSL `step` function.
+ *
+ * @param edge The edge value.
+ * @param v The value to test.
+ * @returns The result of the step function.
+ */
 export const Step = (edge: Input<"float">, v: Input<"float">) =>
   Float($`step(${edge}, ${v})`, { name: "Step" })
 
+/**
+ * Performs a Hermite interpolation between two values, and returns the result.
+ *
+ * Wraps the GLSL `smoothstep` function.
+ *
+ * @param min The lower edge of the Hermite einterpolation.
+ * @param max The upper edge of the Hermite interpolation.
+ * @param v The source value for the interpolation.
+ * @returns The result of the Hermite interpolation.
+ */
 export const Smoothstep = (min: Input<"float">, max: Input<"float">, v: Input<"float">) =>
   Float($`smoothstep(${min}, ${max}, ${v})`, { name: "Smoothstep" })
 
