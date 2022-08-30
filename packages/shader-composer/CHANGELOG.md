@@ -1,5 +1,12 @@
 # shader-composer
 
+## 0.3.2
+
+### Patch Changes
+
+- 85941bb: Added `InstanceID` and `VertexID` units.
+- 60a3bcf: Added `float` cast, which will cast the given expression to a float unit.
+
 ## 0.3.1
 
 ### Patch Changes
