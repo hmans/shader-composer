@@ -36,10 +36,10 @@
 		"release": "yarn ci && yarn changeset publish"
 	},
 	"dependencies": {
-		"@changesets/cli": "^2.24.3",
+		"@changesets/cli": "^2.24.4",
 		"@manypkg/cli": "^0.19.1",
 		"@preconstruct/cli": "^2.1.5",
-		"typedoc": "^0.23.10"
+		"typedoc": "^0.23.11"
 	},
 	"stackblitz": {
 		"startCommand": "cd apps/examples && yarn dev"
