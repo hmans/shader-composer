@@ -103,12 +103,12 @@ describe("compileShader", () => {
 
     it("adds the uniform value object to the returned uniforms object", () => {
       expect(getShader().uniforms).toMatchInlineSnapshot(`
-			Object {
-			  "u_Anonymous_1": Object {
-			    "value": 0,
-			  },
-			}
-		`)
+        {
+          "u_Anonymous_1": {
+            "value": 0,
+          },
+        }
+      `)
     })
   })
 
@@ -153,7 +153,7 @@ describe("compileShader", () => {
     const a = Float(1, { name: "A", only: "vertex" })
     const root = Master({ fragment: { body: $`${a}` } })
     expect(() => compileShader(root)).toThrowErrorMatchingInlineSnapshot(
-      `"Encountered a unit \\"A\\" that is only allowed in the vertex shader, but was encountered when compiling the fragment shader. Consider wrapping the value, or the derived value you're interested in, in a Unit that has a varying."`
+      `"Encountered a unit "A" that is only allowed in the vertex shader, but was encountered when compiling the fragment shader. Consider wrapping the value, or the derived value you're interested in, in a Unit that has a varying."`
     )
   })
 })

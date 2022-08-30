@@ -1,6 +1,6 @@
 import { $ } from "../expressions"
 import { Input } from "../units"
-import { InstanceMatrix, ModelMatrix, ViewMatrix } from "./geometry"
+import { ModelMatrix, ViewMatrix } from "./geometry"
 import { Vec3 } from "./values"
 
 // "Note that modelViewMatrix is not set when rendering an instanced model"
