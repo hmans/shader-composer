@@ -1,7 +1,12 @@
 import { $ } from "../expressions"
 import { type } from "../glslType"
 import { GLSLType, Input, isUnit, Unit, UnitConfig } from "../units"
-import { Mat3, Mat4, Vec2, Vec3, Vec4 } from "./values"
+import { Float, Mat3, Mat4, Vec2, Vec3, Vec4 } from "./values"
+
+export const float = (
+  v: Input<"float" | "bool" | "int"> = 0,
+  extras?: Partial<UnitConfig<"float">>
+) => Float($`float(${v})`, extras)
 
 export const vec2 = (
   x: Input<"float"> = 0,
