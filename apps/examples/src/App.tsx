@@ -1,4 +1,4 @@
-import { Application, Description, Example } from "r3f-stage"
+import { Application, Description, Example, Heading } from "r3f-stage"
 import "r3f-stage/styles.css"
 import DiscoCube from "./examples/DiscoCube"
 import DissolveExample from "./examples/Dissolve"
@@ -16,6 +16,7 @@ import WaterExample from "./examples/Water"
 function App() {
   return (
     <Application>
+      <Heading>The Basics</Heading>
       <Example path="hello-world" title="Hello World" makeDefault>
         <Description>
           A simple example demonstrating <strong>color changes</strong>,{" "}
@@ -25,7 +26,7 @@ function App() {
         <HelloWorld />
       </Example>
 
-      <Example path="rotation" title="Rotation (Vertex Shader)">
+      <Example path="rotation" title="Rotation (Vertex Displacement)">
         <Description>
           Sometimes you'll want to perform rotation within the vertex shader (and not in
           the scene itself.) This example shows you how, including how to fix the normals
@@ -38,6 +39,8 @@ function App() {
       <Example path="textures" title="Textures">
         <Textures />
       </Example>
+
+      <Heading>Demos</Heading>
 
       <Example path="flag" title="Flag">
         <Description>A wavy flag!</Description>
