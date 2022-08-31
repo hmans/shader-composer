@@ -1,5 +1,11 @@
 # shader-composer
 
+## 0.3.3
+
+### Patch Changes
+
+- 70025cb: The `GradientStop` and `GradientStops` generics now default to `vec3` gradients.
+
 ## 0.3.2
 
 ### Patch Changes
