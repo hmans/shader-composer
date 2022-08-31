@@ -1,4 +1,4 @@
-import { Snippet, Input, Vec3, ViewMatrix, InstanceMatrix, $ } from "shader-composer"
+import { $, Input, ModelMatrix, Snippet, Vec3, ViewMatrix } from "shader-composer"
 
 const billboard = Snippet(
   (name) => $`
@@ -14,6 +14,7 @@ const billboard = Snippet(
 export const Billboard = (position: Input<"vec3">) =>
   Vec3($`${billboard}(${position}.xy,
     ${ViewMatrix}
+    * ${ModelMatrix}
     #ifdef USE_INSTANCING
     * instanceMatrix
     #endif
