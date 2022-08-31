@@ -15,6 +15,6 @@ export const Billboard = (position: Input<"vec3">) =>
   Vec3($`${billboard}(${position}.xy,
     ${ViewMatrix}
     #ifdef USE_INSTANCING
-    * ${InstanceMatrix}
+    * instanceMatrix
     #endif
     )`)
