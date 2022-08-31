@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@hmans/r3f-animate": "^0.0.4",
-    "@react-three/drei": "^9.25.1",
+    "@react-three/drei": "^9.25.2",
     "@react-three/fiber": "^8.6.0",
-    "fp-ts": "^2.12.1",
+    "fp-ts": "^2.12.3",
     "r3f-stage": "^0.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -23,7 +23,7 @@
     "three-custom-shader-material": "^4.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.17",
+    "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
     "@types/three": "^0.143.2",
     "@vitejs/plugin-react": "^2.0.1",
