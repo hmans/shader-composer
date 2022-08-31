@@ -35,11 +35,11 @@ export const Fresnel = ({
     { name: "Fresnel" }
   )
 
-export type GradientStops<T extends GLSLType> = GradientStop<T>[]
+export type GradientStops<T extends GLSLType = "vec3"> = GradientStop<T>[]
 
-export type GradientStop<T extends GLSLType> = [Input<T>, Input<"float">]
+export type GradientStop<T extends GLSLType = "vec3"> = [Input<T>, Input<"float">]
 
-export const Gradient = <T extends GLSLType>(
+export const Gradient = <T extends GLSLType = "vec3">(
   f: Input<"float">,
   ...stops: GradientStops<T>
 ) => {
