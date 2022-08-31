@@ -1,5 +1,6 @@
 import { Application, Description, Example, Heading } from "r3f-stage"
 import "r3f-stage/styles.css"
+import BillboardingExample from "./examples/Billboarding"
 import DiscoCube from "./examples/DiscoCube"
 import DissolveExample from "./examples/Dissolve"
 import Fireball from "./examples/Fireball"
@@ -17,6 +18,7 @@ function App() {
   return (
     <Application>
       <Heading>The Basics</Heading>
+
       <Example path="hello-world" title="Hello World" makeDefault>
         <Description>
           A simple example demonstrating <strong>color changes</strong>,{" "}
@@ -24,6 +26,12 @@ function App() {
         </Description>
 
         <HelloWorld />
+      </Example>
+
+      <Heading>Techniques</Heading>
+
+      <Example path="billboarding" title="Billboarding">
+        <BillboardingExample />
       </Example>
 
       <Example path="rotation" title="Rotation (Vertex Displacement)">
