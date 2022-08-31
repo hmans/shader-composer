@@ -1,5 +1,12 @@
 # shader-composer-toybox
 
+## 0.1.2
+
+### Patch Changes
+
+- 0145dc0: `Billboard` now correctly billboards rotated meshes.
+- 0145dc0: Fixed a bug where `Billboard` would crash when used outside of instanced rendering.
+
 ## 0.1.1
 
 ### Patch Changes
